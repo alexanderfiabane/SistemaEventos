@@ -1,0 +1,86 @@
+@charset "UTF-8";
+
+/* general notice styles */
+.infoNotice {
+    background: #FAFAFA; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #fafafa 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#fafafa)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#fafafa 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#fafafa 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#fafafa 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#fafafa 100%); /* W3C */
+    border: 1px solid #BBB;
+}
+.successNotice {
+    background: #fafcf2; /* Old browsers */
+    background: -moz-linear-gradient(top,  #fafcf2 0%, #eef4de 50%, #d6edb6 51%, #ebf4e1 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafcf2), color-stop(50%,#eef4de), color-stop(51%,#d6edb6), color-stop(100%,#ebf4e1)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fafcf2 0%,#eef4de 50%,#d6edb6 51%,#ebf4e1 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fafcf2 0%,#eef4de 50%,#d6edb6 51%,#ebf4e1 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fafcf2 0%,#eef4de 50%,#d6edb6 51%,#ebf4e1 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #fafcf2 0%,#eef4de 50%,#d6edb6 51%,#ebf4e1 100%); /* W3C */
+    border: 1px solid #8A8;
+}
+.warningNotice {
+    background: #fffdf2; /* Old browsers */
+    background: -moz-linear-gradient(top,  #fffdf2 0%, #fffbd8 50%, #fcf7bd 51%, #fcf9d6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fffdf2), color-stop(50%,#fffbd8), color-stop(51%,#fcf7bd), color-stop(100%,#fcf9d6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fffdf2 0%,#fffbd8 50%,#fcf7bd 51%,#fcf9d6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fffdf2 0%,#fffbd8 50%,#fcf7bd 51%,#fcf9d6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fffdf2 0%,#fffbd8 50%,#fcf7bd 51%,#fcf9d6 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #fffdf2 0%,#fffbd8 50%,#fcf7bd 51%,#fcf9d6 100%); /* W3C */
+    border: 1px solid #BA3;
+}
+.errorNotice {
+    background: #fff3ea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #fff3ea 0%, #ffe4d1 50%, #ffdac1 51%, #ffece2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fff3ea), color-stop(50%,#ffe4d1), color-stop(51%,#ffdac1), color-stop(100%,#ffece2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #fff3ea 0%,#ffe4d1 50%,#ffdac1 51%,#ffece2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #fff3ea 0%,#ffe4d1 50%,#ffdac1 51%,#ffece2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #fff3ea 0%,#ffe4d1 50%,#ffdac1 51%,#ffece2 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #fff3ea 0%,#ffe4d1 50%,#ffdac1 51%,#ffece2 100%); /* W3C */
+    border: 1px solid #E88;
+}
+.infoNotice, .successNotice, .warningNotice, .errorNotice {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: .5em;
+    -moz-border-radius: .5em;
+    -webkit-border-radius: .5em;
+    padding: .3em .6em;
+}
+.infoNoticeLabel {
+    color: #666;
+}
+.successNoticeLabel {
+    color: #474;
+}
+.warningNoticeLabel {
+    color: #971;
+}
+.errorNoticeLabel {
+    color: #B44;
+}
+
+.noticeIconContainer {
+    width: 40px;
+    vertical-align: top;
+}
+.noticeLabelContainer {
+    vertical-align: middle;
+}
+.noticeCloseContainer {
+    width: 18px;
+    padding-top: 10px;
+    vertical-align: top;
+}
+
+.noticeCloseContainer img {
+    cursor: pointer;
+    opacity: .4;
+}
+
+.noticeCloseContainer img:hover {
+    opacity: 1;
+}

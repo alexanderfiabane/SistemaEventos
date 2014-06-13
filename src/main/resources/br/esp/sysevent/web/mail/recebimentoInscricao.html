@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Untitled Document</title>
+    </head>
+    <body>
+        <div style="color: #ffffff; background-color: #4684B4; line-height: 40px; padding: 10px;">
+            <h1>Caro(a) ${inscricao.confraternista.tipo.descricao} ${inscricao.confraternista.pessoa.nome}</h1>            
+        </div>
+        <div style="padding-top:15px;font-family:Arial; font-size:12pt">
+            É com muita satisfação que recebemos a sua inscrição em nosso sistema.<br/>
+            Sua inscrição está sendo analisada pela nossa equipe.<br/>
+            Para acompanhar o andamento da sua inscrição fique atento a sua caixa de e-mails ou acesse http://www.seespirita.org, no link 'Minhas Inscrições'
+            utilizando o login e senha contidos neste e-email.            
+            <br/>
+            <br/>
+            <b>Dados para acesso:</b>
+            <br/>
+            <b>Login: </b>${inscricao.confraternista.pessoa.endereco.email}<br/>
+            <b>Senha: </b>${dateUtils.format($inscricao.confraternista.pessoa.dataNascimento.time, "ddMMyyyy")}<br/>
+            <br/>
+            <br/>
+            Em caso de dúvida ou para maiores informações acesse http://emuse.arteeluz.blog.br ou através do e-mail contato@arteeluz.blog.br
+            <br/>
+            <br/>
+        </div>
+        <div style="color: #000000; background-color:#F4F4F4; font-weight: bold; padding: 10px;">
+            Atenciosamente,<br/>
+            Coordenação do EMUSE.
+        </div>
+    </body>
+</html>

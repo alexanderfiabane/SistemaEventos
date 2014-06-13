@@ -1,0 +1,40 @@
+<%@ include file="/WEB-INF/includes/jstl.jspf" %>
+
+<c:if test="${empty dwr_imported or !dwr_imported}">
+
+    <!-- YUI -->
+    <link rel="stylesheet" type="text/css" href="<c:url value='/assets/yui/css/fonts-min.css?_yuiversion=2.4.1'/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/assets/yui/css/container.css?_yuiversion=2.4.1'/>">
+    <script type="text/javascript" src="<c:url value='/assets/yui/js/utilities.js?_yuiversion=2.4.1'/>"></script>
+    <script type="text/javascript" src="<c:url value='/assets/yui/js/container.js?_yuiversion=2.4.1'/>"></script>
+    <script type="text/javascript">
+
+        /* namespace YUI - utilizado na chamada ao componente YUI*/
+        YAHOO.namespace("container");
+
+    </script>
+
+    <!-- DWR -->
+    <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/dwr/util.js'/>"></script>
+    <script type="text/javascript" src="<c:url value="/assets/dwr/js/dwr.js"/>"></script>
+    <script type="text/javascript">
+        preHook('<img src="<c:url value='/assets/yui/img/loading.gif'/>" alt=""/>');
+        postHook();
+
+        DWREngine.setTextHtmlHandler(function() {
+            alert("Sua sessão provavelmente expirou.\nFaça login novamente.");
+            location.reload(true);
+        });
+        /*
+         *  Gerenciador GLOBAL de erros para chamadas ajax com DWR.
+         */
+        dwr.engine.setErrorHandler(function(errorString, exception) {
+            /*window.location = "<c:url value='/error/500.html'/>?msg=" + exception.message;*/
+            alert(errorString);
+        });
+    </script>
+
+    <%-- seta a flag que indica que este jspf ja foi importado --%>
+    <c:set var="dwr_imported" value="true" scope="request"/>
+</c:if>

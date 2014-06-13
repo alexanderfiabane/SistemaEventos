@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+/* import msf:menuitem tag styles */
+@import url('tag-menuitem.css');
+
+/* import msf:breadcrumb tag styles */
+@import url('tag-pagetitle.css');

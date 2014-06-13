@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                    http://www.springframework.org/schema/context
+                    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                    http://www.directwebremoting.org/schema/spring-dwr
+                    http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+
+    <dwr:configuration >
+        <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">
+            <dwr:include method="name"/>
+            <dwr:include method="sigla"/>
+            <dwr:include method="descricao"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Pessoa" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="nome"/>
+            <dwr:include method="sexo"/>
+            <dwr:include method="endereco"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Confraternista" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="pessoa"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Endereco" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="cidade"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Cidade" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="nome"/>
+            <dwr:include method="estado"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Estado" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="sigla"/>            
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Dormitorio" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="nome"/>
+        </dwr:convert>
+    </dwr:configuration>
+
+    <dwr:controller id="dwrController" debug="true" />
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="alwaysUseFullPath" value="true"/>
+        <property name="mappings">
+            <props>
+                <prop key="/dwr/**/*">dwrController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
+    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">
+        <!--<property name="cidadeService" ref="cidadeService"/>-->
+        <dwr:remote javascript="testeAjaxService">
+            <dwr:include method="teste" />
+        </dwr:remote>
+    </bean>
+    <bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">
+        <!--<property name="confraternistaService" ref="confraternistaService"/>-->
+        <dwr:remote javascript="confraternistaAjaxService">
+            <dwr:include method="findByNome" />
+            <dwr:include method="findByIdDormitorio" />
+        </dwr:remote>
+    </bean>
+    <bean id="enderecoAjaxService" class="br.esp.sysevent.web.ajax.EnderecoAjaxService">
+        <dwr:remote javascript="enderecoAjaxService">
+            <dwr:include method="getCidades" />
+        </dwr:remote>
+    </bean>
+    <bean id="dormitorioAjaxService" class="br.esp.sysevent.web.ajax.DormitorioAjaxService">
+        <dwr:remote javascript="dormitorioAjaxService">
+            <dwr:include method="findById" />
+        </dwr:remote>
+    </bean>
+</beans>

@@ -1,0 +1,196 @@
+.jumbotron {
+    position: relative;
+    -webkit-box-shadow:  0 3px 7px rgba(0,0,0,.2), 0 -3px 7px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 3px 7px rgba(0,0,0,.2), 0 -3px 7px rgba(0,0,0,.2);
+    box-shadow: 0 3px 7px rgba(0,0,0,.2), 0 -3px 7px rgba(0,0,0,.2);
+}
+/**
+ * Usado para estilizar o jumbotron
+ * Caso deseje customizar o jumbotron, apenas sobrescreva esta classe.
+ */
+.jumbotron-inner {
+    padding: 50px 20px 10px 20px;
+    /*text-align: center;*/
+    text-shadow: 2px 4px 8px rgba(0,0,0,.4);
+    color: #fff;
+    background: #020031;
+    background: -moz-linear-gradient(45deg,  #020031 0%, #6d3353 100%);
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6d3353));
+    background: -webkit-linear-gradient(45deg,  #020031 0%,#6d3353 100%);
+    background: -o-linear-gradient(45deg,  #020031 0%,#6d3353 100%);
+    background: -ms-linear-gradient(45deg,  #020031 0%,#6d3353 100%);
+    background: linear-gradient(45deg,  #020031 0%,#6d3353 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );  //IE6-9 fallback on horizontal gradient 
+}
+.jumbotron-inner p {
+    font-size: 16pt;
+}
+
+.jumbotron-inner .container {
+    position: relative;
+    z-index: 2;
+}
+.jumbotron-inner:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*background: url(../img/masthead-pattern.png) repeat center center;*/
+    opacity: .5;
+}
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1) {
+    .jumbotron-inner:after {
+        background-size: 150px 150px;
+    }
+}
+
+.masthead {
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.footer {
+    margin-top: 20px;
+    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 -2px 8px rgba(0,0,0,.04);
+    -moz-box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 -2px 8px rgba(0,0,0,.04);
+    box-shadow: 0 2px 8px rgba(0,0,0,.04), 0 -2px 8px rgba(0,0,0,.04);
+}
+
+.footer-fixed-bottom {
+  position: fixed;
+  z-index: 1030;
+  margin-bottom: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-inner {
+    padding: 5px;
+    text-shadow: 0 1px 3px rgba(0,0,0,.2), 0 0 30px rgba(0,0,0,.02);
+    border-top: 1px solid #e5e5e5;
+    color: #A0A0A0;
+    background-color: #f5f5f5;
+}
+
+.footer p {
+    margin-bottom: 0;
+    color: #777;
+}
+.footer-links {
+    margin: 10px 0;
+}
+.footer-links li {
+    display: inline;
+    padding: 0 2px;
+}
+.footer-links li:first-child {
+    padding-left: 0;
+}
+.dropup-menu {
+    bottom: 100%;
+    top: auto !important;
+}
+
+/* position the arrow downwards, pointing to the menu */
+
+.navbar .dropup-menu:before {
+    border-bottom: none;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 7px solid rgba(0, 0, 0, 0.2);
+    left: 7px;
+    top: 100%;
+}
+
+.navbar .dropup-menu:after {
+    border-bottom: none;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+    left: 10px;
+    top: 100%;
+    left: 6px;
+}
+/* Responsive -------------------------------------------------- */
+
+@media (min-width: 768px) and (max-width: 979px) {
+    /* Remove any padding from the body */
+    body {
+        padding-top: 0;
+    }
+    /* Widen masthead and social buttons to fill body padding */
+    .jumbotron {
+        margin-top: -20px; /* Offset bottom margin on .navbar */
+    }
+    .jumbotron-inner {
+        /*padding: 40px 20px;*/
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .jumbotron-inner h1 {
+        font-size: 22pt;
+    }
+    .jumbotron-inner p {
+        font-size: 12pt;
+    }
+}
+
+/* Tablet ------------------------- */
+@media (max-width: 767px) {
+    /* Remove any padding from the body */
+    body {
+        padding-top: 0;
+    }
+
+    /* Widen masthead and social buttons to fill body padding */
+    .jumbotron {
+        padding: 40px 20px;
+        margin-top:   -20px; /* Offset bottom margin on .navbar */
+        margin-right: -20px;
+        margin-left:  -20px;
+    }
+    .jumbotron-inner {
+        /*padding: 40px 20px;*/
+        margin-top:   -40px; /* Offset bottom margin on .navbar */
+        margin-right: -20px;
+        margin-left:  -20px;
+        margin-bottom: -40px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .jumbotron-inner h1 {
+        font-size: 14pt;
+        margin: 2px;
+    }
+    .jumbotron-inner p {
+        font-size: 10pt;
+    }
+
+    .footer {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    .footer-inner {
+    }
+    .footer p {
+        margin-bottom: 9px;
+    }
+}
+
+/* Landscape phones ------------------------- */
+@media (max-width: 480px) {
+    /* Remove padding above jumbotron */
+    body {
+        padding-top: 0;
+    }
+
+    /* Tighten up footer */
+    .footer {
+    }
+}

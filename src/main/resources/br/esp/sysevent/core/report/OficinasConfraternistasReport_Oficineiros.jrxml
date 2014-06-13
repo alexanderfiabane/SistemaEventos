@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OficinasConfraternistasReport_Oficineiros" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="138edcd2-5d49-479e-af4f-c37a164408c5">
+	<property name="ireport.zoom" value="5.559917313492239"/>
+	<property name="ireport.x" value="334"/>
+	<property name="ireport.y" value="0"/>
+	<field name="pessoa.nome" class="java.lang.String"/>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b8722492-c6a2-426e-bc93-bae516833df7" x="0" y="0" width="555" height="22"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pessoa.nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="454ceb2f-ee2b-4430-9008-c49a56638a1e" x="5" y="10" width="3" height="3" backcolor="#000000"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

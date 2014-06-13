@@ -1,0 +1,44 @@
+@charset "UTF-8";
+/* general breadcrumb styles */
+
+.pagetitleBreadcrumb {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.pagetitleBreadcrumb > li {
+    display: inline-block;
+    *display: inline;
+    /* IE7 inline-block hack */
+    *zoom: 1;
+}
+
+/* current page label style */
+.pagetitleLabel {
+    font-size: 18pt;
+    font-weight: bold;
+    color: #4684B4;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
+}
+
+/* step separator style */
+.breadcrumbSeparator {
+    font-size: 11pt;
+    color: #4A89B9;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
+}
+
+/* step labels style */
+.breadcrumbLink {
+    font-size: 12pt;
+    color: #4A89B9;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
+    text-decoration: none;
+}
+
+/* step label mouse hover style */
+.breadcrumbLink:hover {
+    color: #F95;
+    cursor: pointer;
+}

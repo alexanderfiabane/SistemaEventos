@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                                 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                                 http://www.springframework.org/schema/security
+                                 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!--
+        Aqui nos configuramos quais sao os padroes de url que vao ser interceptados pelo spring security.
+        A principio, tudo que for ".html" (que possui um controller) soh podera ser acessado se o usuario estiver logado.
+    -->
+
+    <http auto-config="true" use-expressions="true">
+        <!--index.html deve ser desprotegido-->
+        <intercept-url pattern="/user/*" access="hasAnyRole('ROLE_USER')" />
+        <intercept-url pattern="/admin/**/*" access="hasAnyRole('ROLE_ADMIN')" />
+        <!--<intercept-url pattern="/index.html" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" />-->
+        <form-login login-page="/login.html" default-target-url="/index.html" authentication-failure-url="/login.html?error=true" />
+        <logout  logout-url="/logout"  logout-success-url="/" />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider user-service-ref="usuarioService">
+            <!-- plaintext, sha, sha-256, md5, md4 -->
+            <password-encoder hash="sha-256"/>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

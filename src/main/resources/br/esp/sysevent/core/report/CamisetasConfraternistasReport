@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TipoConfraternistasReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b367f350-e66f-401b-bfd1-633e0b7a8609">
+	<property name="ireport.zoom" value="3.1384283767210195"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
+	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
+	<field name="confraternista.tipo" class="java.lang.Object"/>
+	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
+	<group name="tipo" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{confraternista.tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="25">
+				<staticText>
+					<reportElement uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c" x="0" y="2" width="57" height="20" forecolor="#000000"/>
+					<box leftPadding="5"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nome:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="130" y="2" width="279" height="20" forecolor="#000000"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="10460785-744f-401d-b38a-3aa6df6cf7df" x="0" y="24" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="2" width="555" height="20" forecolor="#000000"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total: " + $V{tipo_COUNT}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="10460785-744f-401d-b38a-3aa6df6cf7df" x="0" y="0" width="555" height="1"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3" x="0" y="24" width="555" height="21" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + "º - " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a6979233-01af-4636-8226-c70349affe40" x="0" y="1" width="555" height="23" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Camisetas dos Confraternistas]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="0" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="44" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="1" width="555" height="20"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="454ceb2f-ee2b-4430-9008-c49a56638a1e" x="4" y="10" width="3" height="3" backcolor="#000000"/>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement uuid="1df7bf3c-858f-4a8a-bd7d-10cd327802da" x="533" y="1" width="20" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ef6e9a29-820a-4568-86ba-b5b5e6443c51" x="498" y="1" width="35" height="15" forecolor="#000000"/>
+				<textElement/>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="bdac8b21-33fe-4a18-8f33-25f2e4c6c674" x="0" y="0" width="555" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

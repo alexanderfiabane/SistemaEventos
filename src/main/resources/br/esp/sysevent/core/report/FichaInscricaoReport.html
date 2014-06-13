@@ -1,0 +1,180 @@
+<!--
+ Copyright (c) 2012, CPD-UFSM. All Rights Reserved
+-->
+<!DOCTYPE html>
+<html style='height: 100%; margin: 0;'>
+    <head>
+        <title>Ficha de Inscrição</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style type="text/css">
+			table{
+					border: solid 2px #000000;
+				}
+			body {
+					font-family:Arial, Helvetica, sans-serif;
+				}
+			#session{
+				background-color:#CCC;
+				}
+			.fullWidth{
+				width: 100%;
+				}
+			.autorizacao{
+				text-align:justify;
+				font-size:12pt;				
+				}
+			.headReport{
+				width: 100%;
+				text-align:center;
+				font-size:18pt;
+                color:#2C2C2C;
+                text-shadow: 1px 1px #919191;
+				}
+            .sessionTitle{
+                padding-left:5px;
+                padding-bottom:1px;
+                border-bottom-width:1px;
+                border-bottom-color:#CECECE;
+                border-bottom-style:solid;
+                min-height:24px;
+                font-size:14pt;
+                font-style:oblique;
+				font-weight:bold;
+                color:#2C2C2C;
+                text-shadow: 1px 1px #919191;
+            }
+            .formFieldTitle{
+                float:left;
+                padding-top:8px;
+                padding-right:8px;
+                text-align:left;
+                color:#6B6C7E;
+                font-size:12pt;
+                font-weight:bold;
+                max-width: 280px;
+                min-width: 260px;
+                text-align:left;
+            }           
+        </style>
+    </head>
+    <body style='height: 100%; margin: 0;'>
+    	<table align="center" class="fullWidth">
+        	<tr>
+            	<td id="session" colspan="4">
+                      <div class="headReport">Ficha de Inscricao</div>
+                      <div class="headReport" style="font-size:16pt">$inscricao.edicaoEvento.numero - $inscricao.edicaoEvento.evento.sigla</div>
+                </td>
+            </tr>
+            <tr>            	
+            	<td id="session" colspan="4"><div class="sessionTitle">Detalhes Pessoais</div></td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Nome completo: $inscricao.confraternista.pessoa.nome</td>
+                <td class="formFieldTitle">Nome para crachá: $inscricao.confraternista.nomeCracha</td>
+                <td class="formFieldTitle">Dasta Nascimento: $dateUtils.format($inscricao.confraternista.pessoa.dataNascimento.time, "dd/MM/yyyy")</td>
+                <td class="formFieldTitle">Sexo: $inscricao.confraternista.pessoa.sexo.descricao</td>
+            </tr>
+			<tr>
+            	<td class="formFieldTitle">CPF: $!inscricao.confraternista.pessoa.documentos.cpf</td>
+                <td class="formFieldTitle">Identidade: $!inscricao.confraternista.pessoa.documentos.rg</td>                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Rua: $inscricao.confraternista.pessoa.endereco.logradouro</td>
+                <td class="formFieldTitle">Número: $inscricao.confraternista.pessoa.endereco.numero</td>
+                <td class="formFieldTitle">Complemento: $!inscricao.confraternista.pessoa.endereco.complemento</td>
+                <td class="formFieldTitle">Bairro: $inscricao.confraternista.pessoa.endereco.bairro</td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Cidade: $inscricao.confraternista.pessoa.endereco.cidade.nome</td>
+                <td class="formFieldTitle">Estado: $inscricao.confraternista.pessoa.endereco.cidade.estado.nome</td>
+                <td class="formFieldTitle">CEP: $inscricao.confraternista.pessoa.endereco.cep</td>                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">E-mail: $inscricao.confraternista.pessoa.endereco.email</td>
+                <td class="formFieldTitle">Telefone: $inscricao.confraternista.pessoa.endereco.telefone</td>
+                <td class="formFieldTitle">Telefone durante o evento: $inscricao.confraternista.pessoa.endereco.telefoneEvento</td>                
+            </tr>                        
+            <tr>
+            	<td id="session" colspan="4"><div class="sessionTitle">Detalhes sobre Saúde</div></td>                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Medicação: $!inscricao.confraternista.pessoa.informacoesSaude.medicacao</td>                                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Convênio: $!inscricao.confraternista.pessoa.informacoesSaude.convenio</td>
+                <td class="formFieldTitle">Telefone: $!inscricao.confraternista.pessoa.informacoesSaude.convenioTelefone</td>                                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Alergia $!inscricao.confraternista.pessoa.informacoesSaude.alergia</td>
+            </tr>
+            <tr>
+            	<td id="session" colspan="4"><div class="sessionTitle">Detalhes da Instituição Espírita</div></td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle" colspan="2">Nome: $inscricao.confraternista.casaEspirita.nome</td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Rua: $inscricao.confraternista.casaEspirita.endereco.logradouro</td>
+                <td class="formFieldTitle">Número: $inscricao.confraternista.casaEspirita.endereco.numero</td>
+                <td class="formFieldTitle">Complemento: $!inscricao.confraternista.casaEspirita.endereco.complemento</td>
+                <td class="formFieldTitle">Bairro: $inscricao.confraternista.casaEspirita.endereco.bairro</td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Cidade: $inscricao.confraternista.casaEspirita.endereco.cidade.nome</td>
+                <td class="formFieldTitle">Estado: $inscricao.confraternista.casaEspirita.endereco.cidade.estado.nome</td>
+                <td class="formFieldTitle">CEP: $inscricao.confraternista.casaEspirita.endereco.cep</td>                
+            </tr>
+            <tr>
+            	<td class="formFieldTitle" colspan="4">Atividade que participa na Instituição Espírita: $inscricao.confraternista.atividadeCasaEspirita</td>
+            </tr>
+            <tr>
+            	<td id="session" colspan="4"><div class="sessionTitle">Detalhes da Oficina</div></td>
+            </tr>
+            <tr>
+            	<td class="formFieldTitle">Nome da oficina: $inscricao.confraternista.oficina.nome</td>
+            </tr>
+            <tr>
+            	<td id="session" colspan="4"><div class="sessionTitle">Autorização para Menor de Idade</div></td>
+            </tr>
+            <tr>
+            	<td colspan="4">
+                	<div class="autorizacao">
+                    	<div>
+                    	Eu,_____________________________, portador da CI n°_________________________após ler e concordar com as Normas de Ação e Regimento do EMUSE, autorizo o menor supracitado a participar do 5º EMUSE, no período de 29/03/2013 a 31/03/2013, conforme opção de oficina assinalada nesta Ficha de Inscrição.
+                        </div>
+                        <div style="text-align:center;">
+                        <br/>
+                        <br/>
+						_______________________, ___ de ____________ de 2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _____________________________                        
+                        </div>
+                        <div style="text-align:center;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cidade e data)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(assinatura do responsável) 
+                        </div>
+
+
+                    </div>
+                </td>
+            </tr>
+            <tr>
+            	<td id="session" colspan="4"><div class="sessionTitle">Autorização da Instituição Espírita</div></td>
+            </tr>
+            <tr>
+            	<td colspan="4">
+                	<div class="autorizacao">
+                    	<div>
+                    	 Eu, _________________________________________________, declaro que o(a) participante acima identificado(a) freqüenta, as atividades descritas no campo ' Atividade(s) na instituição espírita ' desta Ficha de Inscrição, há pelo menos dois anos, tendo freqüência superior a 70%, portanto, atende aos critérios estabelecidos para participação do EMUSE.
+                         </div>
+                         <div style="text-align:center">
+                         <br/>
+                         <br/>
+                         _______________________, ___ de ____________ de 2013&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_______________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____________________________
+                         </div>
+                         <div style="text-align:center;">
+                          (cidade e data)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(telefone)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(assinatura do responsável) 
+                         </div>
+                    </div>
+                </td>
+            </tr>            
+        </table>                            
+    </body>
+</html>

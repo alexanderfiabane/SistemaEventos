@@ -1,0 +1,14 @@
+<%@ include file="/WEB-INF/includes/jstl.jspf" %>
+
+<footer class="footer footer-fixed-bottom">
+    <div class="footer-inner">
+        <div class="container">
+            <div class="pull-left">
+                <spring:message code="application.name"/> - <spring:message code="application.version"/>
+            </div>
+            <div class="pull-right">
+                <spring:message code="application.copyright.web"/>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* general menuitem styles */
+
+/* esta classe pertence ao bloco clicavel do item */
+.mi {
+    cursor: pointer;
+}
+
+/* esta classe pertence ao bloco que contem o icone */
+.mi .miIcon {
+    opacity: .8;
+}
+
+/* esta classe pertence ao bloco que contem o label */
+.mi .miLabel {
+    color:#6B6C7E;
+    font-size:16px;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0,0,0,.3);
+    text-decoration: none;
+}
+
+/* este é o estilo da imagem do icone em si */
+.mi img {
+    opacity: .8;
+}
+
+/* adiciona os efeitos nos quetro blocos definidos anteriormente */
+.mi, .mi .miIcon, .mi .miLabel, .mi img {
+    -o-transition: all .4s ease-in-out;
+    -ms-transition: all .4s ease-in-out;
+    -moz-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+/* este é o estilo do icone quando ele está desabilitado */
+.miDisabled .miIconDisabled {
+    opacity: .5;
+}
+/* este é o estilo do label quando ele está desabilitado */
+.miDisabled .miLabelDisabled {
+    color: #444;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px rgba(0,0,0,.3);
+    text-decoration: none;
+    opacity: .5;
+}
+/* estilos quando o cursor está sobre o item*/
+.mi:hover {
+    background-color: rgba(0,0,0,.04);
+    border-radius: 6px;
+}
+.mi:hover img,
+.mi:hover .miIcon,
+.mi:hover .miLabel {
+    opacity: 1;
+    color: #F95;
+}

@@ -1,0 +1,231 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html{
+    height:100%;
+    width:100%;
+    min-height: 100%;
+}
+
+body{
+    margin:0;
+    border:0;
+    padding:0;
+    height:100%;
+    width:100%;
+    min-height: 100%;
+    font-family:"Arial Rounded MT Bold";
+}
+
+#divLogin{
+    background-image:url('../img/fundoLogin.png');
+    background-repeat:repeat-y;
+    width: 100%;
+    height:auto;
+    min-height:100%;
+    padding-top:20px;
+}
+
+#divPrincipal{
+    width: 100%;
+    height:auto;
+    min-height:100%;
+}
+
+#divLogoSistemaLogin{
+    margin-top:20px;
+    background-image:url('../img/logoLogin.png');
+    background-repeat:no-repeat;
+    width:215px;
+    height:111px;
+    margin-left:75px;
+    float:left;
+}
+
+#divLogoEvento{
+    margin-top:-20px;
+    background-image:url('../img/imgEvento.png');
+    background-repeat:no-repeat;
+    width:678px;
+    height:212px;
+    margin-left:349px;
+}
+
+#divLogoSistemaMenu{
+    background-image:url('../img/logoSisHeader.png');
+    background-repeat:no-repeat;
+    width:150px;
+    height:78px;
+    float:right;
+    margin-right:20px;
+}
+
+#HeaderBar{
+    margin-top:-97px;
+}
+
+#divHeaderLeft{
+    background-image:url('../img/header.png');
+    background-repeat:no-repeat;
+    margin-top:-98px;
+    min-width:238px;
+    height:148px;
+    float:left;
+    padding-bottom:10px;
+}
+
+#divHeaderLine{
+    background-image:url('../img/headerBar.png');
+    background-repeat:repeat-x;
+    height:24px;
+    margin-left:238px;
+    margin-top:98px;
+}
+
+#HeaderMenu{
+    background-color:#D9E8F2;
+    padding-top:10px;
+}
+
+#Content{
+    width:100%;
+}
+
+#ContentMenu{
+    width:100%;
+    background-color:#F0F3F4;
+    padding-bottom:20px;
+    padding-top:20px;
+    text-align:center;
+}
+
+#Menu{
+    background-color:#D0D2D2;
+    line-height:25px;
+    color:#6B6C6C;
+    font-size:16px;
+}
+
+#divFormLogin{
+    float:left;
+    margin-left:70px;
+    padding-top:25px;
+}
+
+#divNoticias{
+    margin-left:370px;
+    margin-right:35px;
+}
+
+#acessoRestrito{
+    background-image:url('../img/acessoRestrito.png');
+    background-repeat:no-repeat;
+    min-width:241px;
+    height:25px;
+    margin-left:62px;
+}
+
+#Footer{
+    margin-top:40px;
+    margin-left:69px;
+    color:#A2ABB0;
+    font-size:10px;
+}
+
+#FooterMenu{
+    text-align:center;
+    padding-top:20px;
+    color:#A2ABB0;
+    font-size:10px;
+}
+
+#esqueciSenha{
+    float:left;
+    vertical-align:bottom;
+}
+
+#btFormLogin{
+    float:right;
+}
+
+#Avisos{
+    font-size:12px;
+    color:#6B6C6C;
+    padding-top:5px;
+    padding-left:20px;
+}
+
+#divInfoUser{
+    float:left;
+    padding-left:20px;
+}
+
+#btLogout{
+    float:right;
+    padding-right:20px;
+}
+
+a{
+    text-decoration:none;
+}
+
+a:visited{
+    color: none;
+}
+
+.esqueciSenha{
+    color:#6B6E6E;
+    font-size:10px;
+    text-decoration:underline;
+}
+
+.tituloEventoLogin{
+    margin-left:133px;
+    color:#313436;
+    font-size:20px;
+    padding-bottom:3px;
+}
+
+.tituloEventoMenu{
+    float:left;
+    padding-left:15px;
+    color:#313335;
+    font-size:20px;
+}
+
+.temaEventoMenu{
+    float:right;
+    padding-right:15px;
+    padding-top:1px;
+    color:#313335;
+    font-size:16px;
+}
+
+.tituloFieldLogin{
+    font-size:16px;
+    color:#313334;
+    margin-left:-15px;
+    padding-bottom:5px;
+}
+
+.fieldLogin{
+    line-height:25px;
+    padding-left:5px;
+    padding-right:5px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    font-size:14px;
+    color:#313334;
+}
+
+.tituloSessao{
+    padding-left:5px;
+    padding-bottom:1px;
+    border-bottom-width:1px;
+    border-bottom-color:#CECECE;
+    border-bottom-style:solid;
+    min-height:24px;
+    font-size:14px;
+    color:#6B6C6C;
+}
