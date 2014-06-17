@@ -16,6 +16,7 @@ import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.core.model.Usuario.Role;
 import br.msf.commons.util.CalendarUtils;
 import java.util.logging.Level;
+import org.apache.commons.codec.digest.DigestUtils;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -78,16 +79,16 @@ public class UsuarioServiceTest extends AbstractServiceTest {
         }
 
         Usuario usuario = new Usuario();
-        usuario.setUsername("admin");
-        usuario.setPassword("teste01");
+        usuario.setUsername("teste");
+        usuario.setPassword(DigestUtils.sha256Hex("teste01"));
         usuario.setRole(Role.ROLE_ADMIN);
         usuario.setPessoa(pessoaService.findById(PESSOA_ID));
         Long id = usuarioService.save(usuario);
         assertNotNull(id); // salvou com sucesso
 
         try {
-            usuario = (Usuario) usuarioService.loadUserByUsername("admin");
-            assertTrue(usuario != null && "admin".equals(usuario.getUsername()));
+            usuario = (Usuario) usuarioService.loadUserByUsername("teste");
+            assertTrue(usuario != null && "teste".equals(usuario.getUsername()));
         } catch (UsernameNotFoundException e) {
             fail(); // desta vez, deveria encontrar o user salvo anteriormente e nao levantar exceçao!
         }
