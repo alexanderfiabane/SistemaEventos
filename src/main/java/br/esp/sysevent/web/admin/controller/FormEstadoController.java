@@ -7,6 +7,7 @@ import br.esp.sysevent.web.admin.validation.EstadoValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.service.EstadoService;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -57,7 +58,7 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
     @ModelAttribute(COMMAND_NAME)
     public Estado getCommand(@RequestParam(value = "idEstado", required = false) final String idEstado) {
         final Estado estado;
-        if (NumberUtils.isNumber(idEstado)) {
+        if (CharSequenceUtils.isNumber(idEstado)) {
             estado = getCommandService().findById(NumberUtils.parseLong(idEstado));
         } else {
             estado = new Estado();

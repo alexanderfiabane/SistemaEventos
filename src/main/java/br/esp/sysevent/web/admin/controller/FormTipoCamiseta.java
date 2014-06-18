@@ -6,6 +6,7 @@ import br.esp.sysevent.core.model.TipoCamiseta;
 import br.esp.sysevent.core.service.TipoCamisetaService;
 import br.msf.commons.persistence.service.EntityService;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -46,7 +47,7 @@ public class FormTipoCamiseta extends AbstractFormController<Long, TipoCamiseta>
     @ModelAttribute(COMMAND_NAME)
     public TipoCamiseta getCommand(@RequestParam(value = "idTipo", required = false) final String idTipo) {
         final TipoCamiseta command;
-        if (NumberUtils.isNumber(idTipo)) {
+        if (CharSequenceUtils.isNumber(idTipo)) {
             command = tipoCamisetaService.findById(NumberUtils.parseLong(idTipo));
         } else {
             command = new TipoCamiseta();

@@ -10,6 +10,7 @@ import br.esp.sysevent.core.model.Noticia;
 import br.esp.sysevent.core.service.NoticiaService;
 import br.msf.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Calendar;
 import java.util.Collection;
@@ -53,7 +54,7 @@ public class FormNoticiaController extends AbstractFormController<Long, Noticia>
     @ModelAttribute(COMMAND_NAME)
     public Noticia getCommand(@RequestParam(value = "idNoticia", required = false) final String idNoticia) {
         final Noticia noticia;
-        if (NumberUtils.isNumber(idNoticia)) {
+        if (CharSequenceUtils.isNumber(idNoticia)) {
             noticia = noticiaService.findById(NumberUtils.parseLong(idNoticia));
         } else {
             noticia = new Noticia();

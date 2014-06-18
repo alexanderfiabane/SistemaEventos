@@ -26,6 +26,7 @@ import br.esp.sysevent.core.service.NoticiaService;
 import br.esp.sysevent.core.service.OficinaService;
 import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.esp.sysevent.core.service.TipoCamisetaService;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,7 +70,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteEvento.html", method = RequestMethod.GET)
     public String deleteEvento(@RequestParam("idEvento") final String idEvento, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idEvento)) {
+        if (!CharSequenceUtils.isNumber(idEvento)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Evento evento = eventoService.findById(NumberUtils.parseLong(idEvento));
@@ -83,7 +84,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteEdicao.html", method = RequestMethod.GET)
     public String deleteEdicao(@RequestParam("idEdicao") final String idEdicao, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idEdicao)) {
+        if (!CharSequenceUtils.isNumber(idEdicao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
@@ -97,7 +98,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteEstado.html", method = RequestMethod.GET)
     public String deleteEstado(@RequestParam("idEstado") final String idEstado, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idEstado)) {
+        if (!CharSequenceUtils.isNumber(idEstado)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Estado estado = estadoService.findById(NumberUtils.parseLong(idEstado));
@@ -111,7 +112,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteCidade.html", method = RequestMethod.GET)
     public String deleteCidade(@RequestParam("idCidade") final String idCidade, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idCidade)) {
+        if (!CharSequenceUtils.isNumber(idCidade)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Cidade cidade = cidadeService.findById(NumberUtils.parseLong(idCidade));
@@ -125,7 +126,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteNoticia.html", method = RequestMethod.GET)
     public String deleteNoticia(@RequestParam("idNoticia") final String idNoticia, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idNoticia)) {
+        if (!CharSequenceUtils.isNumber(idNoticia)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Noticia noticia = noticiaService.findById(NumberUtils.parseLong(idNoticia));
@@ -139,7 +140,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteTipoCamiseta.html", method = RequestMethod.GET)
     public String deleteTipoCamiseta(@RequestParam("idTipo") final String idTipoCamiseta, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idTipoCamiseta)) {
+        if (!CharSequenceUtils.isNumber(idTipoCamiseta)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final TipoCamiseta tipoCamiseta = tipoCamisetaService.findById(NumberUtils.parseLong(idTipoCamiseta));
@@ -153,7 +154,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteTamanhoCamiseta.html", method = RequestMethod.GET)
     public String deleteTamanhoCamiseta(@RequestParam("idTamanho") final String idTamanhoCamiseta, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idTamanhoCamiseta)) {
+        if (!CharSequenceUtils.isNumber(idTamanhoCamiseta)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final TamanhoCamiseta tamanhoCamiseta = tamanhoCamisetaService.findById(NumberUtils.parseLong(idTamanhoCamiseta));
@@ -167,7 +168,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteCorCamiseta.html", method = RequestMethod.GET)
     public String deleteCorCamiseta(@RequestParam("idCor") final String idCorCamiseta, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idCorCamiseta)) {
+        if (!CharSequenceUtils.isNumber(idCorCamiseta)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final CorCamiseta corCamiseta = corCamisetaService.findById(NumberUtils.parseLong(idCorCamiseta));
@@ -181,7 +182,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteOficina.html", method = RequestMethod.GET)
     public String deleteOficina(@RequestParam("idOficina") final String idOficina, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idOficina)) {
+        if (!CharSequenceUtils.isNumber(idOficina)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Oficina oficina = oficinaService.findById(NumberUtils.parseLong(idOficina));
@@ -195,7 +196,7 @@ public class AdminActionsController {
     
     @RequestMapping(value = "/admin/deleteGrupoIdade.html", method = RequestMethod.GET)
     public String deleteGrupoIdade(@RequestParam("idGrupoIdade") final String idGrupoIdade, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idGrupoIdade)) {
+        if (!CharSequenceUtils.isNumber(idGrupoIdade)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
@@ -209,7 +210,7 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/deleteDormitorio.html", method = RequestMethod.GET)
     public String deleteDormitorio(@RequestParam("idDormitorio") final String idDormitorio, final RedirectAttributes attributes) {
-        if (!NumberUtils.isNumber(idDormitorio)) {
+        if (!CharSequenceUtils.isNumber(idDormitorio)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Dormitorio dormitorio = dormitorioService.findById(NumberUtils.parseLong(idDormitorio));
@@ -224,7 +225,7 @@ public class AdminActionsController {
     @RequestMapping(value = "/admin/alocaDormitorio.html", method = RequestMethod.GET)
     public String alocaConfraternistasDomitorios(@RequestParam("idEdicao") final String idEdicao, final RedirectAttributes attributes) {
 
-        if (!NumberUtils.isNumber(idEdicao)) {
+        if (!CharSequenceUtils.isNumber(idEdicao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));        

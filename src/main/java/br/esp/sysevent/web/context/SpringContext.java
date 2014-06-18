@@ -6,8 +6,6 @@ package br.esp.sysevent.web.context;
 import br.msf.commons.util.LocaleUtils;
 import java.io.IOException;
 import java.sql.Driver;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.hibernate.SessionFactory;
@@ -22,7 +20,6 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -38,7 +35,6 @@ import org.springframework.web.servlet.view.JstlView;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-@EnableWebMvc
 @Configuration
 @EnableTransactionManagement
 public class SpringContext {

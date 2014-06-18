@@ -17,8 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Entity
 @Table(name = "USUARIOS")
-@AttributeOverride(name = "id", column =
-                                @Column(name = "ID_USUARIO"))
+@AttributeOverride(name = "id", column = @Column(name = "ID_USUARIO"))
 /**
  * NOTA!!! Mudei o nome de uns atributos para esta classe ser compatível com o UserDetails do spring-security!
  */

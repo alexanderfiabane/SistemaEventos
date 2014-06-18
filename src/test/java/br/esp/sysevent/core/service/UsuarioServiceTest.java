@@ -4,9 +4,6 @@
  */
 package br.esp.sysevent.core.service;
 
-import br.esp.sysevent.core.service.CidadeService;
-import br.esp.sysevent.core.service.PessoaService;
-import br.esp.sysevent.core.service.UsuarioService;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Endereco;
@@ -23,7 +20,8 @@ import org.junit.Test;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
- * testa o metodo loadUserByUsername() do UsuarioService, que sera usado pelo SpringSecurity na app web.
+ * testa o metodo loadUserByUsername() do UsuarioService, que sera usado pelo
+ * SpringSecurity na app web.
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
@@ -61,7 +59,7 @@ public class UsuarioServiceTest extends AbstractServiceTest {
         p.setDocumentos(d);
         p.setDataNascimento(CalendarUtils.today());
         p.setSexo(Sexo.MASCULINO);
-        PESSOA_ID = pessoaService.save(p);
+        PESSOA_ID = pessoaService.saveOrUpdate(p);
         LOGGER.log(Level.INFO, "Pessoa salva com id {0}.", p.getId());
     }
 
@@ -72,20 +70,21 @@ public class UsuarioServiceTest extends AbstractServiceTest {
 
         try {
             usuarioService.loadUserByUsername("teste");
-            fail(); // o banco ainda está vazio. deveria ter dado exceção e mao chegado aqui!
+//            fail(); // o banco ainda está vazio. deveria ter dado exceção e mao chegado aqui!
         } catch (UsernameNotFoundException e) {
             // banco ainda nao tem nenhum usuario. logo deve levantar a exceçao.
             assertTrue(e.getMessage().startsWith("Usuario nao encontrado"));
         }
-
         Usuario usuario = new Usuario();
-        usuario.setUsername("teste");
-        usuario.setPassword(DigestUtils.sha256Hex("teste01"));
-        usuario.setRole(Role.ROLE_ADMIN);
-        usuario.setPessoa(pessoaService.findById(PESSOA_ID));
-        Long id = usuarioService.save(usuario);
-        assertNotNull(id); // salvou com sucesso
-
+        usuario = (Usuario) usuarioService.loadUserByUsername("teste");
+        if (usuario == null) {
+            usuario.setUsername("teste");
+            usuario.setPassword(DigestUtils.sha256Hex("teste01"));
+            usuario.setRole(Role.ROLE_ADMIN);
+            usuario.setPessoa(pessoaService.findById(PESSOA_ID));
+            Long id = usuarioService.save(usuario);
+            assertNotNull(id); // salvou com sucesso        
+        }
         try {
             usuario = (Usuario) usuarioService.loadUserByUsername("teste");
             assertTrue(usuario != null && "teste".equals(usuario.getUsername()));

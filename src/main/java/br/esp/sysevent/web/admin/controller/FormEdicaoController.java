@@ -4,8 +4,6 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
-import br.esp.sysevent.web.admin.validation.EdicaoValidator;
-import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
@@ -16,13 +14,17 @@ import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.EventoService;
 import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.esp.sysevent.core.service.TipoCamisetaService;
+import br.esp.sysevent.web.admin.validation.EdicaoValidator;
+import br.esp.sysevent.web.controller.AbstractFormController;
 import br.msf.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.msf.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.CollectionUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -70,17 +72,16 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @ModelAttribute(COMMAND_NAME)
     public Edicao getCommand(@RequestParam(value = "idEvento", required = false) final String idEvento,
                              @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
-        final Edicao edicao;
-        if (NumberUtils.isNumber(idEdicao)) {
+        Edicao edicao = new Edicao();
+        if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
             edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        } else if (NumberUtils.isNumber(idEvento)) {
+        } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
             final Evento evento = eventoService.findById(NumberUtils.parseLong(idEvento));
             if (evento == null) {
                 throw new IllegalArgumentException("Evento não encontrado");
-            }
-            edicao = new Edicao();
+            }            
             edicao.setVagasOcupadas(0);
             edicao.setEvento(evento);
         } else {
@@ -121,6 +122,9 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     * @param command
+     * @param model
+     * @return 
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Edicao command, final ModelMap model) {
@@ -131,6 +135,13 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param result
+     * @param model
+     * @param attributes
+     * @param locale
+     * @param status
+     * @return 
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Edicao command,

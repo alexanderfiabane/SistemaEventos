@@ -11,6 +11,7 @@ import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.service.CidadeService;
 import br.esp.sysevent.core.service.EstadoService;
 import br.msf.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -72,11 +73,11 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
     public Cidade getCommand(@RequestParam(value = "idCidade", required = false) final String idCidade,
             @RequestParam(value = "idEstado", required = false) final String idEstado) {
         final Cidade cidade;
-        if (NumberUtils.isNumber(idCidade)) {
+        if (CharSequenceUtils.isNumber(idCidade)) {
             cidade = getCommandService().findById(NumberUtils.parseLong(idCidade));
         } else {
             cidade = new Cidade();
-            if (NumberUtils.isNumber(idEstado)) {
+            if (CharSequenceUtils.isNumber(idEstado)) {
                 // se nao tiver idEstado, o usuario seleciona no combo...
                 cidade.setEstado(estadoService.findById(NumberUtils.parseLong(idEstado)));
             }

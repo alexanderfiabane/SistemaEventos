@@ -11,6 +11,7 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.GrupoIdadeService;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,9 @@ public class FormGrupoIdadeController extends AbstractFormController<Long, Grupo
     public GrupoIdade getCommand(@RequestParam(value = "idGrupoIdade", required = false) final String idGrupoIdade,
                               @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final GrupoIdade grupoIdade;
-        if (NumberUtils.isNumber(idGrupoIdade)) {
+        if (CharSequenceUtils.isNumber(idGrupoIdade)) {
             grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
-        } else if (NumberUtils.isNumber(idEdicao)) {
+        } else if (CharSequenceUtils.isNumber(idEdicao)) {
             final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");

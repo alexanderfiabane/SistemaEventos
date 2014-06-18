@@ -9,6 +9,7 @@ import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.service.EventoService;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -58,7 +59,7 @@ public class FormEventoController extends AbstractFormController<Long, Evento> {
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@RequestParam(value = "idEvento", required = false) final String idEvento, final ModelMap model) {
         final Evento evento;
-        if (NumberUtils.isNumber(idEvento)) {
+        if (CharSequenceUtils.isNumber(idEvento)) {
             evento = eventoService.findById(NumberUtils.parseLong(idEvento));
         } else {
             evento = new Evento();

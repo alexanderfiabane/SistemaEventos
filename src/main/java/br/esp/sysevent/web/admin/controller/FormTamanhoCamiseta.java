@@ -6,6 +6,7 @@ import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.msf.commons.persistence.service.EntityService;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -46,7 +47,7 @@ public class FormTamanhoCamiseta extends AbstractFormController<Long, TamanhoCam
     @ModelAttribute(COMMAND_NAME)
     public TamanhoCamiseta getCommand(@RequestParam(value = "idTamanho", required = false) final String idTamanho) {
         final TamanhoCamiseta command;
-        if (NumberUtils.isNumber(idTamanho)) {
+        if (CharSequenceUtils.isNumber(idTamanho)) {
             command = tamanhoCamisetaService.findById(NumberUtils.parseLong(idTamanho));
         } else {
             command = new TamanhoCamiseta();

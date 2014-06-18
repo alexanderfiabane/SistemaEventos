@@ -6,6 +6,7 @@ import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.service.CorCamisetaService;
 import br.msf.commons.persistence.service.EntityService;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -46,7 +47,7 @@ public class FormCorCamiseta extends AbstractFormController<Long, CorCamiseta> {
     @ModelAttribute(COMMAND_NAME)
     public CorCamiseta getCommand(@RequestParam(value = "idCor", required = false) final String idCor) {
         final CorCamiseta command;
-        if (NumberUtils.isNumber(idCor)) {
+        if (CharSequenceUtils.isNumber(idCor)) {
             command = corCamisetaService.findById(NumberUtils.parseLong(idCor));
         } else {
             command = new CorCamiseta();

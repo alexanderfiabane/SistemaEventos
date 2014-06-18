@@ -10,6 +10,7 @@ import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.OficinaService;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,9 @@ public class FormOficinaController extends AbstractFormController<Long, Oficina>
     public Oficina getCommand(@RequestParam(value = "idOficina", required = false) final String idOficina,
                               @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Oficina oficina;
-        if (NumberUtils.isNumber(idOficina)) {
+        if (CharSequenceUtils.isNumber(idOficina)) {
             oficina = oficinaService.findById(NumberUtils.parseLong(idOficina));
-        } else if (NumberUtils.isNumber(idEdicao)) {
+        } else if (CharSequenceUtils.isNumber(idEdicao)) {
             final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");

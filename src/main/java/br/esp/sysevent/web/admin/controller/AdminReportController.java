@@ -15,6 +15,7 @@ import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.EventoService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.ReportService;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.io.InputStream;
 import java.util.Collection;
@@ -201,7 +202,7 @@ public class AdminReportController {
 
     @RequestMapping(value = "/admin/relatorio/listEdicao.html", method = RequestMethod.GET)
     public String listEdicao(@RequestParam(value = "idEvento", required = false) final String idEvento, final ModelMap model) {
-        if (!NumberUtils.isNumber(idEvento)) {
+        if (!CharSequenceUtils.isNumber(idEvento)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Evento evento = eventoService.findById(NumberUtils.parseLong(idEvento));
@@ -215,7 +216,7 @@ public class AdminReportController {
     }
 
     protected Inscricao getInscricao(final String idInscricao) throws IllegalArgumentException, IllegalAccessException {
-        if (!NumberUtils.isNumber(idInscricao)) {
+        if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));

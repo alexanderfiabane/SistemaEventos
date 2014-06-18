@@ -14,6 +14,7 @@ import br.esp.sysevent.core.service.DormitorioService;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.msf.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.msf.commons.persistence.springframework.validation.Validator;
+import br.msf.commons.util.CharSequenceUtils;
 import br.msf.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
@@ -61,9 +62,9 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
     public Dormitorio getCommand(@RequestParam(value = "idDormitorio", required = false) final String idDormitorio,
             @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Dormitorio dormitorio;
-        if (NumberUtils.isNumber(idDormitorio)) {
+        if (CharSequenceUtils.isNumber(idDormitorio)) {
             dormitorio = dormitorioService.findById(NumberUtils.parseLong(idDormitorio));
-        } else if (NumberUtils.isNumber(idEdicao)) {
+        } else if (CharSequenceUtils.isNumber(idEdicao)) {
             final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");
