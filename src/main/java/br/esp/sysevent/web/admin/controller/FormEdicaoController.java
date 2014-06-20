@@ -82,7 +82,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             if (evento == null) {
                 throw new IllegalArgumentException("Evento não encontrado");
             }            
-            edicao.setVagasOcupadas(0);
+            edicao.setVagasOcupadas(0);            
             edicao.setEvento(evento);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
@@ -114,6 +114,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
         // TODO : Não ta fazendo o bind do Calendar.
+        //binder.registerCustomEditor(Period.class, new CustomCalendarEditor(getDateFormat(locale), true));        
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaService));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaService));

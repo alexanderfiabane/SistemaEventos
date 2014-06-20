@@ -7,8 +7,8 @@ package br.esp.sysevent.web.admin.validation;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.service.EdicaoService;
+import br.msf.commons.persistence.model.PersistentPeriod;
 import br.msf.commons.persistence.springframework.validation.AbstractValidator;
-import br.msf.commons.temporal.Period;
 import br.msf.commons.util.CharSequenceUtils;
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
@@ -75,7 +75,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         }
     }
 
-    private void validatePeriodoInscricao(Period periodoInscricao, Errors errors) {
+    private void validatePeriodoInscricao(PersistentPeriod periodoInscricao, Errors errors) {
         if (periodoInscricao == null) {
             // período de inscrição obrigatório
             errors.rejectValue("periodoInscricao", "errors.required");

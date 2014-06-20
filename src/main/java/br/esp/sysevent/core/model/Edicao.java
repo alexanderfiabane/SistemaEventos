@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.model;
 
 import br.msf.commons.persistence.model.AbstractEntity;
-import br.msf.commons.temporal.Period;
+import br.msf.commons.persistence.model.PersistentPeriod;
 import br.msf.commons.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -41,11 +41,11 @@ public class Edicao extends AbstractEntity<Long> {
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "start", column =
-                @Column(name = "DATA_INI")),
+                @Column(name = "DATA_INSCRICAO_INI")),
         @AttributeOverride(name = "end", column =
-                @Column(name = "DATA_FIM"))
+                @Column(name = "DATA_INSCRICAO_FIM"))
     })
-    private Period periodoInscricao;
+    private PersistentPeriod periodoInscricao;
     @Column(name = "DATA_EDICAO", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar data;
@@ -107,11 +107,11 @@ public class Edicao extends AbstractEntity<Long> {
         this.vagasOcupadas = vagasOcupadas;
     }
 
-    public Period getPeriodoInscricao() {
+    public PersistentPeriod getPeriodoInscricao() {
         return periodoInscricao;
     }
 
-    public void setPeriodoInscricao(final Period periodoInscricao) {
+    public void setPeriodoInscricao(final PersistentPeriod periodoInscricao) {
         this.periodoInscricao = periodoInscricao;
     }
 
@@ -232,15 +232,15 @@ public class Edicao extends AbstractEntity<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + (this.tema != null ? this.tema.hashCode() : 0);
-        hash = 71 * hash + (this.periodoInscricao != null ? this.periodoInscricao.hashCode() : 0);
-        hash = 71 * hash + (this.evento != null ? this.evento.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + (this.evento != null ? this.evento.hashCode() : 0);
+        hash = 37 * hash + (this.tema != null ? this.tema.hashCode() : 0);
+        hash = 37 * hash + (this.periodoInscricao != null ? this.periodoInscricao.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -248,17 +248,17 @@ public class Edicao extends AbstractEntity<Long> {
             return false;
         }
         final Edicao other = (Edicao) obj;
+        if (this.evento != other.evento && (this.evento == null || !this.evento.equals(other.evento))) {
+            return false;
+        }
         if ((this.tema == null) ? (other.tema != null) : !this.tema.equals(other.tema)) {
             return false;
         }
         if (this.periodoInscricao != other.periodoInscricao && (this.periodoInscricao == null || !this.periodoInscricao.equals(other.periodoInscricao))) {
             return false;
         }
-        if (this.evento != other.evento && (this.evento == null || !this.evento.equals(other.evento))) {
-            return false;
-        }
         return true;
-    }
+    }    
 
     public enum Tipo {
 

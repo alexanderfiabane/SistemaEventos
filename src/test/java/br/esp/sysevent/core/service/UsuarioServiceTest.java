@@ -63,28 +63,25 @@ public class UsuarioServiceTest extends AbstractServiceTest {
         LOGGER.log(Level.INFO, "Pessoa salva com id {0}.", p.getId());
     }
 
-    @Test
+    //@Test
     public void testLoadUserByUsername() {
         final UsuarioService usuarioService = getService(UsuarioService.class);
         final PessoaService pessoaService = getService(PessoaService.class);
 
         try {
             usuarioService.loadUserByUsername("teste");
-//            fail(); // o banco ainda está vazio. deveria ter dado exceção e mao chegado aqui!
+            //fail(); // o banco ainda está vazio. deveria ter dado exceção e não chegado aqui!
         } catch (UsernameNotFoundException e) {
             // banco ainda nao tem nenhum usuario. logo deve levantar a exceçao.
             assertTrue(e.getMessage().startsWith("Usuario nao encontrado"));
         }
         Usuario usuario = new Usuario();
-        usuario = (Usuario) usuarioService.loadUserByUsername("teste");
-        if (usuario == null) {
-            usuario.setUsername("teste");
-            usuario.setPassword(DigestUtils.sha256Hex("teste01"));
-            usuario.setRole(Role.ROLE_ADMIN);
-            usuario.setPessoa(pessoaService.findById(PESSOA_ID));
-            Long id = usuarioService.save(usuario);
-            assertNotNull(id); // salvou com sucesso        
-        }
+        usuario.setUsername("teste");
+        usuario.setPassword(DigestUtils.sha256Hex("teste01"));
+        usuario.setRole(Role.ROLE_ADMIN);
+        usuario.setPessoa(pessoaService.findById(PESSOA_ID));
+        Long id = usuarioService.save(usuario);
+        assertNotNull(id); // salvou com sucesso   
         try {
             usuario = (Usuario) usuarioService.loadUserByUsername("teste");
             assertTrue(usuario != null && "teste".equals(usuario.getUsername()));
