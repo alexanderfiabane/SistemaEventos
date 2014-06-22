@@ -6,7 +6,7 @@ package br.esp.sysevent.web.admin.controller;
 
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.service.EdicaoService;
-import br.msf.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

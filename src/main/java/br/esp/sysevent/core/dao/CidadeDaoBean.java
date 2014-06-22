@@ -5,7 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
-import br.msf.commons.persistence.dao.AbstractEntityDaoBean;
+import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;

@@ -8,7 +8,7 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.ReportService;
-import br.msf.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.NumberUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;

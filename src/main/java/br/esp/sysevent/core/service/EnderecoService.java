@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Endereco;
-import br.msf.commons.persistence.service.EntityService;
+import br.ojimarcius.commons.persistence.service.EntityService;
 
 /**
  *

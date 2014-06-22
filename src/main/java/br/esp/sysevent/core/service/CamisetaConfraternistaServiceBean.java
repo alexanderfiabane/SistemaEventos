@@ -7,7 +7,7 @@ import br.esp.sysevent.core.dao.CamisetaConfraternistaDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
-import br.msf.commons.persistence.service.AbstractEntityServiceBean;
+import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;

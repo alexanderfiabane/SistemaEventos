@@ -6,7 +6,7 @@ package br.esp.sysevent.core.dao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
-import br.msf.commons.persistence.dao.EntityDao;
+import br.ojimarcius.commons.persistence.dao.EntityDao;
 import java.util.Collection;
 
 /**

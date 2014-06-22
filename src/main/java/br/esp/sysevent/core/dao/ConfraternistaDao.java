@@ -5,7 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
-import br.msf.commons.persistence.dao.EntityDao;
+import br.ojimarcius.commons.persistence.dao.EntityDao;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;

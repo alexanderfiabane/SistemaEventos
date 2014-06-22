@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Oficina;
-import br.msf.commons.persistence.dao.AbstractEntityDaoBean;
+import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;

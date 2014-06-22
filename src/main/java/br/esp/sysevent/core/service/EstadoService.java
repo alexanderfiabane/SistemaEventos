@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Estado;
-import br.msf.commons.persistence.service.EntityService;
+import br.ojimarcius.commons.persistence.service.EntityService;
 import java.util.ArrayList;
 import java.util.Collection;
 

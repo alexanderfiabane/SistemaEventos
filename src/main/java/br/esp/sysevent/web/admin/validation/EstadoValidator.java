@@ -5,8 +5,8 @@ package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.service.EstadoService;
-import br.msf.commons.persistence.springframework.validation.AbstractValidator;
-import br.msf.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

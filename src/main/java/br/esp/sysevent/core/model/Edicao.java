@@ -3,9 +3,9 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.msf.commons.persistence.model.AbstractEntity;
-import br.msf.commons.persistence.model.PersistentPeriod;
-import br.msf.commons.util.CollectionUtils;
+import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import br.ojimarcius.commons.persistence.model.PersistentPeriod;
+import br.ojimarcius.commons.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;

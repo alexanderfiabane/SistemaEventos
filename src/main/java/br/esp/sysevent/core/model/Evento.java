@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.msf.commons.persistence.model.AbstractEntity;
+import br.ojimarcius.commons.persistence.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;

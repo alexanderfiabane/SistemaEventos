@@ -8,7 +8,7 @@ import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.msf.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;

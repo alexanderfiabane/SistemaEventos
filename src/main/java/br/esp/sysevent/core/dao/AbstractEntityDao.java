@@ -3,9 +3,9 @@
  */
 package br.esp.sysevent.core.dao;
 
-import br.msf.commons.persistence.dao.AbstractEntityDaoBean;
-import br.msf.commons.persistence.dao.EntityDao;
-import br.msf.commons.persistence.model.Entity;
+import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import br.ojimarcius.commons.persistence.dao.EntityDao;
+import br.ojimarcius.commons.persistence.model.Entity;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;

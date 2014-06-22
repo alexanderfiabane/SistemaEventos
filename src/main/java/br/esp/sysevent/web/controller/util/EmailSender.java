@@ -3,9 +3,9 @@
  */
 package br.esp.sysevent.web.controller.util;
 
-import br.msf.commons.mail.Email;
-import br.msf.commons.util.ArrayUtils;
-import br.msf.commons.util.DateUtils;
+import br.ojimarcius.commons.mail.Email;
+import br.ojimarcius.commons.util.ArrayUtils;
+import br.ojimarcius.commons.util.DateUtils;
 import java.util.Map;
 import java.util.Properties;
 import javax.mail.Authenticator;

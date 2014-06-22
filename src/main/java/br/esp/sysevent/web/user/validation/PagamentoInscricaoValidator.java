@@ -4,8 +4,8 @@
 package br.esp.sysevent.web.user.validation;
 
 import br.esp.sysevent.core.model.PagamentoInscricao;
-import br.msf.commons.persistence.springframework.validation.AbstractValidator;
-import br.msf.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 

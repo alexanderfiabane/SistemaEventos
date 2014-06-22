@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.msf.commons.persistence.model.AbstractEntity;
+import br.ojimarcius.commons.persistence.model.AbstractEntity;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import javax.persistence.AttributeOverride;

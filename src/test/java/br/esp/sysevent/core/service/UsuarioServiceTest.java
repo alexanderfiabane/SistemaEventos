@@ -11,7 +11,7 @@ import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.core.model.Usuario.Role;
-import br.msf.commons.util.CalendarUtils;
+import br.ojimarcius.commons.util.CalendarUtils;
 import java.util.logging.Level;
 import org.apache.commons.codec.digest.DigestUtils;
 import static org.junit.Assert.*;

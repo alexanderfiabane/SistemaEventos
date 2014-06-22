@@ -8,7 +8,7 @@ import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.service.CidadeService;
 import br.esp.sysevent.core.service.EstadoService;
-import br.msf.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.NumberUtils;
 import java.util.Collection;
 
 /**

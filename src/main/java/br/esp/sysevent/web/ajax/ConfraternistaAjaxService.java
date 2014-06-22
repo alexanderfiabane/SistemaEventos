@@ -5,8 +5,8 @@ package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.service.ConfraternistaService;
-import br.msf.commons.util.NumberUtils;
-import br.msf.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.util.Collection;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;

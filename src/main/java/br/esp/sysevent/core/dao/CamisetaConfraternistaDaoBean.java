@@ -7,7 +7,7 @@ import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
-import br.msf.commons.persistence.dao.AbstractEntityDaoBean;
+import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;

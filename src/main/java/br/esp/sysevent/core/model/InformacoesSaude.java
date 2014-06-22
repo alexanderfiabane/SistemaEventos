@@ -4,8 +4,8 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.msf.commons.persistence.model.AbstractEntity;
-import br.msf.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;

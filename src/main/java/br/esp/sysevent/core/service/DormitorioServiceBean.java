@@ -8,7 +8,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
-import br.msf.commons.persistence.service.AbstractEntityServiceBean;
+import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

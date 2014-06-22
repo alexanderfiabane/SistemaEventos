@@ -6,7 +6,7 @@ package br.esp.sysevent.core.service;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Usuario;
-import br.msf.commons.persistence.service.AbstractEntityServiceBean;
+import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Calendar;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;

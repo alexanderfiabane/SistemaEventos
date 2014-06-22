@@ -6,8 +6,8 @@ package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.dao.NoticiaDao;
 import br.esp.sysevent.core.model.Noticia;
-import br.msf.commons.persistence.service.AbstractEntityServiceBean;
-import br.msf.commons.util.CalendarUtils;
+import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
+import br.ojimarcius.commons.util.CalendarUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;

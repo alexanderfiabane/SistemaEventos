@@ -1,13 +1,11 @@
 package br.esp.sysevent.core.service;
 
-import br.esp.sysevent.core.service.CidadeService;
-import br.esp.sysevent.core.service.PessoaService;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
-import br.msf.commons.util.CalendarUtils;
+import br.ojimarcius.commons.util.CalendarUtils;
 import java.util.Collection;
 import java.util.logging.Level;
 import org.junit.BeforeClass;

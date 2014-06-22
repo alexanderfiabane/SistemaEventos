@@ -6,8 +6,8 @@ package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.service.DormitorioService;
-import br.msf.commons.util.NumberUtils;
-import br.msf.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.util.NumberUtils;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

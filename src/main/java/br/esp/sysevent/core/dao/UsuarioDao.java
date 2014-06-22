@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Usuario;
-import br.msf.commons.persistence.dao.EntityDao;
+import br.ojimarcius.commons.persistence.dao.EntityDao;
 
 /**
  *

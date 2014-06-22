@@ -1,7 +1,7 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.TamanhoCamiseta;
-import br.msf.commons.persistence.service.EntityService;
+import br.ojimarcius.commons.persistence.service.EntityService;
 
 public interface TamanhoCamisetaService extends EntityService<Long, TamanhoCamiseta> {
 

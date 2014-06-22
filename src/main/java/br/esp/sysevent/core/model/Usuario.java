@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.msf.commons.persistence.model.AbstractEntity;
+import br.ojimarcius.commons.persistence.model.AbstractEntity;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.*;
