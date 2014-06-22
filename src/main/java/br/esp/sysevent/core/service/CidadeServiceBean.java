@@ -103,7 +103,7 @@ public class CidadeServiceBean extends AbstractEntityServiceBean<Long, Cidade> i
             final Collection<Cidade> cidades = new ArrayList<Cidade>();
             Collection<Estado> estados = estadoService.findAll();
             for (Estado estado : estados) {
-                Resource res = new ClassPathResource("/br/msf/commons/persistence/data/Cities_BR_" + estado.getSigla() + ".txt");
+                Resource res = new ClassPathResource("/br/ojimarcius/commons/persistence/data/Cities_BR_" + estado.getSigla() + ".txt");
                 if (!res.exists()) {
                     continue; // se nao existir arquivo para este estado, passamos para o prox
                 }

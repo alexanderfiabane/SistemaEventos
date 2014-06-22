@@ -33,12 +33,12 @@
     <dependencies>
         <!--Commons (Oji Marcius)-->
         <dependency>
-            <groupId>br.msf.commons</groupId>
+            <groupId>br.ojimarcius.commons</groupId>
             <artifactId>commons-persistence</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>br.msf.commons</groupId>
+            <groupId>br.ojimarcius.commons</groupId>
             <artifactId>commons-tags</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>      
