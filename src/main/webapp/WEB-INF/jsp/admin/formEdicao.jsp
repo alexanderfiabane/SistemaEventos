@@ -121,10 +121,10 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu alignLeft dropup-menu">
-                    <c:if test="${edicao.faixaEtaria or edicao.oficinaFaixaEtaria}">
+                    <c:if test="${edicao.faixaEtaria}">
                         <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
                         </c:if>
-                        <c:if test="${edicao.oficina or edicao.oficinaFaixaEtaria}">
+                        <c:if test="${edicao.oficina}">
                         <li><a href="${oficina_url}">Oficinas</a></li>
                         </c:if>
                     <li><a href="${dormitorio_url}">Dormitórios</a></li>

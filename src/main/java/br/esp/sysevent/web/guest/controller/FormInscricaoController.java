@@ -31,6 +31,7 @@ import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.esp.sysevent.core.service.TipoCamisetaService;
 import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -91,7 +92,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     @ModelAttribute(COMMAND_NAME)
     public Inscricao getCommand(@RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Inscricao command;
-        if (NumberUtils.isNumber(idEdicao)) {
+        if (CharSequenceUtils.isNumber(idEdicao)) {
             final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");

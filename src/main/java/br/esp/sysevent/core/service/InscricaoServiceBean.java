@@ -201,14 +201,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
                 }
             } else if (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA)) {
                 insereGrupoIdade(confraternista);
-            } else if (tipoEdicao.equals(Edicao.Tipo.OFICINA_FAIXA_ETARIA)) {
-                final Oficina oficina = confraternista.getOficina();
-                if (oficina != null) {
-                    oficina.ocupaVaga();
-                    oficinaService.saveOrUpdate(oficina);
-                }
-                insereGrupoIdade(confraternista);
-            }
+            } 
             edicao.ocupaVaga();
             edicaoService.saveOrUpdate(edicao);
         }
@@ -242,7 +235,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Calendar dataNascimentoAtual = inscricaoAtual.getConfraternista().getPessoa().getDataNascimento();
         final GrupoIdade grupoIdadeAtual = inscricaoAtual.getConfraternista().getGrupoIdade();
         final Edicao.Tipo tipoEdicao = inscricao.getEdicaoEvento().getTipo();
-        if ((grupoIdadeAtual != null) && (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA) || tipoEdicao.equals(Edicao.Tipo.OFICINA_FAIXA_ETARIA))) {
+        if ((grupoIdadeAtual != null) && (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA))) {
             if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)) {
                 grupoIdadeAtual.desocupaVaga();
                 grupoIdadeService.saveOrUpdate(grupoIdadeAtual);
@@ -284,7 +277,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdade(idadeConfraternista.intValue());
         if (gruposIdade != null) {
             for (GrupoIdade grupoIdade : gruposIdade) {
-                if (grupoIdade.getSaldoVagas() > 0) {
+                if (grupoIdade.getSaldoVagas() > 0 && confraternista.getGrupoIdade() == null) {                    
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
                     confraternista.setGrupoIdade(grupoIdade);

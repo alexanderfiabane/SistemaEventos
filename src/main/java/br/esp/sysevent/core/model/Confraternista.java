@@ -154,11 +154,12 @@ public class Confraternista extends AbstractEntity<Long> {
 
     public enum Tipo {
 
-        CONFRATERNISTA("Confraternista"),
         AUXILIAR("Auxiliar"),
-        OFICINEIRO("Oficineiro"),
+        COORDENADOR("Coordenador"),
+        CONFRATERNISTA("Confraternista"),
+        EVANGELIZADOR("Evangelizador"),
         FACILITADOR("Facilitador"),
-        COORDENADOR("Coordenador");
+        OFICINEIRO("Oficineiro");
         private final String descricao;
 
         private Tipo(final String descricao) {

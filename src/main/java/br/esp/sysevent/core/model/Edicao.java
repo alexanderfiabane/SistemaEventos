@@ -224,11 +224,7 @@ public class Edicao extends AbstractEntity<Long> {
 
     public boolean isOficina() {
         return Tipo.OFICINA.equals(getTipo());
-    }
-
-    public boolean isOficinaFaixaEtaria() {
-        return Tipo.OFICINA_FAIXA_ETARIA.equals(getTipo());
-    }
+    }   
 
     @Override
     public int hashCode() {
@@ -264,8 +260,7 @@ public class Edicao extends AbstractEntity<Long> {
 
         CONGRESSO("Congresso"),
         FAIXA_ETARIA("Faixa Etária"),
-        OFICINA("Oficina"),
-        OFICINA_FAIXA_ETARIA("Oficina e Faixa Etária");
+        OFICINA("Oficina");        
         private final String descricao;
 
         private Tipo(final String descricao) {

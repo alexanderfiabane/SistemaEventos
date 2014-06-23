@@ -43,11 +43,11 @@
                 <fieldset>
                     <legend><msf:message key="label.eventdetails"/></legend>
                     <div class="row-fluid">
-                        <div class="span6">
+                        <div class="span12">
                             <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                             <c:forEach var="item" items="${tiposConfraternista}">
-                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio inline" breakAfter="false">
-                                    <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                    <form:radiobutton path="confraternista.tipo" value="${item.name}"/>                                    
                                 </msf:label>
                             </c:forEach>
                         </div>

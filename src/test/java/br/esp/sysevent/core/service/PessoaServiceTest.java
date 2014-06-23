@@ -18,13 +18,13 @@ import org.junit.Test;
  */
 public class PessoaServiceTest extends AbstractServiceTest {
 
-    @BeforeClass
+    //@BeforeClass
     public static void preparaDados() {
         fillEstados(); // popula a tabela de estados com dados de testes
         fillCidades(); // popula a tabela de cidades com dados de testes
     }
 
-    @Test
+    //@Test
     public void testSave() {
         final CidadeService cidadeService = getService(CidadeService.class);
         final PessoaService pessoaService = getService(PessoaService.class);

@@ -29,7 +29,7 @@ public class UsuarioServiceTest extends AbstractServiceTest {
 
     private static Long PESSOA_ID;
 
-    @BeforeClass
+    //@BeforeClass
     public static void preparaDados() {
         fillEstados(); // popula a tabela de estados com dados de testes
         fillCidades(); // popula a tabela de cidades com dados de testes
