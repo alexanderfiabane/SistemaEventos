@@ -119,7 +119,9 @@ public class Confraternista extends AbstractEntity<Long> {
     public boolean isOcupaVaga() {
         switch (tipo) {
             case CONFRATERNISTA:
-            //case AUXILIAR:
+            case EVANGELIZADOR:
+            case COORDENADOR:
+            case FACILITADOR:
                 return true;
             default:
                 return false;

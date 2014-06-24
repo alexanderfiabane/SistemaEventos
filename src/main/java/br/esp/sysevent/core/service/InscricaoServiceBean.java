@@ -189,7 +189,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
     }
 
     protected void ocupaVaga(final Inscricao inscricao) {
-        final Edicao edicao = inscricao.getEdicaoEvento();
+        final Edicao edicao = edicaoService.findById(inscricao.getEdicaoEvento().getId());
         final Edicao.Tipo tipoEdicao = edicao.getTipo();
         final Confraternista confraternista = inscricao.getConfraternista();
         if (confraternista.isOcupaVaga()) {
@@ -272,6 +272,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
     }
 
     //TODO: Ver maneira de obrigar admin a cadastrar os grupos
+    //TODO: Inserir tipo em grupoIdade e inserir considerando por tipo
     protected void insereGrupoIdade(Confraternista confraternista) {
         Integer idadeConfraternista = diferencaDatas(CalendarUtils.now(), confraternista.getPessoa().getDataNascimento());
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdade(idadeConfraternista.intValue());
