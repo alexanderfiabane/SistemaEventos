@@ -81,8 +81,9 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
             errors.rejectValue("confraternista.nomeCracha", "errors.required");
         }
         validatePessoa(confraternista.getPessoa(), errors);
+        validaIdade(inscricao, errors);
         validateOficina(inscricao, errors);
-        validateCasaEspirita(confraternista.getCasaEspirita(), errors);
+        validateCasaEspirita(confraternista.getCasaEspirita(), errors);        
     }
 
     protected void validatePessoa(Pessoa pessoa, Errors errors) {
@@ -96,12 +97,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         }
         if (pessoa.getDataNascimento() == null) {
             errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.required");
-        } 
-//        if (pessoa.getDataNascimento() == null) {
-//            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.required");
-//        } else if (validaIdade(pessoa.getDataNascimento()) < 16) {
-//            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
-//        }
+        }        
         validateDocumentos(pessoa.getDocumentos(), errors);
         validateEndereco(pessoa.getEndereco(), errors, "confraternista.pessoa.endereco", true);
     }
@@ -250,29 +246,26 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
     }
 
     //TODO: Novamente idade fixa para 16 anos.
-    protected Integer validaIdade(Calendar dataNascimento){
+    protected void validaIdade(Inscricao inscricao, Errors errors){
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date dataEvento = null;
-        try {
-            dataEvento = df.parse("29/03/2013");
-        } catch (ParseException ex) {
-            Logger.getLogger(InscricaoValidator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(dataEvento);
-
+        Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
+        Calendar dataEvento = inscricao.getEdicaoEvento().getData();
+        Integer idadeMinima = inscricao.getEdicaoEvento().getIdadeMinima();
+        
         int year1 = dataNascimento.get(Calendar.YEAR);
-        int year2 = cal2.get(Calendar.YEAR);
+        int year2 = dataEvento.get(Calendar.YEAR);
         int month1 = dataNascimento.get(Calendar.MONTH);
-        int month2 = cal2.get(Calendar.MONTH);
+        int month2 = dataEvento.get(Calendar.MONTH);
         int day1 = dataNascimento.get(Calendar.DAY_OF_MONTH);
-        int day2 = cal2.get(Calendar.DAY_OF_MONTH);
+        int day2 = dataEvento.get(Calendar.DAY_OF_MONTH);
         int idade = year2 - year1;
         if ((month2 < month1)
                 || ((month2 == month1) && (day2 < day1))) {
             idade -= 1;
         }
-        return idade;
+        if(idade < idadeMinima){
+            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
+        }
     }
 }

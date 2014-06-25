@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -38,6 +40,9 @@ public class GrupoIdade extends AbstractEntity<Long>{
     private Integer idadeMinima;
     @Column(name = "IDADE_MAX", nullable = false)
     private Integer idadeMaxima;
+    @Column(name = "TIPO", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Confraternista.Tipo tipo;
     @OneToMany(mappedBy = "grupoIdade")
     @Where(clause = "tipo = 'FACILITADOR'")
     private Set<Confraternista> facilitadores;
@@ -73,6 +78,14 @@ public class GrupoIdade extends AbstractEntity<Long>{
     public void setEdicaoEvento(Edicao edicaoEvento) {
         this.edicaoEvento = edicaoEvento;
     }
+
+    public Confraternista.Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Confraternista.Tipo tipo) {
+        this.tipo = tipo;
+    }   
 
     public Set<Confraternista> getFacilitadores() {
         return facilitadores;

@@ -20,11 +20,16 @@
 <form:form commandName="command">
     <div class="row-fluid">
         <div class="span3">
+            <bs:formField label="label.grouptype" isLabelKey="true" isMandatory="true" path="tipo" type="select" itens="${tiposGrupoIdade}" itemLabel="descricao" selectNullItemLabel="Selecione o tipo do grupo"/>            
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
             <bs:formField label="label.groupagename" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
         </div>
         <div class="span3">
             <bs:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
-        </div>
+        </div>        
     </div>
     <div class="row-fluid">
         <div class="span3">
@@ -45,7 +50,8 @@
             <button  type="button" class="btn btn-mini" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
             <button  type="button" class="btn btn-mini" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
             </display:column>
-            <display:column titleKey="label.name" property="nome" class="centered" headerClass="centered"/>
+            <display:column titleKey="label.name" property="nome" class="left" headerClass="centered"/>
+            <display:column titleKey="label.type" property="tipo" class="left" headerClass="centered"/>
             <display:column titleKey="label.vacancies" property="vagas" class="centered" headerClass="centered"/>
             <display:column titleKey="label.minage" property="idadeMinima" class="centered" headerClass="centered"/>
             <display:column titleKey="label.maxage" property="idadeMaxima" class="centered" headerClass="centered"/>

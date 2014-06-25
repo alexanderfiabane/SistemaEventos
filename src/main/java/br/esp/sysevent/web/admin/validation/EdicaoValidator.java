@@ -35,6 +35,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateValorInscricao(edicao.getValorInscricao(), errors); // valida o valor da inscrição
         validateVagas(edicao.getVagas(), errors); // valida o número de vagas da edição
         validatePeriodoInscricao(edicao.getPeriodoInscricao(), errors); // valida o perído de inscrição
+        validateIdadeMinima(edicao.getIdadeMinima(), errors);
     }
 
     private void validateEvento(Evento evento, Errors errors) {
@@ -91,6 +92,12 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
                     errors.rejectValue("periodoInscricao", "errors.invalid");
             }
+        }
+    }
+
+    private void validateIdadeMinima(Integer idadeMinima, Errors errors) {
+        if (idadeMinima == null){
+            errors.rejectValue("idadeMinima", "errors.invalid");
         }
     }
 }

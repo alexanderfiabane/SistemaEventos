@@ -48,6 +48,9 @@
                     <div class="span3">
                         <bs:formField label="label.subscriptionDate" isLabelKey="true" isMandatory="true" type="date" path="data" maxlength="10"/>
                     </div>
+                    <div class="span3">
+                        <bs:formField label="label.subscriptionminage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3"/>
+                    </div>
                 </div>            
                 <div class="row-fluid">
                     <div class="span6">
@@ -140,7 +143,8 @@
         </display:column>
         <display:column titleKey="label.subscriptionDate" media="html" class="centered" headerClass="centered">
             <msf:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
-        </display:column>        
+        </display:column>
+        <display:column titleKey="label.subscriptionminage" property="idadeMinima" class="centered" headerClass="centered"/>
     </display:table>
 </div>
 <script type="text/javascript">

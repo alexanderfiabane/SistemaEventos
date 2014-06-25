@@ -49,6 +49,8 @@ public class Edicao extends AbstractEntity<Long> {
     @Column(name = "DATA_EDICAO", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar data;
+    @Column(name = "IDADE_MINIMA", nullable = false)
+    private Integer idadeMinima;
     @Column(name = "TIPO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
@@ -122,6 +124,14 @@ public class Edicao extends AbstractEntity<Long> {
     public void setData(Calendar data) {
         this.data = data;
     }
+
+    public Integer getIdadeMinima() {
+        return idadeMinima;
+    }
+
+    public void setIdadeMinima(Integer idadeMinima) {
+        this.idadeMinima = idadeMinima;
+    }    
 
     public Tipo getTipo() {
         return tipo;

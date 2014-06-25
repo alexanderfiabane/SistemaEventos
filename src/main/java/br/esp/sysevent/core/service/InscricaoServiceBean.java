@@ -278,7 +278,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdade(idadeConfraternista.intValue());
         if (gruposIdade != null) {
             for (GrupoIdade grupoIdade : gruposIdade) {
-                if (grupoIdade.getSaldoVagas() > 0 && confraternista.getGrupoIdade() == null) {                    
+                if (grupoIdade.getSaldoVagas() > 0 && confraternista.getGrupoIdade() == null && grupoIdade.getTipo().equals(confraternista.getTipo())) {                    
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
                     confraternista.setGrupoIdade(grupoIdade);

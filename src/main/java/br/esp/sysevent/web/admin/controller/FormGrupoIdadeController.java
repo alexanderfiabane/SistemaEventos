@@ -4,6 +4,7 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.web.admin.validation.GrupoIdadeValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.core.model.Edicao;
@@ -13,6 +14,7 @@ import br.esp.sysevent.core.service.GrupoIdadeService;
 import br.ojimarcius.commons.persistence.springframework.validation.Validator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
+import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,6 +76,11 @@ public class FormGrupoIdadeController extends AbstractFormController<Long, Grupo
     
     @InitBinder
     protected void initBinder(final WebDataBinder binder) {
+    }
+    
+    @ModelAttribute("tiposGrupoIdade")
+    public Collection<Confraternista.Tipo> getTiposGrupoIdade() {
+        return Confraternista.Tipo.getValues();
     }
 
     @RequestMapping(method = RequestMethod.GET)

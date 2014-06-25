@@ -4,6 +4,7 @@
  */
 package br.esp.sysevent.web.admin.validation;
 
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
@@ -22,11 +23,12 @@ public class GrupoIdadeValidator extends AbstractValidator<GrupoIdade>{
     private final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
     
     @Override
-    public void validateCommand(GrupoIdade target, Errors errors) {
-        validateEdicao(target.getEdicaoEvento(), errors);
-        validateNome(target.getNome(), errors);
-        validateVagas(target.getVagas(), errors);
-        validateFaixaEtaria(target.getIdadeMinima(), target.getIdadeMaxima(), errors);
+    public void validateCommand(GrupoIdade grupoIdade, Errors errors) {
+        validateEdicao(grupoIdade.getEdicaoEvento(), errors);
+        validateNome(grupoIdade.getNome(), errors);
+        validateTipo(grupoIdade.getTipo(), errors);
+        validateVagas(grupoIdade.getVagas(), errors);
+        validateFaixaEtaria(grupoIdade.getIdadeMinima(), grupoIdade.getIdadeMaxima(), errors);
     }
     
     public void validateNome(final String nome, final Errors errors) {
@@ -54,6 +56,12 @@ public class GrupoIdadeValidator extends AbstractValidator<GrupoIdade>{
     private void validateFaixaEtaria(Integer idadeMinima, Integer idadeMaxima, Errors errors) {
         if(idadeMinima > idadeMaxima){
             errors.rejectValue("idadeMinima", "errors.age.minmax");
+        }
+    }
+
+    private void validateTipo(Confraternista.Tipo tipo, Errors errors) {
+        if (tipo == null){
+            errors.rejectValue("tipo", "errors.required");
         }
     }
     
