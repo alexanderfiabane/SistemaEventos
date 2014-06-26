@@ -8,6 +8,7 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.ReportService;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class ReportController {
     }
 
     protected Inscricao getInscricao(final String idInscricao) throws IllegalArgumentException, IllegalAccessException {
-        if (!NumberUtils.isNumber(idInscricao)) {
+        if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));

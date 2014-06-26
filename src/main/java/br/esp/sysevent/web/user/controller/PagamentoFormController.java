@@ -13,6 +13,7 @@ import br.esp.sysevent.core.service.PagamentoInscricaoService;
 import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
 import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.ojimarcius.commons.persistence.springframework.validation.Validator;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -105,7 +106,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
     }
 
     protected Inscricao getInscricao(final String idInscricao) throws IllegalArgumentException, IllegalAccessException {
-        if (!NumberUtils.isNumber(idInscricao)) {
+        if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parâmetros inválidos.");
         }
         final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));

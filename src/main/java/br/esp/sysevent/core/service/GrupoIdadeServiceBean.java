@@ -4,8 +4,9 @@
  */
 package br.esp.sysevent.core.service;
 
-import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.dao.GrupoIdadeDao;
+import br.esp.sysevent.core.model.Confraternista;
+import br.esp.sysevent.core.model.GrupoIdade;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,15 @@ public class GrupoIdadeServiceBean extends AbstractEntityServiceBean<Long, Grupo
         super.setDao(dao);
     }
     
+    @Override
     public Collection<GrupoIdade> findByIdade(int idade){       
         return getDao().findByIdade(idade);
     }
+    
+    @Override
+    public Collection<GrupoIdade> findByIdadeTipo(Integer idade, Confraternista.Tipo tipo){       
+        return getDao().findByIdadeTipo(idade, tipo);
+    }   
+    
+    
 }

@@ -169,7 +169,7 @@
                     <legend><msf:message key="label.housedetails"/></legend>
                     <div class="row-fluid">
                         <div class="span3">
-                            <bs:formField label="label.name" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100"/>
+                            <bs:formField label="label.name" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
                         </div>
                     </div>
                     <div class="row-fluid">

@@ -4,7 +4,7 @@
 <content tag="titlebarContent">
     <msf:pagetitle label="Gerencimento de Inscrições - Lista de Eventos" defaultIsLabelKey="true">
         <msf:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
 </content>
 

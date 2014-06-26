@@ -18,7 +18,7 @@
             <div class="span6">
                 <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
-                    <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio inline" breakAfter="false">
+                    <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                         <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                     </msf:label>
                 </c:forEach>
@@ -134,8 +134,8 @@
     <fieldset>
         <legend><msf:message key="label.housedetails"/></legend>
         <div class="row-fluid">
-            <div class="span3">
-                <bs:formField label="Nome" isLabelKey="false" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100"/>
+            <div class="span12">
+                <bs:formField label="Nome" isLabelKey="false" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
             </div>
         </div>
         <div class="row-fluid">

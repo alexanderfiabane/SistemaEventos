@@ -18,7 +18,7 @@
     <div class="row-fluid">
         <msf:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
         <select id="dormitorios">
-            <option value="">-- Selecione um dormitório --</option>
+            <option value="">Selecione um dormitório</option>
             <c:forEach var="dormitorio" items="${dormitorios}">
                 <option value="${dormitorio.id}">${dormitorio.nome}</option>
             </c:forEach>
@@ -58,13 +58,13 @@
                                                 </th>
                                             </tr>
                                             <tr>                                                
-                                                <th>
+                                                <th style="text-align: center;">
                                                     <msf:message key="label.state"/>
                                                 </th>
-                                                <th>
+                                                <th style="text-align: center;">
                                                     <msf:message key="label.city"/>
                                                 </th>
-                                                <th>
+                                                <th style="text-align: center;">
                                                     <msf:message key="label.name"/>
                                                 </th>
                                             </tr>
@@ -114,22 +114,22 @@
                         .append(jQuery('<th style="text-align: center;" colspan="3">')
                         .append(dormitorio.nome)))
                         .append(jQuery('<tr>')
-                        .append(jQuery('<th>')
+                        .append(jQuery('<th style="text-align: center;">')
                         .append('<msf:message key="label.state"/>'))
-                        .append(jQuery('<th>')
+                        .append(jQuery('<th style="text-align: center;">')
                         .append('<msf:message key="label.city"/>'))
-                        .append(jQuery('<th>')
+                        .append(jQuery('<th style="text-align: center;">')
                         .append('<msf:message key="label.name"/>'))));
                 confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
+                    jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
                     jQuery.each(confraternistas, function(index, value) {
-                        jQuery(inputConfraternista).append(jQuery('<tbody>')
-                                .append(jQuery('<tr>')
+                        jQuery(dormitorioSelec).append(jQuery('<tr>')
                                 .append(jQuery('<td>')
                                 .append(value.pessoa.endereco.cidade.estado.sigla))
                                 .append(jQuery('<td>')
                                 .append(value.pessoa.endereco.cidade.nome))
                                 .append(jQuery('<td>')
-                                .append(value.pessoa.nome))));
+                                .append(value.pessoa.nome)));
                     });
                 });
             });

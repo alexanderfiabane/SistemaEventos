@@ -4,7 +4,9 @@
 <content tag="titlebarContent">
     <msf:pagetitle label="Gerenciamento de Inscrições (${edicao.tema})" defaultIsLabelKey="true">
         <msf:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.managesubscription.subscription"><msf:url><c:url value="/admin/inscricao/listEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="label.page.managesubscription.event" isLabelKey="true"><msf:url><c:url value="/admin/inscricao/listEvento.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="label.page.managesubscription.subscription" isLabelKey="true"><msf:url><c:url value="/admin/inscricao/listEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
 </content>
 

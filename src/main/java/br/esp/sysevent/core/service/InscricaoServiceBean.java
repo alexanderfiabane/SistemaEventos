@@ -200,7 +200,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
                     oficinaService.saveOrUpdate(oficina);
                 }
             } else if (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA)) {
-                insereGrupoIdade(confraternista);
+                insereGrupoIdade(inscricao);
             } 
             edicao.ocupaVaga();
             edicaoService.saveOrUpdate(edicao);
@@ -239,7 +239,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
             if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)) {
                 grupoIdadeAtual.desocupaVaga();
                 grupoIdadeService.saveOrUpdate(grupoIdadeAtual);
-                insereGrupoIdade(inscricao.getConfraternista());
+                insereGrupoIdade(inscricao);
             }
         }
     }
@@ -270,20 +270,23 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Usuario usuario = usuarioService.findByLogin(emailAtual);
         usuarioService.delete(usuario);
     }
-
-    //TODO: Ver maneira de obrigar admin a cadastrar os grupos
-    //TODO: Inserir tipo em grupoIdade e inserir considerando por tipo
-    protected void insereGrupoIdade(Confraternista confraternista) {
-        Integer idadeConfraternista = diferencaDatas(CalendarUtils.now(), confraternista.getPessoa().getDataNascimento());
-        Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdade(idadeConfraternista.intValue());
+    
+    protected void insereGrupoIdade(Inscricao inscricao) {
+        final Confraternista confraternista = inscricao.getConfraternista();
+        Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento());
+        Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdadeTipo(idadeConfraternista, confraternista.getTipo());
         if (gruposIdade != null) {
             for (GrupoIdade grupoIdade : gruposIdade) {
-                if (grupoIdade.getSaldoVagas() > 0 && confraternista.getGrupoIdade() == null && grupoIdade.getTipo().equals(confraternista.getTipo())) {                    
+                if (confraternista.getGrupoIdade() != null){
+                    break;
+                } else if (grupoIdade.getSaldoVagas() == 0) {
+                    break;
+                }else if (grupoIdade.getTipo().equals(confraternista.getTipo())){
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
                     confraternista.setGrupoIdade(grupoIdade);
                     confraternistaService.saveOrUpdate(confraternista);
-                }
+                }                
             }
         }//Gerar exceção "Entrar em contato com a administração do evento, cadastro de grupos idade incompleto"
     }

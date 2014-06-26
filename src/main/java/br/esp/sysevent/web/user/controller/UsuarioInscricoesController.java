@@ -8,6 +8,7 @@ import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.core.service.InscricaoService;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UsuarioInscricoesController {
     }
 
     protected Inscricao getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
-        if (!NumberUtils.isNumber(idInscricao)) {
+        if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao), initProps);

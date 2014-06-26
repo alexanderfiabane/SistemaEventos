@@ -4,6 +4,7 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.ojimarcius.commons.persistence.dao.EntityDao;
 import java.util.Collection;
@@ -15,4 +16,6 @@ import java.util.Collection;
 public interface GrupoIdadeDao extends EntityDao<Long, GrupoIdade>{
     
     public Collection<GrupoIdade> findByIdade(int idade);
+
+    public Collection<GrupoIdade> findByIdadeTipo(int idade, Confraternista.Tipo tipo);
 }

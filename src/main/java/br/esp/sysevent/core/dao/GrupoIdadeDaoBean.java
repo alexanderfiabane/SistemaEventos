@@ -4,6 +4,7 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
@@ -34,11 +35,22 @@ public class GrupoIdadeDaoBean extends AbstractEntityDaoBean<Long, GrupoIdade> i
         return super.findAll(Order.asc("nome"));
     }
     
+    @Override
     public Collection<GrupoIdade> findByIdade(int idade){
         final DetachedCriteria c = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.le("idadeMinima", idade))
                 .add(Restrictions.ge("idadeMaxima", idade));
+        return findByCriteria(c, Order.asc("nome"));
+    }
+    
+    @Override
+    public Collection<GrupoIdade> findByIdadeTipo(int idade, Confraternista.Tipo tipo){
+        final DetachedCriteria c = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.le("idadeMinima", idade))
+                .add(Restrictions.ge("idadeMaxima", idade))
+                .add(Restrictions.eq("tipo", tipo));
         return findByCriteria(c, Order.asc("nome"));
     }
 }

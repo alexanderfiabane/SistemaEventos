@@ -8,6 +8,7 @@ import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
+import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +29,7 @@ public class UsuarioFormInscricaoController extends FormInscricaoController{
     @ModelAttribute(COMMAND_NAME)
     public Inscricao getCommand(@RequestParam(value = "idInscricao", required = false) final String idInscricao) {
         final Inscricao command;
-        if (NumberUtils.isNumber(idInscricao)) {
+        if (CharSequenceUtils.isNumber(idInscricao)) {
             command = inscricaoService.findById(NumberUtils.parseLong(idInscricao), INIT_PROPS);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");

@@ -2,8 +2,9 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Gerenciamento de Inscrições - Lista de Edições (${evento.nome})" defaultIsLabelKey="true">
+    <msf:pagetitle label="Gerenciamento de Inscrições - Lista de Edições (${evento.sigla})" defaultIsLabelKey="true">
         <msf:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></msf:icon>
+        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="label.page.managesubscription.event"><msf:url><c:url value="/admin/inscricao/listEvento.html"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
 </content>
