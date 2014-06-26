@@ -5,7 +5,9 @@ package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.service.EntityService;
+import java.util.Collection;
 
 /**
  *
@@ -14,4 +16,6 @@ import br.ojimarcius.commons.persistence.service.EntityService;
 public interface DormitorioService extends EntityService<Long, Dormitorio> {
     
     public void alocaConfraternistasAleatoriamente(final Edicao edicao);
+
+    public Collection<Dormitorio> findBySexo(Sexo sexo);
 }

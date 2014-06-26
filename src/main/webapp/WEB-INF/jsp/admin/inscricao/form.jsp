@@ -138,7 +138,7 @@
     <fieldset>
         <legend><msf:message key="label.housedetails"/></legend>
         <div class="row-fluid">
-            <div class="span3">
+            <div class="span12">
                 <bs:formField label="Nome" isLabelKey="false" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
             </div>
         </div>

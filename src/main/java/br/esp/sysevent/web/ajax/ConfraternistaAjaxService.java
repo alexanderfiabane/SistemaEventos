@@ -4,6 +4,7 @@
 package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Confraternista;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.service.ConfraternistaService;
 import br.ojimarcius.commons.util.NumberUtils;
 import br.ojimarcius.commons.util.CharSequenceUtils;
@@ -34,5 +35,16 @@ public class ConfraternistaAjaxService {
             return Collections.emptyList();
         }        
         return confraternistaService.findByDormitorio(NumberUtils.parseLong(idDormitorio));
+    }
+    
+    public Collection<Confraternista> findSemDormitorio(String genero) {
+        if (CharSequenceUtils.isBlank(genero)) {            
+            return null;
+        }else{
+            if (genero.equals(Sexo.MASCULINO.getDescricao())){
+                return confraternistaService.findBySexoSemDormitorio(Sexo.MASCULINO);
+            }
+            return confraternistaService.findBySexoSemDormitorio(Sexo.FEMININO);    
+        }        
     }
 }

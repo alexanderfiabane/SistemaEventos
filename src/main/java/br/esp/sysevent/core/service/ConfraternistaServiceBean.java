@@ -6,6 +6,7 @@ package br.esp.sysevent.core.service;
 import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
@@ -53,5 +54,10 @@ public class ConfraternistaServiceBean extends AbstractEntityServiceBean<Long, C
     public Collection<Confraternista> findBySemDormitorio(){
         return getDao().findBySemDormitorio(Order.asc("pessoa.nome"));
     }   
+    
+    @Override
+    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero){
+        return getDao().findBySexoSemDormitorio(genero, Order.asc("pessoa.nome"));
+    }
     
 }

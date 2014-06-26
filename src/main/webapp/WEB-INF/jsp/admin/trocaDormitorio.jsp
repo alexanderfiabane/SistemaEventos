@@ -16,14 +16,25 @@
 
 <div class="row-fluid">
     <div class="row-fluid">
-        <msf:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
-        <select id="dormitorios">
-            <option value="">Selecione um dormitório</option>
-            <c:forEach var="dormitorio" items="${dormitorios}">
-                <option value="${dormitorio.id}">${dormitorio.nome}</option>
-            </c:forEach>
-        </select>                
-    </div>
+        <div class="span3">            
+            <msf:label label="label.gender" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+            <select id="sexo" class="span12">
+                <option value="">Selecione o gênero do dormitório</option>
+                <c:forEach var="sexo" items="${sexos}">
+                    <option value="${sexo.descricao}">${sexo.descricao}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="span3">            
+            <msf:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+            <select id="dormitorios" class="span12">
+                <option value="">Selecione um dormitório</option>
+                <c:forEach var="dormitorio" items="${dormitorios}">
+                    <option value="${dormitorio.id}">${dormitorio.nome}</option>
+                </c:forEach>
+            </select>                
+        </div>
+    </div>    
     <div id="areaTrocaDormitorio" class="centeredDivOuter" style="width: 100%">
         <div class="centeredDivInner">
             <table id="trocaDormitorio" class="table centered" style="width: 100%">
@@ -68,16 +79,7 @@
                                                     <msf:message key="label.name"/>
                                                 </th>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${confraternistasSemDormitorio}" var="confraternistaSemDormitorio">
-                                                <tr>                                                     
-                                                    <td>${confraternistaSemDormitorio.pessoa.endereco.cidade.estado.sigla}</td>
-                                                    <td>${confraternistaSemDormitorio.pessoa.endereco.cidade.nome}</td>
-                                                    <td>${confraternistaSemDormitorio.pessoa.nome}</td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
+                                        </thead>                                        
                                     </table>
                                 </div>
                             </div>
@@ -95,56 +97,87 @@
 <script type="text/javascript">
     //Carrega o painel com os confraternistas do dormitorio selecionado
     jQuery('#dormitorios').change(function() {
-        loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'));
+        loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'), true);
         trocaDormitorios();
     });
 
-    function loadConfraternistas(inputDormitorio, inputConfraternista) {
-        var dormitorioSelecionado = inputDormitorio.val();
-        jQuery(inputConfraternista).empty();
-        if (dormitorioSelecionado == '') {
-            jQuery(inputConfraternista).append(jQuery('<thead>')
-                    .append(jQuery('<tr>')
-                    .append(jQuery('<th style="text-align: center;" colspan="3">')
-                    .append('Selecione um dormitório'))));
-        } else {
-            dormitorioAjaxService.findById(dormitorioSelecionado, function callback(dormitorio) {
+    /**
+     * Carrega os confraternisto do dormitório selecionado.
+     * 
+     * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormitório.
+     * @param {Dormitorio} inputDormitorio
+     * @param {ID Div} inputConfraternista
+     * @returns {Collection<Confraternista>}
+     */
+    function loadConfraternistas(inputDormitorio, inputConfraternista, situacaoConfraternista) {
+        if (situacaoConfraternista) {
+            var dormitorioSelecionado = inputDormitorio.val();
+            jQuery(inputConfraternista).empty();
+            if (dormitorioSelecionado === '') {
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr>')
-                        .append(jQuery('<th style="text-align: center;" colspan="3">')
-                        .append(dormitorio.nome)))
-                        .append(jQuery('<tr>')
-                        .append(jQuery('<th style="text-align: center;">')
-                        .append('<msf:message key="label.state"/>'))
-                        .append(jQuery('<th style="text-align: center;">')
-                        .append('<msf:message key="label.city"/>'))
-                        .append(jQuery('<th style="text-align: center;">')
-                        .append('<msf:message key="label.name"/>'))));
-                confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
-                    jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
-                    jQuery.each(confraternistas, function(index, value) {
-                        jQuery(dormitorioSelec).append(jQuery('<tr>')
-                                .append(jQuery('<td>')
-                                .append(value.pessoa.endereco.cidade.estado.sigla))
-                                .append(jQuery('<td>')
-                                .append(value.pessoa.endereco.cidade.nome))
-                                .append(jQuery('<td>')
-                                .append(value.pessoa.nome)));
+                                .append(jQuery('<th style="text-align: center;" colspan="3">')
+                                        .append('Selecione um dormitório'))));
+            } else {
+                dormitorioAjaxService.findById(dormitorioSelecionado, function callback(dormitorio) {
+                    jQuery(inputConfraternista).append(jQuery('<thead>')
+                            .append(jQuery('<tr>')
+                                    .append(jQuery('<th style="text-align: center;" colspan="3">')
+                                            .append(dormitorio.nome)))
+                            .append(jQuery('<tr>')
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.state"/>'))
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.city"/>'))
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.name"/>'))));
+                    confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
+                        jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
+                        jQuery.each(confraternistas, function(index, value) {
+                            jQuery('#dormitorioSelec').append(jQuery('<tr>')
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.endereco.cidade.estado.sigla))
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.endereco.cidade.nome))
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.nome)));
+                        });
                     });
+                });
+            }
+        } else {
+            confraternistaAjaxService.findSemDormitorio(inputDormitorio, function callback(confraternistas) {
+                jQuery(inputConfraternista).empty();
+                jQuery(inputConfraternista).append(jQuery('<thead>')
+                        .append(jQuery('<tr>')
+                                .append(jQuery('<th style="text-align: center;" colspan="3">')
+                                        .append("Confraternistas Sem Dormitório")))
+                        .append(jQuery('<tr>')
+                                .append(jQuery('<th style="text-align: center;">')
+                                        .append('<msf:message key="label.state"/>'))
+                                .append(jQuery('<th style="text-align: center;">')
+                                        .append('<msf:message key="label.city"/>'))
+                                .append(jQuery('<th style="text-align: center;">')
+                                        .append('<msf:message key="label.name"/>'))));
+                jQuery(inputConfraternista).append('<tbody id="semDormitorio">');
+                jQuery.each(confraternistas, function(index, value) {
+                    jQuery('#semDormitorio').append(jQuery('<tr>')
+                            .append(jQuery('<td>')
+                                    .append(value.pessoa.endereco.cidade.estado.sigla))
+                            .append(jQuery('<td>')
+                                    .append(value.pessoa.endereco.cidade.nome))
+                            .append(jQuery('<td>')
+                                    .append(value.pessoa.nome)));
                 });
             });
         }
     }
 
-    jQuery.ready(function() {
-        trocaDormitorios();
-    });
-
-    $("#confraternistasComDormitorio, #confraternistasSemDormitorio")
-
-    //Função de Drag and Drop entre as tabelas dos dormitórios
-    //TODO: colocar cursor no meio
-    //TODO: colocar aviso de como funciona a troca de dormitório.
+    /**
+     * Plugin para trocar(arrastar) os confraternistas de um dormitório
+     * para o grupo de 'sem dormitório' e vice-versa.
+     
+     * @returns {undefined}     */
     function trocaDormitorios() {
         $("#confraternistasComDormitorio, #confraternistasSemDormitorio").sortable(
                 {connectWith: ".connectedSortable",
@@ -152,27 +185,46 @@
                     items: '> tbody > *',
                     receive: function(ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
-                    },                    
+                    },
                     cursorAt: {left: 20},
                     revert: true
                 }
         ).disableSelection();
     }
-    ;
 
-//    jQuery().ready(function() {
-//        tableSort(jQuery('#confraternistasSemDormitorio'));
-//    });
-//
-//    function tableSort(inputTable) {
-//        inputTable.tablesorter({
-//            theme: 'blue',
-//            widthFixed: true,
-//            widgets: ['zebra'],
-//            headers: {
-//                0: {sorter: false}
-//            },
-//            sortList: [[2, 0]]
-//        });
-//    }
+    /**
+     * Carrega os dormitórios segundo o gênero escolhido
+     
+     * @param {Sexo} inputSexo
+     * @param {Dormitorio} inputDormitorio
+     * @returns {Collection<Dormitorio>}     */
+    function loadDormitorios(inputSexo, inputDormitorio) {
+        var sexoSelecionado = inputSexo.val();
+        inputDormitorio.empty();
+        if (sexoSelecionado === '') {
+            inputDormitorio.append(jQuery('<option>').append('Selecione primeiro um gênero'));
+        } else {
+            loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
+            dormitorioAjaxService.findByGenero(sexoSelecionado, function callback(cidades) {
+                inputDormitorio.append(jQuery('<option>').append('Selecione um dormitório'));
+                jQuery.each(cidades, function(index, value) {
+                    inputDormitorio.append(jQuery('<option>').val(value.id).append(value.nome));
+                });
+            });
+        }
+    }
+
+    /**
+     * Inicializa os métodos javascript
+     * @returns {undefined}     */
+    jQuery(function() {
+        $(document).ready(function() {
+            trocaDormitorios();
+            jQuery('#sexo').change(function() {
+                loadDormitorios(jQuery(this), jQuery('#dormitorios'));
+            });
+            loadDormitorios(jQuery('#sexo'), jQuery('#dormitorios'));
+        });
+    });
+
 </script>

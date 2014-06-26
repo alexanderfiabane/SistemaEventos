@@ -8,6 +8,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
@@ -98,6 +100,11 @@ public class DormitorioServiceBean extends AbstractEntityServiceBean<Long, Dormi
                 }
             }
         }
+    }
+    
+    @Override
+    public Collection<Dormitorio> findBySexo(Sexo sexo){
+        return getDao().findByProperty("sexo", sexo, Order.asc("nome"));
     }
 
     private boolean validaDormitorio(Dormitorio dormitorio, Confraternista confraternista) {

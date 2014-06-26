@@ -5,6 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
 import org.hibernate.Criteria;
@@ -50,20 +51,20 @@ public class ConfraternistaDaoBean extends AbstractEntityDaoBean<Long, Confrater
         c.add(Restrictions.eq("dormitorio", dormitorio));
 
         return findByCriteria(c);
-    }    
+    }
 
     @Override
     public Collection<Confraternista> findByDormitorio(final Long idDormitorio, final Order order) {
 
         final DetachedCriteria c = createCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        c.createAlias("dormitorio", "dormitorio");        
-        c.createAlias("pessoa", "pessoa");                      
-        c.createAlias("pessoa.endereco", "endereco");                      
-        c.createAlias("endereco.cidade", "cidade");                      
-            c.add(Restrictions.eq("dormitorio.id", idDormitorio));        
+        c.createAlias("dormitorio", "dormitorio");
+        c.createAlias("pessoa", "pessoa");
+        c.createAlias("pessoa.endereco", "endereco");
+        c.createAlias("endereco.cidade", "cidade");
+        c.add(Restrictions.eq("dormitorio.id", idDormitorio));
         return findByCriteria(c, order);
     }
-    
+
     @Override
     public Collection<Confraternista> findBySemDormitorio(Order order) {
 
@@ -73,5 +74,17 @@ public class ConfraternistaDaoBean extends AbstractEntityDaoBean<Long, Confrater
 
         return findByCriteria(c, order);
     }
-    
+
+    @Override
+    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero, Order order) {
+
+        final DetachedCriteria c = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("pessoa", "pessoa")
+                .add(Restrictions.isNull("dormitorio"))
+                .add(Restrictions.eq("pessoa.sexo", genero));        
+
+        return findByCriteria(c, order);
+    }
+
 }

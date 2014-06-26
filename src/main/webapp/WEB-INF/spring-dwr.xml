@@ -67,6 +67,7 @@
         <dwr:remote javascript="confraternistaAjaxService">
             <dwr:include method="findByNome" />
             <dwr:include method="findByIdDormitorio" />
+            <dwr:include method="findSemDormitorio" />
         </dwr:remote>
     </bean>
     <bean id="enderecoAjaxService" class="br.esp.sysevent.web.ajax.EnderecoAjaxService">
@@ -77,6 +78,7 @@
     <bean id="dormitorioAjaxService" class="br.esp.sysevent.web.ajax.DormitorioAjaxService">
         <dwr:remote javascript="dormitorioAjaxService">
             <dwr:include method="findById" />
+            <dwr:include method="findByGenero" />
         </dwr:remote>
     </bean>
 </beans>

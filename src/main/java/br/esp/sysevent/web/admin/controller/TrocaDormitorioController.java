@@ -5,14 +5,17 @@
 package br.esp.sysevent.web.admin.controller;
 
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.service.ConfraternistaService;
 import br.esp.sysevent.core.service.DormitorioService;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +35,12 @@ public class TrocaDormitorioController{
     @Autowired
     protected ConfraternistaService confraternistaService;    
     
+    /* sexos para o select do form */
+    @ModelAttribute("sexos")
+    public Collection<Sexo> getSexos() {
+        return Sexo.getValues();
+    }
+    
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@RequestParam(value="idEdicao",required=false) final String idEdicao, final ModelMap model) {
         if (!CharSequenceUtils.isNumber(idEdicao)) {
@@ -42,7 +51,7 @@ public class TrocaDormitorioController{
             throw new IllegalArgumentException("Edição não encontrada.");
         }
         model.addAttribute("edicao", edicao);
-        model.addAttribute("dormitorios", dormitorioService.findByProperty("edicaoEvento", edicao));        
+        //model.addAttribute("dormitorios", dormitorioService.findByProperty("edicaoEvento", edicao));        
         model.addAttribute("confraternistasSemDormitorio", confraternistaService.findBySemDormitorio());
         
         return "admin/trocaDormitorio";

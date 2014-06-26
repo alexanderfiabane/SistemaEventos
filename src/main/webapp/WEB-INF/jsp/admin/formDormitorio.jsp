@@ -23,7 +23,7 @@
             <bs:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.gender" isLabelKey="true" isMandatory="true" path="sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="-- Selecione --"/>
+            <bs:formField label="label.gender" isLabelKey="true" isMandatory="true" path="sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="Selecione"/>
         </div>
     </div>
     <div class="row-fluid">
