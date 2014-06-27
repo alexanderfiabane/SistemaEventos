@@ -17,12 +17,8 @@ import br.ojimarcius.commons.persistence.springframework.validation.AbstractVali
 import br.ojimarcius.commons.util.PeriodUtils;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -81,9 +77,11 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
             errors.rejectValue("confraternista.nomeCracha", "errors.required");
         }
         validatePessoa(confraternista.getPessoa(), errors);
-        validaIdade(inscricao, errors);
+        if (confraternista.getPessoa().getDataNascimento() != null) {
+            validaIdade(inscricao, errors);
+        }
         validateOficina(inscricao, errors);
-        validateCasaEspirita(confraternista.getCasaEspirita(), errors);        
+        validateCasaEspirita(confraternista.getCasaEspirita(), errors);
     }
 
     protected void validatePessoa(Pessoa pessoa, Errors errors) {
@@ -97,14 +95,14 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         }
         if (pessoa.getDataNascimento() == null) {
             errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.required");
-        }        
+        }
         validateDocumentos(pessoa.getDocumentos(), errors);
         validateEndereco(pessoa.getEndereco(), errors, "confraternista.pessoa.endereco", true);
     }
 
     protected void validateOficina(Inscricao inscricao, Errors errors) {
         boolean temOficina = !inscricao.getEdicaoEvento().getOficinas().isEmpty();
-        if(!temOficina) {
+        if (!temOficina) {
             return;
         }
         final Oficina oficina = inscricao.getConfraternista().getOficina();
@@ -113,7 +111,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
             return;
         }
 
-        if(inscricao.getId() == null) { //nova inscricao
+        if (inscricao.getId() == null) { //nova inscricao
             if (!oficina.temVaga()) {
                 errors.rejectValue("confraternista.oficina", "errors.workshop.full");
             }
@@ -132,12 +130,12 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
     protected void validateCasaEspirita(CasaEspirita casaEspirita, Errors errors) {
         if (CharSequenceUtils.isBlank(casaEspirita.getNome())) {
             errors.rejectValue("confraternista.casaEspirita.nome", "errors.required");
-        } 
+        }
         validateEndereco(casaEspirita.getEndereco(), errors, "confraternista.casaEspirita.endereco", false);
     }
 
     protected void validateDocumentos(Documento documentos, Errors errors) {
-        if (CharSequenceUtils.isBlank(documentos.getCpf()) && CharSequenceUtils.isBlank(documentos.getRg())) {
+        if (CharSequenceUtils.isBlankOrNull(documentos.getCpf()) && CharSequenceUtils.isBlankOrNull(documentos.getRg())) {
             errors.rejectValue("confraternista.pessoa.documentos.cpf", "errors.required.doc");
             errors.rejectValue("confraternista.pessoa.documentos.rg", "errors.required.doc");
         } else if (!CharSequenceUtils.isBlank(documentos.getCpf())) {
@@ -191,7 +189,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         final String emailPath = "confraternista.pessoa.endereco.email";
         final Inscricao inscricaoDocumentos = inscricaoService.findByEdicaoDocumentos(edicao.getId(), documentos);
 
-        if(isNova) {
+        if (isNova) {
             if (inscricaoDocumentos != null) {
                 errors.rejectValue("id", "errors.alreadyExists");
             }
@@ -204,8 +202,8 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
                 errors.rejectValue("id", "errors.alreadyExists");
             }
             final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
-            if(!errors.hasFieldErrors(emailPath)) {
-                if(!email.equals(emailAtual) && !enderecoService.findByProperty("email", email).isEmpty()) {
+            if (!errors.hasFieldErrors(emailPath)) {
+                if (!email.equals(emailAtual) && !enderecoService.findByProperty("email", email).isEmpty()) {
                     errors.rejectValue(emailPath, "errors.alreadyExists");
                 }
             }
@@ -245,14 +243,13 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         return cpfNoMask.substring(9).equals(String.valueOf(digitos[9]).concat(String.valueOf(digitos[10])));
     }
 
-    //TODO: Novamente idade fixa para 16 anos.
-    protected void validaIdade(Inscricao inscricao, Errors errors){
+    protected void validaIdade(Inscricao inscricao, Errors errors) {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
         Calendar dataEvento = inscricao.getEdicaoEvento().getData();
         Integer idadeMinima = inscricao.getEdicaoEvento().getIdadeMinima();
-        
+
         int year1 = dataNascimento.get(Calendar.YEAR);
         int year2 = dataEvento.get(Calendar.YEAR);
         int month1 = dataNascimento.get(Calendar.MONTH);
@@ -264,7 +261,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
                 || ((month2 == month1) && (day2 < day1))) {
             idade -= 1;
         }
-        if(idade < idadeMinima){
+        if (idade < idadeMinima) {
             errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
         }
     }

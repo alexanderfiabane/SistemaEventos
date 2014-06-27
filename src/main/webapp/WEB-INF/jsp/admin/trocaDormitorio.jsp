@@ -56,7 +56,10 @@
                                     </table>
                                 </div>
                             </div>
-                        </td>            
+                        </td>
+                        <td>
+                            Arraste para trocar
+                        </td>
                         <td>
                             <div class="centeredDivOuter" style="width: 400px">
                                 <div class="centeredDivInner">
@@ -95,11 +98,6 @@
 <script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/dormitorioAjaxService.js"/>"></script>
 <script type="text/javascript">
-    //Carrega o painel com os confraternistas do dormitorio selecionado
-    jQuery('#dormitorios').change(function() {
-        loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'), true);
-        trocaDormitorios();
-    });
 
     /**
      * Carrega os confraternisto do dormitório selecionado.
@@ -142,6 +140,10 @@
                                     .append(jQuery('<td>')
                                             .append(value.pessoa.nome)));
                         });
+                        jQuery(inputConfraternista).append(jQuery('<tfoot>')
+                                .append(jQuery('<tr>')
+                                        .append(jQuery('<td colspan="3">')
+                                                .append("<strong>Total: " + jQuery("#confraternistasComDormitorio tbody tr").length + "</strong>"))));
                     });
                 });
             }
@@ -169,6 +171,10 @@
                             .append(jQuery('<td>')
                                     .append(value.pessoa.nome)));
                 });
+                jQuery(inputConfraternista).append(jQuery('<tfoot>')
+                        .append(jQuery('<tr>')
+                                .append(jQuery('<td colspan="3">')
+                                        .append("<strong>Total: " + jQuery("#confraternistasSemDormitorio tbody tr").length + "</strong>"))));
             });
         }
     }
@@ -200,13 +206,13 @@
      * @returns {Collection<Dormitorio>}     */
     function loadDormitorios(inputSexo, inputDormitorio) {
         var sexoSelecionado = inputSexo.val();
-        inputDormitorio.empty();
+        inputDormitorio.empty();       
         if (sexoSelecionado === '') {
             inputDormitorio.append(jQuery('<option>').append('Selecione primeiro um gênero'));
         } else {
             loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
             dormitorioAjaxService.findByGenero(sexoSelecionado, function callback(cidades) {
-                inputDormitorio.append(jQuery('<option>').append('Selecione um dormitório'));
+                inputDormitorio.append(jQuery('<option value="">').append('Selecione um dormitório'));
                 jQuery.each(cidades, function(index, value) {
                     inputDormitorio.append(jQuery('<option>').val(value.id).append(value.nome));
                 });
@@ -214,16 +220,21 @@
         }
     }
 
+
     /**
      * Inicializa os métodos javascript
      * @returns {undefined}     */
     jQuery(function() {
         $(document).ready(function() {
+            loadDormitorios(jQuery('#sexo'), jQuery('#dormitorios'));
             trocaDormitorios();
+            //Carrega o painel com os confraternistas do dormitorio selecionado
+            jQuery('#dormitorios').change(function() {
+                loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'), true);
+            });
             jQuery('#sexo').change(function() {
                 loadDormitorios(jQuery(this), jQuery('#dormitorios'));
             });
-            loadDormitorios(jQuery('#sexo'), jQuery('#dormitorios'));
         });
     });
 
