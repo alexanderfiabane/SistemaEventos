@@ -55,7 +55,7 @@ public class Edicao extends AbstractEntity<Long> {
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
     @ManyToMany
-    @JoinTable(name = "EDICOES_TIPOS_CAM", schema = "see2500_emuse",
+    @JoinTable(name = "EDICOES_TIPOS_CAM",
             joinColumns = {
         @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {
@@ -63,7 +63,7 @@ public class Edicao extends AbstractEntity<Long> {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<TipoCamiseta> tiposCamiseta;
     @ManyToMany
-    @JoinTable(name = "EDICOES_CORES_CAM", schema = "see2500_emuse",
+    @JoinTable(name = "EDICOES_CORES_CAM",
             joinColumns = {
         @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {
@@ -71,7 +71,7 @@ public class Edicao extends AbstractEntity<Long> {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<CorCamiseta> coresCamiseta;
     @ManyToMany
-    @JoinTable(name = "EDICOES_TAMANHOS_CAM", schema = "see2500_emuse",
+    @JoinTable(name = "EDICOES_TAMANHOS_CAM",
             joinColumns = {
         @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {

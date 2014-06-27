@@ -12,7 +12,7 @@ import javax.persistence.*;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Entity
-@Table(name = "pessoas")
+@Table(name = "PESSOAS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_PESSOA"))
 public class Pessoa extends AbstractEntity<Long> {

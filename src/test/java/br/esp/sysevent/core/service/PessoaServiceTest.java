@@ -56,7 +56,7 @@ public class PessoaServiceTest extends AbstractServiceTest {
         LOGGER.log(Level.INFO, "Pessoa salva com id {0}.", p.getId());
     }
 
-    @Test
+    //@Test
     public void testFindByNome() {
         final PessoaService pessoaService = getService(PessoaService.class);
         final Collection<Pessoa> pessoas = pessoaService.findAll();
