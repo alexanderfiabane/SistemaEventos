@@ -57,8 +57,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            Arraste para trocar
+                        <td class="centered" style="padding-top: 5%;">
+                            <p class="text-info"><strong>Arraste a linha</strong></p>                            
+                            <img scr="/assets/application/img/icons/arrow.png"/>
+                            <p class="text-info"><strong>para trocar</strong></p>
                         </td>
                         <td>
                             <div class="centeredDivOuter" style="width: 400px">
@@ -186,7 +188,9 @@
      * @returns {undefined}     */
     function trocaDormitorios() {
         $("#confraternistasComDormitorio, #confraternistasSemDormitorio").sortable(
-                {connectWith: ".connectedSortable",
+                {
+                    connectWith: ".connectedSortable",
+                    //placeholder: "ui-state-highlight",
                     cursor: "move",
                     items: '> tbody > *',
                     receive: function(ev, ui) {
