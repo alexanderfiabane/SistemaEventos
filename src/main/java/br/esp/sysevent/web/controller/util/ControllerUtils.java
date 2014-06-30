@@ -129,7 +129,7 @@ public abstract class ControllerUtils {
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricao", (Object) inscricao));
 
         final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + mailProperties.getProperty("mail.smtp.from") + ">");
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricao.getEdicaoEvento().getEvento().getSigla() + ">");
         email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);

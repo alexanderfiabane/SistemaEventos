@@ -23,8 +23,7 @@
                 <display:column titleKey="label.number" property="numero" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.theme" property="tema" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.vacancies" property="vagas" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.subscriptionValue" property="valorInscricao" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.shirtValue" property="valorCamiseta" class="centered" headerClass="centered"/>
+                <display:column titleKey="label.subscriptionValue" property="valorInscricao" class="centered" headerClass="centered"/>                
                 <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
                     de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
                 </display:column>

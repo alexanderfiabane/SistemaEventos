@@ -14,11 +14,14 @@
 <form:form commandName="command">
     <form:hidden path="id"/>
     <div class="row-fluid">
-        <div class="span3">
+        <div class="span4">
             <bs:formField label="label.eventname" isLabelKey="true" isMandatory="true" path="nome" maxlength="100"/>
         </div>
-        <div class="span3">
+        <div class="span4">
             <bs:formField label="label.eventacronym" isLabelKey="true" isMandatory="true" path="sigla" maxlength="30"/>
+        </div>
+        <div class="span4">
+            <bs:formField label="label.eventsite" isLabelKey="true" isMandatory="true" path="site" maxlength="150"/>
         </div>
     </div>
     <bs:formButtonGroup formUrl="/admin/formEvento.html"/>
@@ -40,6 +43,7 @@
         </display:column>
         <display:column titleKey="label.name" property="nome" class="centered" headerClass="centered"/>
         <display:column titleKey="label.acronym" property="sigla" class="centered" headerClass="centered"/>
+        <display:column titleKey="label.site" property="site" class="centered" headerClass="centered"/>
     </display:table>
 </div>
 

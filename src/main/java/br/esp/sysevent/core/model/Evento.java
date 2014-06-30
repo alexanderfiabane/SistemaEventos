@@ -23,6 +23,8 @@ public class Evento extends AbstractEntity<Long> {
     private String nome;    
     @Column(name = "SIGLA", length = 80, nullable = true)
     private String sigla;    
+    @Column(name = "SITE", length = 150, nullable = true)
+    private String site;    
 
     public String getNome() {
         return nome;
@@ -39,6 +41,14 @@ public class Evento extends AbstractEntity<Long> {
     public void setSigla(final String sigla) {
         this.sigla = sigla;
     }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }    
 
     @Override
     public int hashCode() {

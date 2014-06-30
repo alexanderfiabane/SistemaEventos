@@ -22,6 +22,8 @@ public class EventoValidator extends AbstractValidator<Evento> {
 
     private final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
     private final Pattern SIGLA_PATTERN = Pattern.compile("[a-zA-Z]+");
+    //private final Pattern WEBSITE_PATTERN = Pattern.compile("^(http[s]?://|ftp://)?(www\\\\.)?[a-zA-Z0-9-\\\\.]+\\\\.(com|org|net|mil|edu|ca|co.uk|com.au|gov|br)$");
+
     @Autowired
     EstadoService eventoService;
 
@@ -29,6 +31,7 @@ public class EventoValidator extends AbstractValidator<Evento> {
     public void validateCommand(final Evento evento, final Errors errors) {
         validateNome(evento.getNome(), errors); // valida o nome
         validateSigla(evento.getId(), evento.getSigla(), errors); // valida a sigla
+        validateSite(evento.getSite(), errors); // valida a sigla
     }
 
     public void validateNome(final String nome, final Errors errors) {
@@ -46,8 +49,19 @@ public class EventoValidator extends AbstractValidator<Evento> {
             // sigla obrigatória
             errors.rejectValue("sigla", "errors.required");
         } else if (!SIGLA_PATTERN.matcher(sigla).matches()) {
-                // sigla inválida
-                errors.rejectValue("sigla", "errors.invalid");            
+            // sigla inválida
+            errors.rejectValue("sigla", "errors.invalid");
         }
+    }
+
+    private void validateSite(String site, Errors errors) {
+        if (CharSequenceUtils.isBlankOrNull(site)) {
+            // site obrigatório
+            errors.rejectValue("site", "errors.required");
+        } 
+//        else if (!WEBSITE_PATTERN.matcher(site).matches()) {
+//            // site inválida
+//            errors.rejectValue("site", "errors.invalid");
+//        }
     }
 }
