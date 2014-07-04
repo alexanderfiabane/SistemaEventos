@@ -116,14 +116,16 @@
                                         <button  type="button" class="btn btn-mini" title="Editar Inscrição" id="editarInscricao" onclick="location.href = '${url_edit}';"><i class="icon-edit"></i></button>
                                         <c:choose>
                                             <c:when test="${inscricao.podeAprovar}">
-                                                <button type="button" class="btn btn-mini" title="Confirmar Inscrição " id="aprovarInscricao" onclick="location.href = '${url_aprova}';"><i class="icon-check"></i></button>
+                                               <button type="button" class="btn btn-mini" title="Confirmar Inscrição " id="aprovarInscricao" onclick="location.href = '${url_aprova}';"><i class="icon-check"></i></button>
                                                 <button type="button" class="btn btn-mini" title="Reabrir para Edição" id="reabreInscricao" onclick="location.href = '${url_reabre}';"><i class="icon-share"></i></button>
                                             </c:when>
                                             <c:when test="${inscricao.podeEfetivar}">
                                                 <button type="button" class="btn btn-mini" title="Efetivar Inscrição" id="efetivarInscricao" onclick="location.href = '${url_efetiva}';"><i class="icon-thumbs-up"></i></button>
                                             </c:when>
                                         </c:choose>
-                                        <button type="button" class="btn btn-mini" title="Indeferir Inscrição" id="indeferirInscricao" onclick="location.href = '${url_indefere}';"><i class="icon-thumbs-down"></i></button>
+                                        <c:if test="${not inscricao.indeferida}">
+                                            <button type="button" class="btn btn-mini" title="Indeferir Inscrição" id="indeferirInscricao" onclick="location.href = '${url_indefere}';"><i class="icon-thumbs-down"></i></button>
+                                        </c:if>        
                                     </td>
                                     <td>
                                         ${inscricao.confraternista.pessoa.nome}
@@ -158,23 +160,23 @@
     </c:otherwise>
 </c:choose>
 
-<script type="text/javascript">    
-    $(function(){        
+<script type="text/javascript">
+    $(function() {
 
         $("#inscricoes")
 
-        // Initialize tablesorter
-        // ***********************
-        .tablesorter({
-            theme: 'blue',
-            widthFixed: true,
-            widgets: ['zebra'],
-            headers: {
-                0: {sorter: false},
-                1: {sorter: false}
-            },
-            sortList: [[1, 0]]
-      
-        });        
+                // Initialize tablesorter
+                // ***********************
+                .tablesorter({
+                    theme: 'blue',
+                    widthFixed: true,
+                    widgets: ['zebra'],
+                    headers: {
+                        0: {sorter: false},
+                        1: {sorter: false}
+                    },
+                    sortList: [[1, 0]]
+
+                });
     });
 </script>
