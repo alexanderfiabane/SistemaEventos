@@ -94,9 +94,6 @@
         </div>
     </div>                    
 </div>
-<div class="row-fluid">
-    <bs:formButtonGroup formUrl="/admin/trocaDormitorio.html?idEdicao=${edicao.id}"/>
-</div>
 <script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/dormitorioAjaxService.js"/>"></script>
 <script type="text/javascript">
@@ -113,7 +110,7 @@
         if (situacaoConfraternista) {
             var dormitorioSelecionado = inputDormitorio.val();
             jQuery(inputConfraternista).empty();
-            if (dormitorioSelecionado === '') {
+            if (dormitorioSelecionado === null || dormitorioSelecionado === '') {
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
@@ -164,15 +161,17 @@
                                 .append(jQuery('<th style="text-align: center;">')
                                         .append('<msf:message key="label.name"/>'))));
                 jQuery(inputConfraternista).append('<tbody id="semDormitorio">');
-                jQuery.each(confraternistas, function(index, value) {
-                    jQuery('#semDormitorio').append(jQuery('<tr>')
-                            .append(jQuery('<td>')
-                                    .append(value.pessoa.endereco.cidade.estado.sigla))
-                            .append(jQuery('<td>')
-                                    .append(value.pessoa.endereco.cidade.nome))
-                            .append(jQuery('<td>')
-                                    .append(value.pessoa.nome)));
-                });
+                if (confraternistas !== null) {
+                    jQuery.each(confraternistas, function(index, value) {
+                        jQuery('#semDormitorio').append(jQuery('<tr>')
+                                .append(jQuery('<td>')
+                                        .append(value.pessoa.endereco.cidade.estado.sigla))
+                                .append(jQuery('<td>')
+                                        .append(value.pessoa.endereco.cidade.nome))
+                                .append(jQuery('<td>')
+                                        .append(value.pessoa.nome)));
+                    });
+                }
                 jQuery(inputConfraternista).append(jQuery('<tfoot>')
                         .append(jQuery('<tr>')
                                 .append(jQuery('<td colspan="3">')
@@ -210,9 +209,11 @@
      * @returns {Collection<Dormitorio>}     */
     function loadDormitorios(inputSexo, inputDormitorio) {
         var sexoSelecionado = inputSexo.val();
-        inputDormitorio.empty();       
+        inputDormitorio.empty();
+        loadConfraternistas(inputDormitorio, jQuery('#confraternistasComDormitorio'), true);
         if (sexoSelecionado === '') {
             inputDormitorio.append(jQuery('<option>').append('Selecione primeiro um gênero'));
+            loadConfraternistas(null, '#confraternistasSemDormitorio', false);
         } else {
             loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
             dormitorioAjaxService.findByGenero(sexoSelecionado, function callback(cidades) {
@@ -235,6 +236,7 @@
             //Carrega o painel com os confraternistas do dormitorio selecionado
             jQuery('#dormitorios').change(function() {
                 loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'), true);
+                loadConfraternistas(jQuery('#sexo').val(), '#confraternistasSemDormitorio', false);
             });
             jQuery('#sexo').change(function() {
                 loadDormitorios(jQuery(this), jQuery('#dormitorios'));

@@ -38,7 +38,7 @@ public class ConfraternistaAjaxService {
     }
     
     public Collection<Confraternista> findSemDormitorio(String genero) {
-        if (CharSequenceUtils.isBlank(genero)) {            
+        if (CharSequenceUtils.isBlankOrNull(genero)) {            
             return null;
         }else{
             if (genero.equals(Sexo.MASCULINO.getDescricao())){
