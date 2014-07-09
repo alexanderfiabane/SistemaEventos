@@ -131,7 +131,7 @@
                     confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
                         jQuery.each(confraternistas, function(index, value) {
-                            jQuery('#dormitorioSelec').append(jQuery('<tr>')
+                            jQuery('#dormitorioSelec').append(jQuery('<tr id="'+value.id+'">')
                                     .append(jQuery('<td>')
                                             .append(value.pessoa.endereco.cidade.estado.sigla))
                                     .append(jQuery('<td>')
@@ -163,7 +163,7 @@
                 jQuery(inputConfraternista).append('<tbody id="semDormitorio">');
                 if (confraternistas !== null) {
                     jQuery.each(confraternistas, function(index, value) {
-                        jQuery('#semDormitorio').append(jQuery('<tr>')
+                        jQuery('#semDormitorio').append(jQuery('<tr id="'+value.id+'">')
                                 .append(jQuery('<td>')
                                         .append(value.pessoa.endereco.cidade.estado.sigla))
                                 .append(jQuery('<td>')
@@ -194,7 +194,11 @@
                     items: '> tbody > *',
                     receive: function(ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
-                    },
+                        //método que valida e salva troca
+                        //dormitorioService.troca(jQuery('#dormitorios').val(), ui.item)
+                        alert(jQuery('#dormitorios').val()+" receive");                        
+                        
+                    },                                        
                     cursorAt: {left: 20},
                     revert: true
                 }
@@ -224,7 +228,6 @@
             });
         }
     }
-
 
     /**
      * Inicializa os métodos javascript
