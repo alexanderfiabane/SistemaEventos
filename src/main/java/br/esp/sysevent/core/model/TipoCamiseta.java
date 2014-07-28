@@ -1,7 +1,6 @@
 package br.esp.sysevent.core.model;
 
 import br.ojimarcius.commons.persistence.model.AbstractEntity;
-import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -17,9 +16,7 @@ public class TipoCamiseta extends AbstractEntity<Long> {
     private static final long serialVersionUID = 8310315145254678448L;    
     
     @Column(name = "DESCRICAO", nullable = false, unique = true)
-    private String descricao;
-    @Column(name = "VALOR_CAMISETA", nullable = false)
-    private BigDecimal valorCamiseta;
+    private String descricao;    
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tiposCamiseta")
     private Collection<Edicao> edicoes;
 
@@ -29,15 +26,7 @@ public class TipoCamiseta extends AbstractEntity<Long> {
 
     public void setDescricao(final String descricao) {
         this.descricao = descricao;
-    }
-
-    public BigDecimal getValorCamiseta() {
-        return valorCamiseta;
-    }
-
-    public void setValorCamiseta(BigDecimal valorCamiseta) {
-        this.valorCamiseta = valorCamiseta;
-    }   
+    }     
 
     public Collection<Edicao> getEdicoes() {
         return edicoes;

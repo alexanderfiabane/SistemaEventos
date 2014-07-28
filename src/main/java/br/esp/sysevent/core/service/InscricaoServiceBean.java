@@ -161,7 +161,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Edicao edicao = inscricao.getEdicaoEvento();
         BigDecimal valorInscricao = edicao.getValorInscricao();
         for (CamisetaConfraternista camiseta : inscricao.getConfraternista().getCamisetas()) {
-            valorInscricao = valorInscricao.add(camiseta.getTipoCamiseta().getValorCamiseta().multiply(new BigDecimal(camiseta.getQuantidadeCamiseta())));
+            valorInscricao = valorInscricao.add(edicao.getValorCamiseta().multiply(new BigDecimal(camiseta.getQuantidadeCamiseta())));
         }
         inscricao.setValor(valorInscricao);
     }

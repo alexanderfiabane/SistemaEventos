@@ -17,10 +17,7 @@
     <div class="row-fluid">
         <div class="span3">
             <bs:formField label="label.description" isLabelKey="true" isMandatory="true" path="descricao" maxlength="30"/>
-        </div>        
-        <div class="span3">
-            <bs:formField label="label.shirtValue" isLabelKey="true" isMandatory="true" path="valorCamiseta" maxlength="3"/>
-        </div>
+        </div>                
     </div>
     <bs:formButtonGroup formUrl="/admin/formTipoCamiseta.html"/>
 </form:form>

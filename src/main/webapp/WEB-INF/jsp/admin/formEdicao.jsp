@@ -68,7 +68,7 @@
         <div class="tab-pane fade" id="camisetas">
             <fieldset>
                 <legend><msf:message key="label.shirts"/></legend>
-                <div class="row-fluid">            
+                <div class="row-fluid">                    
                     <table class="table table-condensed">
                         <tr>
                             <th colspan="3" class="centered">Selecione os Tipos, Cores e Tamanhos de camiseta oferecidos na edição</th>
@@ -92,6 +92,13 @@
                             <td>
                                 <div class="inline-checks">
                                     <form:checkboxes items="${tamanhosCamiseta}" itemValue="id" itemLabel="descricao" path="tamanhosCamiseta" delimiter="<br>"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="span12">
+                                    <bs:formField label="label.shirtValue" isLabelKey="true" isMandatory="true" path="valorCamiseta" maxlength="3"/>
                                 </div>
                             </td>
                         </tr>
@@ -148,17 +155,17 @@
     </display:table>
 </div>
 <script type="text/javascript">
-                function toogleMenu(idEdicao) {
-                    var menuId = "#menu_" + idEdicao;
-                    var hidden = $(menuId).children("ul").is(":hidden");
-                    $(menuId + ">ul").hide();
-                    if (hidden) {
-                        $(menuId).children("ul").toggle();
-                        $(menuId).css("top", -50);
-                        $(menuId).css("left", 150);
-                    }
-                }
-                onload = function() {
-                    document.getElementById("tema").focus();
-                };
+    function toogleMenu(idEdicao) {
+        var menuId = "#menu_" + idEdicao;
+        var hidden = $(menuId).children("ul").is(":hidden");
+        $(menuId + ">ul").hide();
+        if (hidden) {
+            $(menuId).children("ul").toggle();
+            $(menuId).css("top", -50);
+            $(menuId).css("left", 150);
+        }
+    }
+    onload = function() {
+        document.getElementById("tema").focus();
+    };
 </script>

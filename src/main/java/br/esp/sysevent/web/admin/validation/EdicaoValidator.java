@@ -10,6 +10,7 @@ import br.esp.sysevent.core.service.EdicaoService;
 import br.ojimarcius.commons.persistence.model.PersistentPeriod;
 import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.util.NumberUtils;
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateVagas(edicao.getVagas(), errors); // valida o número de vagas da edição
         validatePeriodoInscricao(edicao.getPeriodoInscricao(), errors); // valida o perído de inscrição
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
+        validateValorCamiseta(edicao.getValorCamiseta(), errors);
     }
 
     private void validateEvento(Evento evento, Errors errors) {
@@ -81,23 +83,32 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             // período de inscrição obrigatório
             errors.rejectValue("periodoInscricao", "errors.required");
         } else {
-            if(periodoInscricao.getStart() == null) {
+            if (periodoInscricao.getStart() == null) {
                 errors.rejectValue("periodoInscricao.start", "errors.required");
             }
-            if(periodoInscricao.getEnd() == null) {
+            if (periodoInscricao.getEnd() == null) {
                 errors.rejectValue("periodoInscricao.end", "errors.required");
             }
-            if(!errors.hasFieldErrors("periodoInscricao.start") &&
-               !errors.hasFieldErrors("periodoInscricao.end") &&
-                periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
-                    errors.rejectValue("periodoInscricao", "errors.invalid");
+            if (!errors.hasFieldErrors("periodoInscricao.start")
+                && !errors.hasFieldErrors("periodoInscricao.end")
+                && periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
+                errors.rejectValue("periodoInscricao", "errors.invalid");
             }
         }
     }
 
     private void validateIdadeMinima(Integer idadeMinima, Errors errors) {
-        if (idadeMinima == null){
+        if (idadeMinima == null) {
             errors.rejectValue("idadeMinima", "errors.invalid");
+        }
+    }
+
+    private void validateValorCamiseta(BigDecimal valorCamiseta, Errors errors) {
+        if (valorCamiseta != null) {
+            if (NumberUtils.isBigDecimal(valorCamiseta)) {
+            } else {
+                errors.rejectValue("valorCamiseta", "errors.invalid");
+            }
         }
     }
 }

@@ -78,6 +78,7 @@ public class Edicao extends AbstractEntity<Long> {
         @JoinColumn(name = "ID_TAMANHO_CAM", nullable = false)})
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<TamanhoCamiseta> tamanhosCamiseta;
+    private BigDecimal valorCamiseta;
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "edicaoEvento")
     private Collection<Oficina> oficinas;
@@ -185,6 +186,14 @@ public class Edicao extends AbstractEntity<Long> {
         return tamanhosCamiseta;
     }
 
+    public BigDecimal getValorCamiseta() {
+        return valorCamiseta;
+    }
+
+    public void setValorCamiseta(BigDecimal valorCamiseta) {
+        this.valorCamiseta = valorCamiseta;
+    }    
+    
     public void setTamanhosCamiseta(final Collection<TamanhoCamiseta> tamanhosCamiseta) {
         this.tamanhosCamiseta = tamanhosCamiseta;
     }
