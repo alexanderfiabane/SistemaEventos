@@ -173,7 +173,7 @@
         <div class="row-fluid">
             <table id="camisetas" class="table table-striped table-condensed">
                 <thead>
-                    <tr><th class="center" colspan="4"><msf:message key="label.shirts"/></th></tr>
+                    <tr><th class="centered" colspan="4"><msf:message key="label.shirts"/></th></tr>
                     <tr>
                         <th><msf:message key="label.shirttype"/></th>
                         <th><msf:message key="label.shirtcolor"/></th>

@@ -79,6 +79,7 @@
         <dwr:remote javascript="dormitorioAjaxService">
             <dwr:include method="findById" />
             <dwr:include method="findByGenero" />
+            <dwr:include method="troca" />
         </dwr:remote>
     </bean>
 </beans>
