@@ -269,7 +269,7 @@
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
                         <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
-                        <button type="button" class="btn btn-mini" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
+                        <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
                     </div>
                 </div>
             </div>
