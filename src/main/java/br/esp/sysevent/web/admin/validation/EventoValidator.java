@@ -48,7 +48,7 @@ public class EventoValidator extends AbstractValidator<Evento> {
         if (CharSequenceUtils.isBlankOrNull(sigla)) {
             // sigla obrigatória
             errors.rejectValue("sigla", "errors.required");
-        } else if (!SIGLA_PATTERN.matcher(sigla).matches()) {
+        } else if (!NOME_PATTERN.matcher(sigla).matches()) {
             // sigla inválida
             errors.rejectValue("sigla", "errors.invalid");
         }

@@ -57,8 +57,8 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         }
     }
 
-    public void validateNumero(final Integer numero, final Errors errors) {
-        if (numero == null) {
+    public void validateNumero(final String numero, final Errors errors) {
+        if (CharSequenceUtils.isBlankOrNull(numero)) {
             // número da edição obrigatório
             errors.rejectValue("numero", "errors.required");
         }

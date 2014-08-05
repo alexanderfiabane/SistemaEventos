@@ -26,6 +26,9 @@ public class Pessoa extends AbstractEntity<Long> {
     @Column(name = "SEXO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_RESPONSAVEL", nullable = true)
+    private Responsavel responsavel;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_ENDERECO", nullable = true)
     private Endereco endereco;
@@ -75,6 +78,14 @@ public class Pessoa extends AbstractEntity<Long> {
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
+
+    public Responsavel getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(Responsavel responsavel) {
+        this.responsavel = responsavel;
+    }   
 
     public InformacoesSaude getInformacoesSaude() {
         return informacoesSaude;

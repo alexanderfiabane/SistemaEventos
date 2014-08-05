@@ -24,7 +24,7 @@ public class Endereco extends AbstractEntity<Long> {
     private static final long serialVersionUID = -2155619439655011984L;
     @Column(name = "LOGRADOURO", length = 80, nullable = false)
     private String logradouro;
-    @Column(name = "NUMERO", length = 80,nullable = false)
+    @Column(name = "NUMERO", length = 80, nullable = false)
     private String numero;
     @Column(name = "COMPLEMENTO", length = 80, nullable = true)
     private String complemento;

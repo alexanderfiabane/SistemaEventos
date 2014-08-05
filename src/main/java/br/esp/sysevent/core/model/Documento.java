@@ -22,6 +22,8 @@ public class Documento extends AbstractEntity<Long> {
     private static final long serialVersionUID = 5953359082579266700L;
     @Column(name = "RG", length = 16, nullable = true)
     private String rg;
+    @Column(name = "CERTIDAO_NASCIMENTO", length = 20, nullable = true)
+    private String certidaoNascimento;
     @Column(name = "CPF", length = 16, nullable = true)
     private String cpf;
 
@@ -33,6 +35,14 @@ public class Documento extends AbstractEntity<Long> {
         this.rg = rg;
     }
 
+    public String getCertidaoNascimento() {
+        return certidaoNascimento;
+    }
+
+    public void setCertidaoNascimento(String certidaoNascimento) {
+        this.certidaoNascimento = certidaoNascimento;
+    }   
+    
     public String getCpf() {
         return cpf;
     }

@@ -50,6 +50,9 @@
         <div class="span3">
             <bs:formFieldView label="label.id" isLabelKey="true" value="${command.confraternista.pessoa.documentos.rg}"/>
         </div>
+        <div class="span3">
+            <bs:formFieldView label="label.birthcertificate" isLabelKey="true" value="${command.confraternista.pessoa.documentos.certidaoNascimento}"/>
+        </div>
     </div>
     <div class="row-fluid">
         <div class="span3">
@@ -87,10 +90,18 @@
             <bs:formFieldView label="label.phoneatevent" isLabelKey="true" value="${command.confraternista.pessoa.endereco.telefoneEvento}"/>
         </div>
     </div>
+    <div class="row-fluid">
+        <div class="span6">
+            <bs:formFieldView label="label.responsible" isLabelKey="true" value="${command.confraternista.pessoa.responsavel.nome}"/>
+        </div>
+        <div class="span3">
+            <bs:formFieldView label="label.phone" isLabelKey="true" value="${command.confraternista.pessoa.responsavel.telefone}"/>
+        </div>        
+    </div>
 </fieldset>
 
 <fieldset>
-    <legend><msf:message key="label.healthdetails"/></legend>
+    <legend><msf:message key="label.healthfooddetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
             <bs:formFieldView label="Medicação" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.medicacao}"/>
@@ -107,6 +118,11 @@
     <div class="row-fluid">
         <div class="span3">
             <bs:formFieldView label="Alergia" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.alergia}"/>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+            <bs:formFieldView label="Alimentação" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.dieta}"/>
         </div>
     </div>
 </fieldset>
@@ -143,6 +159,14 @@
         </div>
     </div>
     <div class="row-fluid">
+        <div class="span6">
+            <bs:formFieldView label="label.responsibleevent" isLabelKey="true" value="${command.confraternista.responsavelEvento.nome}"/>
+        </div>
+        <div class="span3">
+            <bs:formFieldView label="label.phone" isLabelKey="true" value="${command.confraternista.responsavelEvento.telefone}"/>
+        </div>        
+    </div>
+    <div class="row-fluid">
         <div class="span3">
             <bs:formFieldView label="label.activityatie" isLabelKey="true" value="${command.confraternista.atividadeCasaEspirita}"/>
         </div>
@@ -164,31 +188,31 @@
         </div>
     </fieldset>
 </c:if>
-    <c:if test="${not empty command.confraternista.camisetas}">
-        <fieldset>
-            <legend><msf:message key="label.shirtdetails"/></legend>
-            <div class="row-fluid">
-                <table id="camisetas" class="table table-striped table-condensed">
-                    <thead>
-                        <tr><td colspan="4"><msf:label label="label.shirts" isMandatory="false" isLabelKey="true" colonAfter="false"/></td></tr>
+<c:if test="${not empty command.confraternista.camisetas}">
+    <fieldset>
+        <legend><msf:message key="label.shirtdetails"/></legend>
+        <div class="row-fluid">
+            <table id="camisetas" class="table table-striped table-condensed">
+                <thead>
+                    <tr><td colspan="4" class="centered"><msf:label label="label.shirts" isMandatory="false" isLabelKey="true" colonAfter="false"/></td></tr>
+                    <tr>
+                        <td><msf:label label="label.shirttype" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><msf:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><msf:label label="label.shirtsize" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><msf:label label="label.shirtquant" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="camiseta" items="${command.confraternista.camisetas}">
                         <tr>
-                            <td><msf:label label="label.shirttype" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                            <td><msf:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                            <td><msf:label label="label.shirtsize" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                            <td><msf:label label="label.shirtquant" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                            <td>${camiseta.tipoCamiseta.descricao}</td>
+                            <td>${camiseta.corCamiseta.descricao}</td>
+                            <td>${camiseta.tamanhoCamiseta.descricao}</td>
+                            <td>${camiseta.quantidadeCamiseta}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="camiseta" items="${command.confraternista.camisetas}">
-                            <tr>
-                                <td>${camiseta.tipoCamiseta.descricao}</td>
-                                <td>${camiseta.corCamiseta.descricao}</td>
-                                <td>${camiseta.tamanhoCamiseta.descricao}</td>
-                                <td>${camiseta.quantidadeCamiseta}</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-    </c:if>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</c:if>

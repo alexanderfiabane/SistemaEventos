@@ -11,11 +11,14 @@ import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
+import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.core.service.EnderecoService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.ojimarcius.commons.temporal.Age;
 import br.ojimarcius.commons.util.PeriodUtils;
 import br.ojimarcius.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.util.DateUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,6 +70,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
 
     protected void validateConfraternista(Inscricao inscricao, Errors errors) {
         final Confraternista confraternista = inscricao.getConfraternista();
+        final Integer maiorIdade = 18;
         if (confraternista.getTipo() == null) {
             errors.rejectValue("confraternista.tipo", "errors.required");
         }
@@ -80,8 +84,22 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (confraternista.getPessoa().getDataNascimento() != null) {
             validaIdade(inscricao, errors);
         }
+        if (getIdade(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
+            validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
+        }
         validateOficina(inscricao, errors);
         validateCasaEspirita(confraternista.getCasaEspirita(), errors);
+    }
+
+    protected void validateResponsavelEvento(Responsavel responsavelEvento, Errors errors) {
+        if (CharSequenceUtils.isBlank(responsavelEvento.getNome())) {
+            errors.rejectValue("confraternista.responsavelEvento.nome", "errors.required");
+        } else if (!NOME_PATTERN.matcher(responsavelEvento.getNome()).matches()) {
+            errors.rejectValue("confraternista.responsavelEvento.nome", "errors.invalid");
+        }
+        if (CharSequenceUtils.isBlank(responsavelEvento.getTelefone())) {
+            errors.rejectValue("confraternista.responsavelEvento.telefone", "errors.required");
+        }
     }
 
     protected void validatePessoa(Pessoa pessoa, Errors errors) {
@@ -135,9 +153,12 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
     }
 
     protected void validateDocumentos(Documento documentos, Errors errors) {
-        if (CharSequenceUtils.isBlankOrNull(documentos.getCpf()) && CharSequenceUtils.isBlankOrNull(documentos.getRg())) {
+        if (CharSequenceUtils.isBlankOrNull(documentos.getCpf())
+                && CharSequenceUtils.isBlankOrNull(documentos.getRg())
+                && CharSequenceUtils.isBlankOrNull(documentos.getCertidaoNascimento())) {
             errors.rejectValue("confraternista.pessoa.documentos.cpf", "errors.required.doc");
             errors.rejectValue("confraternista.pessoa.documentos.rg", "errors.required.doc");
+            errors.rejectValue("confraternista.pessoa.documentos.certidaoNascimento", "errors.required.doc");
         } else if (!CharSequenceUtils.isBlank(documentos.getCpf())) {
             if (!isValidCPF(documentos.getCpf())) {
                 errors.rejectValue("confraternista.pessoa.documentos.cpf", "errors.invalid");
@@ -146,6 +167,11 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (!CharSequenceUtils.isBlank(documentos.getRg())) {
             if (!NUMERO_PATTERN.matcher(documentos.getRg()).matches()) {
                 errors.rejectValue("confraternista.pessoa.documentos.rg", "errors.invalid");
+            }
+        }
+        if (!CharSequenceUtils.isBlank(documentos.getCertidaoNascimento())) {
+            if (!NUMERO_PATTERN.matcher(documentos.getCertidaoNascimento()).matches()) {
+                errors.rejectValue("confraternista.pessoa.documentos.certidaoNascimento", "errors.invalid");
             }
         }
     }
@@ -245,24 +271,31 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
 
     protected void validaIdade(Inscricao inscricao, Errors errors) {
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
         Calendar dataEvento = inscricao.getEdicaoEvento().getData();
         Integer idadeMinima = inscricao.getEdicaoEvento().getIdadeMinima();
+        int idade = getIdade(dataEvento, dataNascimento);
+        if (idade < idadeMinima) {
+            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
+        }
+    }
 
-        int year1 = dataNascimento.get(Calendar.YEAR);
-        int year2 = dataEvento.get(Calendar.YEAR);
-        int month1 = dataNascimento.get(Calendar.MONTH);
-        int month2 = dataEvento.get(Calendar.MONTH);
-        int day1 = dataNascimento.get(Calendar.DAY_OF_MONTH);
-        int day2 = dataEvento.get(Calendar.DAY_OF_MONTH);
+    protected int getIdade(Calendar dataMaior, Calendar dataMenor) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        int year1 = dataMenor.get(Calendar.YEAR);
+        int year2 = dataMaior.get(Calendar.YEAR);
+        int month1 = dataMenor.get(Calendar.MONTH);
+        int month2 = dataMaior.get(Calendar.MONTH);
+        int day1 = dataMenor.get(Calendar.DAY_OF_MONTH);
+        int day2 = dataMaior.get(Calendar.DAY_OF_MONTH);
         int idade = year2 - year1;
         if ((month2 < month1)
                 || ((month2 == month1) && (day2 < day1))) {
             idade -= 1;
         }
-        if (idade < idadeMinima) {
-            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
-        }
+        return idade;
     }
+
 }

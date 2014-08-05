@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaInscricaoReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44cd0794-5d72-4a9a-837f-e90cbd8026f8">
-	<property name="ireport.zoom" value="1.2100000000000055"/>
-	<property name="ireport.x" value="24"/>
-	<property name="ireport.y" value="0"/>
-	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaInscricaoReport" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="44cd0794-5d72-4a9a-837f-e90cbd8026f8">
+	<property name="ireport.zoom" value="1.464100000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="67"/>
+	<field name="edicaoEvento.numero" class="java.lang.String"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
 	<field name="confraternista.nomeCracha" class="java.lang.String"/>
@@ -35,6 +35,14 @@
 	<field name="confraternista.casaEspirita.endereco.cep" class="java.lang.String"/>
 	<field name="confraternista.atividadeCasaEspirita" class="java.lang.String"/>
 	<field name="confraternista.oficina.nome" class="java.lang.String"/>
+	<field name="edicaoEvento.tipo" class="java.lang.Object"/>
+	<field name="confraternista.grupoIdade.nome" class="java.lang.String"/>
+	<field name="confraternista.pessoa.documentos.certidaoNascimento" class="java.lang.String"/>
+	<field name="confraternista.pessoa.responsavel.nome" class="java.lang.String"/>
+	<field name="confraternista.pessoa.responsavel.telefone" class="java.lang.String"/>
+	<field name="confraternista.responsavelEvento.nome" class="java.lang.String"/>
+	<field name="confraternista.responsavelEvento.telefone" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.dieta" class="java.lang.String"/>
 	<title>
 		<band splitType="Stretch"/>
 	</title>
@@ -46,8 +54,12 @@
 	</columnHeader>
 	<detail>
 		<band height="789" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="575" height="50" uuid="562e9676-8830-4015-987e-98233c130e5e"/>
+				<imageExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\SistemaEventos\\src\\main\\resources\\br\\esp\\sysevent\\core\\report\\cabecalhoFichaInscricao.jpg"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="101" width="130" height="15"/>
+				<reportElement x="0" y="101" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -55,7 +67,7 @@
 				<text><![CDATA[CPF]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="181" width="130" height="15"/>
+				<reportElement x="143" y="172" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -63,7 +75,7 @@
 				<text><![CDATA[Telefone]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="101" width="130" height="15"/>
+				<reportElement x="143" y="101" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -71,7 +83,7 @@
 				<text><![CDATA[Identidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="127" width="130" height="15"/>
+				<reportElement x="0" y="124" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -79,7 +91,7 @@
 				<text><![CDATA[Rua]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="75" width="130" height="15"/>
+				<reportElement x="143" y="77" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -87,7 +99,7 @@
 				<text><![CDATA[Nome para crachá]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="181" width="130" height="15"/>
+				<reportElement x="286" y="172" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -95,7 +107,7 @@
 				<text><![CDATA[Telefone durante o evento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="75" width="130" height="15"/>
+				<reportElement x="0" y="77" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -103,7 +115,7 @@
 				<text><![CDATA[Nome completo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="425" y="127" width="130" height="15"/>
+				<reportElement x="429" y="124" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -111,7 +123,7 @@
 				<text><![CDATA[Bairro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="154" width="130" height="15"/>
+				<reportElement x="0" y="148" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -119,7 +131,7 @@
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="181" width="130" height="15"/>
+				<reportElement x="0" y="172" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -127,7 +139,7 @@
 				<text><![CDATA[E-mail]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="127" width="130" height="15"/>
+				<reportElement x="286" y="124" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -135,7 +147,7 @@
 				<text><![CDATA[Complemento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="127" width="130" height="15"/>
+				<reportElement x="143" y="124" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -143,7 +155,7 @@
 				<text><![CDATA[Número]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="75" width="130" height="15"/>
+				<reportElement x="286" y="77" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -151,7 +163,7 @@
 				<text><![CDATA[Data de nascimento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="154" width="130" height="15"/>
+				<reportElement x="143" y="148" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -159,7 +171,7 @@
 				<text><![CDATA[Cidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="425" y="75" width="130" height="15"/>
+				<reportElement x="429" y="77" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -167,15 +179,15 @@
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="154" width="130" height="15"/>
+				<reportElement x="286" y="148" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CEP]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="86" width="140" height="12"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="88" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -183,7 +195,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="86" width="140" height="12"/>
+				<reportElement x="143" y="88" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -191,7 +203,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.nomeCracha}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="86" width="130" height="12"/>
+				<reportElement x="286" y="88" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -199,23 +211,23 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.dataNascimento.time}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="425" y="86" width="130" height="12"/>
+				<reportElement x="429" y="88" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.sexo.descricao}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="112" width="130" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="112" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.documentos.cpf}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.documentos.cpf} == null ? "Não informado" : $F{confraternista.pessoa.documentos.cpf}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="138" width="140" height="12"/>
+				<reportElement x="0" y="135" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -223,63 +235,63 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.logradouro}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="165" width="140" height="12"/>
+				<reportElement x="0" y="159" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.estado.sigla}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="192" width="140" height="12"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="183" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.email}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="112" width="130" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="143" y="112" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.documentos.rg}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.documentos.rg} == null ? "Não informado" : $F{confraternista.pessoa.documentos.rg}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="52" width="147" height="22" forecolor="#000000"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="52" width="147" height="22" forecolor="#000000" uuid="546cf3e3-7224-42fb-a66d-944d2286061e"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isStrikeThrough="false"/>
+					<font fontName="SansSerif" size="16" isBold="true" isItalic="false" isStrikeThrough="false"/>
 				</textElement>
-				<text><![CDATA[Detalhes Pessoais]]></text>
+				<text><![CDATA[Dados Pessoais]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="211" width="176" height="22" forecolor="#000000"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="225" width="176" height="22" forecolor="#000000" uuid="546cf3e3-7224-42fb-a66d-944d2286061e"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalhes sobre saúde]]></text>
+				<text><![CDATA[Dados sobre saúde]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="138" width="130" height="12"/>
+				<reportElement x="143" y="135" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.numero}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="138" width="130" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="286" y="135" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.complemento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.complemento} == null ? "Não informado" : $F{confraternista.pessoa.endereco.complemento}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="425" y="138" width="130" height="12"/>
+				<reportElement x="429" y="135" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -287,7 +299,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.bairro}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="165" width="140" height="12"/>
+				<reportElement x="143" y="159" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -295,7 +307,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="165" width="130" height="12"/>
+				<reportElement x="286" y="159" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -303,7 +315,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cep}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="192" width="140" height="12"/>
+				<reportElement x="143" y="183" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -311,7 +323,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.telefone}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="192" width="140" height="12"/>
+				<reportElement x="286" y="183" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -319,15 +331,15 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.telefoneEvento}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="246" width="555" height="12"/>
+				<reportElement x="0" y="261" width="575" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.informacoesSaude.medicacao} == null ? "Não possui." : $F{confraternista.pessoa.informacoesSaude.medicacao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.medicacao} == null) || ($F{confraternista.pessoa.informacoesSaude.medicacao}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.medicacao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="235" width="162" height="15"/>
+				<reportElement x="0" y="250" width="162" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -335,7 +347,7 @@
 				<text><![CDATA[Faz uso rotineiro de medicação?]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="287" width="162" height="15"/>
+				<reportElement x="0" y="298" width="162" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -343,23 +355,23 @@
 				<text><![CDATA[Possui algum tipo de alergia?]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="261" width="162" height="15"/>
+				<reportElement x="0" y="274" width="162" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tem algum tipo de convênio?]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="298" width="555" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="309" width="575" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.informacoesSaude.alergia} == null ? "Não possui." : $F{confraternista.pessoa.informacoesSaude.alergia}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.alergia} == null) || ($F{confraternista.pessoa.informacoesSaude.alergia}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.alergia}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="364" width="130" height="15"/>
+				<reportElement x="0" y="398" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -367,7 +379,7 @@
 				<text><![CDATA[Rua]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="364" width="130" height="15"/>
+				<reportElement x="143" y="398" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -375,7 +387,7 @@
 				<text><![CDATA[Número]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="364" width="130" height="15"/>
+				<reportElement x="286" y="398" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -383,7 +395,7 @@
 				<text><![CDATA[Complemento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="425" y="364" width="130" height="15"/>
+				<reportElement x="429" y="398" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -391,7 +403,7 @@
 				<text><![CDATA[Bairro]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="391" width="130" height="15"/>
+				<reportElement x="0" y="421" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -399,7 +411,7 @@
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="141" y="391" width="130" height="15"/>
+				<reportElement x="143" y="421" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -407,7 +419,7 @@
 				<text><![CDATA[Cidade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="282" y="391" width="130" height="15"/>
+				<reportElement x="286" y="421" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -415,7 +427,7 @@
 				<text><![CDATA[CEP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="417" width="176" height="15"/>
+				<reportElement x="0" y="470" width="176" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -423,7 +435,7 @@
 				<text><![CDATA[Atividade(s) na instituição espírita]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="339" width="35" height="15"/>
+				<reportElement x="0" y="373" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>
 				<box leftPadding="2"/>
 				<textElement>
 					<font fontName="SansSerif" size="10" isBold="true"/>
@@ -431,7 +443,7 @@
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="350" width="555" height="12"/>
+				<reportElement x="0" y="385" width="575" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -439,7 +451,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="375" width="140" height="12"/>
+				<reportElement x="0" y="409" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -447,7 +459,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.logradouro}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="375" width="130" height="12"/>
+				<reportElement x="143" y="409" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -455,15 +467,15 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.numero}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="375" width="130" height="12"/>
+				<reportElement x="286" y="409" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.complemento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.complemento} == null ? "Não informado" : $F{confraternista.casaEspirita.endereco.complemento}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="425" y="375" width="130" height="12"/>
+				<reportElement x="429" y="409" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -471,7 +483,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.bairro}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="402" width="140" height="12"/>
+				<reportElement x="0" y="432" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -479,7 +491,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.cidade.estado.sigla}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="141" y="402" width="140" height="12"/>
+				<reportElement x="143" y="432" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
@@ -487,271 +499,380 @@
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.cidade.nome}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="282" y="402" width="130" height="12"/>
+				<reportElement x="286" y="432" width="140" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.endereco.cep}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="18c8dade-8a01-406e-8e31-50aa759160cb" x="0" y="513" width="555" height="43"/>
-				<box topPadding="2" leftPadding="4" bottomPadding="0" rightPadding="4"/>
-				<textElement textAlignment="Justified">
-					<font fontName="SansSerif" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Eu,_____________________________, portador da CI n°______________________  após ler e concordar com as Normas de Ação e Regimento do EMUSE, autorizo o menor supracitado a participar do 5º EMUSE, no período de 29/03/2013 a 31/03/2013, conforme opção de oficina assinalada nesta Ficha de Inscrição.
-
-]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="428" width="555" height="12"/>
+				<reportElement x="0" y="481" width="575" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.atividadeCasaEspirita}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4" x="0" y="470" width="89" height="15"/>
-				<box leftPadding="2"/>
-				<textElement>
-					<font fontName="SansSerif" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Oficina escolhida:]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="86" y="470" width="468" height="15"/>
+				<reportElement x="1" y="527" width="574" height="15" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
-					<font fontName="SansSerif" size="9" isUnderline="true"/>
+					<font fontName="SansSerif" size="9" isUnderline="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.oficina.nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Grupo: "+$F{confraternista.grupoIdade.nome}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="18c8dade-8a01-406e-8e31-50aa759160cb" x="0" y="634" width="555" height="44"/>
-				<box topPadding="2" leftPadding="4" bottomPadding="0" rightPadding="4"/>
-				<textElement textAlignment="Justified">
-					<font fontName="SansSerif" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ Eu, _________________________________________________, declaro que o(a) participante acima identificado(a) freqüenta, as atividades descritas no campo " Atividade(s) na instituição espírita " desta Ficha de Inscrição, há pelo menos dois anos, tendo freqüência superior a 70%, portanto, atende aos critérios estabelecidos para participação do EMUSE.
-]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="314" width="252" height="22" forecolor="#000000"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="349" width="252" height="22" forecolor="#000000" uuid="546cf3e3-7224-42fb-a66d-944d2286061e"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Detalhes da Instituição Espírita]]></text>
+				<text><![CDATA[Dados da Instituição Espírita]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="445" width="176" height="22" forecolor="#000000"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="543" width="281" height="22" forecolor="#000000" uuid="546cf3e3-7224-42fb-a66d-944d2286061e"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Detalhes da Oficina]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="488" width="281" height="22" forecolor="#000000"/>
-				<box leftPadding="2"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Autorização para Menor de Idade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="546cf3e3-7224-42fb-a66d-944d2286061e" stretchType="RelativeToTallestObject" x="0" y="610" width="281" height="22" forecolor="#000000"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="654" width="281" height="22" forecolor="#000000" uuid="546cf3e3-7224-42fb-a66d-944d2286061e"/>
 				<box leftPadding="2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="14" isBold="true"/>
+					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Autorização da Instituição Espírita]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="272" width="555" height="12"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="285" width="575" height="12" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="SansSerif" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.informacoesSaude.convenio} == null ? "Não possui." : $F{confraternista.pessoa.informacoesSaude.convenio} + ". Telefone: " + $F{confraternista.pessoa.informacoesSaude.convenioTelefone}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.convenio} == null) || ($F{confraternista.pessoa.informacoesSaude.convenio}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.convenio} + ". Telefone: " + $F{confraternista.pessoa.informacoesSaude.convenioTelefone}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a6979233-01af-4636-8226-c70349affe40" x="193" y="3" width="169" height="23" forecolor="#000000"/>
+				<reportElement x="0" y="0" width="575" height="33" forecolor="#FFFFFF" uuid="a6979233-01af-4636-8226-c70349affe40"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="18" isBold="true"/>
+					<font fontName="SansSerif" size="18" isBold="true" isStrikeThrough="false"/>
 				</textElement>
 				<text><![CDATA[Ficha de Inscrição]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3" x="1" y="26" width="553" height="21" forecolor="#000000"/>
+				<reportElement x="0" y="26" width="575" height="21" forecolor="#FFFFFF" uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + "º - " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + " " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="50" width="555" height="1"/>
+				<reportElement x="0" y="50" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="3.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="210" width="555" height="1"/>
+				<reportElement x="0" y="224" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="313" width="555" height="1"/>
+				<reportElement x="0" y="348" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="444" width="555" height="1"/>
+				<reportElement x="0" y="501" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="487" width="555" height="1"/>
+				<reportElement x="0" y="542" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="609" width="555" height="1"/>
+				<reportElement x="0" y="653" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="0" width="555" height="1"/>
+				<reportElement x="0" y="0" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="3.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="74" width="555" height="1"/>
+				<reportElement x="0" y="74" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="233" width="555" height="1"/>
+				<reportElement x="0" y="247" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="336" width="555" height="1"/>
+				<reportElement x="0" y="371" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="467" width="555" height="1"/>
+				<reportElement x="0" y="524" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="510" width="555" height="1"/>
+				<reportElement x="0" y="565" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="651c465a-c35b-4ded-8891-dfe576ab64ff" x="0" y="632" width="555" height="1"/>
+				<reportElement x="0" y="676" width="575" height="1" uuid="651c465a-c35b-4ded-8891-dfe576ab64ff"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="374" y="581" width="132" height="1"/>
+				<reportElement x="374" y="634" width="132" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="379" y="582" width="127" height="15"/>
-				<textElement/>
+				<reportElement x="384" y="635" width="127" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(assinatura do responsável)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="89" y="754" width="127" height="15"/>
-				<textElement/>
+				<reportElement x="92" y="772" width="127" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(assinatura do responsável)]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="87" y="753" width="132" height="1"/>
+				<reportElement x="87" y="771" width="132" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="46" y="581" width="212" height="1"/>
+				<reportElement x="46" y="634" width="212" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="181" y="568" width="14" height="15"/>
-				<textElement/>
+				<reportElement x="181" y="621" width="14" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[de]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="133" y="569" width="14" height="15"/>
-				<textElement/>
+				<reportElement x="133" y="622" width="14" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="233" y="568" width="25" height="15"/>
-				<textElement/>
-				<text><![CDATA[2013]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="119" y="582" width="79" height="15"/>
-				<textElement/>
+				<reportElement x="122" y="635" width="79" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(cidade e data)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="234" y="693" width="25" height="15"/>
-				<textElement/>
-				<text><![CDATA[2013]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="182" y="693" width="14" height="15"/>
-				<textElement/>
+				<reportElement x="182" y="724" width="14" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[de]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="120" y="707" width="79" height="15"/>
-				<textElement/>
+				<reportElement x="122" y="738" width="79" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(cidade e data)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="134" y="694" width="14" height="15"/>
-				<textElement/>
+				<reportElement x="134" y="725" width="14" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[,]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="47" y="706" width="212" height="1"/>
+				<reportElement x="47" y="737" width="212" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="380" y="709" width="127" height="15"/>
-				<textElement/>
+				<reportElement x="388" y="740" width="127" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(telefone do responsável)]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="375" y="708" width="132" height="1"/>
+				<reportElement x="375" y="739" width="132" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="379" y="754" width="127" height="15"/>
-				<textElement/>
+				<reportElement x="381" y="772" width="127" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(assinatura do participante)]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698" x="375" y="753" width="132" height="1"/>
+				<reportElement x="375" y="771" width="132" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>
 			</line>
 			<staticText>
-				<reportElement uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5" x="374" y="693" width="127" height="15"/>
-				<textElement/>
+				<reportElement x="374" y="724" width="127" height="15" uuid="beaec731-96a6-4ca4-a81a-a2d495601cc5"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
 				<text><![CDATA[(    )]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="286" y="101" width="143" height="15" uuid="f5ff0303-1b20-40d4-bee4-eeb195211be7"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Certidão Nascimento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="286" y="112" width="140" height="12" uuid="c0658285-20e9-458b-ba7c-e50d35a09304"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.documentos.certidaoNascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="196" width="286" height="15" uuid="74882fdf-e416-40fc-b2c4-4c7908ceccb3"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do responsável (pai ou mãe)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="196" width="143" height="15" uuid="55a1fbb2-4e43-427b-a292-5acec5160c94"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone do responsável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="445" width="286" height="15" uuid="0ec71736-f476-4b23-a785-0e42433b47a5"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do responsável no evento (evangelizador)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="286" y="445" width="286" height="15" uuid="dffed34b-186d-422a-8fde-8c54a46f22e3"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefone do responsável no evento]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="457" width="283" height="12" uuid="f35f2289-900f-4639-990c-c7a643580ba0"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.responsavelEvento.nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="286" y="457" width="283" height="12" uuid="4efc5f55-bb3b-4bad-9739-20df5782d5fe"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.responsavelEvento.telefone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="322" width="201" height="15" uuid="9ad9bebe-5b09-48cb-bb13-392f5a3255cf"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Possui algum tipo de restrição alimentar?]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="334" width="575" height="12" uuid="0e9de143-ae13-4ab4-99ff-dd38f9beec5b"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.dieta} == null) || ($F{confraternista.pessoa.informacoesSaude.dieta}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.dieta}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="208" width="283" height="12" uuid="27b424b3-67f0-43fc-a96b-4962b6cfff23"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.responsavel.nome}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="286" y="207" width="140" height="12" uuid="783a8770-6e9a-425d-8703-86c304481f20"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.responsavel.telefone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="571" width="575" height="55" uuid="a327302c-05ef-4a95-83f6-ef2af28efb49"/>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Eu,_____________________________, portador da CI n°______________________, autorizo o menor supracitado, do(a) qual sou responsável, a participar do "+$F{edicaoEvento.numero} +" "+ $F{edicaoEvento.evento.sigla}+", no período de 18/10/2014 a 19/10/2014, que ocorrerá no Acampamento Batista Gaúcho, em Itaara-RS. Autorizo o mesmo a pernoitar no local e a divulgação de fotos e de filmagens que serão realizadas pela organização do evento."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="682" width="575" height="56" uuid="69d64b3a-f1ab-42c1-9b99-cede012d83cc"/>
+				<textElement textAlignment="Justified">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Eu, _________________________________________________, declaro que o(a) participante acima identificado(a) freqüenta as atividades descritas no campo 'Atividade(s) na instituição espírita' desta ficha de inscrição, há pelo menos um ano, tendo freqüência superior a 75%, portanto, atende aos critérios estabelecidos para participação do(a) "+ $F{edicaoEvento.numero} +" "+ $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="502" width="575" height="22" uuid="68cc8cc7-d736-465f-861b-ca412e832d7c"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Dados do Grupo"]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="234" y="621" width="37" height="15" uuid="32510f85-317e-4122-bfc6-b8f70ba1637c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="234" y="724" width="37" height="15" uuid="83a45558-7ef1-4d50-9c9d-b2b0eb3b7012"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

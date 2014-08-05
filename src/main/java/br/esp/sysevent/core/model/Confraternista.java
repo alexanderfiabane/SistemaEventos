@@ -29,6 +29,9 @@ public class Confraternista extends AbstractEntity<Long> {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "ID_PESSOA", nullable = false)
     private Pessoa pessoa;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "ID_RESPONSAVEL", nullable = true)
+    private Responsavel responsavelEvento;
     @ManyToOne
     @JoinColumn(name = "ID_OFICINA", nullable = true)
     private Oficina oficina;
@@ -80,6 +83,14 @@ public class Confraternista extends AbstractEntity<Long> {
         return pessoa;
     }
 
+    public Responsavel getResponsavelEvento() {
+        return responsavelEvento;
+    }
+
+    public void setResponsavelEvento(Responsavel responsavelEvento) {
+        this.responsavelEvento = responsavelEvento;
+    }     
+    
     public GrupoIdade getGrupoIdade() {
         return grupoIdade;
     }

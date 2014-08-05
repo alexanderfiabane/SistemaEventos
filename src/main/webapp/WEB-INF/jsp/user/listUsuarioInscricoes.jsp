@@ -45,7 +45,7 @@
                     </c:choose>
                 </display:column>
                 <display:column titleKey="label.event" value="${inscricao.edicaoEvento.evento.nome}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.number" value="${inscricao.edicaoEvento.numero}ª" class="centered" headerClass="centered"/>
+                <display:column titleKey="label.number" value="${inscricao.edicaoEvento.numero}" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.theme" value="${inscricao.edicaoEvento.tema}" class="centered" headerClass="centered"/>                        
                 <display:column titleKey="label.subscriptionstatus" value="${inscricao.status.value}" class="centered" headerClass="centered"/>                        
                 <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">

@@ -31,6 +31,8 @@ public class InformacoesSaude extends AbstractEntity<Long>{
     private String convenioTelefone;
     @Column(name = "ALERGIA", nullable = true)
     private String alergia;    
+    @Column(name = "DIETA", nullable = true)
+    private String dieta;    
 
     public String getMedicacao() {
         return medicacao;
@@ -63,11 +65,20 @@ public class InformacoesSaude extends AbstractEntity<Long>{
     public void setAlergia(String alergia) {
         this.alergia = alergia;
     }
+
+    public String getDieta() {
+        return dieta;
+    }
+
+    public void setDieta(String dieta) {
+        this.dieta = dieta;
+    }   
     
     public boolean temInformacao() {
         return !CharSequenceUtils.isBlank(medicacao) ||
                !CharSequenceUtils.isBlank(convenio) ||
-               !CharSequenceUtils.isBlank(alergia);
+               !CharSequenceUtils.isBlank(alergia) ||
+               !CharSequenceUtils.isBlank(dieta);
     }
 
     @Override

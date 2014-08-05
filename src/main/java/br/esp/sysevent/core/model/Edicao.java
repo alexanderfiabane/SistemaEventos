@@ -35,7 +35,7 @@ public class Edicao extends AbstractEntity<Long> {
     @Column(name = "VAGAS_OCUPADAS", nullable = false)
     private Integer vagasOcupadas;
     @Column(name = "NUMERO", nullable = false)
-    private Integer numero;
+    private String numero;
     @Column(name = "VALOR_INSCR", nullable = false)
     private BigDecimal valorInscricao;
     @Embedded
@@ -150,11 +150,11 @@ public class Edicao extends AbstractEntity<Long> {
         this.evento = evento;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(final Integer numero) {
+    public void setNumero(final String numero) {
         this.numero = numero;
     }
 

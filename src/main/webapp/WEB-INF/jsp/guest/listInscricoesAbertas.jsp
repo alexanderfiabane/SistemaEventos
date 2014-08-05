@@ -21,7 +21,7 @@
                     <button type="button" class="btn btn-mini" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>                            
                 </display:column>
                 <display:column titleKey="label.event" value="${edicao.evento.nome}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.number" value="${edicao.numero}ª" class="centered" headerClass="centered"/>
+                <display:column titleKey="label.number" value="${edicao.numero}" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.theme" value="${edicao.tema}" class="centered" headerClass="centered"/>                        
                 <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
                     de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>

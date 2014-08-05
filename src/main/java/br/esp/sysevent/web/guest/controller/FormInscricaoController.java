@@ -3,9 +3,6 @@
  */
 package br.esp.sysevent.web.guest.controller;
 
-import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.web.controller.util.ControllerUtils;
-import br.esp.sysevent.web.guest.validation.InscricaoValidator;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Confraternista;
@@ -18,6 +15,7 @@ import br.esp.sysevent.core.model.InformacoesSaude;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
+import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
@@ -27,8 +25,12 @@ import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.EstadoService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.OficinaService;
+import br.esp.sysevent.core.service.ResponsavelService;
 import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.esp.sysevent.core.service.TipoCamisetaService;
+import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.validation.InscricaoValidator;
 import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.ojimarcius.commons.util.CharSequenceUtils;
@@ -60,6 +62,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(value = "/guest/formInscricao.html")
 public class FormInscricaoController extends AbstractFormController<Long, Inscricao> {
 
+    @Autowired
+    protected ResponsavelService responsavelService;
     @Autowired
     protected EstadoService estadoService;
     @Autowired
@@ -115,6 +119,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de tipos de confraternista ao referenceData.
+     * @return 
      */
     @ModelAttribute("tiposConfraternista")
     public Collection<Confraternista.Tipo> getTiposConfraternista() {
@@ -123,6 +128,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de sexos ao referenceData.
+     * @return 
      */
     @ModelAttribute("sexos")
     public Collection<Sexo> getSexos() {
@@ -131,6 +137,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de Estados ao referenceData.
+     * @return 
      */
     @ModelAttribute("estados")
     public Collection<Estado> getEstados() {
@@ -139,10 +146,13 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Inicializa os binders de tipos.
+     * @param binder
+     * @param locale
      */
     @InitBinder
     public void initBinder(final WebDataBinder binder, final Locale locale) {
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
+        binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<Responsavel>(responsavelService));
         binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<Cidade>(cidadeService));
         binder.registerCustomEditor(Oficina.class, new CustomEntityEditor<Oficina>(oficinaService));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaService));
@@ -152,6 +162,9 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     * @param command
+     * @param model
+     * @return 
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Inscricao command, final ModelMap model) {
@@ -161,6 +174,13 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param locale
+     * @param result
+     * @param status
+     * @param model
+     * @param attributes
+     * @return 
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Inscricao command,

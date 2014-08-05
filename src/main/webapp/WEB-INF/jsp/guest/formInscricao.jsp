@@ -19,9 +19,11 @@
             <div class="span6">
                 <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
-                    <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
-                        <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                    </msf:label>
+                    <c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">
+                        <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                            <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                        </msf:label>
+                    </c:if>
                 </c:forEach>
                 <div class="control">
                     <form:errors path="confraternista.tipo" cssClass="label label-important"/>
@@ -53,6 +55,9 @@
             <div class="span3">
                 <bs:formField label="label.id" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.rg" maxlength="10"/>
             </div>
+            <div class="span3">
+                <bs:formField label="label.birthcertificate" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.certidaoNascimento" maxlength="20"/>
+            </div>
         </div>
         <div class="row-fluid">
             <div class="span3">
@@ -72,14 +77,14 @@
             <div class="span3">
                 <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estado">
-                    <option value="">-- Selecione um estado --</option>
+                    <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
                         <option value="${estado.id}" <c:if test="${command.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
@@ -96,10 +101,18 @@
                 <bs:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
             </div>
         </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <bs:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="span12"/>                
+            </div>            
+            <div class="span3">
+                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.telefone" maxlength="16"/>                
+            </div>            
+        </div>
     </fieldset>
 
     <fieldset>
-        <legend><msf:message key="label.healthdetails"/></legend>
+        <legend><msf:message key="label.healthfooddetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
                 <msf:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
@@ -133,6 +146,16 @@
                 <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255"/>
             </div>
         </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <msf:label label="Possui algum tipo de restrição alimentar?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <msf:label label="Não" for="dietaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaNao" name="dieta" value="false"/></msf:label>
+                <msf:label label="Sim" for="dietaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaSim" name="dieta" value="true"/></msf:label>
+                </div>
+                <div class="span3">
+                <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255"/>
+            </div>
+        </div>
     </fieldset>
 
     <fieldset>
@@ -160,19 +183,30 @@
             <div class="span3">
                 <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estadoCasa">
-                    <option value="">-- Selecione um estado --</option>
+                    <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
                         <option value="${estado.id}" <c:if test="${command.confraternista.casaEspirita.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
             </div>
         </div>
+        <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
+        <%--<c:if test="${command.confraternista.tipo == 'CONFRATERNISTA'}">--%>                    
+        <div class="row-fluid">
+            <div class="span6">
+                <bs:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="span12"/>                
+            </div>            
+            <div class="span3">
+                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.telefone" maxlength="16"/>                
+            </div> 
+        </div>    
+        <%--</c:if>--%>    
         <div class="row-fluid">
             <div class="span12">
                 <bs:formField label="label.activityatie" isLabelKey="true" isMandatory="true" path="confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="span12"/>
@@ -234,7 +268,7 @@
                 <div class="span1">
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
-                        <button type="button" class="btn btn-mini" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
+                        <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
                         <button type="button" class="btn btn-mini" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
                     </div>
                 </div>
@@ -278,8 +312,8 @@
                     </tbody>
                 </table>
                 <span class="span" style="font-size:8pt;">
-                    * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' Adicionar camiseta '.<br/>
-                    * Caso não deseje adquirir a camiseta agora, basta clicar em 'Apagar' ou não alterar os campos referentes à camiseta!<br/>
+                    * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' + '.<br/>
+                    * Caso não deseje adquirir a camiseta agora, basta clicar em ' - ' ou não alterar os campos referentes à camiseta!<br/>
                     * <b>Valor:</b> Camiseta - <fmt:formatNumber value="${command.edicaoEvento.valorCamiseta}" type="currency" currencySymbol="R$" minFractionDigits="2"/>.
                 </span>
             </div>
@@ -309,6 +343,8 @@
                                                 jQuery('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
                                                 jQuery('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
                                                 jQuery('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
 
                                                 jQuery('#addCamiseta').click(addCamiseta);
                                                 jQuery('.delete').click(removeCamiseta);
@@ -341,6 +377,13 @@
                                                         jQuery('#alergia').attr('readonly', true).val('');
                                                     }
                                                 });
+                                                jQuery('[name=dieta]').change(function() {
+                                                    if (jQuery(this).val() == 'true') {
+                                                        jQuery('#dieta').attr('readonly', false);
+                                                    } else {
+                                                        jQuery('#dieta').attr('readonly', true).val('');
+                                                    }
+                                                });
 
                                                 if (jQuery('#medicacao').val() == '') {
                                                     jQuery('#medicacaoNao').click();
@@ -356,6 +399,11 @@
                                                     jQuery('#alergiaNao').click();
                                                 } else {
                                                     jQuery('#alergiaSim').click();
+                                                }
+                                                if (jQuery('#dieta').val() == '') {
+                                                    jQuery('#dietaNao').click();
+                                                } else {
+                                                    jQuery('#dietaSim').click();
                                                 }
 
 

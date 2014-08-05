@@ -18,9 +18,11 @@
             <div class="span6">
                 <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
-                    <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
-                        <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                    </msf:label>
+                   <c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">
+                        <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                            <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                        </msf:label>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
@@ -49,6 +51,9 @@
             <div class="span3">
                 <bs:formField label="label.id" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.rg" maxlength="10"/>
             </div>
+            <div class="span3">
+                <bs:formField label="label.birthcertificate" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.certidaoNascimento" maxlength="20"/>
+            </div>
         </div>
         <div class="row-fluid">
             <div class="span3">
@@ -68,14 +73,14 @@
             <div class="span3">
                 <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estado">
-                    <option value="">-- Selecione um estado --</option>
+                    <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
                         <option value="${estado.id}" <c:if test="${command.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
@@ -92,10 +97,18 @@
                 <bs:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
             </div>
         </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <bs:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="span12"/>                
+            </div>            
+            <div class="span3">
+                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.telefone" maxlength="16"/>                
+            </div>            
+        </div>
     </fieldset>
 
     <fieldset>
-        <legend><msf:message key="label.healthdetails"/></legend>
+        <legend><msf:message key="label.healthfooddetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
                 <msf:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
@@ -127,6 +140,16 @@
                 </div>
                 <div class="span3">
                 <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255"/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3">
+                <msf:label label="Possui algum tipo de restrição alimentar?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <msf:label label="Não" for="dietaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaNao" name="dieta" value="false"/></msf:label>
+                <msf:label label="Sim" for="dietaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaSim" name="dieta" value="true"/></msf:label>
+                </div>
+                <div class="span3">
+                <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255"/>
             </div>
         </div>
     </fieldset>
@@ -169,6 +192,17 @@
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
             </div>
         </div>
+       <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
+        <%--<c:if test="${command.confraternista.tipo == 'CONFRATERNISTA'}">--%>                    
+            <div class="row-fluid">
+                <div class="span6">
+                    <bs:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="span12"/>                
+                </div>            
+                <div class="span3">
+                    <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.telefone" maxlength="16"/>                
+                </div> 
+            </div>    
+        <%--</c:if>--%>
         <div class="row-fluid">
             <div class="span12">
                 <bs:formField label="label.activityatie" isLabelKey="true" isMandatory="true" path="confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="span12"/>
@@ -230,7 +264,7 @@
                 <div class="span1">
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
-                        <button type="button" class="btn btn-mini" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
+                        <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
                         <button type="button" class="btn btn-mini" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
                     </div>
                 </div>
@@ -274,8 +308,8 @@
                     </tbody>
                 </table>
                 <span class="span" style="font-size:8pt;">
-                    * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' Adicionar camiseta '.<br/>
-                    * Caso não deseje adquirir a camiseta agora, basta clicar em 'Apagar' ou não alterar os campos referentes à camiseta!<br/>
+                    * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' + '.<br/>
+                    * Caso não deseje adquirir a camiseta agora, basta clicar em ' - ' ou não alterar os campos referentes à camiseta!<br/>
                     * <b>Valor:</b> Camiseta - <fmt:formatNumber value="${command.edicaoEvento.valorCamiseta}" type="currency" currencySymbol="R$" minFractionDigits="2"/>.
                 </span>
             </div>
@@ -287,179 +321,192 @@
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
-    jQuery(function() {
-        var camisetaIndex = ${fn:length(command.confraternista.camisetas)};
-        jQuery(document).ready(function() {
-            $('.accordion').accordion({
-                //                    collapsible: true,
-                heightStyle: 'content',
-                icons: {
-                    header: 'ui-icon-circle-arrow-e',
-                    activeHeader: 'ui-icon-circle-arrow-s'
-                }
-            });
+                                        jQuery(function() {
+                                            var camisetaIndex = ${fn:length(command.confraternista.camisetas)};
+                                            jQuery(document).ready(function() {
+                                                $('.accordion').accordion({
+                                                    //                    collapsible: true,
+                                                    heightStyle: 'content',
+                                                    icons: {
+                                                        header: 'ui-icon-circle-arrow-e',
+                                                        activeHeader: 'ui-icon-circle-arrow-s'
+                                                    }
+                                                });
 
-            jQuery('[name="confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
-            jQuery('[name="confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
-            jQuery('[name="confraternista.pessoa.endereco.cep"]').mask('99999-999');
-            jQuery('[name="confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
-            jQuery('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
-            jQuery('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
-            jQuery('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
+                                                jQuery('[name="confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
+                                                jQuery('[name="confraternista.pessoa.endereco.cep"]').mask('99999-999');
+                                                jQuery('[name="confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
+                                                jQuery('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
+                                                jQuery('[name="confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
 
-            jQuery('#addCamiseta').click(addCamiseta);
-            jQuery('.delete').click(removeCamiseta);
-            jQuery('#removeCamiseta').hide();
+                                                jQuery('#addCamiseta').click(addCamiseta);
+                                                jQuery('.delete').click(removeCamiseta);
+                                                jQuery('#removeCamiseta').hide();
 
-            jQuery('[name="confraternista.oficina"]').each(function() {
-                jQuery(this).attr('checked', jQuery(this).val() == '${command.confraternista.oficina.id}');
-            });
+                                                jQuery('[name="confraternista.oficina"]').each(function() {
+                                                    jQuery(this).attr('checked', jQuery(this).val() == '${command.confraternista.oficina.id}');
+                                                });
 
-            jQuery('[name=medicacao]').change(function() {
-                if (jQuery(this).val() == 'true') {
-                    jQuery('#medicacao').attr('readonly', false);
-                } else {
-                    jQuery('#medicacao').attr('readonly', true).val('');
-                }
-            });
-            jQuery('[name=convenio]').change(function() {
-                if (jQuery(this).val() == 'true') {
-                    jQuery('#convenio').attr('readonly', false);
-                    jQuery('#foneConvenio').attr('readonly', false);
-                } else {
-                    jQuery('#convenio').attr('readonly', true).val('');
-                    jQuery('#foneConvenio').attr('readonly', true).val('');
-                }
-            });
-            jQuery('[name=alergia]').change(function() {
-                if (jQuery(this).val() == 'true') {
-                    jQuery('#alergia').attr('readonly', false);
-                } else {
-                    jQuery('#alergia').attr('readonly', true).val('');
-                }
-            });
+                                                jQuery('[name=medicacao]').change(function() {
+                                                    if (jQuery(this).val() == 'true') {
+                                                        jQuery('#medicacao').attr('readonly', false);
+                                                    } else {
+                                                        jQuery('#medicacao').attr('readonly', true).val('');
+                                                    }
+                                                });
+                                                jQuery('[name=convenio]').change(function() {
+                                                    if (jQuery(this).val() == 'true') {
+                                                        jQuery('#convenio').attr('readonly', false);
+                                                        jQuery('#foneConvenio').attr('readonly', false);
+                                                    } else {
+                                                        jQuery('#convenio').attr('readonly', true).val('');
+                                                        jQuery('#foneConvenio').attr('readonly', true).val('');
+                                                    }
+                                                });
+                                                jQuery('[name=alergia]').change(function() {
+                                                    if (jQuery(this).val() == 'true') {
+                                                        jQuery('#alergia').attr('readonly', false);
+                                                    } else {
+                                                        jQuery('#alergia').attr('readonly', true).val('');
+                                                    }
+                                                });
+                                                jQuery('[name=dieta]').change(function() {
+                                                    if (jQuery(this).val() == 'true') {
+                                                        jQuery('#dieta').attr('readonly', false);
+                                                    } else {
+                                                        jQuery('#dieta').attr('readonly', true).val('');
+                                                    }
+                                                });
 
-            if (jQuery('#medicacao').val() == '') {
-                jQuery('#medicacaoNao').click();
-            } else {
-                jQuery('#medicacaoSim').click();
-            }
-            if (jQuery('#convenio').val() == '') {
-                jQuery('#convenioNao').click();
-            } else {
-                jQuery('#convenioSim').click();
-            }
-            if (jQuery('#alergia').val() == '') {
-                jQuery('#alergiaNao').click();
-            } else {
-                jQuery('#alergiaSim').click();
-            }
+                                                if (jQuery('#medicacao').val() == '') {
+                                                    jQuery('#medicacaoNao').click();
+                                                } else {
+                                                    jQuery('#medicacaoSim').click();
+                                                }
+                                                if (jQuery('#convenio').val() == '') {
+                                                    jQuery('#convenioNao').click();
+                                                } else {
+                                                    jQuery('#convenioSim').click();
+                                                }
+                                                if (jQuery('#alergia').val() == '') {
+                                                    jQuery('#alergiaNao').click();
+                                                } else {
+                                                    jQuery('#alergiaSim').click();
+                                                }
+                                                if (jQuery('#dieta').val() == '') {
+                                                    jQuery('#dietaNao').click();
+                                                } else {
+                                                    jQuery('#dietaSim').click();
+                                                }
 
+                                                jQuery('#estado').change(function() {
+                                                    loadCidades(jQuery(this), jQuery('#cidade'));
+                                                });
+                                                jQuery('#estadoCasa').change(function() {
+                                                    loadCidades(jQuery(this), jQuery('#cidadeCasa'));
+                                                });
 
-            jQuery('#estado').change(function() {
-                loadCidades(jQuery(this), jQuery('#cidade'));
-            });
-            jQuery('#estadoCasa').change(function() {
-                loadCidades(jQuery(this), jQuery('#cidadeCasa'));
-            });
+                                                loadCidades(jQuery('#estado'), jQuery('#cidade'), '${command.confraternista.pessoa.endereco.cidade.id}');
+                                                loadCidades(jQuery('#estadoCasa'), jQuery('#cidadeCasa'), '${command.confraternista.casaEspirita.endereco.cidade.id}');
+                                            });
 
-            loadCidades(jQuery('#estado'), jQuery('#cidade'), '${command.confraternista.pessoa.endereco.cidade.id}');
-            loadCidades(jQuery('#estadoCasa'), jQuery('#cidadeCasa'), '${command.confraternista.casaEspirita.endereco.cidade.id}');
-        });
+                                            function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
+                                                var estadoSelecionado = inputEstado.val();
+                                                inputCidade.empty();
+                                                if (estadoSelecionado == '') {
+                                                    inputCidade.append(jQuery('<option>').append('-- Selecione primeiro um estado --'));
+                                                } else {
+                                                    enderecoAjaxService.getCidades(estadoSelecionado, function callback(cidades) {
+                                                        inputCidade.append(jQuery('<option>').append('-- Selecione uma cidade --'));
+                                                        jQuery.each(cidades, function(index, value) {
+                                                            inputCidade.append(jQuery('<option>').val(value.id).append(value.nome));
+                                                        });
+                                                        if (idCidadeAtual) {
+                                                            inputCidade.val(idCidadeAtual);
+                                                        }
+                                                    });
+                                                }
+                                            }
 
-        function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
-            var estadoSelecionado = inputEstado.val();
-            inputCidade.empty();
-            if (estadoSelecionado == '') {
-                inputCidade.append(jQuery('<option>').append('-- Selecione primeiro um estado --'));
-            } else {
-                enderecoAjaxService.getCidades(estadoSelecionado, function callback(cidades) {
-                    inputCidade.append(jQuery('<option>').append('-- Selecione uma cidade --'));
-                    jQuery.each(cidades, function(index, value) {
-                        inputCidade.append(jQuery('<option>').val(value.id).append(value.nome));
-                    });
-                    if (idCidadeAtual) {
-                        inputCidade.val(idCidadeAtual);
-                    }
-                });
-            }
-        }
-        
-        function removeCamiseta() {
-            jQuery(this).parent().parent().find('td input').val('');
-            jQuery(this).parent().parent().hide();
-        }
+                                            function removeCamiseta() {
+                                                jQuery(this).parent().parent().find('td input').val('');
+                                                jQuery(this).parent().parent().hide();
+                                            }
 
-        function addCamiseta() {
-            var tipo = jQuery('#tipoCamiseta').val();
-            var cor = jQuery('#corCamiseta').val();
-            var tam = jQuery('#tamanhoCamiseta').val();
-            var quant = jQuery('#quantCamiseta').val();
+                                            function addCamiseta() {
+                                                var tipo = jQuery('#tipoCamiseta').val();
+                                                var cor = jQuery('#corCamiseta').val();
+                                                var tam = jQuery('#tamanhoCamiseta').val();
+                                                var quant = jQuery('#quantCamiseta').val();
 
-            var tipoDescr = jQuery('#tipoCamiseta :selected').html();
-            var corDescr = jQuery('#corCamiseta :selected').text();
-            var tamDescr = jQuery('#tamanhoCamiseta :selected').text();
-            var quantDescr = jQuery('#quantCamiseta').val();
+                                                var tipoDescr = jQuery('#tipoCamiseta :selected').html();
+                                                var corDescr = jQuery('#corCamiseta :selected').text();
+                                                var tamDescr = jQuery('#tamanhoCamiseta :selected').text();
+                                                var quantDescr = jQuery('#quantCamiseta').val();
 
-            if (tipo == '') {
-                alert('Escolha um tipo de camiseta!');
-                return;
-            }
-            if (cor == '') {
-                alert('Escolha uma cor de camiseta!');
-                return;
-            }
-            if (tam == '') {
-                alert('Escolha um tamanho de camiseta!');
-                return;
-            }
-            if (quant == '') {
-                alert('Defina a quantidade de camisetas!');
-                return;
-            }
+                                                if (tipo == '') {
+                                                    alert('Escolha um tipo de camiseta!');
+                                                    return;
+                                                }
+                                                if (cor == '') {
+                                                    alert('Escolha uma cor de camiseta!');
+                                                    return;
+                                                }
+                                                if (tam == '') {
+                                                    alert('Escolha um tamanho de camiseta!');
+                                                    return;
+                                                }
+                                                if (quant == '') {
+                                                    alert('Defina a quantidade de camisetas!');
+                                                    return;
+                                                }
 
-            var index = camisetaIndex++;
+                                                var index = camisetaIndex++;
 
-            jQuery('#camisetas tbody').append(jQuery('<tr>').attr('id', 'camiseta_' + index)
-                    .append(jQuery('<td>').append(createButton()))
-                    .append(jQuery('<td>').append(createInput('t', tipo, index)).append(tipoDescr))
-                    .append(jQuery('<td>').append(createInput('c', cor, index)).append(corDescr))
-                    .append(jQuery('<td>').append(createInput('s', tam, index)).append(tamDescr))
-                    .append(jQuery('<td>').append(createInput('q', quant, index)).append(quantDescr))
-                    );
+                                                jQuery('#camisetas tbody').append(jQuery('<tr>').attr('id', 'camiseta_' + index)
+                                                        .append(jQuery('<td>').append(createButton()))
+                                                        .append(jQuery('<td>').append(createInput('t', tipo, index)).append(tipoDescr))
+                                                        .append(jQuery('<td>').append(createInput('c', cor, index)).append(corDescr))
+                                                        .append(jQuery('<td>').append(createInput('s', tam, index)).append(tamDescr))
+                                                        .append(jQuery('<td>').append(createInput('q', quant, index)).append(quantDescr))
+                                                        );
 
-            jQuery('#tipoCamiseta').val('');
-            jQuery('#corCamiseta').val('');
-            jQuery('#tamanhoCamiseta').val('');
-            jQuery('#quantCamiseta').val('');
-        }
+                                                jQuery('#tipoCamiseta').val('');
+                                                jQuery('#corCamiseta').val('');
+                                                jQuery('#tamanhoCamiseta').val('');
+                                                jQuery('#quantCamiseta').val('');
+                                            }
 
-        function createInput(key, value, index) {
-            return jQuery('<input>').attr('type', 'hidden').attr('name', getName(key, index)).val(value);
-        }
+                                            function createInput(key, value, index) {
+                                                return jQuery('<input>').attr('type', 'hidden').attr('name', getName(key, index)).val(value);
+                                            }
 
-        function createButton() {
-            return jQuery("#removeCamiseta").clone(true).show();
-        }
+                                            function createButton() {
+                                                return jQuery("#removeCamiseta").clone(true).show();
+                                            }
 
-        function getName(key, index) {
-            var path = 'confraternista.camisetas';
-            var field;
-            switch (key) {
-                case 't':
-                    field = 'tipoCamiseta';
-                    break;
-                case 'c':
-                    field = 'corCamiseta';
-                    break;
-                case 's':
-                    field = 'tamanhoCamiseta';
-                    break;
-                case 'q':
-                    field = 'quantidadeCamiseta';
-                    break;
-            }
-            return path + '[' + index + '].' + field;
-        }
-    });
+                                            function getName(key, index) {
+                                                var path = 'confraternista.camisetas';
+                                                var field;
+                                                switch (key) {
+                                                    case 't':
+                                                        field = 'tipoCamiseta';
+                                                        break;
+                                                    case 'c':
+                                                        field = 'corCamiseta';
+                                                        break;
+                                                    case 's':
+                                                        field = 'tamanhoCamiseta';
+                                                        break;
+                                                    case 'q':
+                                                        field = 'quantidadeCamiseta';
+                                                        break;
+                                                }
+                                                return path + '[' + index + '].' + field;
+                                            }
+                                        });
 </script>
