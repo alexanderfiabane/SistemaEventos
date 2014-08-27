@@ -7,7 +7,7 @@
 		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
 	</parameter>
 	<field name="confraternista.oficina.nome" class="java.lang.String"/>
-	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
+	<field name="edicaoEvento.numero" class="java.lang.String"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="edicaoEvento.tema" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
@@ -19,7 +19,7 @@
 		<groupHeader>
 			<band height="70">
 				<staticText>
-					<reportElement uuid="652c56af-6c1e-4016-844c-4759d360df6a" x="0" y="2" width="70" height="20"/>
+					<reportElement x="0" y="2" width="70" height="20" uuid="652c56af-6c1e-4016-844c-4759d360df6a"/>
 					<box leftPadding="5"/>
 					<textElement>
 						<font size="15" isBold="true"/>
@@ -27,22 +27,22 @@
 					<text><![CDATA[Oficina:]]></text>
 				</staticText>
 				<line>
-					<reportElement uuid="ad6863d6-3586-432d-bf3c-c036d24cea72" x="0" y="22" width="555" height="1"/>
+					<reportElement x="0" y="22" width="555" height="1" uuid="ad6863d6-3586-432d-bf3c-c036d24cea72"/>
 				</line>
 				<subreport>
-					<reportElement uuid="918dba74-ddad-4ff8-8245-1e4ff729dfe8" x="0" y="43" width="555" height="26"/>
+					<reportElement x="0" y="43" width="555" height="26" uuid="918dba74-ddad-4ff8-8245-1e4ff729dfe8"/>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{confraternista.oficina.oficineiros})]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "OficinasConfraternistasReport_Oficineiros.jasper"]]></subreportExpression>
 				</subreport>
 				<textField>
-					<reportElement uuid="f31666c4-91ef-490b-a429-4ef98c3ae86f" x="63" y="2" width="496" height="20"/>
+					<reportElement x="63" y="2" width="496" height="20" uuid="f31666c4-91ef-490b-a429-4ef98c3ae86f"/>
 					<textElement>
 						<font size="15"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{confraternista.oficina.nome}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement uuid="6425311f-9ae5-4c03-817e-1b9f9a5ba621" x="0" y="23" width="82" height="20"/>
+					<reportElement x="0" y="23" width="82" height="20" uuid="6425311f-9ae5-4c03-817e-1b9f9a5ba621"/>
 					<box leftPadding="5"/>
 					<textElement verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
@@ -54,24 +54,24 @@
 		<groupFooter>
 			<band height="24">
 				<line>
-					<reportElement uuid="42a43cc7-d570-4c90-bb63-46ac314458ab" x="0" y="0" width="555" height="1"/>
+					<reportElement x="0" y="0" width="555" height="1" uuid="42a43cc7-d570-4c90-bb63-46ac314458ab"/>
 				</line>
 				<staticText>
-					<reportElement uuid="1d74db77-08ea-4eaf-8a72-3558801f01b1" x="0" y="1" width="31" height="23"/>
+					<reportElement x="0" y="1" width="31" height="23" uuid="1d74db77-08ea-4eaf-8a72-3558801f01b1"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[Total:]]></text>
 				</staticText>
 				<textField>
-					<reportElement uuid="62a90734-c994-41f2-b931-8634686031fd" x="31" y="1" width="113" height="23"/>
+					<reportElement x="31" y="1" width="113" height="23" uuid="62a90734-c994-41f2-b931-8634686031fd"/>
 					<textElement>
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{Oficina_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement uuid="a979e046-71e7-4f6c-b6af-0b3ab79294f4" x="259" y="1" width="296" height="20"/>
+					<reportElement x="259" y="1" width="296" height="20" uuid="a979e046-71e7-4f6c-b6af-0b3ab79294f4"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font size="12"/>
 					</textElement>
@@ -83,20 +83,20 @@
 	<pageHeader>
 		<band height="28">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3" x="0" y="3" width="555" height="24" forecolor="#000000"/>
+				<reportElement x="0" y="3" width="555" height="24" forecolor="#000000" uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + "º - " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + " " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="0" width="555" height="1"/>
+				<reportElement x="0" y="0" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="27" width="555" height="1"/>
+				<reportElement x="0" y="27" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
@@ -106,7 +106,7 @@
 	<detail>
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="0" y="1" width="210" height="22"/>
+				<reportElement x="0" y="1" width="210" height="22" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 				<box leftPadding="10"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" size="9"/>
@@ -114,14 +114,14 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="7407d889-4caa-4201-b52f-74a2a84e441b" x="210" y="1" width="184" height="22"/>
+				<reportElement x="210" y="1" width="184" height="22" uuid="7407d889-4caa-4201-b52f-74a2a84e441b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ff494e01-1b6e-4b73-b9db-dd1dd4eb651d" x="394" y="1" width="161" height="22"/>
+				<reportElement x="394" y="1" width="161" height="22" uuid="ff494e01-1b6e-4b73-b9db-dd1dd4eb651d"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>

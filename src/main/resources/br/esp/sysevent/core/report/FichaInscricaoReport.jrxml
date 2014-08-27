@@ -2,7 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaInscricaoReport" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="44cd0794-5d72-4a9a-837f-e90cbd8026f8">
 	<property name="ireport.zoom" value="1.464100000000007"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="67"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="fichaInscricaoCabecalho" class="java.io.InputStream"/>
 	<field name="edicaoEvento.numero" class="java.lang.String"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
@@ -54,9 +55,9 @@
 	</columnHeader>
 	<detail>
 		<band height="789" splitType="Stretch">
-			<image>
+			<image onErrorType="Blank">
 				<reportElement x="0" y="0" width="575" height="50" uuid="562e9676-8830-4015-987e-98233c130e5e"/>
-				<imageExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\SistemaEventos\\src\\main\\resources\\br\\esp\\sysevent\\core\\report\\cabecalhoFichaInscricao.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{fichaInscricaoCabecalho}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="101" width="143" height="15" uuid="af8b1900-d43a-4a09-abb4-3d13b0831af4"/>

@@ -32,12 +32,16 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 public class ReportServiceBean implements ReportService {
 
     private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaInscricaoReport.jasper";
+    private static final String CABECALHO_FICHA_INSCRICAO = "br/esp/sysevent/core/report/cabecalhoFichaInscricao.jpg";
 //    private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaArteLuzReport.jasper";
     private static final String HTML = "br/esp/sysevent/core/report/FichaInscricaoReport.html";
 
     @Override
     public byte[] geraRelatorio(Inscricao inscricao) throws Exception {
-        return geraRelatorio(Collections.singleton(inscricao), FICHA_INSCRICAO);
+        final InputStream imagem = getClass().getClassLoader().getResourceAsStream(CABECALHO_FICHA_INSCRICAO);
+        final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
+        parametros.put("fichaInscricaoCabecalho", imagem);
+        return geraRelatorio(Collections.singleton(inscricao), FICHA_INSCRICAO, parametros);
 //        final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(inscricao));
 //        return JasperRunManager.runReportToPdf(getJasper(FICHA_INSCRICAO).getInputStream(), getParameters(null), dataSource);
 //        final InputStream htmlModel = getClass().getClassLoader().getResourceAsStream(HTML);

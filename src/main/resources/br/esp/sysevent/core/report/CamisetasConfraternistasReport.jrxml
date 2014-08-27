@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CamisetasConfraternistasReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b367f350-e66f-401b-bfd1-633e0b7a8609">
-	<property name="ireport.zoom" value="2.3579476910000157"/>
-	<property name="ireport.x" value="736"/>
-	<property name="ireport.y" value="10"/>
+	<property name="ireport.zoom" value="1.9487171000000127"/>
+	<property name="ireport.x" value="152"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
 	</parameter>
-	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
+	<field name="edicaoEvento.numero" class="java.lang.String"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
 	<field name="confraternista.camisetas" class="java.util.Collection"/>
@@ -16,7 +16,7 @@
 		<groupHeader>
 			<band height="24">
 				<staticText>
-					<reportElement uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c" x="0" y="2" width="60" height="20" forecolor="#000000"/>
+					<reportElement x="0" y="2" width="60" height="20" forecolor="#000000" uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c"/>
 					<box leftPadding="5"/>
 					<textElement>
 						<font size="15" isBold="true"/>
@@ -24,7 +24,7 @@
 					<text><![CDATA[Nome:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47" x="58" y="2" width="495" height="20" forecolor="#000000"/>
+					<reportElement x="58" y="2" width="495" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 					<box leftPadding="5"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="SansSerif" size="15"/>
@@ -32,18 +32,18 @@
 					<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement uuid="10460785-744f-401d-b38a-3aa6df6cf7df" x="0" y="23" width="555" height="1"/>
+					<reportElement x="0" y="23" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>
 				</line>
 				<line>
-					<reportElement uuid="10460785-744f-401d-b38a-3aa6df6cf7df" x="0" y="0" width="555" height="1"/>
+					<reportElement x="0" y="0" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>
 				</line>
 				<textField>
-					<reportElement uuid="4c55100b-6020-4c64-b79f-b3ff4ef2826f" x="453" y="2" width="100" height="20"/>
+					<reportElement x="334" y="2" width="219" height="20" uuid="4c55100b-6020-4c64-b79f-b3ff4ef2826f"/>
 					<box rightPadding="5"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Inscrição: " + $F{status}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -57,27 +57,27 @@
 	<pageHeader>
 		<band height="47" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3" x="0" y="24" width="555" height="21" forecolor="#000000"/>
+				<reportElement x="0" y="24" width="555" height="21" forecolor="#000000" uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + "º - " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + " " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a6979233-01af-4636-8226-c70349affe40" x="0" y="1" width="555" height="23" forecolor="#000000"/>
+				<reportElement x="0" y="1" width="555" height="23" forecolor="#000000" uuid="a6979233-01af-4636-8226-c70349affe40"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lista de Camisetas dos Confraternistas]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="0" width="555" height="1"/>
+				<reportElement x="0" y="0" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement uuid="1384b674-73af-4615-94b1-de6af75768ae" x="0" y="44" width="555" height="1"/>
+				<reportElement x="0" y="44" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
@@ -87,7 +87,7 @@
 	<detail>
 		<band height="22" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="25b2cb01-0ac8-440b-a870-c0f4dcba40fb" x="0" y="0" width="555" height="22"/>
+				<reportElement x="0" y="0" width="555" height="22" uuid="25b2cb01-0ac8-440b-a870-c0f4dcba40fb"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{confraternista.camisetas})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "CamisetasConfraternistasReport_Camisetas.jasper"]]></subreportExpression>
 			</subreport>
@@ -99,17 +99,15 @@
 	<pageFooter>
 		<band height="16" splitType="Stretch">
 			<textField>
-				<reportElement uuid="1df7bf3c-858f-4a8a-bd7d-10cd327802da" x="533" y="1" width="20" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000"/>
-				<textElement/>
+				<reportElement x="533" y="1" width="20" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="1df7bf3c-858f-4a8a-bd7d-10cd327802da"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="ef6e9a29-820a-4568-86ba-b5b5e6443c51" x="498" y="1" width="35" height="15" forecolor="#000000"/>
-				<textElement/>
+				<reportElement x="498" y="1" width="35" height="15" forecolor="#000000" uuid="ef6e9a29-820a-4568-86ba-b5b5e6443c51"/>
 				<text><![CDATA[Página:]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="bdac8b21-33fe-4a18-8f33-25f2e4c6c674" x="0" y="0" width="555" height="1"/>
+				<reportElement x="0" y="0" width="555" height="1" uuid="bdac8b21-33fe-4a18-8f33-25f2e4c6c674"/>
 			</line>
 		</band>
 	</pageFooter>
