@@ -133,6 +133,7 @@ public class Confraternista extends AbstractEntity<Long> {
             case EVANGELIZADOR:
             case COORDENADOR:
             case FACILITADOR:
+            case OFICINEIRO:
                 return true;
             default:
                 return false;

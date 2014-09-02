@@ -95,8 +95,11 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         atualizaDocumentos(inscricao);
         atualizaInfoSaude(inscricao);
         final Inscricao inscricaoAtual = findById(inscricao.getId());
-        atualizaVagaOficina(inscricao, inscricaoAtual);
-        atualizaGrupoIdade(inscricao, inscricaoAtual);
+        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
+            atualizaVagaOficina(inscricao, inscricaoAtual);
+        } else if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA)) {
+            atualizaGrupoIdade(inscricao, inscricaoAtual);
+        }
         atualizaUsuario(inscricao, inscricaoAtual);
         saveOrUpdate(inscricao);
 
@@ -201,7 +204,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
                 }
             } else if (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA)) {
                 insereGrupoIdade(inscricao);
-            } 
+            }
             edicao.ocupaVaga();
             edicaoService.saveOrUpdate(edicao);
         }
@@ -211,7 +214,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Pessoa pessoa = inscricao.getConfraternista().getPessoa();
         final Usuario usuario = new Usuario();
         usuario.setPessoa(pessoa);
-        usuario.setRole(Usuario.Role.ROLE_USER);
+        usuario.setRole(Usuario.Role.ROLE_USER);        
         usuario.setUsername(pessoa.getEndereco().getEmail());
         usuario.setPassword(DigestUtils.sha256Hex(CalendarUtils.format(pessoa.getDataNascimento(), "ddMMyyyy")));
         usuario.setEnabled(true);
@@ -250,9 +253,13 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
         final Calendar dataNascimentoAtual = inscricaoAtual.getConfraternista().getPessoa().getDataNascimento();
         if (!email.equals(emailAtual)) {
-            removeUsuario(emailAtual);
-            flush();
-            criaUsuario(inscricao);
+            Pessoa pessoa = inscricaoAtual.getConfraternista().getPessoa();
+            Usuario usuario = usuarioService.findByLogin(pessoa.getEndereco().getEmail());
+            usuario.setUsername(email);
+            usuarioService.saveOrUpdate(usuario);            
+//            removeUsuario(emailAtual);
+//            flush();
+//            criaUsuario(inscricao);
         } else if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)) {
             //alterou dt nascimento
             atualizaSenha(inscricao);
@@ -270,23 +277,23 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Usuario usuario = usuarioService.findByLogin(emailAtual);
         usuarioService.delete(usuario);
     }
-    
+
     protected void insereGrupoIdade(Inscricao inscricao) {
         final Confraternista confraternista = inscricao.getConfraternista();
         Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento());
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdadeTipo(idadeConfraternista, confraternista.getTipo());
         if (gruposIdade != null) {
             for (GrupoIdade grupoIdade : gruposIdade) {
-                if (confraternista.getGrupoIdade() != null){
+                if (confraternista.getGrupoIdade() != null) {
                     break;
                 } else if (grupoIdade.getSaldoVagas() == 0) {
                     break;
-                }else if (grupoIdade.getTipo().equals(confraternista.getTipo())){
+                } else if (grupoIdade.getTipo().equals(confraternista.getTipo())) {
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
                     confraternista.setGrupoIdade(grupoIdade);
                     confraternistaService.saveOrUpdate(confraternista);
-                }                
+                }
             }
         }//Gerar exceção "Entrar em contato com a administração do evento, cadastro de grupos idade incompleto"
     }
