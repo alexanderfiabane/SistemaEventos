@@ -15,10 +15,8 @@ import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.core.service.EnderecoService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.temporal.Age;
 import br.ojimarcius.commons.util.PeriodUtils;
 import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.DateUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,9 +58,11 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (edicaoEvento == null) {
             errors.rejectValue("edicaoEvento", "errors.required");
         } else {
-            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true)) {
+            if (inscricao.getId() == null) {
+                errors.rejectValue("edicaoEvento", "errors.required");
+            } else if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true)) {
                 errors.rejectValue("edicaoEvento", "errors.subscriptionPeriod.invalid");
-            } else if (inscricao.getId() == null && !edicaoEvento.temVaga()) {
+            } else if (!edicaoEvento.temVaga()) {
                 errors.rejectValue("edicaoEvento", "errors.subscription.full");
             }
         }
@@ -83,11 +83,13 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         validatePessoa(confraternista.getPessoa(), errors);
         if (confraternista.getPessoa().getDataNascimento() != null) {
             validaIdade(inscricao, errors);
+            if (getIdade(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
+                validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
+            }
         }
-        if (getIdade(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
-            validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
+        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
+            validateOficina(inscricao, errors);
         }
-        validateOficina(inscricao, errors);
         validateCasaEspirita(confraternista.getCasaEspirita(), errors);
     }
 
