@@ -58,11 +58,9 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (edicaoEvento == null) {
             errors.rejectValue("edicaoEvento", "errors.required");
         } else {
-            if (inscricao.getId() == null) {
-                errors.rejectValue("edicaoEvento", "errors.required");
-            } else if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true)) {
+            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true)) {
                 errors.rejectValue("edicaoEvento", "errors.subscriptionPeriod.invalid");
-            } else if (!edicaoEvento.temVaga()) {
+            } else if (inscricao.getId() == null && !edicaoEvento.temVaga()) {
                 errors.rejectValue("edicaoEvento", "errors.subscription.full");
             }
         }
