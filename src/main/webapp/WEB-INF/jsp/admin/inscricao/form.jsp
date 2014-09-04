@@ -26,6 +26,9 @@
                         <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                     </msf:label>
                 </c:forEach>
+                <div class="control">
+                    <form:errors path="confraternista.tipo" cssClass="label label-important"/>
+                </div>
             </div>
         </div>
     </fieldset>
@@ -181,14 +184,14 @@
             <div class="span3">
                 <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estadoCasa">
-                    <option value="">-- Selecione um estado --</option>
+                    <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
                         <option value="${estado.id}" <c:if test="${command.confraternista.casaEspirita.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
@@ -267,7 +270,7 @@
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
                         <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
-                        <button type="button" class="btn btn-mini" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
+                        <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
                     </div>
                 </div>
             </div>

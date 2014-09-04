@@ -406,7 +406,6 @@
                                                     jQuery('#dietaSim').click();
                                                 }
 
-
                                                 jQuery('#estado').change(function() {
                                                     loadCidades(jQuery(this), jQuery('#cidade'));
                                                 });

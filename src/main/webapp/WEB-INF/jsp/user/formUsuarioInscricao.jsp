@@ -18,12 +18,15 @@
             <div class="span6">
                 <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
-                   <c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">
+                    <c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">
                         <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                             <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                         </msf:label>
                     </c:if>
                 </c:forEach>
+                <div class="control">
+                    <form:errors path="confraternista.tipo" cssClass="label label-important"/>
+                </div>
             </div>
         </div>
     </fieldset>
@@ -179,29 +182,29 @@
             <div class="span3">
                 <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estadoCasa">
-                    <option value="">-- Selecione um estado --</option>
+                    <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
                         <option value="${estado.id}" <c:if test="${command.confraternista.casaEspirita.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
             </div>
         </div>
-       <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
+        <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
         <%--<c:if test="${command.confraternista.tipo == 'CONFRATERNISTA'}">--%>                    
-            <div class="row-fluid">
-                <div class="span6">
-                    <bs:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="span12"/>                
-                </div>            
-                <div class="span3">
-                    <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.telefone" maxlength="16"/>                
-                </div> 
-            </div>    
+        <div class="row-fluid">
+            <div class="span6">
+                <bs:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="span12"/>                
+            </div>            
+            <div class="span3">
+                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.telefone" maxlength="16"/>                
+            </div> 
+        </div>    
         <%--</c:if>--%>
         <div class="row-fluid">
             <div class="span12">
@@ -265,7 +268,7 @@
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
                         <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
-                        <button type="button" class="btn btn-mini" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
+                        <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
                     </div>
                 </div>
             </div>
