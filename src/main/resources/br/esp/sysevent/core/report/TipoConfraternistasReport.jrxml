@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TipoConfraternistasReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b367f350-e66f-401b-bfd1-633e0b7a8609">
-	<property name="ireport.zoom" value="3.1384283767210195"/>
-	<property name="ireport.x" value="242"/>
-	<property name="ireport.y" value="42"/>
+	<property name="ireport.zoom" value="1.4641000000000088"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
 	</parameter>
@@ -14,21 +14,13 @@
 		<groupExpression><![CDATA[$F{confraternista.tipo}]]></groupExpression>
 		<groupHeader>
 			<band height="25">
-				<staticText>
-					<reportElement x="0" y="2" width="141" height="20" forecolor="#000000" uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c"/>
-					<box leftPadding="5"/>
-					<textElement>
-						<font size="15" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Tipo de Inscrição:]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="130" y="2" width="279" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
+					<reportElement x="1" y="2" width="552" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 					<box leftPadding="5"/>
 					<textElement verticalAlignment="Top">
-						<font fontName="SansSerif" size="15"/>
+						<font fontName="SansSerif" size="15" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Tipo de inscrição: " + $F{confraternista.tipo}]]></textFieldExpression>
 				</textField>
 				<line>
 					<reportElement x="0" y="24" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>
