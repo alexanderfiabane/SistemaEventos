@@ -215,6 +215,30 @@ public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> impleme
 //                , Order.asc("oficina.nome")
 //                , Order.asc("pessoa.nome"));
     }
+    
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<Inscricao> findByEdicaoGrupoIdade(final Edicao edicao){
+        final StringBuilder builder = new StringBuilder(400);
+        builder
+                .append("select i ")
+                .append("from Inscricao i ")
+                .append("join fetch i.confraternista confraternista ")
+                .append("join fetch confraternista.pessoa pessoa ")
+                .append("join fetch confraternista.grupoIdade grupoIdade ")
+                .append("join fetch grupoIdade.facilitadores facilitador ")
+                .append("where i.edicaoEvento = :edicao ")
+                .append("and confraternista.tipo in (:tipo) ")
+                .append("and i.status in (:status) ")
+                .append("order by grupoIdade.nome, pessoa.nome ");
+
+        return getCurrentSession().createQuery(builder.toString())
+                .setEntity("edicao", edicao)
+                .setParameterList("tipo", new Confraternista.Tipo[]{Confraternista.Tipo.CONFRATERNISTA, Confraternista.Tipo.COORDENADOR, Confraternista.Tipo.EVANGELIZADOR})
+                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .list();
+    }
 
     @Override
     public Inscricao findByEdicaoDocumentos(final Long idEdicao, Documento documento){

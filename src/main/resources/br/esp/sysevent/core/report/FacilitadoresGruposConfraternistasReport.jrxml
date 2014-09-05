@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacilitadoresGruposConfraternistasReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dec89996-a009-4138-89dc-88073580aae8">
+	<property name="ireport.zoom" value="1.3310000000000055"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="confraternista.grupoIdade.nome" class="java.lang.String"/>
+	<field name="edicaoEvento.numero" class="java.lang.String"/>
+	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
+	<field name="edicaoEvento.tema" class="java.lang.String"/>
+	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
+	<field name="confraternista.grupoIdade.facilitadores" class="java.util.Collection"/>
+	<field name="confraternista.pessoa.endereco.cidade.nome" class="java.lang.String"/>
+	<field name="confraternista.pessoa.endereco.email" class="java.lang.String"/>
+	<group name="Grupo" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{confraternista.grupoIdade.nome}]]></groupExpression>
+		<groupHeader>
+			<band height="70">
+				<staticText>
+					<reportElement x="0" y="2" width="70" height="20" uuid="652c56af-6c1e-4016-844c-4759d360df6a"/>
+					<box leftPadding="5"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grupo:]]></text>
+				</staticText>
+				<line>
+					<reportElement x="0" y="22" width="555" height="1" uuid="ad6863d6-3586-432d-bf3c-c036d24cea72"/>
+				</line>
+				<subreport>
+					<reportElement x="0" y="43" width="555" height="26" uuid="918dba74-ddad-4ff8-8245-1e4ff729dfe8"/>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{confraternista.grupoIdade.facilitadores})]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "GruposConfraternistasReport_Facilitadores.jasper"]]></subreportExpression>
+				</subreport>
+				<textField>
+					<reportElement x="63" y="2" width="496" height="20" uuid="f31666c4-91ef-490b-a429-4ef98c3ae86f"/>
+					<textElement>
+						<font size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{confraternista.grupoIdade.nome}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="23" width="555" height="20" uuid="6425311f-9ae5-4c03-817e-1b9f9a5ba621"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Facilitadores(s):]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="42a43cc7-d570-4c90-bb63-46ac314458ab"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="1" width="31" height="23" uuid="1d74db77-08ea-4eaf-8a72-3558801f01b1"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="259" y="1" width="296" height="20" uuid="a979e046-71e7-4f6c-b6af-0b3ab79294f4"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{edicaoEvento.tema}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="31" y="1" width="113" height="23" uuid="91f9f5e3-8854-4468-a5be-b18a890ddeec"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Grupo_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="28">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="3" width="555" height="24" forecolor="#000000" uuid="bb7fa466-8e2c-44d7-809f-5507c54f37d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + " " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="27" width="555" height="1" uuid="1384b674-73af-4615-94b1-de6af75768ae"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="210" height="22" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="1" width="184" height="22" uuid="7407d889-4caa-4201-b52f-74a2a84e441b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="1" width="161" height="22" uuid="ff494e01-1b6e-4b73-b9db-dd1dd4eb651d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.email}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

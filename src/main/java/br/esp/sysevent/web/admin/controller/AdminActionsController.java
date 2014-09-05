@@ -28,6 +28,7 @@ import br.esp.sysevent.core.service.TamanhoCamisetaService;
 import br.esp.sysevent.core.service.TipoCamisetaService;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,7 +43,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 public class AdminActionsController {
-
+    
     @Autowired
     private EstadoService estadoService;
     @Autowired
@@ -67,7 +68,7 @@ public class AdminActionsController {
     private InscricaoService inscricaoService;
     @Autowired
     private GrupoIdadeService grupoIdadeService;
-
+    
     @RequestMapping(value = "/admin/deleteEvento.html", method = RequestMethod.GET)
     public String deleteEvento(@RequestParam("idEvento") final String idEvento, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idEvento)) {
@@ -81,7 +82,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formEvento.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteEdicao.html", method = RequestMethod.GET)
     public String deleteEdicao(@RequestParam("idEdicao") final String idEdicao, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idEdicao)) {
@@ -91,11 +92,21 @@ public class AdminActionsController {
         if (edicao == null) {
             throw new IllegalArgumentException("Edição não encontrada.");
         }
+//        if (edicao.getTipo().equals(Edicao.Tipo.OFICINA)) {
+//            Collection<Oficina> oficinas = oficinaService.findByProperty("edicaoEvento", edicao);
+//            edicao.removeOficinas(oficinas);
+//            oficinaService.saveOrUpdateAll(oficinas);
+//        }
+//        if (edicao.getTipo().equals(Edicao.Tipo.FAIXA_ETARIA)) {
+//            Collection<GrupoIdade> grupos = grupoIdadeService.findByProperty("edicaoEvento", edicao);
+//            edicao.removeGruposIdade(grupos);
+//            grupoIdadeService.saveOrUpdateAll(grupos);
+//        }
         edicaoService.delete(edicao);
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formEdicao.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteEstado.html", method = RequestMethod.GET)
     public String deleteEstado(@RequestParam("idEstado") final String idEstado, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idEstado)) {
@@ -109,7 +120,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formEstado.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteCidade.html", method = RequestMethod.GET)
     public String deleteCidade(@RequestParam("idCidade") final String idCidade, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idCidade)) {
@@ -123,7 +134,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formCidade.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteNoticia.html", method = RequestMethod.GET)
     public String deleteNoticia(@RequestParam("idNoticia") final String idNoticia, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idNoticia)) {
@@ -137,7 +148,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formNoticia.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteTipoCamiseta.html", method = RequestMethod.GET)
     public String deleteTipoCamiseta(@RequestParam("idTipo") final String idTipoCamiseta, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idTipoCamiseta)) {
@@ -151,7 +162,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formTipoCamiseta.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteTamanhoCamiseta.html", method = RequestMethod.GET)
     public String deleteTamanhoCamiseta(@RequestParam("idTamanho") final String idTamanhoCamiseta, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idTamanhoCamiseta)) {
@@ -165,7 +176,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formTamanhoCamiseta.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteCorCamiseta.html", method = RequestMethod.GET)
     public String deleteCorCamiseta(@RequestParam("idCor") final String idCorCamiseta, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idCorCamiseta)) {
@@ -179,7 +190,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formCorCamiseta.html";
     }
-
+    
     @RequestMapping(value = "/admin/deleteOficina.html", method = RequestMethod.GET)
     public String deleteOficina(@RequestParam("idOficina") final String idOficina, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idOficina)) {
@@ -207,7 +218,7 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formGrupoIdade.html?idEdicao=" + grupoIdade.getEdicaoEvento().getId();
     }
-
+    
     @RequestMapping(value = "/admin/deleteDormitorio.html", method = RequestMethod.GET)
     public String deleteDormitorio(@RequestParam("idDormitorio") final String idDormitorio, final RedirectAttributes attributes) {
         if (!CharSequenceUtils.isNumber(idDormitorio)) {
@@ -221,10 +232,10 @@ public class AdminActionsController {
         attributes.addFlashAttribute("message", "Deletado com sucesso.");
         return "redirect:/admin/formDormitorio.html?idEdicao=" + dormitorio.getEdicaoEvento().getId();
     }
-
+    
     @RequestMapping(value = "/admin/alocaDormitorio.html", method = RequestMethod.GET)
     public String alocaConfraternistasDomitorios(@RequestParam("idEdicao") final String idEdicao, final RedirectAttributes attributes) {
-
+        
         if (!CharSequenceUtils.isNumber(idEdicao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
@@ -232,6 +243,6 @@ public class AdminActionsController {
         dormitorioService.alocaConfraternistasAleatoriamente(edicao);
         attributes.addFlashAttribute("message", "Confraternistas alocados com sucesso.");
         return "redirect:/admin/formDormitorio.html?idEdicao=" + idEdicao;
-
+        
     }
 }

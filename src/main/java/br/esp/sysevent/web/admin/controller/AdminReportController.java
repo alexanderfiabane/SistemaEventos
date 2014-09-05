@@ -40,6 +40,8 @@ public class AdminReportController {
     private static final String CONFRATERNISTAS_CIDADES_ESTADO = "br/esp/sysevent/core/report/CidadesEstadoPessoasReport.jasper";
     private static final String CONFRATERNISTAS_OFICINAS = "br/esp/sysevent/core/report/OficinasConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_OFICINAS_OFICINEIROS = "br/esp/sysevent/core/report/OficineirosOficinasConfraternistasReport.jasper";
+    private static final String CONFRATERNISTAS_GRUPOS = "br/esp/sysevent/core/report/GruposConfraternistasReport.jasper";
+    private static final String CONFRATERNISTAS_GRUPOS_FACILITADORES = "br/esp/sysevent/core/report/FacilitadoresGruposConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_TIPO = "br/esp/sysevent/core/report/TipoConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_SEXO = "br/esp/sysevent/core/report/SexoConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_CAMISETA = "br/esp/sysevent/core/report/CamisetasConfraternistasReport.jasper";
@@ -90,6 +92,27 @@ public class AdminReportController {
         Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoOficina(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_OFICINAS_OFICINEIROS);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasOficinasOficineiros.pdf", "application/pdf", response);
+        return null;
+    }
+    @RequestMapping(value = "/admin/relatorio/reportConfGrupo.html", method = RequestMethod.GET)
+    public ModelAndView confraternistasGrupoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
+            final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoGrupoIdade(edicao);
+        final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_GRUPOS);
+        ControllerUtils.writeHttpAttached(pdf, "confraternistasGrupos.pdf", "application/pdf", response);
+        return null;
+    }
+
+    @RequestMapping(value = "/admin/relatorio/reportConfGrupoFacilitador.html", method = RequestMethod.GET)
+    public ModelAndView confraternistasGrupoFacilitadoresReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
+            final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {
+        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoGrupoIdade(edicao);
+        final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_GRUPOS_FACILITADORES);
+        ControllerUtils.writeHttpAttached(pdf, "confraternistasGruposFacilitadores.pdf", "application/pdf", response);
         return null;
     }
     

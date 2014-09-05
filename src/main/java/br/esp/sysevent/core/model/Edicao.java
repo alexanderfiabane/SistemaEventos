@@ -205,6 +205,12 @@ public class Edicao extends AbstractEntity<Long> {
     public void setOficinas(Collection<Oficina> oficinas) {
         this.oficinas = oficinas;
     }
+    
+//    public void removeOficinas(Collection<Oficina> oficinas){
+//        for (Oficina oficina : oficinas) {
+//            oficina.setEdicaoEvento(null);
+//        }
+//    }
 
     public Collection<GrupoIdade> getGruposIdade() {
         return gruposIdade;
@@ -213,6 +219,12 @@ public class Edicao extends AbstractEntity<Long> {
     public void setGruposIdade(Collection<GrupoIdade> gruposIdade) {
         this.gruposIdade = gruposIdade;
     }
+    
+//    public void removeGruposIdade(Collection<GrupoIdade> gruposIdade){
+//        for (GrupoIdade grupoIdade : gruposIdade) {
+//            grupoIdade.setEdicaoEvento(null);
+//        }
+//    }
 
     public boolean isPossuiCamisetas() {
         // qquer uma das colecoes de camiseta estando vazia, consideramos que a edicao nao possui camiseta.

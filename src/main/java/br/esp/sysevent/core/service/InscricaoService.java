@@ -23,6 +23,7 @@ public interface InscricaoService extends EntityService<Long, Inscricao> {
     public Collection<Inscricao> findByEdicaoDeferidas(final Long idEdicao);
     public Collection<Inscricao> findByEdicaoCidadeEstado(Edicao edicao);
     public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao);
+    public Collection<Inscricao> findByEdicaoGrupoIdade(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoCamiseta(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoTipo(Edicao edicao);
     public Collection<Inscricao> findByEdicaoSexo(Edicao edicao);

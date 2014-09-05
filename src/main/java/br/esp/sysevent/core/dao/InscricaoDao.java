@@ -24,6 +24,7 @@ public interface InscricaoDao extends EntityDao<Long, Inscricao> {
     public Collection<Inscricao> findByEdicao(final Long idEdicao);
     public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao Edicao);
     public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao);
+    public Collection<Inscricao> findByEdicaoGrupoIdade(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoCamiseta(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoTipo(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoSexo(final Edicao edicao);

@@ -27,14 +27,30 @@
                 <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
                 <msf:url><c:url value="/admin/relatorio/reportConfSexo.html?idEdicao=${edicao.id}"/></msf:url>
             </msf:menuItem>
-            <msf:menuItem label="Relatório de confraternistas por Oficinas">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório de confraternistas por Oficinas - Oficineiros">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
+            <c:if test="${(edicao.tipo == 'OFICINA')}">
+                <msf:menuItem label="Relatório de confraternistas por Oficinas">
+                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
+                    <msf:url><c:url value="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/></msf:url>
+                </msf:menuItem>
+            </c:if>
+            <c:if test="${(edicao.tipo == 'OFICINA')}">
+                <msf:menuItem label="Relatório de confraternistas por Oficinas - Oficineiros">
+                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
+                    <msf:url><c:url value="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/></msf:url>
+                </msf:menuItem>                
+            </c:if>
+            <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
+                <msf:menuItem label="Relatório de confraternistas por Grupos">
+                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
+                    <msf:url><c:url value="/admin/relatorio/reportConfGrupo.html?idEdicao=${edicao.id}"/></msf:url>
+                </msf:menuItem>
+            </c:if>
+            <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
+                <msf:menuItem label="Relatório de confraternistas por Grupos - Facilitadores">
+                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
+                    <msf:url><c:url value="/admin/relatorio/reportConfGrupoFacilitador.html?idEdicao=${edicao.id}"/></msf:url>
+                </msf:menuItem>                
+            </c:if>
             <msf:menuItem label="Relatório de Confraternistas por Dormitório">
                 <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
                 <msf:url><c:url value="/admin/relatorio/reportConfDormitorio.html?idEdicao=${edicao.id}"/></msf:url>
@@ -59,7 +75,7 @@
                 <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
                 <msf:url><c:url value="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/></msf:url>
             </msf:menuItem>
-            
+
         </msf:menu>
     </div>
 </div>

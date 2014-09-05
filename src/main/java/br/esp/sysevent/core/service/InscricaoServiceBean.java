@@ -144,6 +144,12 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
 
     @Transactional(readOnly = true)
     @Override
+    public Collection<Inscricao> findByEdicaoGrupoIdade(Edicao edicao) {
+        return getDao().findByEdicaoGrupoIdade(edicao);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public Collection<Inscricao> findByEdicaoDormitorio(Edicao edicao) {
         return getDao().findByEdicaoDormitorio(edicao);
     }
@@ -203,7 +209,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
                     oficinaService.saveOrUpdate(oficina);
                 }
             } else if (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA)) {
-                insereGrupoIdade(inscricao);
+                insereGrupoIdade(inscricao, false);
             }
             edicao.ocupaVaga();
             edicaoService.saveOrUpdate(edicao);
@@ -214,7 +220,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Pessoa pessoa = inscricao.getConfraternista().getPessoa();
         final Usuario usuario = new Usuario();
         usuario.setPessoa(pessoa);
-        usuario.setRole(Usuario.Role.ROLE_USER);        
+        usuario.setRole(Usuario.Role.ROLE_USER);
         usuario.setUsername(pessoa.getEndereco().getEmail());
         usuario.setPassword(DigestUtils.sha256Hex(CalendarUtils.format(pessoa.getDataNascimento(), "ddMMyyyy")));
         usuario.setEnabled(true);
@@ -236,14 +242,17 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
     protected void atualizaGrupoIdade(Inscricao inscricao, Inscricao inscricaoAtual) {
         final Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
         final Calendar dataNascimentoAtual = inscricaoAtual.getConfraternista().getPessoa().getDataNascimento();
+        final Confraternista confraternista = inscricao.getConfraternista();
+        final Confraternista confraternistaAtual = inscricaoAtual.getConfraternista();
         final GrupoIdade grupoIdadeAtual = inscricaoAtual.getConfraternista().getGrupoIdade();
-        final Edicao.Tipo tipoEdicao = inscricao.getEdicaoEvento().getTipo();
-        if ((grupoIdadeAtual != null) && (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA))) {
-            if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)) {
+        if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)
+                || !confraternista.getTipo().equals(confraternistaAtual.getTipo())
+                || !grupoIdadeAtual.getTipo().equals(confraternista.getTipo())) {
+            if (grupoIdadeAtual != null) {
                 grupoIdadeAtual.desocupaVaga();
                 grupoIdadeService.saveOrUpdate(grupoIdadeAtual);
-                insereGrupoIdade(inscricao);
             }
+            insereGrupoIdade(inscricao, true);
         }
     }
 
@@ -256,7 +265,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
             Pessoa pessoa = inscricaoAtual.getConfraternista().getPessoa();
             Usuario usuario = usuarioService.findByLogin(pessoa.getEndereco().getEmail());
             usuario.setUsername(email);
-            usuarioService.saveOrUpdate(usuario);            
+            usuarioService.saveOrUpdate(usuario);
 //            removeUsuario(emailAtual);
 //            flush();
 //            criaUsuario(inscricao);
@@ -278,25 +287,28 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         usuarioService.delete(usuario);
     }
 
-    protected void insereGrupoIdade(Inscricao inscricao) {
+    protected void insereGrupoIdade(Inscricao inscricao, Boolean atualiza) {
         final Confraternista confraternista = inscricao.getConfraternista();
         Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento());
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdadeTipo(idadeConfraternista, confraternista.getTipo());
         if (gruposIdade != null) {
             for (GrupoIdade grupoIdade : gruposIdade) {
-                if (confraternista.getGrupoIdade() != null) {
+                if (grupoIdade.getSaldoVagas() == 0) {
                     break;
-                } else if (grupoIdade.getSaldoVagas() == 0) {
-                    break;
-                } else if (grupoIdade.getTipo().equals(confraternista.getTipo())) {
+                } else {
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
                     confraternista.setGrupoIdade(grupoIdade);
-                    confraternistaService.saveOrUpdate(confraternista);
+                    break;
                 }
             }
-        }//Gerar exceção "Entrar em contato com a administração do evento, cadastro de grupos idade incompleto"
-    }
+        } else {
+            confraternista.setGrupoIdade(null);
+        }
+        if (!atualiza) {
+            confraternistaService.saveOrUpdate(confraternista);
+        }
+    }//Gerar exceção "Entrar em contato com a administração do evento, cadastro de grupos idade incompleto"
 
     private Integer diferencaDatas(Calendar dataMaior, Calendar dataMenor) {
         int anoMenor = dataMenor.get(Calendar.YEAR);
