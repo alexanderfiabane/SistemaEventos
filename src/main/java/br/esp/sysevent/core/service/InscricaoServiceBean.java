@@ -247,7 +247,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final GrupoIdade grupoIdadeAtual = inscricaoAtual.getConfraternista().getGrupoIdade();
         if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)
                 || !confraternista.getTipo().equals(confraternistaAtual.getTipo())
-                || !grupoIdadeAtual.getTipo().equals(confraternista.getTipo())) {
+                || !confraternista.getTipo().equals(grupoIdadeAtual.getTipo())) {
             if (grupoIdadeAtual != null) {
                 grupoIdadeAtual.desocupaVaga();
                 grupoIdadeService.saveOrUpdate(grupoIdadeAtual);
