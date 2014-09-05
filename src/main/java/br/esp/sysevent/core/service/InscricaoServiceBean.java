@@ -294,7 +294,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         if (gruposIdade != null && gruposIdade.size()>0) {
             for (GrupoIdade grupoIdade : gruposIdade) {
                 if (grupoIdade.getSaldoVagas() == 0) {
-                    break;
+                    continue;
                 } else {
                     grupoIdade.ocupaVaga();
                     grupoIdadeService.saveOrUpdate(grupoIdade);
