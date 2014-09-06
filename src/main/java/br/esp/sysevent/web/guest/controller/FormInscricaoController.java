@@ -11,6 +11,7 @@ import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Estado;
+import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.InformacoesSaude;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
@@ -23,6 +24,7 @@ import br.esp.sysevent.core.service.CidadeService;
 import br.esp.sysevent.core.service.CorCamisetaService;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.EstadoService;
+import br.esp.sysevent.core.service.GrupoIdadeService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.OficinaService;
 import br.esp.sysevent.core.service.ResponsavelService;
@@ -74,6 +76,8 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     protected InscricaoService inscricaoService;
     @Autowired
     protected OficinaService oficinaService;
+    @Autowired
+    protected GrupoIdadeService grupoIdadeService;
     @Autowired
     protected CorCamisetaService corCamisetaService;
     @Autowired
@@ -155,6 +159,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
         binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<Responsavel>(responsavelService));
         binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<Cidade>(cidadeService));
         binder.registerCustomEditor(Oficina.class, new CustomEntityEditor<Oficina>(oficinaService));
+        binder.registerCustomEditor(GrupoIdade.class, new CustomEntityEditor<GrupoIdade>(grupoIdadeService));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaService));
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaService));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<TamanhoCamiseta>(tamanhoCamisetaService));

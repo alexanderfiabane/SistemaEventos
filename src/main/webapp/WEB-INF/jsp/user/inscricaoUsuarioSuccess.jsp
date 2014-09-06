@@ -166,7 +166,7 @@
         </div>       
     </div>
     <div class="row-fluid">
-        <div class="span5">
+        <div class="span12">
             <bs:formFieldView label="label.activityatie" isLabelKey="true" value="${command.confraternista.atividadeCasaEspirita}"/>
         </div>
     </div>

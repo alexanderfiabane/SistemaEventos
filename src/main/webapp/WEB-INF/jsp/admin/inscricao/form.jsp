@@ -22,9 +22,29 @@
             <div class="span6">
                 <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
-                    <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
-                        <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                    </msf:label>
+                    <c:choose>
+                        <c:when test="${command.edicaoEvento.tipo == 'FAIXA_ETARIA'}">                            
+                            <c:if test="${not (item == 'OFICINEIRO')}">
+                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                    <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                                </msf:label>
+                            </c:if>                                                    
+                        </c:when>
+                        <c:when test="${command.edicaoEvento.tipo == 'OFICINA'}">                            
+                            <c:if test="${not (item == 'FACILITADOR')}">
+                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                    <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                                </msf:label>
+                            </c:if>                                                    
+                        </c:when>
+                        <c:otherwise>
+                            <c:if test="${(not item == 'FACILITADOR') || (not item == 'EVANGELIZADOR') || (not item == 'OFICINEIRO')}">
+                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                    <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
+                                </msf:label>
+                            </c:if>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
                 <div class="control">
                     <form:errors path="confraternista.tipo" cssClass="label label-important"/>
@@ -32,6 +52,25 @@
             </div>
         </div>
     </fieldset>
+                
+    <c:if test="${(not empty command.edicaoEvento.gruposIdade) && (command.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
+        <div id="grupoFacilitador" style="display: none;">    
+            <fieldset>
+                <legend><msf:message key="label.eventcoordgroupdetails"/></legend>
+                <div class="row-fluid">
+                    <div class="span3">
+                        <msf:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                        <c:forEach var="grupo" items="${command.edicaoEvento.gruposIdade}">
+                            <msf:label label="${grupo.nome}" colonAfter="false" breakAfter="false" cssClass="radio">
+                                <form:radiobutton path="confraternista.grupoIdade" value="${grupo.id}"/>
+                            </msf:label>
+                        </c:forEach>
+                        <form:errors path="confraternista.grupoIdade" cssClass="fieldError"/>
+                    </div>
+                </div>
+            </fieldset>
+        </div>        
+    </c:if>
 
     <fieldset>
         <legend><msf:message key="label.personaldetails"/></legend>
@@ -215,7 +254,7 @@
         </div>
     </fieldset>
 
-    <c:if test="${not empty command.edicaoEvento.oficinas}">
+    <c:if test="${(not empty command.edicaoEvento.oficinas) && (command.edicaoEvento.tipo == 'OFICINA')}">
         <fieldset>
             <legend><msf:message key="label.workshopdetails"/></legend>
             <div class="row-fluid">
@@ -353,6 +392,14 @@
 
                                                 jQuery('[name="confraternista.oficina"]').each(function() {
                                                     jQuery(this).attr('checked', jQuery(this).val() == '${command.confraternista.oficina.id}');
+                                                });
+                                                
+                                                jQuery('[name="confraternista.tipo"]').change(function() {
+                                                    if(jQuery(this).val() == 'FACILITADOR'){
+                                                       jQuery('#grupoFacilitador').show(); 
+                                                    }else{
+                                                       jQuery('#grupoFacilitador').hide();  
+                                                    }
                                                 });
 
                                                 jQuery('[name=medicacao]').change(function() {

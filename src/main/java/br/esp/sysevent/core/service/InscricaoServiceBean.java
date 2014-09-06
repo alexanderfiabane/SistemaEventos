@@ -291,7 +291,7 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Confraternista confraternista = inscricao.getConfraternista();
         Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento());
         Collection<GrupoIdade> gruposIdade = grupoIdadeService.findByIdadeTipo(idadeConfraternista, confraternista.getTipo());
-        if (gruposIdade != null && gruposIdade.size()>0) {
+        if (gruposIdade != null && gruposIdade.size() > 0) {
             for (GrupoIdade grupoIdade : gruposIdade) {
                 if (grupoIdade.getSaldoVagas() == 0) {
                     continue;
@@ -303,7 +303,9 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
                 }
             }
         } else {
-            confraternista.setGrupoIdade(null);
+            if (!confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)) {
+                confraternista.setGrupoIdade(null);
+            }
         }
         if (!atualiza) {
             confraternistaService.saveOrUpdate(confraternista);
