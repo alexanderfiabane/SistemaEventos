@@ -306,7 +306,7 @@
                     <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
                         <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
-                        <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta"><i class="icon-minus"></i></button>
+                        <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta">Remover camiseta</button>
                     </div>
                 </div>
             </div>
@@ -325,8 +325,8 @@
                     <tbody>
                         <c:forEach var="camiseta" items="${command.confraternista.camisetas}" varStatus="status">
                             <tr id="camiseta_${status.index}">
-                                <td class="centered">
-                                    <button  type="button" class="btn btn-mini" title="Remover" id="removeCamiseta" onclick="jQuery(this).parent().parent().remove();">Remover Camiseta</button>
+                                <td>                                    
+                                    <button  type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta">Remover camiseta</button>
                                 </td>
                                 <td>
                                     <input type="hidden" name="confraternista.camisetas[${status.index}].tipoCamiseta" value="${camiseta.tipoCamiseta.id}"/>
@@ -350,7 +350,7 @@
                 </table>
                 <span class="span" style="font-size:8pt;">
                     * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' + '.<br/>
-                    * Caso não deseje adquirir a camiseta agora, basta clicar em ' - ' ou não alterar os campos referentes à camiseta!<br/>
+                    * Caso não deseje adquirir a camiseta agora, basta clicar em ' Remover camiseta ' ou não alterar os campos referentes à camiseta!<br/>
                     * <b>Valor:</b> Camiseta - <fmt:formatNumber value="${command.edicaoEvento.valorCamiseta}" type="currency" currencySymbol="R$" minFractionDigits="2"/>.
                 </span>
             </div>
