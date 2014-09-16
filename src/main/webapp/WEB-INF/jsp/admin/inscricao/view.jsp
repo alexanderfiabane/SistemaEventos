@@ -129,7 +129,7 @@
 <fieldset>
     <legend><msf:message key="label.housedetails"/></legend>
     <div class="row-fluid">
-        <div class="span3">
+        <div class="span12">
             <bs:formFieldView label="label.name" isLabelKey="true" value="${command.confraternista.casaEspirita.nome}"/>
         </div>
     </div>
