@@ -14,6 +14,7 @@ import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.core.service.EnderecoService;
 import br.esp.sysevent.core.service.InscricaoService;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.PeriodUtils;
 import br.ojimarcius.commons.util.CharSequenceUtils;
@@ -58,7 +59,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (edicaoEvento == null) {
             errors.rejectValue("edicaoEvento", "errors.required");
         } else {
-            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true)) {
+            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true) && !ControllerUtils.isLoggedInAsAdmin()) {
                 errors.rejectValue("edicaoEvento", "errors.subscriptionPeriod.invalid");
             } else if (inscricao.getId() == null && !edicaoEvento.temVaga()) {
                 errors.rejectValue("edicaoEvento", "errors.subscription.full");
