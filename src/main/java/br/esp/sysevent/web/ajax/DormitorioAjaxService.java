@@ -4,8 +4,10 @@
  */
 package br.esp.sysevent.web.ajax;
 
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Sexo;
+import br.esp.sysevent.core.service.ConfraternistaService;
 import br.esp.sysevent.core.service.DormitorioService;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
@@ -22,6 +24,8 @@ public class DormitorioAjaxService {
 
     @Autowired
     DormitorioService dormitorioService;
+    @Autowired
+    ConfraternistaService confraternistarioService;
 
     public Dormitorio findById(String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
@@ -42,14 +46,16 @@ public class DormitorioAjaxService {
     }
 
     public String troca(Long idDormitorio, Long idConfraternista) {
+        Confraternista confraternista;
         if (idDormitorio == null && idConfraternista == null) {
             return null;
         } else if (idDormitorio == null && idConfraternista != null) {
-            //setar idDormitorio em confraternista pra null e salvar
+            //setar idDormitorio em confraternista pra null, descontar vaga e salvar
+            //confraternista = confraternistarioService.findById(idDormitorio);
             return "Confraternista trocado para 'Sem domitório'";
         } else {
             //verficar número de vagas/sexo do dormitorio
-            //setar idDormitorio em confraternista pra idDormitorio e salvar
+            //setar idDormitorio em confraternista pra idDormitorio, somar vaga e salvar
             return "Confraternista trocado para 'Nome dormitório'";
         }
     }

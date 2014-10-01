@@ -196,7 +196,7 @@
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca
                         //dormitorioService.troca(jQuery('#dormitorios').val(), ui.item)
-                        alert(jQuery('#dormitorios').val()+" receive");                        
+                        alert(ui.item.parent()+" - "+ ui.item);                        
                         
                     },                                        
                     cursorAt: {left: 20},
