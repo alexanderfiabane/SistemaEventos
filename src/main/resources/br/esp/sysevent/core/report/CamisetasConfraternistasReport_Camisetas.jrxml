@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CamisetasConfraternistasReport_Camisetas" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bc3a303c-f957-43f5-bb46-83ce00ea6a6f">
-	<property name="ireport.zoom" value="2.357947691000003"/>
+	<property name="ireport.zoom" value="1.771561000000002"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="tamanhoCamiseta.descricao" class="java.lang.String"/>
 	<field name="quantidadeCamiseta" class="java.lang.Integer"/>
+	<field name="corCamiseta.descricao" class="java.lang.String"/>
 	<detail>
 		<band height="22" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="2d549a91-2383-4e6d-9ce0-ed59cff52965" x="82" y="1" width="52" height="20"/>
+				<reportElement x="304" y="1" width="52" height="20" uuid="2d549a91-2383-4e6d-9ce0-ed59cff52965"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tamanhoCamiseta.descricao}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="fbb23c0d-698c-4519-b617-dacba6e8126b" x="246" y="1" width="81" height="20"/>
+				<reportElement x="468" y="1" width="81" height="20" uuid="fbb23c0d-698c-4519-b617-dacba6e8126b"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{quantidadeCamiseta}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a991c323-2361-4bd5-a636-2e6598d4edcf" x="4" y="1" width="82" height="20"/>
+				<reportElement x="226" y="1" width="82" height="20" uuid="a991c323-2361-4bd5-a636-2e6598d4edcf"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
@@ -30,7 +31,7 @@
 				<text><![CDATA[Tamanho:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="439ca6ff-5224-4782-8ff4-10da4cbf1175" x="154" y="1" width="95" height="20"/>
+				<reportElement x="376" y="1" width="95" height="20" uuid="439ca6ff-5224-4782-8ff4-10da4cbf1175"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
@@ -38,8 +39,23 @@
 				<text><![CDATA[Quantidade:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement uuid="454ceb2f-ee2b-4430-9008-c49a56638a1e" x="4" y="10" width="3" height="3" backcolor="#000000"/>
+				<reportElement x="3" y="10" width="3" height="3" backcolor="#000000" uuid="454ceb2f-ee2b-4430-9008-c49a56638a1e"/>
 			</rectangle>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="41" y="1" width="166" height="20" uuid="d2dba865-169c-4500-b1b6-0709d0fbb088"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{corCamiseta.descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="1" width="40" height="20" uuid="8a689e98-38e5-423d-8f12-19f85016e21a"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cor:]]></text>
+			</staticText>
 		</band>
 	</detail>
 </jasperReport>

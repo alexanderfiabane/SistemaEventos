@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CamisetasEncomendaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b367f350-e66f-401b-bfd1-633e0b7a8609">
-	<property name="ireport.zoom" value="1.2100000000000088"/>
+	<property name="ireport.zoom" value="1.9487171000000174"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -10,13 +10,55 @@
 	<parameter name="sigla" class="java.lang.String"/>
 	<field name="tamanhoCamiseta.descricao" class="java.lang.String"/>
 	<field name="quantidadeCamiseta" class="java.lang.Integer"/>
-	<variable name="quantidade_SUM" class="java.lang.Integer" resetType="Group" resetGroup="tamanho" calculation="Sum">
+	<field name="corCamiseta.descricao" class="java.lang.String"/>
+	<variable name="quantidadeCor_SUM" class="java.lang.Integer" resetType="Group" resetGroup="cor" calculation="Sum">
 		<variableExpression><![CDATA[$F{quantidadeCamiseta}]]></variableExpression>
 	</variable>
+	<variable name="quantidadeTamanho_SUM" class="java.lang.Integer" resetType="Group" resetGroup="tamanho" calculation="Sum">
+		<variableExpression><![CDATA[$F{quantidadeCamiseta}]]></variableExpression>
+	</variable>
+	<group name="cor" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{corCamiseta.descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<staticText>
+					<reportElement x="0" y="0" width="42" height="20" forecolor="#000000" uuid="efe373ca-fd90-4e75-a8b1-37bd46b175d3"/>
+					<box leftPadding="5"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cor:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="38" y="0" width="396" height="20" forecolor="#000000" uuid="63aeb9d5-6a37-41fb-8452-0e0191e65d17"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{corCamiseta.descricao}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="24">
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="5b5cb08f-348d-45c2-886c-c16ebb88d162"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="2" width="555" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="15"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total de "+ $F{corCamiseta.descricao} +" : " + $V{quantidadeCor_SUM}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
 	<group name="tamanho">
 		<groupExpression><![CDATA[$F{tamanhoCamiseta.descricao}]]></groupExpression>
 		<groupHeader>
-			<band height="25">
+			<band height="23">
 				<staticText>
 					<reportElement x="0" y="3" width="89" height="20" forecolor="#000000" uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c"/>
 					<box leftPadding="5"/>
@@ -39,14 +81,17 @@
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="24">
+			<band height="23">
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="8f8bef34-a11c-4c10-b34b-0af7b15ae3a7"/>
+				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="0" y="2" width="555" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
+					<reportElement x="0" y="2" width="555" height="20" forecolor="#000000" uuid="47f9a8e0-9610-4307-8920-cfe4c9a1a546"/>
 					<box leftPadding="5"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="SansSerif" size="15"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Total: " + $V{quantidade_SUM}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["Total: " + $V{quantidadeTamanho_SUM}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -87,11 +132,8 @@
 			</line>
 		</band>
 	</pageHeader>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="16" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
 				<reportElement x="533" y="1" width="20" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="1df7bf3c-858f-4a8a-bd7d-10cd327802da"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>

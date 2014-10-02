@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CamisetasConfraternistasReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b367f350-e66f-401b-bfd1-633e0b7a8609">
 	<property name="ireport.zoom" value="1.9487171000000127"/>
-	<property name="ireport.x" value="152"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Alexander Documentos\\Documents\\NetBeansProjects\\sysevent-core\\trunk\\src\\main\\resources\\br\\esp\\sysevent\\report\\"]]></defaultValueExpression>
@@ -14,9 +14,9 @@
 	<group name="confraternista">
 		<groupExpression><![CDATA[$F{confraternista.pessoa.nome}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="45">
 				<staticText>
-					<reportElement x="0" y="2" width="60" height="20" forecolor="#000000" uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c"/>
+					<reportElement x="0" y="22" width="60" height="20" forecolor="#000000" uuid="beffc1a6-7b70-4aea-9205-3bfa6965090c"/>
 					<box leftPadding="5"/>
 					<textElement>
 						<font size="15" isBold="true"/>
@@ -24,7 +24,7 @@
 					<text><![CDATA[Nome:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="58" y="2" width="495" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
+					<reportElement x="58" y="22" width="495" height="20" forecolor="#000000" uuid="55a04aae-f0f8-4c5c-8efa-a6dca02b9f47"/>
 					<box leftPadding="5"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="SansSerif" size="15"/>
@@ -32,7 +32,7 @@
 					<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="0" y="23" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>
+					<reportElement x="0" y="43" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>
 				</line>
 				<line>
 					<reportElement x="0" y="0" width="555" height="1" uuid="10460785-744f-401d-b38a-3aa6df6cf7df"/>

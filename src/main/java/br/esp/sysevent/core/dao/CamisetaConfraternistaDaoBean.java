@@ -50,7 +50,7 @@ public class CamisetaConfraternistaDaoBean extends AbstractEntityDaoBean<Long, C
                 .append("join confraternista.camisetas camisetas ")
                 .append("where i.edicaoEvento = :edicao ")
                 .append("and i.status in (:status) ")
-                .append("order by camisetas.tamanhoCamiseta ");
+                .append("order by camisetas.corCamiseta, camisetas.tamanhoCamiseta ");
 
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
