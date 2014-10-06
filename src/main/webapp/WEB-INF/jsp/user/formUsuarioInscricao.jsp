@@ -20,8 +20,8 @@
                 <c:forEach var="item" items="${tiposConfraternista}">
                     <c:choose>
                         <c:when test="${command.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
-                            <c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">
-                            <%--<c:if test="${not (item == 'OFICINEIRO')}">--%>
+                            <%--<c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">--%>
+                            <c:if test="${not (item == 'OFICINEIRO')}">
                                 <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                                 </msf:label>
