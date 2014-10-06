@@ -118,7 +118,7 @@
             } else {
                 dormitorioAjaxService.findById(dormitorioSelecionado, function callback(dormitorio) {
                     jQuery(inputConfraternista).append(jQuery('<thead>')
-                            .append(jQuery('<tr>')
+                            .append(jQuery('<tr id="'+dormitorio.id+'">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
                                             .append(dormitorio.nome)))
                             .append(jQuery('<tr>')
@@ -150,7 +150,7 @@
             confraternistaAjaxService.findSemDormitorio(inputDormitorio, function callback(confraternistas) {
                 jQuery(inputConfraternista).empty();
                 jQuery(inputConfraternista).append(jQuery('<thead>')
-                        .append(jQuery('<tr>')
+                        .append(jQuery('<tr id='null'>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
                                         .append("Confraternistas Sem Dormitório")))
                         .append(jQuery('<tr>')
@@ -196,7 +196,8 @@
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca
                         //dormitorioService.troca(jQuery('#dormitorios').val(), ui.item)
-                        alert(ui.item.parent()+" - "+ ui.item);                        
+                        alert(dormitorioAjaxService.troca(ui.item.parent.attr("id"), ui.item.attr("id")));                        
+                        //alert(ui.item.parent()+" - "+ ui.item);                        
                         
                     },                                        
                     cursorAt: {left: 20},
