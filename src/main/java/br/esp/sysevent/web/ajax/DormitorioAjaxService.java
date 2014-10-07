@@ -45,18 +45,46 @@ public class DormitorioAjaxService {
         }
     }
 
-    public String troca(Long idDormitorio, Long idConfraternista) {
+    public String troca(String idDormitorio, String idConfraternista) {
         Confraternista confraternista;
-        if (idDormitorio == null && idConfraternista == null) {
-            return null;
-        } else if (idDormitorio == null && idConfraternista != null) {
+        Dormitorio dormitorio;
+        if (idConfraternista == null){
+            return "Ocorreu um erro no sistema";
+        }
+        Long idConf = NumberUtils.parseLong(idConfraternista);
+        Long idDorm;
+        if(idDormitorio.equals("null")){
+            idDorm = null;
+        } else {
+            idDorm = NumberUtils.parseLong(idDormitorio);
+        }
+        if (idDorm == null && idConf != null) {
             //setar idDormitorio em confraternista pra null, descontar vaga e salvar
-            //confraternista = confraternistarioService.findById(idDormitorio);
+            confraternista = confraternistarioService.findById(idConf);
+            dormitorio = confraternista.getDormitorio();
+            dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() - 1);
+            dormitorioService.saveOrUpdate(dormitorio);
+            confraternista.setDormitorio(null);
+            confraternistarioService.saveOrUpdate(confraternista);
             return "Confraternista trocado para 'Sem domitório'";
         } else {
             //verficar número de vagas/sexo do dormitorio
             //setar idDormitorio em confraternista pra idDormitorio, somar vaga e salvar
-            return "Confraternista trocado para 'Nome dormitório'";
+            dormitorio = dormitorioService.findById(idDorm);
+            confraternista = confraternistarioService.findById(idConf);
+            if (dormitorio.getSexo().equals(confraternista.getPessoa().getSexo())) {
+                if(dormitorio.getVagasOcupadas() != dormitorio.getVagas()){
+                    dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas()+1);
+                    dormitorioService.saveOrUpdate(dormitorio);
+                    confraternista.setDormitorio(dormitorio);
+                    confraternistarioService.saveOrUpdate(confraternista);
+                    return "Confraternista trocado para " + dormitorio.getNome();
+                }else{
+                    return "Dormitório sem vagas";
+                }
+            } else {
+                return "Dormitório não é do mesmo sexo do(a) confraternista.";
+            }
         }
     }
 }

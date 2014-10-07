@@ -22,12 +22,14 @@ import javax.persistence.Table;
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_DORMITORIO"))
 public class Dormitorio extends AbstractEntity<Long> {
-
-    private static final long serialVersionUID = 8942418698729372969L;
+    private static final long serialVersionUID = 2667670358839610774L;
+    
     @Column(name = "NOME", length = 40, nullable = false)
     private String nome;
     @Column(name = "VAGAS", nullable = false)
     private Integer vagas;
+    @Column(name = "VAGAS_OCUPADAS", nullable = false)
+    private Integer vagasOcupadas;
     @Column(name = "SEXO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
@@ -57,6 +59,14 @@ public class Dormitorio extends AbstractEntity<Long> {
         this.vagas = vagas;
     }
 
+    public Integer getVagasOcupadas() {
+        return vagasOcupadas;
+    }
+
+    public void setVagasOcupadas(Integer vagasOcupadas) {
+        this.vagasOcupadas = vagasOcupadas;
+    }
+    
     public Confraternista getCoordenador() {
         return coordenador;
     }
