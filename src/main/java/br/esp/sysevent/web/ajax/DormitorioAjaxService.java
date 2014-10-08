@@ -48,19 +48,24 @@ public class DormitorioAjaxService {
     public String troca(String idDormitorio, String idConfraternista) {
         Confraternista confraternista;
         Dormitorio dormitorio;
-        if (idConfraternista == null){
+        if (idConfraternista == null) {
             return "Ocorreu um erro no sistema";
         }
         Long idConf = NumberUtils.parseLong(idConfraternista);
         Long idDorm;
-        if(idDormitorio.equals("null")){
+        if (idDormitorio.equals("null")) {
             idDorm = null;
         } else {
             idDorm = NumberUtils.parseLong(idDormitorio);
         }
+        confraternista = confraternistarioService.findById(idConf);
+        if ((confraternista.equals(confraternista.getDormitorio().getCoordenador()))
+                ||(confraternista.equals(confraternista.getDormitorio().getViceCoordenador()))){
+            return "Este confraternista é coodenador ou vice coodenador de dormitório.\n Para editá-lo vá em 'Cadastrar dormitório'";
+        }
+        
         if (idDorm == null && idConf != null) {
             //setar idDormitorio em confraternista pra null, descontar vaga e salvar
-            confraternista = confraternistarioService.findById(idConf);
             dormitorio = confraternista.getDormitorio();
             dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() - 1);
             dormitorioService.saveOrUpdate(dormitorio);
@@ -70,16 +75,15 @@ public class DormitorioAjaxService {
         } else {
             //verficar número de vagas/sexo do dormitorio
             //setar idDormitorio em confraternista pra idDormitorio, somar vaga e salvar
-            dormitorio = dormitorioService.findById(idDorm);
-            confraternista = confraternistarioService.findById(idConf);
+            dormitorio = dormitorioService.findById(idDorm);            
             if (dormitorio.getSexo().equals(confraternista.getPessoa().getSexo())) {
-                if(dormitorio.getVagasOcupadas() != dormitorio.getVagas()){
-                    dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas()+1);
+                if (dormitorio.getVagasOcupadas() != dormitorio.getVagas()) {
+                    dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() + 1);
                     dormitorioService.saveOrUpdate(dormitorio);
                     confraternista.setDormitorio(dormitorio);
                     confraternistarioService.saveOrUpdate(confraternista);
                     return "Confraternista trocado para " + dormitorio.getNome();
-                }else{
+                } else {
                     return "Dormitório sem vagas";
                 }
             } else {

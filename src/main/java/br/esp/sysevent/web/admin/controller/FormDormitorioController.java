@@ -97,6 +97,13 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param locale
+     * @param result
+     * @param status
+     * @param model
+     * @param attributes
+     * @return 
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Dormitorio command,
@@ -109,17 +116,46 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
         }
-//        Confraternista coordenador = command.getCoordenador();
-//        coordenador = confraternistaService.findById(coordenador.getId());
-//        coordenador.setDormitorio(command);
-//        confraternistaService.saveOrUpdate(coordenador);
-//        Confraternista viceCoordenador = command.getViceCoordenador();
-//        if (!coordenador.equals(viceCoordenador)) {
-//            viceCoordenador = confraternistaService.findById(viceCoordenador.getId());
-//            viceCoordenador.setDormitorio(command);
-//            confraternistaService.saveOrUpdate(viceCoordenador);
-//        }        
-        dormitorioService.saveOrUpdate(command);
+        Confraternista coordenadorNovo = command.getCoordenador();
+        Confraternista viceCoordenadorNovo = command.getViceCoordenador();
+
+        if (!coordenadorNovo.equals(viceCoordenadorNovo)) {
+            if (command.getId() == null) {
+                command.setVagasOcupadas(2);
+            } else {
+                Dormitorio dormitorioAtual = dormitorioService.findById(command.getId());
+                Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
+                Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
+                if (coordenadorAtual.equals(viceCoordenadorAtual)) {
+                    command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() + 1);
+                }
+                coordenadorAtual.setDormitorio(null);
+                confraternistaService.saveOrUpdate(coordenadorAtual);
+                viceCoordenadorAtual.setDormitorio(null);
+                confraternistaService.saveOrUpdate(viceCoordenadorAtual);
+            }
+        } else {
+            if (command.getId() == null) {
+                command.setVagasOcupadas(1);
+            } else {
+                Dormitorio dormitorioAtual = dormitorioService.findById(command.getId());
+                Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
+                Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
+                if (!coordenadorAtual.equals(viceCoordenadorAtual)) {
+                    command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() - 1);
+                }
+                coordenadorAtual.setDormitorio(null);
+                confraternistaService.saveOrUpdate(coordenadorAtual);
+                viceCoordenadorAtual.setDormitorio(null);
+                confraternistaService.saveOrUpdate(viceCoordenadorAtual);
+            }
+        }        
+        Long idDormitorio = dormitorioService.saveOrUpdate(command);        
+        Dormitorio domitorio = dormitorioService.findById(idDormitorio);
+        coordenadorNovo.setDormitorio(domitorio);
+        confraternistaService.saveOrUpdate(coordenadorNovo);
+        viceCoordenadorNovo.setDormitorio(domitorio);
+        confraternistaService.saveOrUpdate(viceCoordenadorNovo);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         status.setComplete();
         return "redirect:/admin/formDormitorio.html?idEdicao=" + command.getEdicaoEvento().getId();

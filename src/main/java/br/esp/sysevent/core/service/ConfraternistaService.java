@@ -19,5 +19,5 @@ public interface ConfraternistaService extends EntityService<Long, Confraternist
     public Collection<Confraternista> findByDormitorio(final Dormitorio dormitorio);
     public Collection<Confraternista> findByDormitorio(final Long idDormitorio);
     public Collection<Confraternista> findBySemDormitorio();
-    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero);
+    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero);    
 }
