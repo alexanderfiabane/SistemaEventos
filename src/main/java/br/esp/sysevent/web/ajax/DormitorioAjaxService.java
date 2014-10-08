@@ -59,11 +59,12 @@ public class DormitorioAjaxService {
             idDorm = NumberUtils.parseLong(idDormitorio);
         }
         confraternista = confraternistarioService.findById(idConf);
-        if ((confraternista.equals(confraternista.getDormitorio().getCoordenador()))
-                ||(confraternista.equals(confraternista.getDormitorio().getViceCoordenador()))){
-            return "Este confraternista é coodenador ou vice coodenador de dormitório.\n Para editá-lo vá em 'Cadastrar dormitório'";
+        if (confraternista.getDormitorio() != null){
+            if ((confraternista.equals(confraternista.getDormitorio().getCoordenador()))
+                    || (confraternista.equals(confraternista.getDormitorio().getViceCoordenador()))) {
+                return "Este confraternista é coodenador ou vice coodenador de dormitório.\n Para editá-lo vá em 'Cadastrar dormitório'";
+            }        
         }
-        
         if (idDorm == null && idConf != null) {
             //setar idDormitorio em confraternista pra null, descontar vaga e salvar
             dormitorio = confraternista.getDormitorio();

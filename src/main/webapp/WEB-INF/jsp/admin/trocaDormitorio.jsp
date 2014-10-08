@@ -120,7 +120,7 @@
                     jQuery(inputConfraternista).append(jQuery('<thead>')
                             .append(jQuery('<tr id="' + dormitorio.id + '">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                            .append(dormitorio.nome)))
+                                            .append(dormitorio.nome + '<br/>' + 'Total de vagas: '+ dormitorio.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.state"/>'))
