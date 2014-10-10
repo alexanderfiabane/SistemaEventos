@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SaudeAlimentacaoConfraternistaReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9c2ff2a9-23f6-4ed8-9abb-d845f5c0591c">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="0"/>
+	<field name="edicaoEvento.numero" class="java.lang.String"/>
+	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
+	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
+	<field name="confraternista.casaEspirita.nome" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.dieta" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.alergia" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.convenioTelefone" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.convenio" class="java.lang.String"/>
+	<field name="confraternista.pessoa.informacoesSaude.medicacao" class="java.lang.String"/>
+	<field name="confraternista.pessoa.endereco.cidade.estado.sigla" class="java.lang.String"/>
+	<field name="confraternista.pessoa.endereco.cidade.nome" class="java.lang.String"/>
+	<field name="confraternista.tipo" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="47" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="24" width="555" height="21" forecolor="#000000" uuid="eb11876e-10fc-4fde-8735-cf378898fc28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edicaoEvento.numero} + " " + $F{edicaoEvento.evento.sigla}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="555" height="23" forecolor="#000000" uuid="8d897ad5-b14c-4ce3-b661-d176e9a037b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Confraternistas - Saúde e Dieta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="27638599-2513-4d31-a525-63ab251e288c"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="44" width="555" height="1" uuid="23c08f7b-146c-419e-9ecc-b46fc65a7f38"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="155" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="93" width="555" height="12" uuid="353456a8-f910-4933-aabc-f749540b63d9"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.convenio} == null) || ($F{confraternista.pessoa.informacoesSaude.convenio}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.convenio} + ". Telefone: " + $F{confraternista.pessoa.informacoesSaude.convenioTelefone}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="58" width="555" height="15" uuid="cdfa1afd-c98f-4fad-b561-bff44b5c2f84"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Faz uso rotineiro de medicação?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="56" width="555" height="1" uuid="00e51f2e-4bb5-4277-9120-380b12a89de0"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="82" width="555" height="15" uuid="8375539d-d4f9-44f0-beae-f7573b2247a1"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tem algum tipo de convênio?]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="142" width="555" height="12" uuid="a4e078c8-80d5-404a-8ba1-cbe64cdd8511"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.dieta} == null) || ($F{confraternista.pessoa.informacoesSaude.dieta}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.dieta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="106" width="555" height="15" uuid="3ef761af-0d19-4324-a8eb-db0dba975452"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Possui algum tipo de alergia?]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="69" width="555" height="12" uuid="005a2f26-8c57-4cbb-8ee5-cacf4872c48a"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.medicacao} == null) || ($F{confraternista.pessoa.informacoesSaude.medicacao}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.medicacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="130" width="555" height="15" uuid="a7d414f4-5c6c-48ff-9744-f899e6f33279"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Possui algum tipo de restrição alimentar?]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="117" width="555" height="12" uuid="9b549cb0-f85a-4d23-ae2f-56770970f217"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.pessoa.informacoesSaude.alergia} == null) || ($F{confraternista.pessoa.informacoesSaude.alergia}.equals("")) ? "Não informado." : $F{confraternista.pessoa.informacoesSaude.alergia}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="a90cec71-bea5-45e8-9e83-df6fd971ca34"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="17" width="555" height="12" uuid="d72183eb-5805-4a1e-ba27-e1f59179b4bc"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="3" width="555" height="15" uuid="9931da73-e23a-4a4c-b3cb-7731cb685bac"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome completo]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="320" y="3" width="235" height="12" uuid="3ac3e28e-1fcd-4efc-9d9f-cfc8e9514150"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}.toUpperCase() + " - " + $F{confraternista.pessoa.endereco.cidade.estado.sigla}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="41" width="575" height="12" uuid="a2e0586c-9b05-495b-9f0a-c128046a0360"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="29" width="555" height="15" uuid="502498b3-f1e0-4f2f-948f-3d37465c8c6e"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sociedade Espírita]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="320" y="15" width="235" height="12" uuid="c822de41-a186-475d-89ce-1bb4bfbb8d82"/>
+				<box leftPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="16">
+			<staticText>
+				<reportElement x="498" y="1" width="35" height="15" forecolor="#000000" uuid="156c367f-015e-4d74-8f98-e3a8aa4d726e"/>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="b3d9215f-0573-474d-bcbf-a6e795fa1ad0"/>
+			</line>
+			<textField>
+				<reportElement x="533" y="1" width="20" height="15" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="c30ce968-4361-4b3f-acac-b8920a982527"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

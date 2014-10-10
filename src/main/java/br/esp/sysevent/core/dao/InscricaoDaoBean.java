@@ -75,7 +75,7 @@ public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> impleme
                     Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                 ));
         return findByCriteria(criteria
-                , Order.asc("cidade.nome"));
+                , Order.asc("pessoa.nome"));
     }
 
     @Override

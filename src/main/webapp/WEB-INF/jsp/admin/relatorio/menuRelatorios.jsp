@@ -4,7 +4,7 @@
 <content tag="titlebarContent">
     <msf:pagetitle label="Relatórios  - (${edicao.tema})" defaultIsLabelKey="true">
         <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><msf:url><c:url value="/admin/relatorio/listEvento.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Relatórios - Lista de Edições" isLabelKey="false"><msf:url><c:url value="/admin/relatorio/listEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
@@ -58,6 +58,10 @@
             <msf:menuItem label="Relatório de Presença dos Confraternistas">
                 <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
                 <msf:url><c:url value="/admin/relatorio/reportConfPresenca.html?idEdicao=${edicao.id}"/></msf:url>
+            </msf:menuItem>
+            <msf:menuItem label="Relatório de Saúde e Dieta dos Confraternistas">
+                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
+                <msf:url><c:url value="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/></msf:url>
             </msf:menuItem>
             <msf:menuItem label="Relatório de camisetas dos confraternistas">
                 <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>

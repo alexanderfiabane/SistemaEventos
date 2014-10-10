@@ -47,6 +47,7 @@ public class AdminReportController {
     private static final String CONFRATERNISTAS_CAMISETA = "br/esp/sysevent/core/report/CamisetasConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_DORMITORIOS = "br/esp/sysevent/core/report/DormitoriosConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_PRESENCA = "br/esp/sysevent/core/report/PresencaConfraternistasReport.jasper";
+    private static final String CONFRATERNISTAS_SAUDE_ALIMENTACAO = "br/esp/sysevent/core/report/SaudeAlimentacaoConfraternistaReport.jasper";
     private static final String CAMISETA_ENCOMENDA = "br/esp/sysevent/core/report/CamisetasEncomendaReport.jasper";
     private static final String CRACHASA3 = "br/esp/sysevent/core/report/CrachasA3Report.jasper";
     private static final String CRACHASA4 = "br/esp/sysevent/core/report/CrachasA4Report.jasper";
@@ -134,6 +135,16 @@ public class AdminReportController {
         Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_PRESENCA);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasPresenca.pdf", "application/pdf", response);
+        return null;
+    }
+    
+    @RequestMapping(value = "/admin/relatorio/reportConfSaudeAlimentacao.html", method = RequestMethod.GET)
+    public ModelAndView confraternistasSaudeAlimentacaoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
+            final HttpServletRequest request,
+            final HttpServletResponse response) throws Exception {        
+        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
+        final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_SAUDE_ALIMENTACAO);
+        ControllerUtils.writeHttpAttached(pdf, "confraternistasSaudeAlimentacao.pdf", "application/pdf", response);
         return null;
     }
 
