@@ -5,6 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
@@ -77,12 +78,32 @@ public class ConfraternistaDaoBean extends AbstractEntityDaoBean<Long, Confrater
 
     @Override
     public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero, Order order) {
+//        final StringBuilder builder = new StringBuilder(400);
+//        builder
+//                .append("select i.confraternista ")
+//                .append("from Inscricao i ")
+//                .append("join i.confraternista c ")
+//                .append("join fetch c.pessoa pessoa ")                                
+//                .append("where pessoa.sexo = :genero ")                
+//                .append("and i.status in (:status) ")
+//                .append("order by :order ");
+//
+//        return getCurrentSession().createQuery(builder.toString())
+//                .setEntity("confraternista", Confraternista.class)
+//                .setParameter("genero", genero)
+//                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+//                .setParameter("order", order)
+//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+//                .list();
 
         final DetachedCriteria c = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("pessoa", "pessoa")
                 .add(Restrictions.isNull("dormitorio"))
-                .add(Restrictions.eq("pessoa.sexo", genero));        
+                .add(Restrictions.eq("pessoa.sexo", genero));
+//                .add(Restrictions.or(
+//                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+//                    Restrictions.eq("status", Inscricao.Status.EFETIVADA));        
 
         return findByCriteria(c, order);
     }
