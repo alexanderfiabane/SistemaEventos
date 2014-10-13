@@ -5,7 +5,6 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
-import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
