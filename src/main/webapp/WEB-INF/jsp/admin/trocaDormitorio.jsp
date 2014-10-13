@@ -147,7 +147,7 @@
                 });
             }
         } else {
-            confraternistaAjaxService.findSemDormitorio(inputDormitorio, function callback(confraternistas) {
+            confraternistaAjaxService.findSemDormitorio(inputDormitorio, ${edicao.id}, function callback(confraternistas) {
                 jQuery(inputConfraternista).empty();
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr id="null">')
@@ -225,9 +225,9 @@
             loadConfraternistas(null, '#confraternistasSemDormitorio', false);
         } else {
             loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
-            dormitorioAjaxService.findByGenero(sexoSelecionado, function callback(cidades) {
+            dormitorioAjaxService.findByGenero(sexoSelecionado, ${edicao.id}, function callback(dormitorio) {
                 inputDormitorio.append(jQuery('<option value="">').append('Selecione um dormitório'));
-                jQuery.each(cidades, function (index, value) {
+                jQuery.each(dormitorio, function (index, value) {
                     inputDormitorio.append(jQuery('<option>').val(value.id).append(value.nome));
                 });
             });

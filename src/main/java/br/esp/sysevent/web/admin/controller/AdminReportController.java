@@ -51,7 +51,8 @@ public class AdminReportController {
     private static final String CAMISETA_ENCOMENDA = "br/esp/sysevent/core/report/CamisetasEncomendaReport.jasper";
     private static final String CRACHASA3 = "br/esp/sysevent/core/report/CrachasA3Report.jasper";
     private static final String CRACHASA4 = "br/esp/sysevent/core/report/CrachasA4Report.jasper";
-    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha2.jpg";
+//    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha2.jpg";
+    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha3.jpg";
     @Autowired
     private InscricaoService inscricaoService;
     @Autowired

@@ -6,9 +6,11 @@ package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.service.ConfraternistaService;
 import br.esp.sysevent.core.service.DormitorioService;
+import br.esp.sysevent.core.service.EdicaoService;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import java.util.Collection;
@@ -23,9 +25,11 @@ import org.springframework.stereotype.Service;
 public class DormitorioAjaxService {
 
     @Autowired
-    DormitorioService dormitorioService;
+    private DormitorioService dormitorioService;
     @Autowired
-    ConfraternistaService confraternistarioService;
+    private ConfraternistaService confraternistaService;
+    @Autowired
+    private EdicaoService edicaoService;
 
     public Dormitorio findById(String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
@@ -34,14 +38,15 @@ public class DormitorioAjaxService {
         return dormitorioService.findById(NumberUtils.parseLong(idDormitorio));
     }
 
-    public Collection<Dormitorio> findByGenero(String genero) {
-        if (CharSequenceUtils.isBlank(genero)) {
+    public Collection<Dormitorio> findByGenero(String genero, String idEdicao) {
+        if (CharSequenceUtils.isBlank(genero) || CharSequenceUtils.isBlank(idEdicao)) {
             return null;
-        } else {
+        } else {            
+            Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
             if (genero.equals(Sexo.MASCULINO.getDescricao())) {
-                return dormitorioService.findBySexo(Sexo.MASCULINO);
+                return dormitorioService.findBySexoEdicao(Sexo.MASCULINO, edicao);
             }
-            return dormitorioService.findBySexo(Sexo.FEMININO);
+            return dormitorioService.findBySexoEdicao(Sexo.FEMININO, edicao);
         }
     }
 
@@ -58,7 +63,7 @@ public class DormitorioAjaxService {
         } else {
             idDorm = NumberUtils.parseLong(idDormitorio);
         }
-        confraternista = confraternistarioService.findById(idConf);
+        confraternista = confraternistaService.findById(idConf);
         if (confraternista.getDormitorio() != null){
             if ((confraternista.equals(confraternista.getDormitorio().getCoordenador()))
                     || (confraternista.equals(confraternista.getDormitorio().getViceCoordenador()))) {
@@ -71,7 +76,7 @@ public class DormitorioAjaxService {
             dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() - 1);
             dormitorioService.saveOrUpdate(dormitorio);
             confraternista.setDormitorio(null);
-            confraternistarioService.saveOrUpdate(confraternista);
+            confraternistaService.saveOrUpdate(confraternista);
             return "Confraternista trocado para 'Sem domitório'";
         } else {
             //verficar número de vagas/sexo do dormitorio
@@ -82,7 +87,7 @@ public class DormitorioAjaxService {
                     dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() + 1);
                     dormitorioService.saveOrUpdate(dormitorio);
                     confraternista.setDormitorio(dormitorio);
-                    confraternistarioService.saveOrUpdate(confraternista);
+                    confraternistaService.saveOrUpdate(confraternista);
                     return "Confraternista trocado para " + dormitorio.getNome();
                 } else {
                     return "Dormitório sem vagas";

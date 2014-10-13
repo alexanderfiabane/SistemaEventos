@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.hibernate.criterion.Order;
@@ -103,6 +105,14 @@ public class DormitorioServiceBean extends AbstractEntityServiceBean<Long, Dormi
     }
     
     @Override
+    public Collection<Dormitorio> findBySexoEdicao(Sexo sexo, Edicao edicao) {
+        Map map = new HashMap();
+        map.put("sexo", sexo);
+        map.put("edicaoEvento", edicao);
+        return getDao().findByProperties(map, Order.asc("nome"));
+    }
+    
+    @Override
     public Collection<Dormitorio> findBySexo(Sexo sexo){
         return getDao().findByProperty("sexo", sexo, Order.asc("nome"));
     }
@@ -153,4 +163,5 @@ public class DormitorioServiceBean extends AbstractEntityServiceBean<Long, Dormi
         }
         return idade;
     }
+
 }

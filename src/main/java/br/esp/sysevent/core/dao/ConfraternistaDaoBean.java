@@ -5,6 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
 import java.util.Collection;
@@ -85,6 +86,6 @@ public class ConfraternistaDaoBean extends AbstractEntityDaoBean<Long, Confrater
                 .add(Restrictions.eq("pessoa.sexo", genero));        
 
         return findByCriteria(c, order);
-    }
+    }   
 
 }

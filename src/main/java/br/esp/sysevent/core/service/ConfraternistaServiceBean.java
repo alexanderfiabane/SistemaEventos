@@ -6,9 +6,13 @@ package br.esp.sysevent.core.service;
 import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
+import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +62,21 @@ public class ConfraternistaServiceBean extends AbstractEntityServiceBean<Long, C
     @Override
     public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero){
         return getDao().findBySexoSemDormitorio(genero, Order.asc("pessoa.nome"));
+    }
+
+    @Override
+    public Collection<Confraternista> findBySexoSemDormitorioEdicao(Sexo genero, Edicao edicao) {
+        Map map = new HashMap();
+        map.put("sexo", genero);
+        map.put("edicaoEvento", edicao);
+        Collection<Confraternista> confraternistas =  getDao().findByProperties(map, Order.asc("pessoa.nome"));
+        Collection<Confraternista> confraternistasSemDormitorio = new HashSet<Confraternista>();
+        for (Confraternista confraternista : confraternistas) {
+            if (confraternista.getDormitorio()== null){
+                confraternistasSemDormitorio.add(confraternista);
+            }
+        }
+        return confraternistasSemDormitorio;
     }
     
 }

@@ -42,6 +42,7 @@
         <dwr:convert class="br.esp.sysevent.core.model.Dormitorio" type="hibernate3">
             <dwr:include method="id"/>
             <dwr:include method="nome"/>
+            <dwr:include method="vagas"/>
         </dwr:convert>
     </dwr:configuration>
 

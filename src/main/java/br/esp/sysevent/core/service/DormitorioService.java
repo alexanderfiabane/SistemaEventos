@@ -18,4 +18,6 @@ public interface DormitorioService extends EntityService<Long, Dormitorio> {
     public void alocaConfraternistasAleatoriamente(final Edicao edicao);
 
     public Collection<Dormitorio> findBySexo(Sexo sexo);
+
+    public Collection<Dormitorio> findBySexoEdicao(Sexo sexo, Edicao edicao);
 }
