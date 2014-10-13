@@ -4,9 +4,7 @@
 package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Confraternista;
-import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
-import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.service.ConfraternistaService;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.InscricaoService;
@@ -53,21 +51,33 @@ public class ConfraternistaAjaxService {
             Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(NumberUtils.parseLong(idEdicao));
             Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
             for (Inscricao inscricao : inscricoes) {
-                if (inscricao.getConfraternista().getDormitorio() == null) {
-                    if (genero.equals(Sexo.MASCULINO.getDescricao())) {
-                        if (inscricao.getConfraternista().getPessoa().getSexo().equals(Sexo.MASCULINO)
-                                && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))) {
-                            confraternistas.add(inscricao.getConfraternista());
-                        }
-                    } else {
-                        if (inscricao.getConfraternista().getPessoa().getSexo().equals(Sexo.FEMININO)
-                                && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))) {
-                            confraternistas.add(inscricao.getConfraternista());
-                        }
+                if (inscricao.getConfraternista().getDormitorio() == null
+                        && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))) {
+                    if (genero.equals(inscricao.getConfraternista().getPessoa().getSexo().getDescricao())) {
+                        confraternistas.add(inscricao.getConfraternista());
                     }
                 }
             }
             return confraternistas;
         }
+    }
+
+    public Collection<Confraternista> findByEdicao(final String idEdicao) {
+        Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(NumberUtils.parseLong(idEdicao));
+        Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
+        for (Inscricao inscricao : inscricoes) {
+            if (inscricao.getConfraternista().getGrupoIdade() != null
+                    && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))
+                    && (inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.CONFRATERNISTA) 
+                    || inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.EVANGELIZADOR))) {
+                confraternistas.add(inscricao.getConfraternista());
+            }
+        }
+        return confraternistas;
+    }
+
+    public String troca(String idGrupo, String idConfraternista) {
+
+        return "Tudo OK";
     }
 }

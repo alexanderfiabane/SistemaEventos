@@ -119,7 +119,7 @@
     <display:table id="edicao" name="edicoes" pagesize="10" requestURI="/admin/formEdicao.html" class="table table-striped table-condensed">
         <c:url var="edit_url" value="/admin/formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
         <c:url var="delete_url" value="/admin/deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-        <c:url var="grupoIdade_url" value="/admin/formGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+        <c:url var="grupoIdade_url" value="/admin/menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
         <c:url var="oficina_url" value="/admin/formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
         <c:url var="dormitorio_url" value="/admin/menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
         <display:column media="html" titleKey="label.options" class="threeOption centered" headerClass="centered">
