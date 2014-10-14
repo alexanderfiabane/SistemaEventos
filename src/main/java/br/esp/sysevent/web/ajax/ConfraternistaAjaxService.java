@@ -93,10 +93,5 @@ public class ConfraternistaAjaxService {
             }
         }
         return confraternistas;
-    }
-
-    public String troca(String idGrupo, String idConfraternista) {
-
-        return "Tudo OK";
-    }
+    }   
 }
