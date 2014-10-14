@@ -48,6 +48,7 @@
             <dwr:include method="id"/>
             <dwr:include method="nome"/>
             <dwr:include method="vagas"/>
+            <dwr:include method="vagasOcupadas"/>
         </dwr:convert>
     </dwr:configuration>
 
@@ -62,17 +63,16 @@
     </bean>
 
     <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
-    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">
-        <!--<property name="cidadeService" ref="cidadeService"/>-->
+    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
         <dwr:remote javascript="testeAjaxService">
             <dwr:include method="teste" />
         </dwr:remote>
     </bean>
-    <bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">
-        <!--<property name="confraternistaService" ref="confraternistaService"/>-->
+    <bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">        
         <dwr:remote javascript="confraternistaAjaxService">
             <dwr:include method="findByNome" />
             <dwr:include method="findByIdDormitorio" />
+            <dwr:include method="findByIdGrupoIdade" />
             <dwr:include method="findSemDormitorio" />
         </dwr:remote>
     </bean>
@@ -90,6 +90,7 @@
     </bean>
     <bean id="grupoIdadeAjaxService" class="br.esp.sysevent.web.ajax.GrupoIdadeAjaxService">
         <dwr:remote javascript="grupoIdadeAjaxService">            
+            <dwr:include method="findById" />
             <dwr:include method="findSimilares" />
             <dwr:include method="troca" />
         </dwr:remote>

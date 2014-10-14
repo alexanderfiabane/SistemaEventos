@@ -24,7 +24,7 @@
 	<detail>
 		<band height="212" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="343" height="212" backcolor="#FFFFFF" uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037"/>
+				<reportElement x="0" y="0" width="340" height="212" backcolor="#FFFFFF" uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
 				</graphicElement>
@@ -35,7 +35,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{confraternista.grupoIdade.nome} == null) || ($F{confraternista.grupoIdade.nome}.equals("")) ? "Não informado." : $F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Transparent" x="9" y="9" width="195" height="36" uuid="65a7c206-1e78-4a9c-89a1-1028c40c13e7"/>
@@ -83,16 +83,16 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{confraternista.dormitorio.nome} == null) || ($F{confraternista.dormitorio.nome}.equals("")) ? "Não informado." : $F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="103" width="343" height="1" uuid="28c32abf-fa03-473c-ac30-5340d7bc5f4c"/>
+				<reportElement x="0" y="103" width="340" height="1" uuid="28c32abf-fa03-473c-ac30-5340d7bc5f4c"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="152" width="343" height="1" uuid="c14dca34-9887-4cd4-92dd-9ff67b9dcb5d"/>
+				<reportElement x="0" y="152" width="340" height="1" uuid="c14dca34-9887-4cd4-92dd-9ff67b9dcb5d"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>

@@ -4,9 +4,11 @@
 package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.model.Confraternista;
+import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.service.ConfraternistaService;
 import br.esp.sysevent.core.service.EdicaoService;
+import br.esp.sysevent.core.service.GrupoIdadeService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
@@ -24,11 +26,11 @@ import org.springframework.stereotype.Service;
 public class ConfraternistaAjaxService {
 
     @Autowired
-    private ConfraternistaService confraternistaService;
-    @Autowired
-    private EdicaoService edicaoService;
+    private ConfraternistaService confraternistaService;    
     @Autowired
     private InscricaoService inscricaoService;
+    @Autowired
+    private GrupoIdadeService grupoIdadeService;
 
     public Collection<Confraternista> findByNome(final String nome) {
         if (CharSequenceUtils.isBlank(nome)) {
@@ -42,6 +44,14 @@ public class ConfraternistaAjaxService {
             return Collections.emptyList();
         }
         return confraternistaService.findByDormitorio(NumberUtils.parseLong(idDormitorio));
+    }
+    
+    public Collection<Confraternista> findByIdGrupoIdade(final String idGrupoIdade) {
+        if (CharSequenceUtils.isBlank(idGrupoIdade)) {
+            return Collections.emptyList();
+        }
+        final GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
+        return confraternistaService.findByProperty("grupoIdade", grupoIdade);
     }
 
     public Collection<Confraternista> findSemDormitorio(String genero, String idEdicao) {

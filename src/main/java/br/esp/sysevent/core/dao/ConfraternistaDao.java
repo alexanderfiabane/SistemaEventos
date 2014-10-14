@@ -5,7 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
-import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.dao.EntityDao;
 import java.util.Collection;
@@ -22,5 +22,6 @@ public interface ConfraternistaDao extends EntityDao<Long, Confraternista> {
     public Collection<Confraternista> findByDormitorio(final Long idDormitorio, final Order order);
     public Collection<Confraternista> findByDormitorio(Dormitorio dormitorio);
     public Collection<Confraternista> findBySemDormitorio(Order order);
-    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero, Order asc);    
+    public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero, Order asc);
+    public Collection<Confraternista> findFacilitadoresByGrupo(GrupoIdade grupoIdade);
 }

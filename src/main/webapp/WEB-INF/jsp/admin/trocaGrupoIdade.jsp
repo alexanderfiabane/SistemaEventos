@@ -41,10 +41,10 @@
                 <tbody>
                     <tr>
                         <td>
-                            <!--Tabela que mostra os confraternista do dormitório selecionado-->
+                            <!--Tabela que mostra os confraternista do grupoA selecionado-->
                             <div class="centeredDivOuter" style="width: 400px;">
                                 <div class="centeredDivInner">
-                                    <!-- Lista de confraternistas do dormitório -->                
+                                    <!-- Lista de confraternistas do grupoA -->                
                                     <table id="confraternistasGrupoA" class="table table-bordered table-striped table-condensed connectedSortable">
                                         <thead>
                                             <tr>
@@ -65,25 +65,14 @@
                         <td>
                             <div class="centeredDivOuter" style="width: 400px">
                                 <div class="centeredDivInner">
-                                    <!-- Lista de confraternistas sem dormitório -->
+                                    <!-- Lista de confraternistas do grupoB -->
                                     <table id="confraternistasGrupoB" class="table table-bordered table-striped table-condensed connectedSortable">
                                         <thead>
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
-                                                    Confraternistas Sem Dormitório
+                                                    Selecione um grupo
                                                 </th>
-                                            </tr>
-                                            <tr>                                                
-                                                <th style="text-align: center;">
-                                                    <msf:message key="label.state"/>
-                                                </th>
-                                                <th style="text-align: center;">
-                                                    <msf:message key="label.city"/>
-                                                </th>
-                                                <th style="text-align: center;">
-                                                    <msf:message key="label.name"/>
-                                                </th>
-                                            </tr>
+                                            </tr>                                           
                                         </thead>                                        
                                     </table>
                                 </div>
@@ -102,25 +91,25 @@
      * Carrega os confraternisto do dormitório selecionado.
      * 
      * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormitório.
-     * @param {Dormitorio} inputDormitorio
+     * @param {Dormitorio} selectedGrupoIdade
      * @param {ID Div} inputConfraternista
      * @returns {Collection<Confraternista>}
      */
-    function loadConfraternistas(inputDormitorio, inputConfraternista, situacaoConfraternista) {
+    function loadConfraternistas(selectedGrupoIdade, inputConfraternista, situacaoConfraternista) {
         if (situacaoConfraternista) {
-            var dormitorioSelecionado = inputDormitorio.val();
-            jQuery(inputConfraternista).empty();
-            if (dormitorioSelecionado === null || dormitorioSelecionado === '') {
+            var grupoIdadeSelecionado = selectedGrupoIdade.val();
+            jQuery(inputConfraternista).empty();            
+            if (grupoIdadeSelecionado === null || grupoIdadeSelecionado === '') {
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
                                         .append('Selecione um grupo'))));
             } else {
-                grupoIdadeAjaxService.findById(dormitorioSelecionado, function callback(dormitorio) {
+                grupoIdadeAjaxService.findById(grupoIdadeSelecionado, function callback(grupoIdade) {
                     jQuery(inputConfraternista).append(jQuery('<thead>')
-                            .append(jQuery('<tr id="' + dormitorio.id + '">')
+                            .append(jQuery('<tr id="' + grupoIdade.id + '">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                            .append(dormitorio.nome + '<br/>' + 'Total de vagas: ' + dormitorio.vagas)))
+                                            .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.state"/>'))
@@ -128,7 +117,7 @@
                                             .append('<msf:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.name"/>'))));
-                    confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
+                    confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
                         jQuery.each(confraternistas, function(index, value) {
                             jQuery('#grupoA').append(jQuery('<tr id="' + value.id + '">')
@@ -142,41 +131,50 @@
                         jQuery(inputConfraternista).append(jQuery('<tfoot>')
                                 .append(jQuery('<tr>')
                                         .append(jQuery('<td colspan="3">')
-                                                .append("<strong>Total: " + jQuery("#confraternistasGrupoA tbody tr").length + "</strong>"))));
+                                                .append("<strong>Vagas ocupadas: " + grupoIdade.vagasOcupadas + "</strong>"))));
                     });
                 });
             }
         } else {
-            confraternistaAjaxService.findSemDormitorio(inputDormitorio, ${edicao.id}, function callback(confraternistas) {
-                jQuery(inputConfraternista).empty();
+            var grupoIdadeSelecionado = selectedGrupoIdade;
+            jQuery(inputConfraternista).empty();
+            //Grupo B
+            if (grupoIdadeSelecionado === null || grupoIdadeSelecionado === '') {
                 jQuery(inputConfraternista).append(jQuery('<thead>')
-                        .append(jQuery('<tr id="null">')
+                        .append(jQuery('<tr>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                        .append("Confraternistas Sem Dormitório")))
-                        .append(jQuery('<tr>')
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<msf:message key="label.state"/>'))
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<msf:message key="label.city"/>'))
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<msf:message key="label.name"/>'))));
-                jQuery(inputConfraternista).append('<tbody id="grupoB">');
-                if (confraternistas !== null) {
-                    jQuery.each(confraternistas, function(index, value) {
-                        jQuery('#grupoB').append(jQuery('<tr id="' + value.id + '">')
-                                .append(jQuery('<td>')
-                                        .append(value.pessoa.endereco.cidade.estado.sigla))
-                                .append(jQuery('<td>')
-                                        .append(value.pessoa.endereco.cidade.nome))
-                                .append(jQuery('<td>')
-                                        .append(value.pessoa.nome)));
+                                        .append('Selecione um grupo'))));
+            } else {
+                grupoIdadeAjaxService.findById(grupoIdadeSelecionado, function callback(grupoIdade) {
+                    jQuery(inputConfraternista).append(jQuery('<thead>')
+                            .append(jQuery('<tr id="' + grupoIdade.id + '">')
+                                    .append(jQuery('<th style="text-align: center;" colspan="3">')
+                                            .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
+                            .append(jQuery('<tr>')
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.state"/>'))
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.city"/>'))
+                                    .append(jQuery('<th style="text-align: center;">')
+                                            .append('<msf:message key="label.name"/>'))));
+                    confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
+                        jQuery(inputConfraternista).append('<tbody id="grupoB">');
+                        jQuery.each(confraternistas, function(index, value) {
+                            jQuery('#grupoB').append(jQuery('<tr id="' + value.id + '">')
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.endereco.cidade.estado.sigla))
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.endereco.cidade.nome))
+                                    .append(jQuery('<td>')
+                                            .append(value.pessoa.nome)));
+                        });
+                        jQuery(inputConfraternista).append(jQuery('<tfoot>')
+                                .append(jQuery('<tr>')
+                                        .append(jQuery('<td colspan="3">')
+                                                .append("<strong>Vagas ocupadas: " + grupoIdade.vagasOcupadas + "</strong>"))));
                     });
-                }
-                jQuery(inputConfraternista).append(jQuery('<tfoot>')
-                        .append(jQuery('<tr>')
-                                .append(jQuery('<td colspan="3">')
-                                        .append("<strong>Total: " + jQuery("#confraternistasGrupoB tbody tr").length + "</strong>"))));
-            });
+                });
+            }
         }
     }
 
@@ -195,9 +193,12 @@
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca                        
                         var idConfraternista = ui.item.context.id;
-                        var idGrupoIdade = ev.target.tHead.rows[0].getAttribute("id");                        
-                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function (retorno) {
+                        var idGrupoIdade = ev.target.tHead.rows[0].getAttribute("id");
+                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function(retorno) {
                             bootbox.alert(retorno);
+//                            bootbox.alert(retorno, function(){                                
+//                                //detectar para onde foi e fazer reload do anterior com o valor selecionado no select correspondente                                
+//                            });                            
                         });
                     },
                     cursorAt: {left: 20},
@@ -209,18 +210,19 @@
     /**
      * Carrega os dormitórios segundo o gênero escolhido
      
-     * @param {idGrupo} grupoa
-     * @param {Dormitorio} grupoB
+     * @param {selectGrupoA} grupoA
+     * @param {selectGrupoB} grupoB
      * @returns {Collection<GrupoIdade>}     */
     function loadGrupos(grupoA, grupoB) {
-        var grupoASelecionado = grupoA.val();
+        var grupoASelecionado = grupoA.val();                
         grupoB.empty();
-        loadConfraternistas(grupoB, jQuery('#confraternistasGrupoA'), true);
+        loadConfraternistas(null, '#confraternistasGrupoB', false);
         if (grupoASelecionado === '') {
-            grupoB.append(jQuery('<option>').append('Selecione primeiro um grupo na coluna da esquerda'));
-            loadConfraternistas(null, '#confraternistasGrupoB', false);
+            grupoB.append(jQuery('<option>').append('Selecione primeiro um grupo na coluna da esquerda'));            
+            loadConfraternistas(grupoA, '#confraternistasGrupoA', true);
         } else {
-            loadConfraternistas(grupoASelecionado, '#confraternistasGrupoB', false);
+            //Carrega confraternistas na coluna da esquerda
+            loadConfraternistas(grupoA, jQuery('#confraternistasGrupoA'), true);            
             grupoIdadeAjaxService.findSimilares(grupoASelecionado, function callback(grupo) {
                 if (grupo.length === 0) {
                     bootbox.alert("Não existem grupos similares ao selecionado.");
@@ -243,9 +245,8 @@
             loadGrupos(jQuery('#selectGrupoA'), jQuery('#selectGrupoB'));
             trocaConfraternistaGrupo();
             //Carrega o painel com os confraternistas do dormitorio selecionado
-            jQuery('#selectGrupoB').change(function() {
-                loadConfraternistas(jQuery(this), jQuery('#confraternistasGrupoA'), true);
-                loadConfraternistas(jQuery('#selectGrupoA').val(), '#confraternistasGrupoB', false);
+            jQuery('#selectGrupoB').change(function() {                                
+                loadConfraternistas(jQuery(this).val(), '#confraternistasGrupoB', false);
             });
             jQuery('#selectGrupoA').change(function() {
                 loadGrupos(jQuery(this), jQuery('#selectGrupoB'));

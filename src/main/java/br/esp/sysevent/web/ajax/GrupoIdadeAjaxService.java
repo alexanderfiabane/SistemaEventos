@@ -27,6 +27,13 @@ public class GrupoIdadeAjaxService {
     @Autowired
     private ConfraternistaService confraternistaService;
 
+    public GrupoIdade findById(String idGrupoIdade) {
+        if (CharSequenceUtils.isBlank(idGrupoIdade)) {
+            return null;
+        }
+        return grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
+    }
+    
     public Collection<GrupoIdade> findSimilares(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
@@ -41,8 +48,8 @@ public class GrupoIdadeAjaxService {
         }
         Confraternista confraternista = confraternistaService.findById(NumberUtils.parseLong(idConfraternista));
         GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
-        GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();
-        Collection<Confraternista> facilitadores = grupoIdadeConfraternista.getFacilitadores();
+        GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();        
+        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdade);
         for (Confraternista facilitador : facilitadores) {
             if (facilitador.equals(confraternista)) {
                 return "Este confraternista é facilitador deste grupo. Para trocá-lo vá em 'Cadastrar Grupo Idade'";

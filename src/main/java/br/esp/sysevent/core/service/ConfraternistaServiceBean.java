@@ -7,6 +7,7 @@ import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Sexo;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
@@ -77,6 +78,11 @@ public class ConfraternistaServiceBean extends AbstractEntityServiceBean<Long, C
             }
         }
         return confraternistasSemDormitorio;
+    }
+
+    @Override
+    public Collection<Confraternista> findFacilitadoresByGrupo(GrupoIdade grupoIdade) {
+        return getDao().findFacilitadoresByGrupo(grupoIdade);
     }
     
 }
