@@ -49,7 +49,7 @@ public class GrupoIdadeAjaxService {
         Confraternista confraternista = confraternistaService.findById(NumberUtils.parseLong(idConfraternista));
         GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
         GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();        
-        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdade);
+        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdadeConfraternista);
         for (Confraternista facilitador : facilitadores) {
             if (facilitador.equals(confraternista)) {
                 return "Este confraternista é facilitador deste grupo. Para trocá-lo vá em 'Cadastrar Grupo Idade'";

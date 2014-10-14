@@ -51,7 +51,16 @@ public class ConfraternistaAjaxService {
             return Collections.emptyList();
         }
         final GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
-        return confraternistaService.findByProperty("grupoIdade", grupoIdade);
+        Collection<Confraternista> confrateristas = confraternistaService.findByProperty("grupoIdade", grupoIdade);
+        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdade);
+        for (Confraternista confraternista : confrateristas) {
+            for (Confraternista facilitador : facilitadores) {
+                if(confrateristas.equals(facilitador)){
+                    confrateristas.remove(confraternista);
+                }
+            }
+        }
+        return confrateristas;
     }
 
     public Collection<Confraternista> findSemDormitorio(String genero, String idEdicao) {
