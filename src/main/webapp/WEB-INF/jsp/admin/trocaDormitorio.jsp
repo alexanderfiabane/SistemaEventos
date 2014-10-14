@@ -198,10 +198,7 @@
                         var idConfraternista = ui.item.context.id;
                         var idDormitorio = ev.target.tHead.rows[0].getAttribute("id");
                         dormitorioAjaxService.troca(idDormitorio, idConfraternista, function (retorno) {
-                            bootbox.dialog(retorno, [{                                    
-                                    "label": "Fechar",
-                                    "class": "btn-primary"
-                                }]);
+                            bootbox.alert(retorno);
                         });
                     },
                     cursorAt: {left: 20},

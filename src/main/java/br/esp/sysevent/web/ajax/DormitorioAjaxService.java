@@ -67,7 +67,7 @@ public class DormitorioAjaxService {
         if (confraternista.getDormitorio() != null){
             if ((confraternista.equals(confraternista.getDormitorio().getCoordenador()))
                     || (confraternista.equals(confraternista.getDormitorio().getViceCoordenador()))) {
-                return "Este confraternista é coodenador ou vice coodenador de dormitório.\n Para editá-lo vá em 'Cadastrar dormitório'";
+                return "Este confraternista é coodenador ou vice coodenador de dormitório.\n Para trocá-lo vá em 'Cadastrar Dormitório'";
             }        
         }
         if (idDorm == null && idConf != null) {

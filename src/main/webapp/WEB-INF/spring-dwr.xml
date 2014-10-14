@@ -44,6 +44,11 @@
             <dwr:include method="nome"/>
             <dwr:include method="vagas"/>
         </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.GrupoIdade" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="nome"/>
+            <dwr:include method="vagas"/>
+        </dwr:convert>
     </dwr:configuration>
 
     <dwr:controller id="dwrController" debug="true" />
@@ -80,6 +85,12 @@
         <dwr:remote javascript="dormitorioAjaxService">
             <dwr:include method="findById" />
             <dwr:include method="findByGenero" />
+            <dwr:include method="troca" />
+        </dwr:remote>
+    </bean>
+    <bean id="grupoIdadeAjaxService" class="br.esp.sysevent.web.ajax.GrupoIdadeAjaxService">
+        <dwr:remote javascript="grupoIdadeAjaxService">            
+            <dwr:include method="findSimilares" />
             <dwr:include method="troca" />
         </dwr:remote>
     </bean>

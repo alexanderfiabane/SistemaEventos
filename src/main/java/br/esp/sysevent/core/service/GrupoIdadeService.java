@@ -18,5 +18,7 @@ public interface GrupoIdadeService extends EntityService<Long, GrupoIdade>{
     public Collection<GrupoIdade> findByIdade(int idade);
 
     public Collection<GrupoIdade> findByIdadeTipo(Integer idadeConfraternista, Confraternista.Tipo tipo);
+
+    public Collection<GrupoIdade> findSimilares(Long idGrupoIdade);
     
 }

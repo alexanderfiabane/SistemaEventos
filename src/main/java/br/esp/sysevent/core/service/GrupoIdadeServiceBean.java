@@ -9,6 +9,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import java.util.Collection;
+import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,19 @@ public class GrupoIdadeServiceBean extends AbstractEntityServiceBean<Long, Grupo
     public Collection<GrupoIdade> findByIdadeTipo(Integer idade, Confraternista.Tipo tipo){       
         return getDao().findByIdadeTipo(idade, tipo);
     }   
+
+    @Override
+    public Collection<GrupoIdade> findSimilares(Long idGrupoIdade) {         
+        Collection<GrupoIdade> gruposIdadesSimilares = new HashSet<GrupoIdade>();
+        GrupoIdade grupoIdadeSimilar = getDao().findById(idGrupoIdade);
+        Collection<GrupoIdade> gruposIdades = getDao().findByIdadeTipo(grupoIdadeSimilar.getIdadeMinima(), grupoIdadeSimilar.getTipo());
+        for (GrupoIdade grupoIdade : gruposIdades) {
+            if(!grupoIdade.equals(grupoIdadeSimilar)){
+                gruposIdadesSimilares.add(grupoIdade);
+            }
+        }
+        return gruposIdadesSimilares;
+    }
     
     
 }
