@@ -6,6 +6,7 @@
     <msf:pagetitle label="Troca de Dormitório do Confraternista">
         <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
         <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Dormitório" isLabelKey="false"><msf:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
@@ -120,7 +121,7 @@
                     jQuery(inputConfraternista).append(jQuery('<thead>')
                             .append(jQuery('<tr id="' + dormitorio.id + '">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                            .append(dormitorio.nome + '<br/>' + 'Total de vagas: '+ dormitorio.vagas)))
+                                            .append(dormitorio.nome + '<br/>' + 'Total de vagas: ' + dormitorio.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.state"/>'))
@@ -198,7 +199,10 @@
                         var idConfraternista = ui.item.context.id;
                         var idDormitorio = ev.target.tHead.rows[0].getAttribute("id");
                         dormitorioAjaxService.troca(idDormitorio, idConfraternista, function (retorno) {
-                            bootbox.alert(retorno);
+                            bootbox.alert(retorno, function () {
+                                loadConfraternistas(jQuery('#dormitorios'), jQuery('#confraternistasComDormitorio'), true);
+                                loadConfraternistas(jQuery('#sexo').val(), '#confraternistasSemDormitorio', false);
+                            });
                         });
                     },
                     cursorAt: {left: 20},

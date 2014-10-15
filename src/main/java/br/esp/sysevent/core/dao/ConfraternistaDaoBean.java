@@ -95,9 +95,9 @@ public class ConfraternistaDaoBean extends AbstractEntityDaoBean<Long, Confrater
                 .append("select c ")
                 .append("from Confraternista c ")
                 .append("join fetch c.pessoa pessoa ")
-                .append("join fetch c.grupoIdade grupoIdade ")                                
-                .append("left join fetch grupoIdade.facilitadores facilitadores ")
-                .append("where grupoIdade = :grupoIdade ")                
+                .append("join fetch c.grupoIdade grupoIdade ")                                                
+                .append("where grupoIdade = :grupoIdade ")
+                .append("and c.tipo = 'FACILITADOR' ")
                 .append("order by pessoa.nome ");
 
         return getCurrentSession().createQuery(builder.toString())

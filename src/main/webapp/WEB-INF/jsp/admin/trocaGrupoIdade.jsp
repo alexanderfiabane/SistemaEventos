@@ -6,6 +6,7 @@
     <msf:pagetitle label="Troca de Grupo do Confraternista">
         <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
         <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Grupo por Idade" isLabelKey="false"><msf:url><c:url value="/admin/menuGrupoIdade.html?idEdicao=${edicao.id}"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>
@@ -98,7 +99,7 @@
     function loadConfraternistas(selectedGrupoIdade, inputConfraternista, situacaoConfraternista) {
         if (situacaoConfraternista) {
             var grupoIdadeSelecionado = selectedGrupoIdade.val();
-            jQuery(inputConfraternista).empty();            
+            jQuery(inputConfraternista).empty();
             if (grupoIdadeSelecionado === null || grupoIdadeSelecionado === '') {
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr>')
@@ -119,7 +120,7 @@
                                             .append('<msf:message key="label.name"/>'))));
                     confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
-                        jQuery.each(confraternistas, function(index, value) {
+                        jQuery.each(confraternistas, function (index, value) {
                             jQuery('#grupoA').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
                                             .append(value.pessoa.endereco.cidade.estado.sigla))
@@ -159,7 +160,7 @@
                                             .append('<msf:message key="label.name"/>'))));
                     confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoB">');
-                        jQuery.each(confraternistas, function(index, value) {
+                        jQuery.each(confraternistas, function (index, value) {
                             jQuery('#grupoB').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
                                             .append(value.pessoa.endereco.cidade.estado.sigla))
@@ -189,16 +190,16 @@
                     connectWith: ".connectedSortable",
                     cursor: "move",
                     items: '> tbody > *',
-                    receive: function(ev, ui) {
+                    receive: function (ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca                        
                         var idConfraternista = ui.item.context.id;
                         var idGrupoIdade = ev.target.tHead.rows[0].getAttribute("id");
-                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function(retorno) {
-                            bootbox.alert(retorno);
-//                            bootbox.alert(retorno, function(){                                
-//                                //detectar para onde foi e fazer reload do anterior com o valor selecionado no select correspondente                                
-//                            });                            
+                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function (retorno) {
+                            bootbox.alert(retorno, function () {
+                                loadConfraternistas(jQuery('#selectGrupoA'), jQuery('#confraternistasGrupoA'), true);
+                                loadConfraternistas(jQuery('#selectGrupoB').val(), '#confraternistasGrupoB', false);
+                            });                         
                         });
                     },
                     cursorAt: {left: 20},
@@ -214,22 +215,22 @@
      * @param {selectGrupoB} grupoB
      * @returns {Collection<GrupoIdade>}     */
     function loadGrupos(grupoA, grupoB) {
-        var grupoASelecionado = grupoA.val();                
+        var grupoASelecionado = grupoA.val();
         grupoB.empty();
         loadConfraternistas(null, '#confraternistasGrupoB', false);
         if (grupoASelecionado === '') {
-            grupoB.append(jQuery('<option>').append('Selecione primeiro um grupo na coluna da esquerda'));            
+            grupoB.append(jQuery('<option>').append('Selecione primeiro um grupo na coluna da esquerda'));
             loadConfraternistas(grupoA, '#confraternistasGrupoA', true);
         } else {
             //Carrega confraternistas na coluna da esquerda
-            loadConfraternistas(grupoA, jQuery('#confraternistasGrupoA'), true);            
+            loadConfraternistas(grupoA, jQuery('#confraternistasGrupoA'), true);
             grupoIdadeAjaxService.findSimilares(grupoASelecionado, function callback(grupo) {
                 if (grupo.length === 0) {
                     bootbox.alert("Não existem grupos similares ao selecionado.");
                     grupoB.append(jQuery('<option value="">').append('Para trocar selecione outro grupo'));
                 } else {
                     grupoB.append(jQuery('<option value="">').append('Selecione um grupo'));
-                    jQuery.each(grupo, function(index, value) {
+                    jQuery.each(grupo, function (index, value) {
                         grupoB.append(jQuery('<option>').val(value.id).append(value.nome));
                     });
                 }
@@ -240,15 +241,15 @@
     /**
      * Inicializa os métodos javascript
      * @returns {undefined}     */
-    jQuery(function() {
-        $(document).ready(function() {
+    jQuery(function () {
+        $(document).ready(function () {
             loadGrupos(jQuery('#selectGrupoA'), jQuery('#selectGrupoB'));
             trocaConfraternistaGrupo();
             //Carrega o painel com os confraternistas do dormitorio selecionado
-            jQuery('#selectGrupoB').change(function() {                                
+            jQuery('#selectGrupoB').change(function () {
                 loadConfraternistas(jQuery(this).val(), '#confraternistasGrupoB', false);
             });
-            jQuery('#selectGrupoA').change(function() {
+            jQuery('#selectGrupoA').change(function () {
                 loadGrupos(jQuery(this), jQuery('#selectGrupoB'));
             });
         });

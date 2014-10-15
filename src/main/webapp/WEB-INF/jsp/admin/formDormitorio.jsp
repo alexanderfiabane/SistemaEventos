@@ -6,6 +6,7 @@
     <msf:pagetitle label="Cadastro de Dormitórios">
         <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
         <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
+        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/></msf:url></msf:breadcrumb>
         <msf:breadcrumb label="Dormitório" isLabelKey="false"><msf:url><c:url value="/admin/menuDormitorio.html?idEdicao=${command.edicaoEvento.id}"/></msf:url></msf:breadcrumb>
     </msf:pagetitle>

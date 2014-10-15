@@ -200,20 +200,6 @@ public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> impleme
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
-//        final DetachedCriteria criteria = createCriteria()
-//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-//                .createAlias("confraternista", "confraternista")
-//                .createAlias("confraternista.pessoa", "pessoa")
-//                .createAlias("confraternista.oficina", "oficina")
-//                .add(Restrictions.eq("edicaoEvento", edicao))
-//                .add(Restrictions.eq("confraternista.tipo", Confraternista.Tipo.CONFRATERNISTA))
-//                .add(Restrictions.or(
-//                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-//                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-//                ));
-//        return findByCriteria(criteria
-//                , Order.asc("oficina.nome")
-//                , Order.asc("pessoa.nome"));
     }
     
     @Override

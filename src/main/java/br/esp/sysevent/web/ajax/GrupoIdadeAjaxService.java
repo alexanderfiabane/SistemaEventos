@@ -33,7 +33,7 @@ public class GrupoIdadeAjaxService {
         }
         return grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
     }
-    
+
     public Collection<GrupoIdade> findSimilares(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
@@ -48,24 +48,26 @@ public class GrupoIdadeAjaxService {
         }
         Confraternista confraternista = confraternistaService.findById(NumberUtils.parseLong(idConfraternista));
         GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
-        GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();        
+        GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();
         Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdadeConfraternista);
         for (Confraternista facilitador : facilitadores) {
             if (facilitador.equals(confraternista)) {
                 return "Este confraternista é facilitador deste grupo. Para trocá-lo vá em 'Cadastrar Grupo Idade'";
             }
         }
-        if (grupoIdade.getVagas() == grupoIdade.getVagasOcupadas()) {
+        if (grupoIdade.getVagas().equals(grupoIdade.getVagasOcupadas())) {
             return "Grupo sem vagas";
+        } else {
+            grupoIdadeConfraternista.setVagasOcupadas(grupoIdadeConfraternista.getVagasOcupadas() - 1);
+            grupoIdadeService.saveOrUpdate(grupoIdadeConfraternista);
+            confraternista.setGrupoIdade(grupoIdade);
+            confraternistaService.saveOrUpdate(confraternista);
+            grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() + 1);
+            grupoIdadeService.saveOrUpdate(grupoIdade);
+
+            return "Confraternista trocado para " + grupoIdade.getNome();
         }
-        grupoIdadeConfraternista.setVagasOcupadas(grupoIdade.getVagasOcupadas() - 1);
-        grupoIdadeService.saveOrUpdate(grupoIdadeConfraternista);
-        confraternista.setGrupoIdade(grupoIdade);
-        confraternistaService.saveOrUpdate(confraternista);
-        grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() + 1);
-        grupoIdadeService.saveOrUpdate(grupoIdade);
-        
-        return "Confraternista trocado para " + grupoIdade.getNome();
+
     }
 
 }

@@ -33,17 +33,9 @@
 				<reportElement mode="Transparent" x="7" y="157" width="162" height="22" uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="12" isBold="true"/>
+					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{confraternista.grupoIdade.nome} == null) || ($F{confraternista.grupoIdade.nome}.equals("")) ? "Não informado." : $F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Transparent" x="9" y="9" width="195" height="36" uuid="65a7c206-1e78-4a9c-89a1-1028c40c13e7"/>
-				<box leftPadding="5"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Transparent" x="7" y="181" width="326" height="22" uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74"/>
@@ -62,26 +54,10 @@
 				<textFieldExpression><![CDATA[$F{confraternista.nomeCracha}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="9" y="45" width="195" height="36" uuid="1ce5888e-25cf-40df-aac7-418923abe87e"/>
-				<box leftPadding="5"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.casaEspirita.nome}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Transparent" x="9" y="81" width="195" height="20" uuid="fc089f5d-efca-4019-8d10-10ba4b0333f2"/>
-				<box leftPadding="5"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}.toUpperCase() + " - " + $F{confraternista.pessoa.endereco.cidade.estado.sigla}.toUpperCase()]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement mode="Transparent" x="170" y="157" width="162" height="22" uuid="fa0639f8-b46a-4a46-9a2b-083b623be4a1"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="12" isBold="true"/>
+					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{confraternista.dormitorio.nome} == null) || ($F{confraternista.dormitorio.nome}.equals("")) ? "Não informado." : $F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
@@ -101,6 +77,15 @@
 				<reportElement x="209" y="9" width="122" height="92" uuid="5b238abe-aabd-4a5d-b65d-af99cec2e7e9"/>
 				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="7" y="9" width="195" height="92" uuid="59f86c14-303c-4d4d-92e3-c6c7c08356d4"/>
+				<textElement>
+					<font fontName="Sakkal Majalla"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase() + "\n" + "\n" +
+$F{confraternista.casaEspirita.nome}.toUpperCase() + "\n" + "\n" +
+$F{confraternista.pessoa.endereco.cidade.nome}.toUpperCase() + " - " + $F{confraternista.pessoa.endereco.cidade.estado.sigla}.toUpperCase()]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
