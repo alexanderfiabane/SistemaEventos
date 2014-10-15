@@ -46,6 +46,7 @@ public class ConfraternistaAjaxService {
         return confraternistaService.findByDormitorio(NumberUtils.parseLong(idDormitorio));
     }
     
+    //Otimizar em consulta
     public Collection<Confraternista> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();
@@ -54,22 +55,16 @@ public class ConfraternistaAjaxService {
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
         Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(grupoIdade.getEdicaoEvento().getId());
         for (Inscricao inscricao : inscricoes) {
-            if(inscricao.getConfraternista().getGrupoIdade() != null && (inscricao.getConfraternista().getGrupoIdade().equals(grupoIdade)) 
+            if(inscricao.getConfraternista().getGrupoIdade() != null && (inscricao.getConfraternista().getGrupoIdade().equals(grupoIdade))
+                    && (!inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.FACILITADOR))
                     && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))){
                 confraternistas.add(inscricao.getConfraternista());
-            }
-        }
-        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdade);
-        for (Confraternista confraternista : confraternistas) {
-            for (Confraternista facilitador : facilitadores) {
-                if(confraternista.equals(facilitador)){
-                    confraternistas.remove(confraternista);
-                }
             }
         }
         return confraternistas;
     }
 
+    //Otimizar em consulta
     public Collection<Confraternista> findSemDormitorio(String genero, String idEdicao) {
         if (CharSequenceUtils.isBlankOrNull(genero) || CharSequenceUtils.isBlankOrNull(idEdicao)) {
             return null;
@@ -88,6 +83,7 @@ public class ConfraternistaAjaxService {
         }
     }
 
+    //Otimizar em consulta
     public Collection<Confraternista> findByEdicao(final String idEdicao) {
         Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(NumberUtils.parseLong(idEdicao));
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
