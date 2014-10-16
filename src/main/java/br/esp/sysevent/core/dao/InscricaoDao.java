@@ -6,6 +6,7 @@ package br.esp.sysevent.core.dao;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.ojimarcius.commons.persistence.dao.EntityDao;
 import java.util.Calendar;
@@ -32,4 +33,6 @@ public interface InscricaoDao extends EntityDao<Long, Inscricao> {
     public Collection<Inscricao> findByUsuario(Usuario usuario);
     public Collection<Inscricao> findByEdicaoDormitorio(final Edicao edicao);
     public Collection<Inscricao> findByEdicaoDeferidas(Long idEdicao);
+    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade);
+    public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao);
 }

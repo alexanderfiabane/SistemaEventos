@@ -6,6 +6,7 @@ package br.esp.sysevent.core.service;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.ojimarcius.commons.persistence.service.EntityService;
 import java.util.Collection;
@@ -30,5 +31,7 @@ public interface InscricaoService extends EntityService<Long, Inscricao> {
     public Inscricao findByEdicaoDocumentos(final Long idEdicao, Documento documento);
     public Collection<Inscricao> findByUsuario(Usuario usuario);
     public Collection<Inscricao> findByEdicaoDormitorio(final Edicao edicao);
+    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade);
+    public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao);
     
 }

@@ -50,7 +50,7 @@ public class ConfraternistaAjaxService {
     public Collection<Confraternista> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();
-        }
+        }        
         final GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
         Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(grupoIdade.getEdicaoEvento().getId());

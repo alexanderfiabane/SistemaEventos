@@ -96,6 +96,7 @@
     </div>                    
 </div>
 <script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/dormitorioAjaxService.js"/>"></script>
 <script type="text/javascript">
 
@@ -143,12 +144,12 @@
                         jQuery(inputConfraternista).append(jQuery('<tfoot>')
                                 .append(jQuery('<tr>')
                                         .append(jQuery('<td colspan="3">')
-                                                .append("<strong>Total: " + jQuery("#confraternistasComDormitorio tbody tr").length + "</strong>"))));
+                                                .append("<strong>Total: " + dormitorio.vagasOcupadas + "</strong>"))));
                     });
                 });
             }
         } else {
-            confraternistaAjaxService.findSemDormitorio(inputDormitorio, ${edicao.id}, function callback(confraternistas) {
+            inscricaoAjaxService.findSemDormitorioBySexo(inputDormitorio, ${edicao.id}, function callback(confraternistas) {
                 jQuery(inputConfraternista).empty();
                 jQuery(inputConfraternista).append(jQuery('<thead>')
                         .append(jQuery('<tr id="null">')
@@ -166,11 +167,11 @@
                     jQuery.each(confraternistas, function (index, value) {
                         jQuery('#semDormitorio').append(jQuery('<tr id="' + value.id + '">')
                                 .append(jQuery('<td>')
-                                        .append(value.pessoa.endereco.cidade.estado.sigla))
+                                        .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
                                 .append(jQuery('<td>')
-                                        .append(value.pessoa.endereco.cidade.nome))
+                                        .append(value.confraternista.pessoa.endereco.cidade.nome))
                                 .append(jQuery('<td>')
-                                        .append(value.pessoa.nome)));
+                                        .append(value.confraternista.pessoa.nome)));
                     });
                 }
                 jQuery(inputConfraternista).append(jQuery('<tfoot>')

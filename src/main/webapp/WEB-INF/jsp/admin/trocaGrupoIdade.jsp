@@ -84,7 +84,7 @@
         </div>
     </div>                    
 </div>
-<script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/grupoIdadeAjaxService.js"/>"></script>
 <script type="text/javascript">
 
@@ -118,16 +118,16 @@
                                             .append('<msf:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.name"/>'))));
-                    confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
+                    inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
                         jQuery.each(confraternistas, function (index, value) {
                             jQuery('#grupoA').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.endereco.cidade.estado.sigla))
+                                            .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.endereco.cidade.nome))
+                                            .append(value.confraternista.pessoa.endereco.cidade.nome))
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.nome)));
+                                            .append(value.confraternista.pessoa.nome)));
                         });
                         jQuery(inputConfraternista).append(jQuery('<tfoot>')
                                 .append(jQuery('<tr>')
@@ -158,16 +158,16 @@
                                             .append('<msf:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
                                             .append('<msf:message key="label.name"/>'))));
-                    confraternistaAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
+                    inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoB">');
                         jQuery.each(confraternistas, function (index, value) {
                             jQuery('#grupoB').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.endereco.cidade.estado.sigla))
+                                            .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.endereco.cidade.nome))
+                                            .append(value.confraternista.pessoa.endereco.cidade.nome))
                                     .append(jQuery('<td>')
-                                            .append(value.pessoa.nome)));
+                                            .append(value.confraternista.pessoa.nome)));
                         });
                         jQuery(inputConfraternista).append(jQuery('<tfoot>')
                                 .append(jQuery('<tr>')

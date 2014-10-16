@@ -7,6 +7,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
@@ -129,6 +130,40 @@ public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> impleme
                 , Order.asc("dormitorio.sexo")
                 , Order.asc("dormitorio.nome")
                 , Order.asc("pessoa.nome"));
+    }
+    
+    @Override
+    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade){
+        final DetachedCriteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("confraternista", "confraternista")
+                .createAlias("confraternista.pessoa", "pessoa")
+                .createAlias("confraternista.grupoIdade", "grupoIdade")
+                .add(Restrictions.eq("grupoIdade.id", idGrupoIdade))
+                .add(Restrictions.or(
+                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                ))
+                .add(Restrictions.ne("confraternista.tipo", Confraternista.Tipo.FACILITADOR));
+        return findByCriteria(criteria                
+                , Order.asc("pessoa.nome"));
+    }
+    
+    @Override
+    public Collection<Inscricao> findSemDormitorioBySexo(final Sexo sexo, final Long idEdicao){
+        final DetachedCriteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("confraternista", "confraternista")                
+                .createAlias("confraternista.pessoa", "pessoa")                
+                .add(Restrictions.eq("edicaoEvento.id", idEdicao))
+                .add(Restrictions.isNull("confraternista.dormitorio.id"))
+                .add(Restrictions.or(
+                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                ))
+                .add(Restrictions.eq("pessoa.sexo", sexo));
+        return findByCriteria(criteria                
+                , Order.asc("pessoa.nome"));        
     }
 
     @Override

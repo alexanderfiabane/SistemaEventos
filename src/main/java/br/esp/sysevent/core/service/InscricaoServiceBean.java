@@ -12,6 +12,7 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
+import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.ojimarcius.commons.persistence.service.AbstractEntityServiceBean;
 import br.ojimarcius.commons.util.CalendarUtils;
@@ -62,6 +63,16 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
     @Override
     public Collection<Inscricao> findByUsuario(Usuario usuario) {
         return getDao().findByUsuario(usuario);
+    }
+    
+    @Override
+    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade) {
+        return getDao().findByIdGrupoIdade(idGrupoIdade);
+    }
+    
+    @Override
+    public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao){
+        return getDao().findSemDormitorioBySexo(sexo, idEdicao);
     }
 
     @Override
@@ -325,5 +336,5 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
             idade -= 1;
         }
         return idade;
-    }
+    }    
 }
