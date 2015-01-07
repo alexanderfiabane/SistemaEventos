@@ -29,14 +29,14 @@
                             </c:if>                                                    
                         </c:when>
                         <c:when test="${command.edicaoEvento.tipo == 'OFICINA'}">                            
-                            <c:if test="${not (item == 'FACILITADOR')}">
+                            <c:if test="${(not (item == 'FACILITADOR')) and (not (item == 'EVANGELIZADOR'))}">
                                 <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                                 </msf:label>
                             </c:if>                                                    
                         </c:when>
                         <c:otherwise>
-                            <c:if test="${(not item == 'FACILITADOR') || (not item == 'EVANGELIZADOR') || (not item == 'OFICINEIRO')}">
+                            <c:if test="${(not (item == 'FACILITADOR')) and (not (item == 'EVANGELIZADOR')) and (not (item == 'OFICINEIRO'))}">
                                 <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
                                 </msf:label>
@@ -78,7 +78,7 @@
                 <bs:formField label="label.badge" isLabelKey="true" isMandatory="true" path="confraternista.nomeCracha" maxlength="100"/>
             </div>
             <div class="span3">
-                <bs:formField label="label.birthday" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.dataNascimento" maxlength="10"/>
+                <bs:formField id="dataNascimento" label="label.birthday" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.dataNascimento" maxlength="10"/>
             </div>
             <div class="span3">
                 <bs:formField label="label.gender" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="-- Selecione --"/>
@@ -108,43 +108,42 @@
             <div class="span3">
                 <bs:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.bairro" maxlength="60"/>
             </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span3">
-                <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
-                <select id="estado">
-                    <option value="">Selecione um estado</option>
-                    <c:forEach var="estado" items="${estados}">
-                        <option value="${estado.id}" <c:if test="${command.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
-                    </c:forEach>
-                </select>
+            <div class="row-fluid">
+                <div class="span3">
+                    <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <select id="estado">
+                        <option value="">Selecione um estado</option>
+                        <c:forEach var="estado" items="${estados}">
+                            <option value="${estado.id}" <c:if test="${command.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="span3">
+                    <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
+                </div>
+                <div class="span3">
+                    <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
+                </div>
             </div>
-            <div class="span3">
-                <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
+            <div class="row-fluid">
+                <div class="span3">
+                    <bs:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100"/>
+                </div>
+                <div class="span3">
+                    <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefone" maxlength="16"/>
+                </div>
+                <div class="span3">
+                    <bs:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
+                </div>
+            </div>                
+            <div id="responsavel" class="row-fluid" style="display:none;">
+                <div class="span6">
+                    <bs:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="span12"/>                
+                </div>            
+                <div class="span3">
+                    <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.telefone" maxlength="16"/>                
+                </div>            
             </div>
-            <div class="span3">
-                <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span3">
-                <bs:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100"/>
-            </div>
-            <div class="span3">
-                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefone" maxlength="16"/>
-            </div>
-            <div class="span3">
-                <bs:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span6">
-                <bs:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="span12"/>                
-            </div>            
-            <div class="span3">
-                <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.telefone" maxlength="16"/>                
-            </div>            
-        </div>
     </fieldset>
 
     <fieldset>
@@ -234,7 +233,7 @@
         </div>
         <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
         <%--<c:if test="${command.confraternista.tipo == 'CONFRATERNISTA'}">--%>                    
-        <div class="row-fluid">
+        <div id="evangelizadorResponsavel" class="row-fluid" style="display:none;">
             <div class="span6">
                 <bs:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="span12"/>                
             </div>            
@@ -361,200 +360,239 @@
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
-                                        jQuery(function() {
-                                            var camisetaIndex = ${fn:length(command.confraternista.camisetas)};
-                                            jQuery(document).ready(function() {
-                                                $('.accordion').accordion({
-                                                    //                    collapsible: true,
-                                                    heightStyle: 'content',
-                                                    icons: {
-                                                        header: 'ui-icon-circle-arrow-e',
-                                                        activeHeader: 'ui-icon-circle-arrow-s'
-                                                    }
-                                                });
+    var camisetaIndex = ${fn:length(command.confraternista.camisetas)};
+    function calculaMaiorIdade(nasc) {
+        var hoje = new Date(), idade;
+        idade = (
+                (hoje.getMonth() > nasc.getMonth())
+                ||
+                (hoje.getMonth() == nasc.getMonth() && hoje.getDate() >= nasc.getDate())
+                ) ? hoje.getFullYear() - nasc.getFullYear() : hoje.getFullYear() - nasc.getFullYear() - 1;
+        if (idade > 18) {
+            return true;
+        }
+    }
 
-                                                jQuery('[name="confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
-                                                jQuery('[name="confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
-                                                jQuery('[name="confraternista.pessoa.endereco.cep"]').mask('99999-999');
-                                                jQuery('[name="confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
-                                                jQuery('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
-                                                jQuery('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
-                                                jQuery('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
-                                                jQuery('[name="confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
-                                                jQuery('[name="confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
+    function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
+        var estadoSelecionado = inputEstado.val();
+        inputCidade.empty();
+        if (estadoSelecionado == '') {
+            inputCidade.append($('<option>').append('-- Selecione primeiro um estado --'));
+        } else {
+            enderecoAjaxService.getCidades(estadoSelecionado, function callback(cidades) {
+                inputCidade.append($('<option>').append('-- Selecione uma cidade --'));
+                $.each(cidades, function (index, value) {
+                    inputCidade.append($('<option>').val(value.id).append(value.nome));
+                });
+                if (idCidadeAtual) {
+                    inputCidade.val(idCidadeAtual);
+                }
+            });
+        }
+    }
 
-                                                jQuery('#addCamiseta').click(addCamiseta);
-                                                jQuery('.delete').click(removeCamiseta);
-                                                jQuery('#removeCamiseta').hide();
+    function removeCamiseta() {
+        $(this).parent().parent().find('td input').val('');
+        $(this).parent().parent().hide();
+    }
 
-                                                jQuery('[name="confraternista.oficina"]').each(function() {
-                                                    jQuery(this).attr('checked', jQuery(this).val() == '${command.confraternista.oficina.id}');
-                                                });
-                                                
-                                                jQuery('[name="confraternista.tipo"]').change(function() {
-                                                    if(jQuery(this).val() == 'FACILITADOR'){
-                                                       jQuery('#grupoFacilitador').show(); 
-                                                    }else{
-                                                       jQuery('#grupoFacilitador').hide();  
-                                                    }
-                                                });
+    function addCamiseta() {
+        var tipo = $('#tipoCamiseta').val();
+        var cor = $('#corCamiseta').val();
+        var tam = $('#tamanhoCamiseta').val();
+        var quant = $('#quantCamiseta').val();
 
-                                                jQuery('[name=medicacao]').change(function() {
-                                                    if (jQuery(this).val() == 'true') {
-                                                        jQuery('#medicacao').attr('readonly', false);
-                                                    } else {
-                                                        jQuery('#medicacao').attr('readonly', true).val('');
-                                                    }
-                                                });
-                                                jQuery('[name=convenio]').change(function() {
-                                                    if (jQuery(this).val() == 'true') {
-                                                        jQuery('#convenio').attr('readonly', false);
-                                                        jQuery('#foneConvenio').attr('readonly', false);
-                                                    } else {
-                                                        jQuery('#convenio').attr('readonly', true).val('');
-                                                        jQuery('#foneConvenio').attr('readonly', true).val('');
-                                                    }
-                                                });
-                                                jQuery('[name=alergia]').change(function() {
-                                                    if (jQuery(this).val() == 'true') {
-                                                        jQuery('#alergia').attr('readonly', false);
-                                                    } else {
-                                                        jQuery('#alergia').attr('readonly', true).val('');
-                                                    }
-                                                });
-                                                jQuery('[name=dieta]').change(function() {
-                                                    if (jQuery(this).val() == 'true') {
-                                                        jQuery('#dieta').attr('readonly', false);
-                                                    } else {
-                                                        jQuery('#dieta').attr('readonly', true).val('');
-                                                    }
-                                                });
+        var tipoDescr = $('#tipoCamiseta :selected').html();
+        var corDescr = $('#corCamiseta :selected').text();
+        var tamDescr = $('#tamanhoCamiseta :selected').text();
+        var quantDescr = $('#quantCamiseta').val();
 
-                                                if (jQuery('#medicacao').val() == '') {
-                                                    jQuery('#medicacaoNao').click();
-                                                } else {
-                                                    jQuery('#medicacaoSim').click();
-                                                }
-                                                if (jQuery('#convenio').val() == '') {
-                                                    jQuery('#convenioNao').click();
-                                                } else {
-                                                    jQuery('#convenioSim').click();
-                                                }
-                                                if (jQuery('#alergia').val() == '') {
-                                                    jQuery('#alergiaNao').click();
-                                                } else {
-                                                    jQuery('#alergiaSim').click();
-                                                }
-                                                if (jQuery('#dieta').val() == '') {
-                                                    jQuery('#dietaNao').click();
-                                                } else {
-                                                    jQuery('#dietaSim').click();
-                                                }
+        if (tipo == '') {
+            alert('Escolha um tipo de camiseta!');
+            return;
+        }
+        if (cor == '') {
+            alert('Escolha uma cor de camiseta!');
+            return;
+        }
+        if (tam == '') {
+            alert('Escolha um tamanho de camiseta!');
+            return;
+        }
+        if (quant == '') {
+            alert('Defina a quantidade de camisetas!');
+            return;
+        }
 
-                                                jQuery('#estado').change(function() {
-                                                    loadCidades(jQuery(this), jQuery('#cidade'));
-                                                });
-                                                jQuery('#estadoCasa').change(function() {
-                                                    loadCidades(jQuery(this), jQuery('#cidadeCasa'));
-                                                });
+        var index = camisetaIndex++;
 
-                                                loadCidades(jQuery('#estado'), jQuery('#cidade'), '${command.confraternista.pessoa.endereco.cidade.id}');
-                                                loadCidades(jQuery('#estadoCasa'), jQuery('#cidadeCasa'), '${command.confraternista.casaEspirita.endereco.cidade.id}');
-                                            });
+        $('#camisetas tbody').append($('<tr>').attr('id', 'camiseta_' + index)
+                .append($('<td>').append(createButton()))
+                .append($('<td>').append(createInput('t', tipo, index)).append(tipoDescr))
+                .append($('<td>').append(createInput('c', cor, index)).append(corDescr))
+                .append($('<td>').append(createInput('s', tam, index)).append(tamDescr))
+                .append($('<td>').append(createInput('q', quant, index)).append(quantDescr))
+                );
 
-                                            function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
-                                                var estadoSelecionado = inputEstado.val();
-                                                inputCidade.empty();
-                                                if (estadoSelecionado == '') {
-                                                    inputCidade.append(jQuery('<option>').append('-- Selecione primeiro um estado --'));
-                                                } else {
-                                                    enderecoAjaxService.getCidades(estadoSelecionado, function callback(cidades) {
-                                                        inputCidade.append(jQuery('<option>').append('-- Selecione uma cidade --'));
-                                                        jQuery.each(cidades, function(index, value) {
-                                                            inputCidade.append(jQuery('<option>').val(value.id).append(value.nome));
-                                                        });
-                                                        if (idCidadeAtual) {
-                                                            inputCidade.val(idCidadeAtual);
-                                                        }
-                                                    });
-                                                }
-                                            }
+        $('#tipoCamiseta').val('');
+        $('#corCamiseta').val('');
+        $('#tamanhoCamiseta').val('');
+        $('#quantCamiseta').val('');
+    }
 
-                                            function removeCamiseta() {
-                                                jQuery(this).parent().parent().find('td input').val('');
-                                                jQuery(this).parent().parent().hide();
-                                            }
+    function createInput(key, value, index) {
+        return $('<input>').attr('type', 'hidden').attr('name', getName(key, index)).val(value);
+    }
 
-                                            function addCamiseta() {
-                                                var tipo = jQuery('#tipoCamiseta').val();
-                                                var cor = jQuery('#corCamiseta').val();
-                                                var tam = jQuery('#tamanhoCamiseta').val();
-                                                var quant = jQuery('#quantCamiseta').val();
+    function createButton() {
+        return $("#removeCamiseta").clone(true).show();
+    }
 
-                                                var tipoDescr = jQuery('#tipoCamiseta :selected').html();
-                                                var corDescr = jQuery('#corCamiseta :selected').text();
-                                                var tamDescr = jQuery('#tamanhoCamiseta :selected').text();
-                                                var quantDescr = jQuery('#quantCamiseta').val();
+    function getName(key, index) {
+        var path = 'confraternista.camisetas';
+        var field;
+        switch (key) {
+            case 't':
+                field = 'tipoCamiseta';
+                break;
+            case 'c':
+                field = 'corCamiseta';
+                break;
+            case 's':
+                field = 'tamanhoCamiseta';
+                break;
+            case 'q':
+                field = 'quantidadeCamiseta';
+                break;
+        }
+        return path + '[' + index + '].' + field;
+    }
 
-                                                if (tipo == '') {
-                                                    alert('Escolha um tipo de camiseta!');
-                                                    return;
-                                                }
-                                                if (cor == '') {
-                                                    alert('Escolha uma cor de camiseta!');
-                                                    return;
-                                                }
-                                                if (tam == '') {
-                                                    alert('Escolha um tamanho de camiseta!');
-                                                    return;
-                                                }
-                                                if (quant == '') {
-                                                    alert('Defina a quantidade de camisetas!');
-                                                    return;
-                                                }
+    function parseDate(str) {
+        var array = str.split('/');
+        for (var i = 0; i < array.length; i++) {
+            array[i] = Number(array[i]);
+        }
+        array[1] = array[1] - 1;
+        return new Date(array[2], array[1], array[0]);
+    }
 
-                                                var index = camisetaIndex++;
+    $(document).ready(function () {
+        $('.accordion').accordion({
+            //                    collapsible: true,
+            heightStyle: 'content',
+            icons: {
+                header: 'ui-icon-circle-arrow-e',
+                activeHeader: 'ui-icon-circle-arrow-s'
+            }
+        });
 
-                                                jQuery('#camisetas tbody').append(jQuery('<tr>').attr('id', 'camiseta_' + index)
-                                                        .append(jQuery('<td>').append(createButton()))
-                                                        .append(jQuery('<td>').append(createInput('t', tipo, index)).append(tipoDescr))
-                                                        .append(jQuery('<td>').append(createInput('c', cor, index)).append(corDescr))
-                                                        .append(jQuery('<td>').append(createInput('s', tam, index)).append(tamDescr))
-                                                        .append(jQuery('<td>').append(createInput('q', quant, index)).append(quantDescr))
-                                                        );
+        $('[name="confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
+        $('[name="confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
+        $('[name="confraternista.pessoa.endereco.cep"]').mask('99999-999');
+        $('[name="confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
+        $('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
+        $('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
+        $('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
+        $('[name="confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
+        $('[name="confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
 
-                                                jQuery('#tipoCamiseta').val('');
-                                                jQuery('#corCamiseta').val('');
-                                                jQuery('#tamanhoCamiseta').val('');
-                                                jQuery('#quantCamiseta').val('');
-                                            }
+        $('#addCamiseta').click(addCamiseta);
+        $('.delete').click(removeCamiseta);
+        $('#removeCamiseta').hide();
 
-                                            function createInput(key, value, index) {
-                                                return jQuery('<input>').attr('type', 'hidden').attr('name', getName(key, index)).val(value);
-                                            }
+        $('[name="confraternista.oficina"]').each(function () {
+            $(this).attr('checked', $(this).val() == '${command.confraternista.oficina.id}');
+        });
 
-                                            function createButton() {
-                                                return jQuery("#removeCamiseta").clone(true).show();
-                                            }
+        $('[name="confraternista.tipo"]').change(function () {
+            if ($(this).val() == 'FACILITADOR') {
+                $('#grupoFacilitador').show();
+            } else {
+                $('#grupoFacilitador').hide();
+            }
+        });
 
-                                            function getName(key, index) {
-                                                var path = 'confraternista.camisetas';
-                                                var field;
-                                                switch (key) {
-                                                    case 't':
-                                                        field = 'tipoCamiseta';
-                                                        break;
-                                                    case 'c':
-                                                        field = 'corCamiseta';
-                                                        break;
-                                                    case 's':
-                                                        field = 'tamanhoCamiseta';
-                                                        break;
-                                                    case 'q':
-                                                        field = 'quantidadeCamiseta';
-                                                        break;
-                                                }
-                                                return path + '[' + index + '].' + field;
-                                            }
-                                        });
+        $('[name=medicacao]').change(function () {
+            if ($(this).val() == 'true') {
+                $('#medicacao').attr('readonly', false);
+            } else {
+                $('#medicacao').attr('readonly', true).val('');
+            }
+        });
+        $('[name=convenio]').change(function () {
+            if ($(this).val() == 'true') {
+                $('#convenio').attr('readonly', false);
+                $('#foneConvenio').attr('readonly', false);
+            } else {
+                $('#convenio').attr('readonly', true).val('');
+                $('#foneConvenio').attr('readonly', true).val('');
+            }
+        });
+        $('[name=alergia]').change(function () {
+            if ($(this).val() == 'true') {
+                $('#alergia').attr('readonly', false);
+            } else {
+                $('#alergia').attr('readonly', true).val('');
+            }
+        });
+        $('[name=dieta]').change(function () {
+            if ($(this).val() == 'true') {
+                $('#dieta').attr('readonly', false);
+            } else {
+                $('#dieta').attr('readonly', true).val('');
+            }
+        });
+
+        if ($('#medicacao').val() == '') {
+            $('#medicacaoNao').click();
+        } else {
+            $('#medicacaoSim').click();
+        }
+        if ($('#convenio').val() == '') {
+            $('#convenioNao').click();
+        } else {
+            $('#convenioSim').click();
+        }
+        if ($('#alergia').val() == '') {
+            $('#alergiaNao').click();
+        } else {
+            $('#alergiaSim').click();
+        }
+        if ($('#dieta').val() == '') {
+            $('#dietaNao').click();
+        } else {
+            $('#dietaSim').click();
+        }
+
+        $('#estado').change(function () {
+            loadCidades($(this), $('#cidade'));
+        });
+        $('#estadoCasa').change(function () {
+            loadCidades($(this), $('#cidadeCasa'));
+        });
+        $('#dataNascimento').blur(function () {
+            var texto = $(this).val();
+            var tipoEvento = '${command.edicaoEvento.tipo}';
+
+            if (typeof texto !== 'undefined' && texto !== '') {
+                var dataNascimento = parseDate(texto);
+                if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))){
+                    $('#evangelizadorResponsavel').show();
+                }else{
+                    $('#evangelizadorResponsavel').hide();
+                }    
+                if (!calculaMaiorIdade(dataNascimento)) {
+                    $('#responsavel').show();
+                } else {
+                    $('#responsavel').hide();
+                }
+            } else {
+                $('#responsavel').hide();                
+            }
+        });
+
+        loadCidades($('#estado'), $('#cidade'), '${command.confraternista.pessoa.endereco.cidade.id}');
+        loadCidades($('#estadoCasa'), $('#cidadeCasa'), '${command.confraternista.casaEspirita.endereco.cidade.id}');
+    });
 </script>
