@@ -5,5 +5,5 @@
         Indica o nome do contexto da aplicacao, que sera usado no link desta.
         Neste caso, nossa aplicacao ficara em "http://serverhost/sysevent-web"
     -->
-  <context-root>/sysevent-web</context-root>
+  <context-root>/see</context-root>
 </glassfish-web-app>

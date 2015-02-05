@@ -8,8 +8,8 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
-<bs:notice type="error" visible="${!empty erro}" closeable="true">${erro}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
+<see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
 <form:form commandName="command">
     <!--Wizard da Ficha de Inscrição-->
@@ -60,38 +60,38 @@
                     <legend><msf:message key="label.personaldetails"/></legend>
                     <div class="row-fluid">
                         <div class="span3">
-                            <bs:formField label="label.fullname" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.nome" maxlength="100"/>
+                            <see:formField label="label.fullname" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.nome" maxlength="100"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.badge" isLabelKey="true" isMandatory="true" path="confraternista.nomeCracha" maxlength="100"/>
+                            <see:formField label="label.badge" isLabelKey="true" isMandatory="true" path="confraternista.nomeCracha" maxlength="100"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.birthday" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.dataNascimento" maxlength="10"/>
+                            <see:formField label="label.birthday" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.dataNascimento" maxlength="10"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.gender" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="-- Selecione --"/>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span3">
-                            <bs:formField label="label.cpf" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.cpf" maxlength="14"/>
-                        </div>
-                        <div class="span3">
-                            <bs:formField label="label.id" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.rg" maxlength="10"/>
+                            <see:formField label="label.gender" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="-- Selecione --"/>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="span3">
-                            <bs:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.logradouro" maxlength="100"/>
+                            <see:formField label="label.cpf" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.cpf" maxlength="14"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.numero" maxlength="6"/>
+                            <see:formField label="label.id" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.rg" maxlength="10"/>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.logradouro" maxlength="100"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.endereco.complemento" maxlength="60"/>
+                            <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.numero" maxlength="6"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.bairro" maxlength="60"/>
+                            <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.endereco.complemento" maxlength="60"/>
+                        </div>
+                        <div class="span3">
+                            <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.bairro" maxlength="60"/>
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -105,21 +105,21 @@
                             </select>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                            <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
+                            <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9"/>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="span3">
-                            <bs:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100"/>
+                            <see:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefone" maxlength="16"/>
+                            <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefone" maxlength="16"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
+                            <see:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16"/>
                         </div>
                     </div>
                 </fieldset>
@@ -135,7 +135,7 @@
                             <msf:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></msf:label>
                             </div>
                             <div class="span3">
-                            <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="confraternista.pessoa.informacoesSaude.medicacao" maxlength="255"/>
+                            <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="confraternista.pessoa.informacoesSaude.medicacao" maxlength="255"/>
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -145,10 +145,10 @@
                             <msf:label label="Sim" for="convenioSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioSim" name="convenio" value="true"/></msf:label>
                             </div>
                             <div class="span3">
-                            <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="confraternista.pessoa.informacoesSaude.convenio" maxlength="255"/>
+                            <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="confraternista.pessoa.informacoesSaude.convenio" maxlength="255"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="Telefone" isLabelKey="false" isMandatory="false" id="foneConvenio" path="confraternista.pessoa.informacoesSaude.convenioTelefone" maxlength="255"/>
+                            <see:formField label="Telefone" isLabelKey="false" isMandatory="false" id="foneConvenio" path="confraternista.pessoa.informacoesSaude.convenioTelefone" maxlength="255"/>
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -158,7 +158,7 @@
                             <msf:label label="Sim" for="alergiaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaSim" name="alergia" value="true"/></msf:label>
                             </div>
                             <div class="span3">
-                            <bs:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255"/>
+                            <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255"/>
                         </div>
                     </div>
                 </fieldset>
@@ -169,21 +169,21 @@
                     <legend><msf:message key="label.housedetails"/></legend>
                     <div class="row-fluid">
                         <div class="span12">
-                            <bs:formField label="label.name" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
+                            <see:formField label="label.name" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="span3">
-                            <bs:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.logradouro" maxlength="100"/>
+                            <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.logradouro" maxlength="100"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.numero" maxlength="6"/>
+                            <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.numero" maxlength="6"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.casaEspirita.endereco.complemento" maxlength="60"/>
+                            <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.casaEspirita.endereco.complemento" maxlength="60"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.bairro" maxlength="60"/>
+                            <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.bairro" maxlength="60"/>
                         </div>
                     </div>
                     <div class="row-fluid">
@@ -197,15 +197,15 @@
                             </select>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
+                            <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="-- Selecione primeiro um estado --"/>
                         </div>
                         <div class="span3">
-                            <bs:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
+                            <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9"/>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <bs:formField label="label.activityatie" isLabelKey="true" isMandatory="true" path="confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="span12"/>
+                            <see:formField label="label.activityatie" isLabelKey="true" isMandatory="true" path="confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="span12"/>
                         </div>
                     </div>
                 </fieldset>
@@ -331,7 +331,7 @@
                     <!--
                     -->
                     <a href="javascript:;">
-                        <bs:formButtonGroup formUrl="/guest/formInscricao.html?idEdicao=${command.edicaoEvento.id}"/>
+                        <see:formButtonGroup formUrl="/guest/formInscricao.html?idEdicao=${command.edicaoEvento.id}"/>
                     </a>
                 </li>
             </ul>

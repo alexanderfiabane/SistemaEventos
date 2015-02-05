@@ -10,23 +10,37 @@
 
 <c:choose>
     <c:when test="${empty edicoes}">
-        <bs:notice type="info" closeable="true">Nenhuma edição com inscrição aberta foi encontrada</bs:notice>
+        <see:notice type="info" closeable="true">Nenhuma edição com inscrição aberta foi encontrada</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="row-fluid">
-            <display:table id="edicao" name="edicoes" pagesize="10" requestURI="/guest/listInscricoesAbertas.html" class="table table-striped table-condensed">                        
-                <c:url var="inscricao_url" value="/guest/formInscricao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                <display:column media="html" titleKey="label.options" class="twoOption centered" headerClass="centered">
-                    <!-- <button type="button" class="btn btn-mini" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-plus"></i></button> -->
-                    <button type="button" class="btn btn-mini" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>                            
-                </display:column>
-                <display:column titleKey="label.event" value="${edicao.evento.nome}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.number" value="${edicao.numero}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.theme" value="${edicao.tema}" class="centered" headerClass="centered"/>                        
-                <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
-                    de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
-                </display:column>
-            </display:table>
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked">
+                <thead class="header">
+                    <tr>
+                        <th class="centered" style="width: 10em;"><msf:message key="label.options"/></th>
+                        <th class="centered"><msf:message key="label.event"/></th>
+                        <th class="centered"><msf:message key="label.number"/></th>
+                        <th class="centered" style="width: 20em;"><msf:message key="label.theme"/></th>
+                        <th class="centered"><msf:message key="label.subscriptionPeriod"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${edicoes}" var="edicao">
+                        <tr>
+                            <td class="centered">
+                                <c:url var="inscricao_url" value="/guest/formInscricao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                                <button type="button" class="btn small" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>
+                            </td>
+                            <td class="centered">${edicao.evento.nome}</td>
+                            <td class="centered">${edicao.numero}</td>
+                            <td class="centered">${edicao.tema}</td>
+                            <td class="centered">
+                                de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </c:otherwise>  
-</c:choose>      
+    </c:otherwise>
+</c:choose>

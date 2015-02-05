@@ -12,7 +12,7 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <div class="row-fluid">

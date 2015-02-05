@@ -10,7 +10,7 @@
 
 <c:choose>
     <c:when test="${empty inscricoes}">
-        <bs:notice type="info" closeable="true">Você não possui inscrições</bs:notice>
+        <see:notice type="info" closeable="true">Você não possui inscrições</see:notice>
     </c:when>
     <c:otherwise>
         <div class="row-fluid">

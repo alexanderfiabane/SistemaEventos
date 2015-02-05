@@ -10,16 +10,16 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.description" isLabelKey="true" isMandatory="true" path="descricao" maxlength="30"/>
+            <see:formField label="label.description" isLabelKey="true" isMandatory="true" path="descricao" maxlength="30"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formTamanhoCamiseta.html"/>
+    <see:formButtonGroup formUrl="/admin/formTamanhoCamiseta.html"/>
 </form:form>
 
 <div class="row-fluid">

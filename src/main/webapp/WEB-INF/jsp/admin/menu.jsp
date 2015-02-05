@@ -9,26 +9,15 @@
 </content>
 
 <!-- Estas duas divs implementam um workaround para centralizar o menu -->
-<div id="outerMenu" class="centered" style="display: table; margin: auto;">
-    <div id="innerMenu" style="display: table-cell;">
-        <msf:menu id="menu" defaultIconSize="64" >
-
-            <msf:menuItem label="Gerenciamento de Inscrições">
-                <msf:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></msf:icon>
-                <msf:url><c:url value="/admin/inscricao/listEvento.html"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Configuração de Eventos<br/> e Edições">
-                <msf:icon><c:url value="/assets/application/img/icons/iconConfigEventoEdicao.png"/></msf:icon>
-                <msf:url><c:url value="/admin/formEvento.html"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Cadastros Básicos">
-                <msf:icon><c:url value="/assets/application/img/icons/iconCadastrosBasicos2.png"/></msf:icon>
-                <msf:url><c:url value="/admin/menuCadastrosBasicos.html"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Emissão de Relatórios">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/listEvento.html"/></msf:url>
-            </msf:menuItem>
-        </msf:menu>
-    </div>
+<div class="small-font-size">
+    <mocca:menu>
+        <mocca:menuItem iconClass="icon-group" label="Gerenciamento de Inscrições" isLabelKey="false"
+                        url="/admin/inscricao/listEvento.html" />
+        <mocca:menuItem iconClass="icon-gear" label="Configuração de Eventos e Edições" isLabelKey="false"
+                        url="/admin/formEvento.html" />
+        <mocca:menuItem iconClass="icon-edit" label="Cadastros Básicos" isLabelKey="false"
+                        url="/admin/menuCadastrosBasicos.html" />
+        <mocca:menuItem iconClass="icon-file-text" label="Emissão de Relatórios" isLabelKey="false"
+                        url="/admin/relatorio/listEvento.html" />
+    </mocca:menu>
 </div>

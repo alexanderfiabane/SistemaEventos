@@ -10,24 +10,24 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <form:hidden path="id"/>
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.cityname" isLabelKey="true" isMandatory="true" path="nome" maxlength="100"/>
+            <see:formField label="label.cityname" isLabelKey="true" isMandatory="true" path="nome" maxlength="100"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.state" isLabelKey="true" isMandatory="true" path="estado" type="select" itens="${estados}" itemLabel="nome" itemValue="id" selectNullItemLabel="-- Selecione um Estado --"/>
+            <see:formField label="label.state" isLabelKey="true" isMandatory="true" path="estado" type="select" itens="${estados}" itemLabel="nome" itemValue="id" selectNullItemLabel="-- Selecione um Estado --"/>
         </div>
         <div class="span3">
             <br/>
-            <bs:formField label="Capital?" path="capital" type="check"/>
+            <see:formField label="Capital?" path="capital" type="check"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formCidade.html"/>
+    <see:formButtonGroup formUrl="/admin/formCidade.html"/>
 </form:form>
 
 <div class="row-fluid">

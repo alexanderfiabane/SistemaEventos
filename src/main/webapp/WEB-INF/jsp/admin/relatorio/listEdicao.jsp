@@ -11,7 +11,7 @@
 
 <c:choose>
     <c:when test="${empty edicoes}">
-        <bs:notice type="info" closeable="true">Não há edições cadastradas para este evento</bs:notice>
+        <see:notice type="info" closeable="true">Não há edições cadastradas para este evento</see:notice>
     </c:when>
     <c:otherwise>
         <div class="row-fluid">

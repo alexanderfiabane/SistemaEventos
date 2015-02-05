@@ -11,19 +11,12 @@
 </content>
 
 <!-- Estas duas divs implementam um workaround para centralizar o menu -->
-<div id="outerMenu" class="centered" style="display: table; margin: auto;">
-    <div id="innerMenu" style="display: table-cell;">
-        <msf:menu id="menu" defaultIconSize="64" >
+<div class="small-font-size">
+    <mocca:menu>
+        <mocca:menuItem iconClass="icon-edit" label="Cadastrar Dormitório" isLabelKey="false"
+                            url="/admin/formDormitorio.html?idEdicao=${edicao.id}"/>
 
-            <msf:menuItem label="Cadastrar Dormitório">
-                <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-                <msf:url><c:url value="/admin/formDormitorio.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-
-            <msf:menuItem label="Trocar Confraternista de Dormitório">
-                <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-                <msf:url><c:url value="/admin/trocaDormitorio.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-        </msf:menu>
-    </div>
+        <mocca:menuItem iconClass="icon-exchange" label="Trocar Confraternista de Dormitório" isLabelKey="false"
+                        url="/admin/trocaDormitorio.html?idEdicao=${edicao.id}"/>
+    </mocca:menu>
 </div>

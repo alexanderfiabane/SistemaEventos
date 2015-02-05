@@ -156,7 +156,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     @InitBinder
     public void initBinder(final WebDataBinder binder, final Locale locale) {
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
-        binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<Responsavel>(responsavelService));
+        binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<Responsavel>(responsavelService));        
         binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<Cidade>(cidadeService));
         binder.registerCustomEditor(Oficina.class, new CustomEntityEditor<Oficina>(oficinaService));
         binder.registerCustomEditor(GrupoIdade.class, new CustomEntityEditor<GrupoIdade>(grupoIdadeService));

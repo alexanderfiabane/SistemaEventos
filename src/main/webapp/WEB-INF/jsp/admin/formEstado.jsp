@@ -9,20 +9,20 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <form:hidden path="id"/>
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.statename" isLabelKey="true" isMandatory="true" path="nome" maxlength="100"/>
+            <see:formField label="label.statename" isLabelKey="true" isMandatory="true" path="nome" maxlength="100"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.stateacronym" isLabelKey="true" isMandatory="true" path="sigla" maxlength="2"/>
+            <see:formField label="label.stateacronym" isLabelKey="true" isMandatory="true" path="sigla" maxlength="2"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formEstado.html"/>
+    <see:formButtonGroup formUrl="/admin/formEstado.html"/>
 </form:form>
 
 <div class="row-fluid">

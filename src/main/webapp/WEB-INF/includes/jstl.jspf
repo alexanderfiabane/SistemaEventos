@@ -15,4 +15,5 @@
 
 <%-- msf tags --%>
 <%@ taglib prefix="msf" uri="http://code.google.com/msf/commons-tags" %>
-<%@ taglib prefix="bs" tagdir="/WEB-INF/tags/bootstrap" %>
+<%@ taglib prefix="see" tagdir="/WEB-INF/tags/see" %>
+<%@ taglib prefix="mocca" tagdir="/WEB-INF/tags/mocca" %>

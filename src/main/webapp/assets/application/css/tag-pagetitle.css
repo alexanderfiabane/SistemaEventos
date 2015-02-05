@@ -1,5 +1,8 @@
 @charset "UTF-8";
 /* general breadcrumb styles */
+.fontfamily, .breadcrumb{
+  font-family: "Orator Std";
+}
 
 .pagetitleBreadcrumb {
   padding: 0;
@@ -15,24 +18,27 @@
 }
 
 /* current page label style */
-.pagetitleLabel {
+.pagetitleLabel{
     font-size: 18pt;
-    font-weight: bold;
-    color: #4684B4;
+    font-weight: bold;    
+    color: #404040;
+    //color: #4684B4;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
 }
 
 /* step separator style */
-.breadcrumbSeparator {
+.breadcrumbSeparator{
     font-size: 11pt;
-    color: #4A89B9;
+    color: #4A4A4A;
+    //color: #4A89B9;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
 }
 
 /* step labels style */
-.breadcrumbLink {
+.breadcrumbLink{
     font-size: 12pt;
-    color: #4A89B9;
+    color: #4A4A4A;
+    //color: #4A89B9;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, .3);
     text-decoration: none;
 }

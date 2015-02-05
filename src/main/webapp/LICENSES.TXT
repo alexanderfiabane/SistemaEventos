@@ -1,0 +1,649 @@
+THIS FRAMEWORK USES A COLLECTION OF THIRD PARTY TECHNOLOGIES.
+HERE ARE ALL THE LICENSES FOR EVERYTHING THAT IS PACKED ALONG WITH MOCCA.
+
+NOTE THAT THE ORIGINAL FILENAMES HAD TO BE CHANGED IN ORDER TO EASY UP THE
+PACKAGE ASSEMBLY.
+
+*******************************************************************************
+* 1) LICENSES OF COMPONENTS BUNDLED ON THE PROJECT
+*******************************************************************************
+
+-------------------------------------------------------------------------------
+- MOCCA FIRST PARTY SOURCES (WTFPL License)
+-------------------------------------------------------------------------------
+         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                  Version 2, December 2004
+
+Copyright (C) 2009-2013 Marcius da Silva da Fonseca.
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+            DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+0. You just DO WHAT THE FUCK YOU WANT TO.
+
+FILES COVERED:
+  - mocca-base-colors.[less|css]
+  - mocca-base-mixins.[less|css]
+  - mocca-base-reset.[less|css]
+  - mocca-base-vars.[less|css]
+  - mocca-module-grid.[less|css]
+  - mocca-module-theme.[less|css]
+  - mocca-module-ufsm.[less|css]
+  - mocca-pack-ufsm.[less|css]
+  - mocca-pack.[less|css]
+  - mocca-theme-accordion.[less|css]
+  - mocca-theme-animations.[less|css]
+  - mocca-theme-band.[less|css]
+  - mocca-theme-box.[less|css]
+  - mocca-theme-breadcrumb.[less|css]
+  - mocca-theme-btn-group.[less|css]
+  - mocca-theme-btn.[less|css]
+  - mocca-theme-dropdown.[less|css]
+  - mocca-theme-form.[less|css]
+  - mocca-theme-mask.[less|css]
+  - mocca-theme-media.[less|css]
+  - mocca-theme-nav.[less|css]
+  - mocca-theme-navbar.[less|css]
+  - mocca-theme-pagination.[less|css]
+  - mocca-theme-panel.[less|css]
+  - mocca-theme-pill.[less|css]
+  - mocca-theme-progress.[less|css]
+  - mocca-theme-table.[less|css]
+  - mocca-theme-util.[less|css]
+  - mocca-ufsm-govbar.[less|css]
+  - mocca-ufsm-vars.[less|css]
+  - mocca-ufsm-webfonts.[less|css]
+  - jquery-extension-mocca.js
+  - jquery-plugin-mocca-ajaxPseudoTable.js
+  - jquery-plugin-mocca-ajaxTable.js
+  - jquery-plugin-mocca-capsAlert.js
+  - jquery-plugin-mocca-confirmDialog.js
+  - jquery-plugin-mocca-dateTimePicker.js
+  - jquery-plugin-mocca-dockable.js
+  - jquery-plugin-mocca-dynamicList.js
+  - jquery-plugin-mocca-filePicker.js
+  - jquery-plugin-mocca-findDialog.js
+  - jquery-plugin-mocca-govbar.js
+  - jquery-plugin-mocca-openUrl.js
+  - jquery-plugin-mocca-passwordChecker.js
+  - jquery-plugin-mocca-passwordToggle.js
+  - jquery-plugin-mocca-textCounter.js
+
+-------------------------------------------------------------------------------
+- JQUERY (MIT License)
+-------------------------------------------------------------------------------
+Copyright 2014 jQuery Foundation and other contributors
+http://jquery.com/
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery.js
+
+-------------------------------------------------------------------------------
+- JQUERY UI (MIT License)
+-------------------------------------------------------------------------------
+Copyright 2014 jQuery Foundation and other contributors,
+http://jqueryui.com/
+
+This software consists of voluntary contributions made by many
+individuals (http://jqueryui.com/about) For exact
+contribution history, see the revision history and logs, available
+at http://jquery-ui.googlecode.com/svn/
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery-ui.css
+  - jquery-ui.js
+
+-------------------------------------------------------------------------------
+- TWITTER BOOTSTRAP (Apache 2.0 License)
+-------------------------------------------------------------------------------
+ Copyright 2013 Twitter, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+FILES COVERED:
+  - jquery-plugin-bootstrap-accordion.js
+  - jquery-plugin-bootstrap-alert.js
+  - jquery-plugin-bootstrap-dropdown.js
+  - jquery-plugin-bootstrap-tab.js
+
+-------------------------------------------------------------------------------
+- FONT AWESOME (SIL OFL 1.1, MIT and CC 3.0 licenses)
+-------------------------------------------------------------------------------
+Font Awesome
+the iconic font designed for use with Twitter Bootstrap
+
+ - The Font Awesome font is licensed under SIL OFL 1.1 -
+   http://scripts.sil.org/OFL
+ - Font Awesome CSS, LESS, and SASS files are licensed under MIT License -
+   http://opensource.org/licenses/mit-license.html
+ - Font Awesome documentation licensed under CC BY 3.0 -
+   http://creativecommons.org/licenses/by/3.0/
+ - Attribution is no longer required in Font Awesome 3.0, but much appreciated:
+   "Font Awesome by Dave Gandy - http://fontawesome.io"
+
+ Author - Dave Gandy
+ ------------------------------------------------------------------------------
+ Email: dave@fontawesome.io
+ Twitter: http://twitter.com/davegandy
+ Work: Lead Product Designer @ Kyruus - http://kyruus.com
+
+FILES COVERED:
+  - mocca-ufsm-webfonts.[css|less]
+  - FontAwesome.otf
+  - fontawesome-webfont.[eot|svg|ttf|woff]
+
+-------------------------------------------------------------------------------
+- JQUERY MIGRATE PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+Copyright 2013 jQuery Foundation and other contributors
+http://jquery.com/
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery-plugin-migrate.js
+
+-------------------------------------------------------------------------------
+- JQUERY TIMEPICKER PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+Copyright (c) 2013 Trent Richardson
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery-plugin-timepicker-addon.js
+
+-------------------------------------------------------------------------------
+- QTIP2 PLUGIN (GPL 2.0 and MIT Licenses)
+-------------------------------------------------------------------------------
+qTip2 - Pretty powerful tooltips
+Copyright (c) 2013 Craig Michael Thompson
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+--
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - mocca-theme-qtip.[css|less]
+  - jquery-plugin-qtip.js
+
+-------------------------------------------------------------------------------
+- BLOCK-UI PLUGIN (GPL 2.0 and MIT Licenses)
+-------------------------------------------------------------------------------
+jQuery blockUI plugin - http://malsup.com/jquery/block/
+Copyright (c) 2007-2013 M. Alsup
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+--
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery-plugin-blockUI.js
+
+-------------------------------------------------------------------------------
+- JSTREE PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+Copyright (c) 2013 Ivan Bozhanov
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - mocca-theme-jstree.[css|less]
+  - jquery-plugin-jstree.js
+
+-------------------------------------------------------------------------------
+- JQUERY MASK PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+ Copyright (c) 2012 Igor Escobar http://blog.igorescobar.com
+
+ The MIT License (http://www.opensource.org/licenses/mit-license.php)
+
+ Permission is hereby granted, free of charge, to any person
+ obtaining a copy of this software and associated documentation
+ files (the "Software"), to deal in the Software without
+ restriction, including without limitation the rights to use,
+ copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the
+ Software is furnished to do so, subject to the following
+ conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+  - jquery-plugin-mask.js
+
+-------------------------------------------------------------------------------
+- STEAMDEV SNIPPET PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+Snippet : jQuery Syntax Highlighter
+http://steamdev.com/snippet
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+
+  - mocca-theme-snippet.[css|less]
+  - jquery-plugin-steamdev-snippet.js
+
+-------------------------------------------------------------------------------
+- JQUERY NUMBER FORMATER PLUGIN (MIT License)
+-------------------------------------------------------------------------------
+jquery.numberformatter - Formatting/Parsing Numbers in jQuery
+Michael Abernethy (mike@abernethysoft.com), Andrew Parry (aparry0@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+FILES COVERED:
+
+  - jquery-plugin-numberformatter.js
+
+-------------------------------------------------------------------------------
+- JS SIMPLE DATE FORMAT (LGPL 2.1 License)
+-------------------------------------------------------------------------------
+JsSimpleDateFormat - library for formatting and parsing date time
+Copyright (C) 2008 AT Mulyana (atmulyana@yahoo.com)
+http://www.javascriptbank.com/=JsSimpleDateFormat
+ 
+This library is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this library; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+FILES COVERED:
+
+  - 3rdparty-embedded.js
+
+-------------------------------------------------------------------------------
+- JS HASHTABLE (Apache 2.0 License)
+-------------------------------------------------------------------------------
+jshashtable - a JavaScript implementation of a hash table.
+http://www.timdown.co.uk/jshashtable/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+FILES COVERED:
+
+  - 3rdparty-embedded.js
+
+-------------------------------------------------------------------------------
+- JS BROWSER DETECTION (Unknown License)
+-------------------------------------------------------------------------------
+
+Unknown License. For this component, there is absolutelly no license mention,
+neither in the sources as the website.
+
+-------------------------------------------------------------------------------
+- HUMANIST 521 FONT (Unknown License)
+-------------------------------------------------------------------------------
+
+Unknown License. For this component, there is absolutelly no license mention,
+neither in the sources as the website.
+
+*******************************************************************************
+* 2) LICENSES OF SOFTWARES USED TO DEVELOP THE PROJECT
+*******************************************************************************
+
+-------------------------------------------------------------------------------
+- NETBEANS (CDDL 1.0 AND GPL 2.0, WITH CLASSPATH EXCEPTION)
+-------------------------------------------------------------------------------
+Copyright (c) 1997, 2014, Oracle and/or its affiliates. All
+rights reserved.
+
+Oracle and Java are registered trademarks of Oracle and/or
+its affiliates. Other names may be trademarks of their
+respective owners.
+
+The Product contains NetBeans IDE, the Glassfish runtime,
+and other components. Review the Product carefully to
+determine which license governs the code you are using.
+
+Oracle separately licenses NetBeans IDE and the Glassfish
+runtime under the CDDL v 1.0 (CDDL) or GNU General Public
+License version 2 with Classpath  Exception ("GPLv2 with
+Classpath Exception"), both of which are identified below.
+You may choose either license to govern your use of NetBeans
+IDE or the Glassfish runtime only upon the condition that
+you accept all of the terms of either the CDDL or GPLv2 with
+Classpath Exception. In addition, the Product also contains
+components which are governed exclusively by the terms of
+the GPLv2 with Classpath Exception (e.g. components from
+OpenJDK) or by the terms of one of the licenses listed below
+(i.e. Oracle JDBC Drivers, and Java Card Development
+Kit 3.0.2).
+
+Third party technology that may be necessary for use with
+the Product is specified in THIRDPARTYLICENSE.txt. Such
+third party technology is licensed to you under the terms of
+the third party technology license agreement specified and
+not under either the CDDL or GPLv2 with Classpath Exception.
+Please review the list of libraries and licenses provided
+for use.
+
+-------------------------------------------------------------------------------
+- APACHE MAVEN (Apache 2.0 License)
+-------------------------------------------------------------------------------
+Apache Maven Distribution
+Copyright 2001-2014 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-------------------------------------------------------------------------------
+- LESSCSS (Apache 2.0 License)
+-------------------------------------------------------------------------------
+LESS - Leaner CSS - http://lesscss.org 
+Copyright (c) 2009-2014, Alexis Sellier <self@cloudhead.net> 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-------------------------------------------------------------------------------
+- LESSCSS-COMPILER JAVA/MAVEN PLUGIN (Apache 2.0 License)
+-------------------------------------------------------------------------------
+lesscss-compiler for java - https://github.com/marceloverdijk
+Copyright (c) 2009-2014, Marcel Overdijk <marcel@overdijk.me> 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-------------------------------------------------------------------------------
+- YUI COMPRESSOR (BSD License)
+-------------------------------------------------------------------------------
+YUI Compressor
+http://yui.github.io/yuicompressor/
+
+Copyright (c) 1982, 1986, 1990, 1991, 1993
+     The Regents of the University of California.  All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. All advertising materials mentioning features or use of this software
+   must display the following acknowledgement:
+     This product includes software developed by the University of
+     California, Berkeley and its contributors.
+4. Neither the name of the University nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGE.

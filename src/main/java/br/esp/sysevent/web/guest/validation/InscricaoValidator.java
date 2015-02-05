@@ -178,7 +178,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
     }
 
     protected void validateEndereco(Endereco endereco, Errors errors, String path, boolean validateContato) {
-        if (endereco.getNumero() == null) {
+        if (CharSequenceUtils.isBlankOrNull(endereco.getNumero())) {
             errors.rejectValue(path + ".numero", "errors.required");
         }
         if (endereco.getCidade() == null) {

@@ -64,12 +64,12 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
     public Collection<Inscricao> findByUsuario(Usuario usuario) {
         return getDao().findByUsuario(usuario);
     }
-    
+
     @Override
     public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade) {
         return getDao().findByIdGrupoIdade(idGrupoIdade);
     }
-    
+
     @Override
     public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao){
         return getDao().findSemDormitorioBySexo(sexo, idEdicao);
@@ -214,8 +214,9 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
         final Confraternista confraternista = inscricao.getConfraternista();
         if (confraternista.isOcupaVaga()) {
             if (tipoEdicao.equals(Edicao.Tipo.OFICINA)) {
-                final Oficina oficina = confraternista.getOficina();
+                Oficina oficina = confraternista.getOficina();
                 if (oficina != null) {
+                    oficina = oficinaService.findById(oficina.getId());
                     oficina.ocupaVaga();
                     oficinaService.saveOrUpdate(oficina);
                 }
@@ -336,5 +337,5 @@ public class InscricaoServiceBean extends AbstractEntityServiceBean<Long, Inscri
             idade -= 1;
         }
         return idade;
-    }    
+    }
 }

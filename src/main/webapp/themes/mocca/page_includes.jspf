@@ -1,0 +1,17 @@
+<%@ include file="/WEB-INF/includes/jstl.jspf" %>
+<!-- Le styles -->
+<link rel="stylesheet" href="<c:url value='/assets/css/smoothness/jquery-ui-min.css'/>" />
+<link rel="stylesheet" href="<c:url value='/assets/css/browser-detector-min.css'/>" />
+<link rel="stylesheet" href="<c:url value='/assets/css/mocca-pack-min.css'/>" />
+<link rel="stylesheet" href="<c:url value='/assets/application/css/application.css'/>" />
+
+<!--JS-->
+<script src="<c:url value='/assets/js/browser-detector-min.js'/>"></script>
+<script src="<c:url value='/assets/js/jquery-min.js'/>"></script>
+<script src="<c:url value='/assets/js/jquery-ui-min.js'/>"></script>
+<script src="<c:url value='/assets/js/jquery-mocca-pack-min.js'/>"></script>
+<!-- DWR -->
+<script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
+<script src="<c:url value='/assets/application/js/SystemUtils.js'/>"></script>
+
+<decorator:head />

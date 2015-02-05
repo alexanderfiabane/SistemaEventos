@@ -16,32 +16,32 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.grouptype" isLabelKey="true" isMandatory="true" path="tipo" type="select" itens="${tiposGrupoIdade}" itemLabel="descricao" selectNullItemLabel="Selecione o tipo do grupo"/>            
+            <see:formField label="label.grouptype" isLabelKey="true" isMandatory="true" path="tipo" type="select" itens="${tiposGrupoIdade}" itemLabel="descricao" selectNullItemLabel="Selecione o tipo do grupo"/>            
         </div>
     </div>
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.groupagename" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
+            <see:formField label="label.groupagename" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
+            <see:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
         </div>        
     </div>
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.minage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3"/>
+            <see:formField label="label.minage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.maxage" isLabelKey="true" isMandatory="true" path="idadeMaxima" maxlength="3"/>
+            <see:formField label="label.maxage" isLabelKey="true" isMandatory="true" path="idadeMaxima" maxlength="3"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formGrupoIdade.html?idEdicao=${command.edicaoEvento.id}"/>
+    <see:formButtonGroup formUrl="/admin/formGrupoIdade.html?idEdicao=${command.edicaoEvento.id}"/>
 </form:form>
 
 <div class="row-fluid">

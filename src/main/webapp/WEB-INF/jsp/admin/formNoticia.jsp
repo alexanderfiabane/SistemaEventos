@@ -9,21 +9,21 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.title" isLabelKey="true" isMandatory="true" path="titulo" maxlength="100"/>
+            <see:formField label="label.title" isLabelKey="true" isMandatory="true" path="titulo" maxlength="100"/>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span12">
-            <bs:formField label="label.content" isLabelKey="true" isMandatory="true" path="conteudo" type="textarea" inputClass="span12"/>
+            <see:formField label="label.content" isLabelKey="true" isMandatory="true" path="conteudo" type="textarea" inputClass="span12"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formNoticia.html"/>
+    <see:formButtonGroup formUrl="/admin/formNoticia.html"/>
 </form:form>
 
 <div class="row-fluid">

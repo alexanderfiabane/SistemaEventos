@@ -9,19 +9,19 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">
         <div class="span3">
-            <bs:formField label="label.workshopname" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
+            <see:formField label="label.workshopname" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
         </div>
         <div class="span3">
-            <bs:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
+            <see:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
         </div>
     </div>
-    <bs:formButtonGroup formUrl="/admin/formOficina.html?idEdicao=${command.edicaoEvento.id}"/>
+    <see:formButtonGroup formUrl="/admin/formOficina.html?idEdicao=${command.edicaoEvento.id}"/>
 </form:form>
 
 <div class="row-fluid">

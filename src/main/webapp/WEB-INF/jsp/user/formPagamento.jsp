@@ -9,20 +9,20 @@
     </msf:pagetitle>
 </content>
 
-<bs:notice type="success" visible="${!empty message}" closeable="true">${message}</bs:notice>
-<bs:notice type="error" visible="${!empty erro}" closeable="true">${erro}</bs:notice>
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
+<see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
 <fieldset>
     <legend><msf:message key="label.eventdetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
-            <bs:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.inscricao.confraternista.tipo.descricao}"/>
+            <see:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.inscricao.confraternista.tipo.descricao}"/>
         </div>
         <div class="span3">
-            <bs:formFieldView label="label.subscriptionstatus" isLabelKey="true" value="${command.inscricao.status.value}"/>
+            <see:formFieldView label="label.subscriptionstatus" isLabelKey="true" value="${command.inscricao.status.value}"/>
         </div>
         <div class="span3">
-            <bs:formFieldView label="label.subscriptionValue" isLabelKey="true" isCurrency="true" value="${command.inscricao.valor}"/>
+            <see:formFieldView label="label.subscriptionValue" isLabelKey="true" isCurrency="true" value="${command.inscricao.valor}"/>
         </div>
     </div>
 </fieldset>
@@ -32,16 +32,16 @@
         <legend><msf:message key="label.paymentdetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
-                <bs:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="numeroDocumento"/>
+                <see:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="numeroDocumento"/>
             </div>
             <div class="span3">
-                <bs:formField label="label.paymentdate" isLabelKey="true" isMandatory="true" type="date" path="data"/>
+                <see:formField label="label.paymentdate" isLabelKey="true" isMandatory="true" type="date" path="data"/>
             </div>
             <div class="span3">
-                <bs:formField label="label.paymentvalue" isLabelKey="true" isMandatory="true" path="valor"/>
+                <see:formField label="label.paymentvalue" isLabelKey="true" isMandatory="true" path="valor"/>
             </div>
         </div>
     </fieldset>
 
-    <bs:formButtonGroup formUrl="/user/formPagamento.html"/>
+    <see:formButtonGroup formUrl="/user/formPagamento.html"/>
 </form:form>
