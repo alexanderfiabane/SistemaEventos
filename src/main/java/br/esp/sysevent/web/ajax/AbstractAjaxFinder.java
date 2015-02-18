@@ -1,25 +1,22 @@
-/*
- * Copyright (c) 2013, CPD-UFSM. All Rights Reserved.
- */
-package br.ufsm.cpd.sie.core.ajax;
+
+package br.esp.sysevent.web.ajax;
 
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Classe base para paginação ajax.
- *
- * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
+ * Classe base para paginaÃ§Ã£o ajax.
+ * 
  * @param <T> Tipo de retorno do search().
  */
 public abstract class AbstractAjaxFinder<T extends Serializable> extends AbstractAjaxService implements AjaxFinder<T>{
    /**
-     * Deve retornar um mapa, contendo o nome do field como chave, e a msg de erro de sua validação.
+     * Deve retornar um mapa, contendo o nome do field como chave, e a msg de erro de sua validaÃ§Ã£o.
      * <p/>
-     * Retorno vazio ou nulo significa sem erros de validação.
+     * Retorno vazio ou nulo significa sem erros de validaï¿½ï¿½o.
      *
-     * @param params A coleção de parametros da pesquisa.
-     * @return Um mapa, contendo o nome do field como chave, e a msg de erro de sua validação.
+     * @param params A coleÃ§Ã£o de parametros da pesquisa.
+     * @return Um mapa, contendo o nome do field como chave, e a msg de erro de sua validaÃ§Ã£o.
      */
     @Override
     public Map<String, String> validate(final Map<String, String> params) {

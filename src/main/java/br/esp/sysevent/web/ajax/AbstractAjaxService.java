@@ -1,21 +1,18 @@
-/*
- * Copyright (c) 2014, CPD-UFSM. All Rights Reserved.
- */
-package br.ufsm.cpd.sie.core.ajax;
+package br.esp.sysevent.web.ajax;
 
+//import br.ojimarcius.commons.search.Operator;
 import br.ufsm.cpd.commons.search.Operator;
-import br.ufsm.cpd.commons.text.EnhancedStringBuilder;
-import br.ufsm.cpd.commons.util.ArgumentUtils;
-import br.ufsm.cpd.commons.util.CharSequenceUtils;
-import br.ufsm.cpd.commons.util.CollectionUtils;
-import br.ufsm.cpd.commons.util.DateUtils;
-import br.ufsm.cpd.commons.util.LocaleUtils;
-import br.ufsm.cpd.commons.util.NumberUtils;
+import br.ojimarcius.commons.text.EnhancedStringBuilder;
+import br.ojimarcius.commons.util.ArgumentUtils;
+import br.ojimarcius.commons.util.CharSequenceUtils;
+import br.ojimarcius.commons.util.CollectionUtils;
+import br.ojimarcius.commons.util.DateUtils;
+import br.ojimarcius.commons.util.LocaleUtils;
+import br.ojimarcius.commons.util.NumberUtils;
+//import br.ojimarcius.commons.persistence.springframework.validation.ValidationUtils;
 import br.ufsm.cpd.commons.web.spring.validation.ValidatorConstants;
 import br.ufsm.cpd.sie.core.entidade.Entity;
-import br.ufsm.cpd.sie.core.entidade.ItemTabEstruturada;
 import br.ufsm.cpd.sie.core.service.EntityService;
-import br.ufsm.cpd.sie.core.service.TabEstruturadaService;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -30,7 +27,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
 /**
- * Classe base para paginação ajax.
+ * Classe base para paginaï¿½ï¿½o ajax.
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  */
@@ -51,32 +48,32 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     }
 
     /**
-     * Indica se o mapa de parâmetros possui algum item.
+     * Indica se o mapa de parï¿½metros possui algum item.
      *
      * @param params O mapa a ser avaliado.
-     * @return true se este mapa possuir algum item. false caso contrário.
+     * @return true se este mapa possuir algum item. false caso contrï¿½rio.
      */
     protected static boolean hasParams(final Map<String, String> params) {
         return CollectionUtils.isNotEmpty(params);
     }
     /**
-     * Indica se o parâmetro de dado nome (key) existe no mapa e não é vazio.
+     * Indica se o parï¿½metro de dado nome (key) existe no mapa e nï¿½o ï¿½ vazio.
      *
-     * @param key    O nome do parâmetro.
+     * @param key    O nome do parï¿½metro.
      * @param params O mapa a ser avaliado.
-     * @return true se existe um parametro não-vazio com o nome dado no mapa. false caso contrário.
+     * @return true se existe um parametro nï¿½o-vazio com o nome dado no mapa. false caso contrï¿½rio.
      */
     protected static boolean hasParam(final String key, final Map<String, String> params) {
         return CharSequenceUtils.isNotBlank(getParam(key, params));
     }
     /**
-     * Retorna o valor que está registrado para o nome de parâmetro dado.
+     * Retorna o valor que estï¿½ registrado para o nome de parï¿½metro dado.
      * <p/>
-     * Pode retornar null caso este não exista.
+     * Pode retornar null caso este nï¿½o exista.
      *
-     * @param key    O nome do parâmetro.
+     * @param key    O nome do parï¿½metro.
      * @param params O mapa a ser avaliado.
-     * @return O valor que está registrado para o nome de parâmetro dado.
+     * @return O valor que estï¿½ registrado para o nome de parï¿½metro dado.
      */
     protected static String getParam(final String key, final Map<String, String> params) {
         if (CollectionUtils.isNotEmpty(params)) {
@@ -86,11 +83,11 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         return null;
     }
     /**
-     * Retorna um {@link br.ufsm.cpd.sie.core.ajax.AbstractAjaxService.Order Order} que representa a ordenação da tabela.
+     * Retorna um {@link br.ufsm.cpd.sie.core.ajax.AbstractAjaxService.Order Order} que representa a ordenaï¿½ï¿½o da tabela.
      *
-     * @param params mapa de parametros que conterá os parametros de ordenação.
-     * @return O {@link br.ufsm.cpd.sie.core.ajax.AbstractAjaxService.Order Order} representando a ordenação da tabela,
-     *         ou null se esta não estiver ordenada.
+     * @param params mapa de parametros que conterï¿½ os parametros de ordenaï¿½ï¿½o.
+     * @return O {@link br.ufsm.cpd.sie.core.ajax.AbstractAjaxService.Order Order} representando a ordenaï¿½ï¿½o da tabela,
+     *         ou null se esta nï¿½o estiver ordenada.
      */
     protected static Order getOrder(final Map<String, String> params) {
         if (hasParam("orderBy", params) && hasParam("orderMode", params)) {
@@ -99,20 +96,20 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         return null;
     }
     /**
-     * Retorna um {@link org.hibernate.criterion.Order Order} que representa a ordenação da tabela.
+     * Retorna um {@link org.hibernate.criterion.Order Order} que representa a ordenaï¿½ï¿½o da tabela.
      *
-     * @param params mapa de parametros que conterá os parametros de ordenação.
-     * @return O {@link org.hibernate.criterion.Order Order} representando a ordenação da tabela, ou null se esta não estiver ordenada.
+     * @param params mapa de parametros que conterï¿½ os parametros de ordenaï¿½ï¿½o.
+     * @return O {@link org.hibernate.criterion.Order Order} representando a ordenaï¿½ï¿½o da tabela, ou null se esta nï¿½o estiver ordenada.
      */
     protected static org.hibernate.criterion.Order getHibernateOrder(final Map<String, String> params) {
         final Order order = getOrder(params);
         return order != null ? order.toHibernateOrder() : null;
     }
     /**
-     * Retorna um {@link br.ufsm.cpd.commons.search.Operator.Order Order} que representa a ordenação da tabela.
+     * Retorna um {@link br.ufsm.cpd.commons.search.Operator.Order Order} que representa a ordenaï¿½ï¿½o da tabela.
      *
-     * @param params mapa de parametros que conterá os parametros de ordenação.
-     * @return O {@link br.ufsm.cpd.commons.search.Operator.Order Order} representando a ordenação da tabela, ou null se esta não estiver ordenada.
+     * @param params mapa de parametros que conterï¿½ os parametros de ordenaï¿½ï¿½o.
+     * @return O {@link br.ufsm.cpd.commons.search.Operator.Order Order} representando a ordenaï¿½ï¿½o da tabela, ou null se esta nï¿½o estiver ordenada.
      */
     protected static Operator.Order getChainOrder(final Map<String, String> params) {
         final Order order = getOrder(params);
@@ -122,9 +119,9 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
@@ -140,16 +137,16 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
      * @param targetClass Classe do tipo de Item do retorno.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado convertido para o tipo desejado.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -159,17 +156,17 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
      * @param targetClass Classe do tipo de Item do retorno.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado convertido para o tipo desejado.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -179,9 +176,9 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
@@ -197,16 +194,16 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
      * @param targetClass Classe do tipo de Item do retorno.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado convertido para o tipo desejado.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -216,17 +213,17 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um dado tipo.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do retorno.
      * @param targetClass Classe do tipo de Item do retorno.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado convertido para o tipo desejado.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -237,7 +234,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para uma entidade.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      *
      * @param <E>         Tipo de entidade do retorno.
      * @param targetClass Classe do tipo de entidade do retorno.
@@ -257,80 +254,57 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         return entity;
     }
     /**
-     * Efetua o parse de um parametro para um ItemTabEstruturada.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
-     *
-     * @param <I>         Tipo de ItemTabEstruturada do retorno.
-     * @param targetClass Classe do tipo de entidade do retorno.
-     * @param key         Chave para o valor do parametro.
-     * @param params      Conjunto de parametros.
-     * @param service     O service a ser usado na consulta.
-     * @param joins       Joins a serem efetuados na consulta.
-     * @return O parametro desejado convertido para o tipo desejado.
-     */
-    protected static <I extends ItemTabEstruturada> I get(final Class<I> targetClass, final String key, final Map<String, String> params, final TabEstruturadaService service, final String... joins) {
-        ArgumentUtils.rejectIfAnyNull(targetClass, service);
-        final Integer item = get(Integer.class, key, params);
-        I entity = null;
-        if (item != null) {
-            entity = service.getItem(targetClass, item, joins);
-        }
-        return entity;
-    }
-
-    /**
-     * Efetua o parse de um parametro para uma coleção.
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
-     * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @return O parametro desejado em formato de coleção.
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getCollection(final Class<S> targetClass, final String key, final Map<String, String> params) {
         return getCollection(targetClass, key, params, null, null);
     }
     /**
-     * Efetua o parse de um parametro para uma coleção.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @return O parametro desejado em formato de coleção.
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getCollection(final Class<S> targetClass, final String key, final Map<String, String> params, final CharSequence pattern) {
         return getCollection(targetClass, key, params, pattern, null);
     }
     /**
-     * Efetua o parse de um parametro para uma coleção.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
-     * @return O parametro desejado em formato de coleção.
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getCollection(final Class<S> targetClass, final String key, final Map<String, String> params, final CharSequence pattern, final Locale locale) {
@@ -352,57 +326,57 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         return collection;
     }
     /**
-     * Efetua o parse de um parametro para uma coleção.
+     * Efetua o parse de um parametro para uma coleÃ§Ã£o.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÃ‰TODO Ã‰ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @return O parametro desejado em formato de coleção.
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getNullsafeCollection(final Class<S> targetClass, final String key, final Map<String, String> params) {
         return getNullsafeCollection(targetClass, key, params, null, null);
     }
     /**
-     * Efetua o parse de um parametro para uma coleção.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @return O parametro desejado em formato de coleção.
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getNullsafeCollection(final Class<S> targetClass, final String key, final Map<String, String> params, final CharSequence pattern) {
         return getNullsafeCollection(targetClass, key, params, pattern, null);
     }
     /**
-     * Efetua o parse de um parametro para uma coleção.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
-     * @return O parametro desejado em formato de coleção.
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
     protected static <S extends Serializable> Collection<S> getNullsafeCollection(final Class<S> targetClass, final String key, final Map<String, String> params, final CharSequence pattern, final Locale locale) {
@@ -411,17 +385,17 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     }
 
     /**
-     * Efetua o parse de um parametro para uma coleção de entidades.
+     * Efetua o parse de um parametro para uma coleï¿½ï¿½o de entidades.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      *
-     * @param <E>         Tipo de entidade da coleção.
+     * @param <E>         Tipo de entidade da coleï¿½ï¿½o.
      * @param targetClass Classe do tipo de entidade do retorno.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
      * @param service     O service a ser usado na consulta.
      * @param joins       Joins a serem efetuados na consulta.
-     * @return O parametro desejado em formato de coleção.
+     * @return O parametro desejado em formato de coleï¿½ï¿½o.
      */
     protected static <E extends Entity<Long>> Collection<E> getNullsafeCollection(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityService<Long, E> service, final String... joins) {
         final Collection<Long> ids = getNullsafeCollection(Long.class, key, params);
@@ -438,39 +412,11 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         return CollectionUtils.EMPTY_LIST;
     }
     /**
-     * Efetua o parse de um parametro para uma coleção de ItemTabEstruturadas.
-     * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
-     *
-     * @param <I>         Tipo de ItemTabEstruturada da coleção.
-     * @param targetClass Classe do tipo de entidade do retorno.
-     * @param key         Chave para o valor do parametro.
-     * @param params      Conjunto de parametros.
-     * @param service     O service a ser usado na consulta.
-     * @param joins       Joins a serem efetuados na consulta.
-     * @return O parametro desejado em formato de coleção.
-     */
-    protected static <I extends ItemTabEstruturada> Collection<I> getNullsafeCollection(final Class<I> targetClass, final String key, final Map<String, String> params, final TabEstruturadaService service, final String... joins) {
-        final Collection<Integer> items = getNullsafeCollection(Integer.class, key, params);
-        if (CollectionUtils.isNotEmpty(items)) {
-            final Collection<I> entities = new ArrayList<I>(items.size());
-            for (Integer item : items) {
-                final I entity = service.getItem(targetClass, item, joins);
-                if (entity != null) {
-                    entities.add(entity);
-                }
-            }
-            return entities;
-        }
-        return CollectionUtils.EMPTY_LIST;
-    }
-
-    /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
@@ -486,16 +432,16 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
      * @param targetClass Classe do tipo de Item do array.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado em formato de array.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -505,17 +451,17 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE MÉTODO NÃO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #660000;">O RETORNO DESTE Mï¿½TODO Nï¿½O ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
      * @param targetClass Classe do tipo de Item do array.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado em formato de array.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -530,9 +476,9 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
@@ -548,16 +494,16 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
      * @param targetClass Classe do tipo de Item do array.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado em formato de array.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -567,17 +513,17 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      * <p/>
-     * Para saber quais <code>targetClass</code> este método suporta,
+     * Para saber quais <code>targetClass</code> este mï¿½todo suporta,
      * vide {@link #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean) parseValue()}.
      *
      * @param <S>         Tipo de item do array.
      * @param targetClass Classe do tipo de Item do array.
      * @param key         Chave para o valor do parametro.
      * @param params      Conjunto de parametros.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar)
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar)
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar)
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar)
      * @return O parametro desejado em formato de array.
      * @see #parseValue(java.lang.Class, java.lang.String, java.lang.CharSequence, java.util.Locale, boolean)parseValue()
      */
@@ -590,7 +536,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Efetua o parse de um parametro para um array de entidades.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
+     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE Mï¿½TODO ï¿½ NULL SAFE.</span>
      *
      * @param <E>         Tipo de entidade do array.
      * @param targetClass Classe do tipo de entidade do retorno.
@@ -605,32 +551,14 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         final E[] array = (E[]) Array.newInstance(targetClass, col.size());
         return col.toArray(array);
     }
+    
     /**
-     * Efetua o parse de um parametro para um array de ItemTabEstruturadas.
+     * Mï¿½todo interno que faz o parse de um valor em formato String para um tipo desejado.
      * <p/>
-     * <span style="font-weight: bold; color: #006600;">O RETORNO DESTE MÉTODO É NULL SAFE.</span>
-     *
-     * @param <I>         Tipo de ItemTabEstruturada do array.
-     * @param targetClass Classe do tipo de entidade do retorno.
-     * @param key         Chave para o valor do parametro.
-     * @param params      Conjunto de parametros.
-     * @param service     O service a ser usado na consulta.
-     * @param joins       Joins a serem efetuados na consulta.
-     * @return O parametro desejado em formato de array.
-     */
-    protected static <I extends ItemTabEstruturada> I[] getNullsafeArray(final Class<I> targetClass, final String key, final Map<String, String> params, final TabEstruturadaService service, final String... joins) {
-        final Collection<I> col = getNullsafeCollection(targetClass, key, params, service, joins);
-        final I[] array = (I[]) Array.newInstance(targetClass, col.size());
-        return col.toArray(array);
-    }
-
-    /**
-     * Método interno que faz o parse de um valor em formato String para um tipo desejado.
+     * Para adicionar suporte para um novo tipo de targetClass, apenas adicione o novo parsing no corpo desse mï¿½todo,
+     * e todos os demais mï¿½todos que recebem targetClass passarï¿½o a reconhecï¿½-lo.
      * <p/>
-     * Para adicionar suporte para um novo tipo de targetClass, apenas adicione o novo parsing no corpo desse método,
-     * e todos os demais métodos que recebem targetClass passarão a reconhecê-lo.
-     * <p/>
-     * Este método suporta:
+     * Este mï¿½todo suporta:
      * <ul>
      * <li>String</li>
      * <li>StringBuilder</li>
@@ -647,12 +575,12 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
      * <li>Calendar</li>
      * </ul>
      *
-     * @param <S>         Tipo de item da coleção.
-     * @param targetClass Classe do tipo de Item da coleção.
+     * @param <S>         Tipo de item da coleï¿½ï¿½o.
+     * @param targetClass Classe do tipo de Item da coleï¿½ï¿½o.
      * @param sval        Valor a ser efetuado o parsing.
-     * @param pattern     O pattern de conversão (se targetClass == Number, Date ou Calendar).
-     * @param locale      O locale de conversão (se targetClass == Number, Date ou Calendar).
-     * @param nullsafe    Indica se o retorno deverá ser nullsafe
+     * @param pattern     O pattern de conversï¿½o (se targetClass == Number, Date ou Calendar).
+     * @param locale      O locale de conversï¿½o (se targetClass == Number, Date ou Calendar).
+     * @param nullsafe    Indica se o retorno deverï¿½ ser nullsafe
      * @return O valor da string dada convertido para o tipo desejado.
      */
     protected static <S extends Serializable> S parseValue(final Class<S> targetClass, final String sval, final CharSequence pattern, final Locale locale, final boolean nullsafe) {
@@ -698,14 +626,14 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
             if (CharSequenceUtils.isNotBlank(sval)) {
                 val = DateUtils.parseDate(sval, dp, l);
             } else if (nullsafe) {
-                // não sei o que assumir em caso de Date nula e nullsafe = true
+                // nï¿½o sei o que assumir em caso de Date nula e nullsafe = true
                 throw new IllegalArgumentException("Could not get a NullSafe Date.");
             }
         } else if (Calendar.class.isAssignableFrom(targetClass)) {
             if (CharSequenceUtils.isNotBlank(sval)) {
                 val = DateUtils.parseCalendar(sval, dp, l);
             } else if (nullsafe) {
-                // não sei o que assumir em caso de Calendar nula e nullsafe = true
+                // nï¿½o sei o que assumir em caso de Calendar nula e nullsafe = true
                 throw new IllegalArgumentException("Could not get a NullSafe Calendar.");
             }
         } else if (Boolean.class.isAssignableFrom(targetClass)) {
@@ -740,7 +668,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Adiciona o field ao mapa de erros, resolvendo a message code para seu valor (de acordo com o message-source configurado).
      * <p/>
-     * Se o code dado não for resolvido para uma msg, o próprio code é usado como msg de erro.
+     * Se o code dado nï¿½o for resolvido para uma msg, o prï¿½prio code ï¿½ usado como msg de erro.
      *
      * @param field       O nome do campo a ser rejeitado.
      * @param messageCode O code para a mensagem de erro, a ser resolvido pelo message-source.
@@ -752,11 +680,11 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     /**
      * Adiciona o field ao mapa de erros, resolvendo a message code para seu valor (de acordo com o message-source configurado).
      * <p/>
-     * Se o code dado não for resolvido para uma msg, o próprio code é usado como msg de erro.
+     * Se o code dado nï¿½o for resolvido para uma msg, o prï¿½prio code ï¿½ usado como msg de erro.
      *
      * @param field       O nome do campo a ser rejeitado.
      * @param messageCode O code para a mensagem de erro, a ser resolvido pelo message-source.
-     * @param params      Um array de parametros para a mensagem resolvida, caso necessário. Formato {0}, {1}, etc....
+     * @param params      Um array de parametros para a mensagem resolvida, caso necessï¿½rio. Formato {0}, {1}, etc....
      * @param errors      O mapa de [field : msg de erro] a ser retornado para a view.
      */
     protected void reject(final String field, final String messageCode, final Object[] params, final Map<String, String> errors) {
@@ -775,7 +703,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
     }
 
     /**
-     * Representa os parametros de ordenação de uma AjaxTable.
+     * Representa os parametros de ordenaï¿½ï¿½o de uma AjaxTable.
      */
     public static class Order {
         private final String column;

@@ -1,7 +1,4 @@
-/*
- * Copyright (c) 2014, CPD-UFSM. All Rights Reserved.
- */
-package br.ufsm.cpd.sie.core.ajax;
+package br.esp.sysevent.web.ajax;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -18,21 +15,21 @@ public interface AjaxFinder<T extends Serializable> {
     /**
      * Efetua a pesquisa, trazendo os itens.
      *
-     * @param firstResult O índice do primeiro resultado a ser buscado.
-     * @param maxResults  O máximo de resultados por página.
-     * @param params      A coleção de parametros da pesquisa.
+     * @param firstResult O ï¿½ndice do primeiro resultado a ser buscado.
+     * @param maxResults  O mï¿½ximo de resultados por pï¿½gina.
+     * @param params      A coleï¿½ï¿½o de parametros da pesquisa.
      * @return O resultado da pesquisa.
      * @throws java.lang.Exception Caso ocorra algo inesperado.
      */
     public abstract Collection<T> search(final int firstResult, final int maxResults, final Map<String, String> params) throws Exception;
 
     /**
-     * Deve retornar um mapa, contendo o nome do field como chave, e a msg de erro de sua validação.
+     * Deve retornar um mapa, contendo o nome do field como chave, e a msg de erro de sua validaï¿½ï¿½o.
      * <p/>
-     * Retorno vazio ou nulo significa sem erros de validação.
+     * Retorno vazio ou nulo significa sem erros de validaï¿½ï¿½o.
      *
-     * @param params A coleção de parametros da pesquisa.
-     * @return Um mapa, contendo o nome do field como chave, e a msg de erro de sua validação.
+     * @param params A coleï¿½ï¿½o de parametros da pesquisa.
+     * @return Um mapa, contendo o nome do field como chave, e a msg de erro de sua validaï¿½ï¿½o.
      */
     public Map<String, String> validate(final Map<String, String> params);
 }

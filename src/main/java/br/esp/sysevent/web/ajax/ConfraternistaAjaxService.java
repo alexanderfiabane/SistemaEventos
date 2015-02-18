@@ -7,7 +7,6 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.service.ConfraternistaService;
-import br.esp.sysevent.core.service.EdicaoService;
 import br.esp.sysevent.core.service.GrupoIdadeService;
 import br.esp.sysevent.core.service.InscricaoService;
 import br.ojimarcius.commons.util.CharSequenceUtils;

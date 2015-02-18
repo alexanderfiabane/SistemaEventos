@@ -1,14 +1,10 @@
-/*
- * Copyright (c) 2014, CPD-UFSM. All Rights Reserved.
- */
-
-package br.ufsm.cpd.sie.core.ajax;
+package br.esp.sysevent.web.ajax;
 
 import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Classe base para paginação ajax.
+ * Classe base para paginaï¿½ï¿½o ajax.
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  * @param <T> Tipo de retorno do search().
@@ -18,7 +14,7 @@ public interface AjaxTable<T extends Serializable> extends AjaxFinder<T> {
     /**
      * Deve retornar a contagem total dos itens da pesquisa.
      *
-     * @param params A coleção de parametros da pesquisa.
+     * @param params A coleï¿½ï¿½o de parametros da pesquisa.
      * @return A contagem total dos itens da pesquisa.
      * @throws java.lang.Exception Caso ocorra algo inesperado.
      */

@@ -1,12 +1,9 @@
-/*
- * Copyright (c) 2013, CPD-UFSM. All Rights Reserved.
- */
-package br.ufsm.cpd.sie.core.ajax;
+package br.esp.sysevent.web.ajax;
 
 import java.io.Serializable;
 
 /**
- * Classe base para paginação ajax.
+ * Classe base para paginaï¿½ï¿½o ajax.
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  * @param <T> Tipo de retorno do search().
