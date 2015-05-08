@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Usuario;
-import com.javaleks.commons.core.dao.EntityDao;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

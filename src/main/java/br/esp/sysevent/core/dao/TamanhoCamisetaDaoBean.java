@@ -1,7 +1,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.TamanhoCamiseta;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.hibernate.SessionFactory;

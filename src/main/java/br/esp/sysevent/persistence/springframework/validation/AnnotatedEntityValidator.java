@@ -14,6 +14,7 @@
  */
 package br.esp.sysevent.persistence.springframework.validation;
 
+import br.esp.sysevent.core.dao.BaseTaperaDao;
 import static br.esp.sysevent.persistence.springframework.validation.ValidationUtils.getFullPath;
 import static br.esp.sysevent.persistence.springframework.validation.ValidationUtils.isNotNullCalendar;
 import static br.esp.sysevent.persistence.springframework.validation.ValidationUtils.isNotNullCharSequence;
@@ -28,7 +29,6 @@ import br.esp.sysevent.persistence.springframework.validation.annotations.Requir
 import br.esp.sysevent.persistence.springframework.validation.annotations.SkipSubvalidation;
 import br.esp.sysevent.persistence.springframework.validation.annotations.SkipValidation;
 import br.esp.sysevent.persistence.springframework.validation.annotations.Unique;
-import com.javaleks.commons.core.dao.EntityDao;
 import com.javaleks.commons.core.model.Entity;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -65,7 +65,7 @@ public abstract class AnnotatedEntityValidator<ID extends Serializable & Compara
     public void complementarValidation(final String pathPrefix, final T target, final Errors errors) {
     }
 
-    protected EntityDao<ID, T> getCommandService() {
+    protected BaseTaperaDao<ID, T> getCommandService() {
         return null;
     }
 

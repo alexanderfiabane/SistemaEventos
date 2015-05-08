@@ -150,8 +150,8 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
                 confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
             }
         }
-        Long idDormitorio = dormitorioDao.saveOrUpdate(command);
-        Dormitorio domitorio = dormitorioDao.findById(idDormitorio);
+        dormitorioDao.saveOrUpdate(command);
+        Dormitorio domitorio = dormitorioDao.findById(command.getId());
         coordenadorNovo.setDormitorio(domitorio);
         confraternistaDao.saveOrUpdate(coordenadorNovo);
         viceCoordenadorNovo.setDormitorio(domitorio);

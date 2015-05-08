@@ -22,6 +22,7 @@ public class OficinaDaoBean extends BaseTaperaDaoBean<Long, Oficina> implements 
         super(sessionFactory);
     }
 
+    @Override
     public Collection<Oficina> findAll() {
         return super.findAll(new Order[]{Order.asc("nome")});
     }

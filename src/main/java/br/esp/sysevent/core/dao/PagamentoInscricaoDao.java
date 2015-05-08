@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.PagamentoInscricao;
-import com.javaleks.commons.core.dao.EntityDao;
 
 /**
  *

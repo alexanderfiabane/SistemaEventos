@@ -6,7 +6,6 @@ package br.esp.sysevent.core.dao;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import com.javaleks.commons.util.CalendarUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;

@@ -16,7 +16,6 @@ import java.util.Collection;
  */
 public interface InscricaoDao extends BaseTaperaDao<Long, Inscricao> {
 
-    public Inscricao findById(final Long id, final String[] initProps);
     public Collection<Inscricao> findByEdicao(final Long idEdicao);
     public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao Edicao);
     public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao);
