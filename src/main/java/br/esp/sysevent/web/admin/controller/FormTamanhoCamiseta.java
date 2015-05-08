@@ -1,13 +1,12 @@
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
+import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.web.admin.validation.TamanhoCamisetaValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.core.model.TamanhoCamiseta;
-import br.esp.sysevent.core.service.TamanhoCamisetaService;
-import br.ojimarcius.commons.persistence.service.EntityService;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +29,36 @@ public class FormTamanhoCamiseta extends AbstractFormController<Long, TamanhoCam
 
     @Autowired
     private TamanhoCamisetaValidator validator;
-    
+
     @Autowired
-    private TamanhoCamisetaService tamanhoCamisetaService;
-    
+    private TamanhoCamisetaDao tamanhoCamisetaDao;
+
     @Override
     protected Validator<TamanhoCamiseta> getValidator() {
         return validator;
     }
 
     @Override
-    protected <S extends EntityService<Long, TamanhoCamiseta>> S getCommandService() {
-        return (S) tamanhoCamisetaService;
+    protected TamanhoCamisetaDao getCommandService() {
+        return tamanhoCamisetaDao;
     }
-    
+
     @ModelAttribute(COMMAND_NAME)
     public TamanhoCamiseta getCommand(@RequestParam(value = "idTamanho", required = false) final String idTamanho) {
         final TamanhoCamiseta command;
         if (CharSequenceUtils.isNumber(idTamanho)) {
-            command = tamanhoCamisetaService.findById(NumberUtils.parseLong(idTamanho));
+            command = tamanhoCamisetaDao.findById(NumberUtils.parseLong(idTamanho));
         } else {
             command = new TamanhoCamiseta();
         }
         return command;
     }
-    
+
     @ModelAttribute("tamanhosCamiseta")
     public Collection<TamanhoCamiseta> getTamanhosCamiseta() {
-        return tamanhoCamisetaService.findAll();
+        return tamanhoCamisetaDao.findAll();
     }
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String onGet() {
         //return form view
@@ -77,11 +76,11 @@ public class FormTamanhoCamiseta extends AbstractFormController<Long, TamanhoCam
         if (runValidator(command, result).hasErrors()) {
             return "admin/formTamanhoCamiseta";
         }
-        tamanhoCamisetaService.saveOrUpdate(command);
+        tamanhoCamisetaDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         // clear the command object from the session and return form success view
         status.setComplete();
         return "redirect:/admin/formTamanhoCamiseta.html";
     }
-    
+
 }

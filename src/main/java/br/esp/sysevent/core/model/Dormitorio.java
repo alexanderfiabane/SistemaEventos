@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,9 +21,9 @@ import javax.persistence.Table;
 @Table(name = "DORMITORIOS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_DORMITORIO"))
-public class Dormitorio extends AbstractEntity<Long> {
+public class Dormitorio extends AbstractEntity {
     private static final long serialVersionUID = 2667670358839610774L;
-    
+
     @Column(name = "NOME", length = 40, nullable = false)
     private String nome;
     @Column(name = "VAGAS", nullable = false)
@@ -66,7 +66,7 @@ public class Dormitorio extends AbstractEntity<Long> {
     public void setVagasOcupadas(Integer vagasOcupadas) {
         this.vagasOcupadas = vagasOcupadas;
     }
-    
+
     public Confraternista getCoordenador() {
         return coordenador;
     }
@@ -101,22 +101,20 @@ public class Dormitorio extends AbstractEntity<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + hashCodeById(this);
-        hash = 37 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 37 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
+        int hash = 7;
+        hash = 13 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 13 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
+        hash = 13 * hash + (this.sexo != null ? this.sexo.hashCode() : 0);
+        hash = 13 * hash + (this.edicaoEvento != null ? this.edicaoEvento.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
-            return false;
-        }
-        if (!equalsById(this, obj)) {
             return false;
         }
         final Dormitorio other = (Dormitorio) obj;
@@ -126,6 +124,13 @@ public class Dormitorio extends AbstractEntity<Long> {
         if (this.vagas != other.vagas && (this.vagas == null || !this.vagas.equals(other.vagas))) {
             return false;
         }
+        if (this.sexo != other.sexo) {
+            return false;
+        }
+        if (this.edicaoEvento != other.edicaoEvento && (this.edicaoEvento == null || !this.edicaoEvento.equals(other.edicaoEvento))) {
+            return false;
+        }
         return true;
     }
+
 }

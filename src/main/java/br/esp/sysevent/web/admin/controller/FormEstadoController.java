@@ -3,12 +3,12 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.EstadoDao;
+import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.web.admin.validation.EstadoValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.core.model.Estado;
-import br.esp.sysevent.core.service.EstadoService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormEstadoController extends AbstractFormController<Long, Estado> {
 
     @Autowired
-    private EstadoService estadoService;
+    private EstadoDao estadoDao;
     @Autowired
     private EstadoValidator validator;
 
@@ -43,8 +43,8 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
     }
 
     @Override
-    protected EstadoService getCommandService() {
-        return estadoService;
+    protected EstadoDao getCommandService() {
+        return estadoDao;
     }
 
     /**
@@ -52,7 +52,7 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
      */
     @ModelAttribute("listEstados")
     public Collection<Estado> listEstados() {
-        return estadoService.findAll();
+        return estadoDao.findAll();
     }
 
     @ModelAttribute(COMMAND_NAME)
@@ -68,6 +68,8 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     * @param model
+     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(final ModelMap model) {
@@ -77,6 +79,12 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param result
+     * @param attributes
+     * @param status
+     * @param locale
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Estado command,
@@ -89,7 +97,7 @@ public class FormEstadoController extends AbstractFormController<Long, Estado> {
         if (runValidator(command, result).hasErrors()) {
             return "admin/formEstado";
         }
-        estadoService.saveOrUpdate(command);
+        estadoDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         // clear the command object from the session and return form success view
         status.setComplete();

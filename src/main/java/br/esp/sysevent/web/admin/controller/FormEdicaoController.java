@@ -4,27 +4,26 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.CorCamisetaDao;
+import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.EventoDao;
+import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
+import br.esp.sysevent.core.dao.TipoCamisetaDao;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
-import br.esp.sysevent.core.service.CorCamisetaService;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.EventoService;
-import br.esp.sysevent.core.service.TamanhoCamisetaService;
-import br.esp.sysevent.core.service.TipoCamisetaService;
 import br.esp.sysevent.web.admin.validation.EdicaoValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
-import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.CollectionUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CollectionUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,15 +46,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
 
     @Autowired
-    private EdicaoService edicaoService;
+    private EdicaoDao edicaoDao;
     @Autowired
-    private EventoService eventoService;
+    private EventoDao eventoDao;
     @Autowired
-    private TipoCamisetaService tipoCamisetaService;
+    private TipoCamisetaDao tipoCamisetaDao;
     @Autowired
-    private CorCamisetaService corCamisetaService;
+    private CorCamisetaDao corCamisetaDao;
     @Autowired
-    private TamanhoCamisetaService tamanhoCamisetaService;
+    private TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
     private EdicaoValidator validator;
 
@@ -65,8 +64,8 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     }
 
     @Override
-    protected EdicaoService getCommandService() {
-        return edicaoService;
+    protected EdicaoDao getCommandService() {
+        return edicaoDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
@@ -75,61 +74,61 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
-            edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
-            final Evento evento = eventoService.findById(NumberUtils.parseLong(idEvento));
+            final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
             if (evento == null) {
                 throw new IllegalArgumentException("Evento não encontrado");
-            }            
-            edicao.setVagasOcupadas(0);            
+            }
+            edicao.setVagasOcupadas(0);
             edicao.setEvento(evento);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
         return edicao;
     }
-    
+
     @ModelAttribute("tiposEdicao")
     public Collection<Edicao.Tipo> getTiposEdicao() {
         return Edicao.Tipo.getValues();
     }
-    
+
     @ModelAttribute("tiposCamiseta")
     public Collection<TipoCamiseta> getTiposCamiseta() {
-        return CollectionUtils.asList(tipoCamisetaService.findAll());
+        return CollectionUtils.asList(tipoCamisetaDao.findAll());
     }
 
     @ModelAttribute("coresCamiseta")
     public Collection<CorCamiseta> getCoresCamiseta() {
-        return CollectionUtils.asList(corCamisetaService.findAll());
+        return CollectionUtils.asList(corCamisetaDao.findAll());
     }
 
     @ModelAttribute("tamanhosCamiseta")
     public Collection<TamanhoCamiseta> getTamanhosCamiseta() {
-        return CollectionUtils.asList(tamanhoCamisetaService.findAll());
+        return CollectionUtils.asList(tamanhoCamisetaDao.findAll());
     }
 
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
         // TODO : Não ta fazendo o bind do Calendar.
-        //binder.registerCustomEditor(Period.class, new CustomCalendarEditor(getDateFormat(locale), true));        
+        //binder.registerCustomEditor(Period.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
-        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaService));
-        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaService));
-        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<TamanhoCamiseta>(tamanhoCamisetaService));
+        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaDao));
+        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaDao));
+        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<TamanhoCamiseta>(tamanhoCamisetaDao));
     }
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
      * @param command
      * @param model
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Edicao command, final ModelMap model) {
-        model.addAttribute("edicoes", edicaoService.findByProperty("evento", command.getEvento()));
+        model.addAttribute("edicoes", edicaoDao.findByProperty("evento", command.getEvento()));
         //return form view
         return "admin/formEdicao";
     }
@@ -142,7 +141,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
      * @param attributes
      * @param locale
      * @param status
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Edicao command,
@@ -156,7 +155,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
         }
-        edicaoService.saveOrUpdate(command);
+        edicaoDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         // clear the command object from the session and return form success view
         status.setComplete();

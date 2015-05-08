@@ -3,9 +3,15 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Set;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import org.hibernate.annotations.Where;
 
 /**
@@ -15,9 +21,9 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "OFICINAS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_OFICINA"))
-public class Oficina extends AbstractEntity<Long> {
+public class Oficina extends AbstractEntity {
     private static final long serialVersionUID = 1333652413938643192L;
-    
+
     @Column(name = "NOME", length = 160, nullable = false)
     private String nome;
     @Column(name = "VAGAS", nullable = false)
@@ -89,22 +95,19 @@ public class Oficina extends AbstractEntity<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + hashCodeById(this);
-        hash = 19 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 19 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
+        int hash = 5;
+        hash = 41 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 41 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
+        hash = 41 * hash + (this.edicaoEvento != null ? this.edicaoEvento.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
-            return false;
-        }
-        if (!equalsById(this, obj)) {
             return false;
         }
         final Oficina other = (Oficina) obj;
@@ -112,6 +115,9 @@ public class Oficina extends AbstractEntity<Long> {
             return false;
         }
         if (this.vagas != other.vagas && (this.vagas == null || !this.vagas.equals(other.vagas))) {
+            return false;
+        }
+        if (this.edicaoEvento != other.edicaoEvento && (this.edicaoEvento == null || !this.edicaoEvento.equals(other.edicaoEvento))) {
             return false;
         }
         return true;

@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Endereco;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 
 /**
  *

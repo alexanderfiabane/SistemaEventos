@@ -3,16 +3,15 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
-import br.esp.sysevent.web.admin.validation.CidadeValidator;
-import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.core.dao.CidadeDao;
+import br.esp.sysevent.core.dao.EstadoDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
-import br.esp.sysevent.core.model.Oficina;
-import br.esp.sysevent.core.service.CidadeService;
-import br.esp.sysevent.core.service.EstadoService;
-import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.admin.validation.CidadeValidator;
+import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormCidadeController extends AbstractFormController<Long, Cidade> {
 
     @Autowired
-    private CidadeService cidadeService;
+    private CidadeDao cidadeDao;
     @Autowired
-    private EstadoService estadoService;
+    private EstadoDao estadoDao;
     @Autowired
     private CidadeValidator validator;
 
@@ -50,14 +49,14 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
     }
 
     @Override
-    protected CidadeService getCommandService() {
-        return cidadeService;
+    protected CidadeDao getCommandService() {
+        return cidadeDao;
     }
 
     /* Disponibiliza a lista de estados para o select do form */
     @ModelAttribute("estados")
     public Collection<Estado> getEstados() {
-        return estadoService.findAll();
+        return estadoDao.findAll();
     }
 
 //    /* Disponibiliza a lista de cidades ja existentes em banco */
@@ -79,7 +78,7 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
             cidade = new Cidade();
             if (CharSequenceUtils.isNumber(idEstado)) {
                 // se nao tiver idEstado, o usuario seleciona no combo...
-                cidade.setEstado(estadoService.findById(NumberUtils.parseLong(idEstado)));
+                cidade.setEstado(estadoDao.findById(NumberUtils.parseLong(idEstado)));
             }
         }
         return cidade;
@@ -88,7 +87,7 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
     protected void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(Estado.class, new CustomEntityEditor(estadoService));
+        binder.registerCustomEditor(Estado.class, new CustomEntityEditor(estadoDao));
     }
 
     /**
@@ -98,15 +97,21 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
     public String onGet(@ModelAttribute(COMMAND_NAME) final Cidade command, final ModelMap model) {
         final Estado estado = command.getEstado();
         if (estado != null) {
-            model.addAttribute("cidades", cidadeService.findByProperty("estado", command.getEstado()));
+            model.addAttribute("cidades", cidadeDao.findByProperty("estado", command.getEstado()));
         }else{
-            model.addAttribute("cidades", cidadeService.findAll());
+            model.addAttribute("cidades", cidadeDao.findAll());
         }
         return "admin/formCidade";
     }
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param result
+     * @param attributes
+     * @param status
+     * @param locale
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Cidade command,
@@ -118,7 +123,7 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
         if (runValidator(command, result).hasErrors()) {
             return "admin/formCidade";
         }
-        cidadeService.saveOrUpdate(command);
+        cidadeDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         status.setComplete();
         return "redirect:/admin/formCidade.html?idCidade=" + command.getId();

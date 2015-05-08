@@ -3,9 +3,20 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Calendar;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -15,7 +26,7 @@ import javax.persistence.*;
 @Table(name = "PESSOAS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_PESSOA"))
-public class Pessoa extends AbstractEntity<Long> {
+public class Pessoa extends AbstractEntity {
 
     private static final long serialVersionUID = 4498720609099052317L;
     @Column(name = "NOME", length = 80, nullable = false)
@@ -85,7 +96,7 @@ public class Pessoa extends AbstractEntity<Long> {
 
     public void setResponsavel(Responsavel responsavel) {
         this.responsavel = responsavel;
-    }   
+    }
 
     public InformacoesSaude getInformacoesSaude() {
         return informacoesSaude;
@@ -93,31 +104,40 @@ public class Pessoa extends AbstractEntity<Long> {
 
     public void setInformacoesSaude(InformacoesSaude informacoesSaude) {
         this.informacoesSaude = informacoesSaude;
-    }   
+    }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + hashCodeById(this);
-        hash = 79 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 89 * hash + (this.dataNascimento != null ? this.dataNascimento.hashCode() : 0);
+        hash = 89 * hash + (this.sexo != null ? this.sexo.hashCode() : 0);
+        hash = 89 * hash + (this.documentos != null ? this.documentos.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
-            return false;
-        }
         final Pessoa other = (Pessoa) obj;
         if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
+        if (this.dataNascimento != other.dataNascimento && (this.dataNascimento == null || !this.dataNascimento.equals(other.dataNascimento))) {
+            return false;
+        }
+        if (this.sexo != other.sexo) {
+            return false;
+        }
+        if (this.documentos != other.documentos && (this.documentos == null || !this.documentos.equals(other.documentos))) {
+            return false;
+        }
         return true;
     }
+
 }

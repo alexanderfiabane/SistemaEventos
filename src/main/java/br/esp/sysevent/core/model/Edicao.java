@@ -3,14 +3,27 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
-import br.ojimarcius.commons.persistence.model.PersistentPeriod;
-import br.ojimarcius.commons.util.CollectionUtils;
+import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CollectionUtils;
+import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -22,9 +35,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Table(name = "EDICOES")
 @AttributeOverride(name = "id", column =
         @Column(name = "ID_EDICAO"))
-public class Edicao extends AbstractEntity<Long> {
-    private static final long serialVersionUID = -814676588800010502L;    
-    
+public class Edicao extends AbstractEntity {
+    private static final long serialVersionUID = -814676588800010502L;
+
     @ManyToOne
     @JoinColumn(name = "ID_EVENTO", nullable = false)
     private Evento evento;
@@ -40,10 +53,8 @@ public class Edicao extends AbstractEntity<Long> {
     private BigDecimal valorInscricao;
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "start", column =
-                @Column(name = "DATA_INSCRICAO_INI")),
-        @AttributeOverride(name = "end", column =
-                @Column(name = "DATA_INSCRICAO_FIM"))
+        @AttributeOverride(name = "start", column = @Column(name = "DATA_INSCRICAO_INI")),
+        @AttributeOverride(name = "end", column = @Column(name = "DATA_INSCRICAO_FIM"))
     })
     private PersistentPeriod periodoInscricao;
     @Column(name = "DATA_EDICAO", nullable = false)
@@ -110,7 +121,7 @@ public class Edicao extends AbstractEntity<Long> {
         this.vagasOcupadas = vagasOcupadas;
     }
 
-    public PersistentPeriod getPeriodoInscricao() {
+    public Period getPeriodoInscricao() {
         return periodoInscricao;
     }
 
@@ -132,7 +143,7 @@ public class Edicao extends AbstractEntity<Long> {
 
     public void setIdadeMinima(Integer idadeMinima) {
         this.idadeMinima = idadeMinima;
-    }    
+    }
 
     public Tipo getTipo() {
         return tipo;
@@ -192,8 +203,8 @@ public class Edicao extends AbstractEntity<Long> {
 
     public void setValorCamiseta(BigDecimal valorCamiseta) {
         this.valorCamiseta = valorCamiseta;
-    }    
-    
+    }
+
     public void setTamanhosCamiseta(final Collection<TamanhoCamiseta> tamanhosCamiseta) {
         this.tamanhosCamiseta = tamanhosCamiseta;
     }
@@ -205,12 +216,6 @@ public class Edicao extends AbstractEntity<Long> {
     public void setOficinas(Collection<Oficina> oficinas) {
         this.oficinas = oficinas;
     }
-    
-//    public void removeOficinas(Collection<Oficina> oficinas){
-//        for (Oficina oficina : oficinas) {
-//            oficina.setEdicaoEvento(null);
-//        }
-//    }
 
     public Collection<GrupoIdade> getGruposIdade() {
         return gruposIdade;
@@ -219,12 +224,6 @@ public class Edicao extends AbstractEntity<Long> {
     public void setGruposIdade(Collection<GrupoIdade> gruposIdade) {
         this.gruposIdade = gruposIdade;
     }
-    
-//    public void removeGruposIdade(Collection<GrupoIdade> gruposIdade){
-//        for (GrupoIdade grupoIdade : gruposIdade) {
-//            grupoIdade.setEdicaoEvento(null);
-//        }
-//    }
 
     public boolean isPossuiCamisetas() {
         // qquer uma das colecoes de camiseta estando vazia, consideramos que a edicao nao possui camiseta.
@@ -255,43 +254,13 @@ public class Edicao extends AbstractEntity<Long> {
 
     public boolean isOficina() {
         return Tipo.OFICINA.equals(getTipo());
-    }   
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + (this.evento != null ? this.evento.hashCode() : 0);
-        hash = 37 * hash + (this.tema != null ? this.tema.hashCode() : 0);
-        hash = 37 * hash + (this.periodoInscricao != null ? this.periodoInscricao.hashCode() : 0);
-        return hash;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Edicao other = (Edicao) obj;
-        if (this.evento != other.evento && (this.evento == null || !this.evento.equals(other.evento))) {
-            return false;
-        }
-        if ((this.tema == null) ? (other.tema != null) : !this.tema.equals(other.tema)) {
-            return false;
-        }
-        if (this.periodoInscricao != other.periodoInscricao && (this.periodoInscricao == null || !this.periodoInscricao.equals(other.periodoInscricao))) {
-            return false;
-        }
-        return true;
-    }    
 
     public enum Tipo {
 
         CONGRESSO("Congresso"),
         FAIXA_ETARIA("Faixa Etária"),
-        OFICINA("Oficina");        
+        OFICINA("Oficina");
         private final String descricao;
 
         private Tipo(final String descricao) {
@@ -310,4 +279,43 @@ public class Edicao extends AbstractEntity<Long> {
             return Arrays.asList(Edicao.Tipo.values());
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.evento != null ? this.evento.hashCode() : 0);
+        hash = 97 * hash + (this.tema != null ? this.tema.hashCode() : 0);
+        hash = 97 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
+        hash = 97 * hash + (this.data != null ? this.data.hashCode() : 0);
+        hash = 97 * hash + (this.tipo != null ? this.tipo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Edicao other = (Edicao) obj;
+        if (this.evento != other.evento && (this.evento == null || !this.evento.equals(other.evento))) {
+            return false;
+        }
+        if ((this.tema == null) ? (other.tema != null) : !this.tema.equals(other.tema)) {
+            return false;
+        }
+        if (this.vagas != other.vagas && (this.vagas == null || !this.vagas.equals(other.vagas))) {
+            return false;
+        }
+        if (this.data != other.data && (this.data == null || !this.data.equals(other.data))) {
+            return false;
+        }
+        if (this.tipo != other.tipo) {
+            return false;
+        }
+        return true;
+    }
+
 }

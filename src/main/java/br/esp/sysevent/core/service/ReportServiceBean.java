@@ -4,9 +4,9 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Inscricao;
-import br.ojimarcius.commons.util.DateUtils;
-import br.ojimarcius.commons.velocity.ConfigurableVelocityProcessor;
-import br.ojimarcius.commons.velocity.VelocityProcessor;
+import br.esp.sysevent.util.ConfigurableVelocityProcessor;
+import br.esp.sysevent.util.VelocityProcessor;
+import com.javaleks.commons.util.DateUtils;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

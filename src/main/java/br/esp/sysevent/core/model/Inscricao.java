@@ -3,11 +3,22 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -16,7 +27,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "INSCRICOES")
 @AttributeOverride(name = "id", column = @Column(name = "ID_INSCRICAO"))
-public class Inscricao extends AbstractEntity<Long> {
+public class Inscricao extends AbstractEntity {
 
     private static final long serialVersionUID = -6397566035964502563L;
     @Column(name = "VALOR", nullable = false)
@@ -116,7 +127,7 @@ public class Inscricao extends AbstractEntity<Long> {
     public boolean isPodeAnalisar() {
         return status == Status.PENDENTE;
     }
-    
+
     public boolean isPodeAprovar() {
         return status == Status.AGUARDANDO_AVALIACAO;
     }
@@ -124,11 +135,11 @@ public class Inscricao extends AbstractEntity<Long> {
     public boolean isPodeEfetivar() {
         return status == Status.AGUARDANDO_PAGAMENTO;
     }
-    
+
     public boolean isEfetivada() {
         return status == Status.EFETIVADA;
     }
-    
+
     public boolean isIndeferida() {
         return status == Status.INDEFERIDA;
     }
@@ -140,40 +151,24 @@ public class Inscricao extends AbstractEntity<Long> {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + hashCodeById(this);
-        hash = 23 * hash + (this.status != null ? this.status.hashCode() : 0);
-        hash = 23 * hash + (this.valor != null ? this.valor.hashCode() : 0);
-        hash = 23 * hash + (this.dataRecebimento != null ? this.dataRecebimento.hashCode() : 0);
-        hash = 23 * hash + (this.dataConfirmacao != null ? this.dataConfirmacao.hashCode() : 0);
-        hash = 23 * hash + (this.dataPagamento != null ? this.dataPagamento.hashCode() : 0);
+        hash = 71 * hash + (this.confraternista != null ? this.confraternista.hashCode() : 0);
+        hash = 71 * hash + (this.edicaoEvento != null ? this.edicaoEvento.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
-            return false;
-        }
         final Inscricao other = (Inscricao) obj;
-        if (this.status != other.status) {
+        if (this.confraternista != other.confraternista && (this.confraternista == null || !this.confraternista.equals(other.confraternista))) {
             return false;
         }
-        if (this.valor != other.valor && (this.valor == null || !this.valor.equals(other.valor))) {
-            return false;
-        }
-        if (this.dataRecebimento != other.dataRecebimento && (this.dataRecebimento == null || !this.dataRecebimento.equals(other.dataRecebimento))) {
-            return false;
-        }
-        if (this.dataConfirmacao != other.dataConfirmacao && (this.dataConfirmacao == null || !this.dataConfirmacao.equals(other.dataConfirmacao))) {
-            return false;
-        }
-        if (this.dataPagamento != other.dataPagamento && (this.dataPagamento == null || !this.dataPagamento.equals(other.dataPagamento))) {
+        if (this.edicaoEvento != other.edicaoEvento && (this.edicaoEvento == null || !this.edicaoEvento.equals(other.edicaoEvento))) {
             return false;
         }
         return true;

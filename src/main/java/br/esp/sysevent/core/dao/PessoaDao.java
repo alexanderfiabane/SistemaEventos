@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Pessoa;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -16,4 +16,7 @@ import org.hibernate.criterion.Order;
 public interface PessoaDao extends EntityDao<Long, Pessoa> {
 
     public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
+    public Collection<Pessoa> findByNome(final String nome);
+    public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode);
+    public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive);
 }

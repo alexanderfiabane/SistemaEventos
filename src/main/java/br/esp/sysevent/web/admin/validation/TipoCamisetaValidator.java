@@ -1,7 +1,7 @@
 package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.TipoCamiseta;
-import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;

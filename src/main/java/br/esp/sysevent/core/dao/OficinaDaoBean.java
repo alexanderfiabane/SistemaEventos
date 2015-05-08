@@ -4,12 +4,11 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Oficina;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,16 +16,15 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class OficinaDaoBean extends AbstractEntityDaoBean<Long, Oficina> implements OficinaDao {
+public class OficinaDaoBean extends AbstractEntityDao<Long, Oficina> implements OficinaDao {
 
-    @Override
     @Autowired
-    @Required
-    public void setSessionFactory(final SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public OficinaDaoBean(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
-    
+
     public Collection<Oficina> findAll() {
         return super.findAll(Order.asc("nome"));
     }
+
 }

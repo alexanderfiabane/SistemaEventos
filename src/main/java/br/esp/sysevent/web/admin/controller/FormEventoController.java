@@ -4,13 +4,12 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.EventoDao;
+import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.web.admin.validation.EventoValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.core.model.Edicao;
-import br.esp.sysevent.core.model.Evento;
-import br.esp.sysevent.core.service.EventoService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormEventoController extends AbstractFormController<Long, Evento> {
 
     @Autowired
-    private EventoService eventoService;
+    private EventoDao eventoDao;
     @Autowired
     private EventoValidator validator;
 
@@ -43,24 +42,27 @@ public class FormEventoController extends AbstractFormController<Long, Evento> {
     }
 
     @Override
-    protected EventoService getCommandService() {
-        return eventoService;
+    protected EventoDao getCommandService() {
+        return eventoDao;
     }
 
     /* Eventos ja existentes em banco */
     @ModelAttribute("eventos")
     public Collection<Evento> getEventos() {
-        return eventoService.findAll();
+        return eventoDao.findAll();
     }
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     * @param idEvento
+     * @param model
+     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@RequestParam(value = "idEvento", required = false) final String idEvento, final ModelMap model) {
         final Evento evento;
         if (CharSequenceUtils.isNumber(idEvento)) {
-            evento = eventoService.findById(NumberUtils.parseLong(idEvento));
+            evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
         } else {
             evento = new Evento();
         }
@@ -72,6 +74,12 @@ public class FormEventoController extends AbstractFormController<Long, Evento> {
 
     /**
      * Processa a submissão do form.
+     * @param command
+     * @param result
+     * @param attributes
+     * @param status
+     * @param locale
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Evento command,
@@ -84,7 +92,7 @@ public class FormEventoController extends AbstractFormController<Long, Evento> {
         if (runValidator(command, result).hasErrors()) {
             return "admin/formEvento";
         }
-        eventoService.saveOrUpdate(command);
+        eventoDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         // clear the command object from the session and return form success view
         status.setComplete();

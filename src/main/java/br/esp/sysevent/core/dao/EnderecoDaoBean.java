@@ -4,10 +4,9 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Endereco;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,12 +14,10 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class EnderecoDaoBean extends AbstractEntityDaoBean<Long, Endereco> implements EnderecoDao {
+public class EnderecoDaoBean extends AbstractEntityDao<Long, Endereco> implements EnderecoDao {
 
-    @Override
     @Autowired
-    @Required
-    public void setSessionFactory(final SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public EnderecoDaoBean(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 }

@@ -6,7 +6,7 @@
 
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "RESPONSAVEIS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_RESPONSAVEL"))
-public class Responsavel extends AbstractEntity<Long> {
+public class Responsavel extends AbstractEntity {
     private static final long serialVersionUID = 2663592209120735750L;
     
     @Column(name = "NOME_RESPONSAVEL", nullable = true)

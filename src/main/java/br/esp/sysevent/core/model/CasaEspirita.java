@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "CASAS_ESPIRITAS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_CASA_ESP"))
-public class CasaEspirita extends AbstractEntity<Long> {
+public class CasaEspirita extends AbstractEntity {
 
     private static final long serialVersionUID = 5425316136115356131L;
     @Column(name = "NOME", length = 80, nullable = false)
@@ -48,26 +48,25 @@ public class CasaEspirita extends AbstractEntity<Long> {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + hashCodeById(this);
-        hash = 97 * hash + (this.nome != null ? this.nome.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
-            return false;
-        }
         final CasaEspirita other = (CasaEspirita) obj;
         if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
             return false;
         }
+        if (this.endereco != other.endereco && (this.endereco == null || !this.endereco.equals(other.endereco))) {
+            return false;
+        }
         return true;
     }
+
 }

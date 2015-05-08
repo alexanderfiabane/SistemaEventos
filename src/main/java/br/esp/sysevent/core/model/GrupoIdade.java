@@ -4,7 +4,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "GRUPOS_IDADE")
 @AttributeOverride(name = "id", column = @Column(name = "ID_GRUPO_IDADE"))
-public class GrupoIdade extends AbstractEntity<Long>{
+public class GrupoIdade extends AbstractEntity{
     private static final long serialVersionUID = -2450021166371519704L;    
     
     @Column(name = "NOME", length = 160, nullable = false)

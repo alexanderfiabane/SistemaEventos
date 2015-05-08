@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "EVENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_EVENTO"))
-public class Evento extends AbstractEntity<Long> {
+public class Evento extends AbstractEntity {
 
     private static final long serialVersionUID = -6396591197859469478L;
     @Column(name = "NOME", length = 80, nullable = false)

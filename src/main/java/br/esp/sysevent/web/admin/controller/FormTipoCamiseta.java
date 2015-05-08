@@ -1,13 +1,12 @@
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.TipoCamisetaDao;
+import br.esp.sysevent.core.model.TipoCamiseta;
 import br.esp.sysevent.web.admin.validation.TipoCamisetaValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.core.model.TipoCamiseta;
-import br.esp.sysevent.core.service.TipoCamisetaService;
-import br.ojimarcius.commons.persistence.service.EntityService;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +29,36 @@ public class FormTipoCamiseta extends AbstractFormController<Long, TipoCamiseta>
 
     @Autowired
     private TipoCamisetaValidator validator;
-    
+
     @Autowired
-    private TipoCamisetaService tipoCamisetaService;
-    
+    private TipoCamisetaDao tipoCamisetaDao;
+
     @Override
     protected Validator<TipoCamiseta> getValidator() {
         return validator;
     }
 
     @Override
-    protected <S extends EntityService<Long, TipoCamiseta>> S getCommandService() {
-        return (S) tipoCamisetaService;
+    protected TipoCamisetaDao getCommandService() {
+        return tipoCamisetaDao;
     }
-    
+
     @ModelAttribute(COMMAND_NAME)
     public TipoCamiseta getCommand(@RequestParam(value = "idTipo", required = false) final String idTipo) {
         final TipoCamiseta command;
         if (CharSequenceUtils.isNumber(idTipo)) {
-            command = tipoCamisetaService.findById(NumberUtils.parseLong(idTipo));
+            command = tipoCamisetaDao.findById(NumberUtils.parseLong(idTipo));
         } else {
             command = new TipoCamiseta();
         }
         return command;
     }
-    
+
     @ModelAttribute("tiposCamiseta")
     public Collection<TipoCamiseta> getTiposCamiseta() {
-        return tipoCamisetaService.findAll();
+        return tipoCamisetaDao.findAll();
     }
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public String onGet() {
         //return form view
@@ -77,11 +76,11 @@ public class FormTipoCamiseta extends AbstractFormController<Long, TipoCamiseta>
         if (runValidator(command, result).hasErrors()) {
             return "admin/formTipoCamiseta";
         }
-        tipoCamisetaService.saveOrUpdate(command);
+        tipoCamisetaDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         // clear the command object from the session and return form success view
         status.setComplete();
         return "redirect:/admin/formTipoCamiseta.html";
     }
-    
+
 }

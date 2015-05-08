@@ -5,7 +5,7 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -17,10 +17,10 @@ import org.hibernate.criterion.Order;
 public interface CidadeDao extends EntityDao<Long, Cidade> {
 
     public Collection<Cidade> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
-
     public Collection<Cidade> findByEstado(final Estado estado, final Order order);
-
     public Collection<Cidade> findByEstado(final Long idEstado);
-
     public Cidade findCapital(final Estado estado);
+    public Long save(Cidade entity);
+    public Long saveOrUpdate(Cidade entity);
+    public void insertDefaultData();
 }

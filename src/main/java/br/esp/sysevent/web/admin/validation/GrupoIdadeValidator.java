@@ -7,7 +7,7 @@ package br.esp.sysevent.web.admin.validation;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
-import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;

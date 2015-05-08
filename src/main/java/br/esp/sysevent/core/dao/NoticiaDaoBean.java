@@ -5,24 +5,42 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Noticia;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
+import com.javaleks.commons.util.CalendarUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Alexander
  */
 @Repository
-public class NoticiaDaoBean extends AbstractEntityDaoBean<Long, Noticia> implements NoticiaDao{
+public class NoticiaDaoBean extends AbstractEntityDao<Long, Noticia> implements NoticiaDao{
+
+    @Autowired
+    public NoticiaDaoBean(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
 
     @Override
-    @Autowired
-    @Required
-    public void setSessionFactory(final SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    @Transactional(readOnly = false)
+    public Long save(final Noticia entity) {
+        // set the date if necessary
+        if (entity.getData() == null) {
+            entity.setData(CalendarUtils.today());
+        }
+        return super.save(entity);
     }
-    
+
+    @Override
+    @Transactional(readOnly = false)
+    public Long saveOrUpdate(final Noticia entity) {
+        // set the date if necessary
+        if (entity.getData() == null) {
+            entity.setData(CalendarUtils.today());
+        }
+        return super.saveOrUpdate(entity);
+    }
 }

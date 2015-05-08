@@ -1,18 +1,13 @@
 package br.esp.sysevent.web.ajax;
 
-//import br.ojimarcius.commons.search.Operator;
-import br.ufsm.cpd.commons.search.Operator;
-import br.ojimarcius.commons.text.EnhancedStringBuilder;
-import br.ojimarcius.commons.util.ArgumentUtils;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.CollectionUtils;
-import br.ojimarcius.commons.util.DateUtils;
-import br.ojimarcius.commons.util.LocaleUtils;
-import br.ojimarcius.commons.util.NumberUtils;
-//import br.ojimarcius.commons.persistence.springframework.validation.ValidationUtils;
-import br.ufsm.cpd.commons.web.spring.validation.ValidatorConstants;
-import br.ufsm.cpd.sie.core.entidade.Entity;
-import br.ufsm.cpd.sie.core.service.EntityService;
+
+import com.javaleks.commons.text.EnhancedStringBuilder;
+import com.javaleks.commons.util.ArgumentUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CollectionUtils;
+import com.javaleks.commons.util.DateUtils;
+import com.javaleks.commons.util.LocaleUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -22,7 +17,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.Entity;
+import org.eclipse.jdt.core.dom.PrefixExpression.Operator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
@@ -31,7 +27,22 @@ import org.springframework.context.NoSuchMessageException;
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  */
-public abstract class AbstractAjaxService extends ValidatorConstants {
+public abstract class AbstractAjaxService{
+
+    /**
+     * Pattern usado para contruir o nome do metodo de validacao nas chamadas ajax.
+     */
+    public static final String SPLIT_PATTERN = "\\.";
+    /**
+     * Patterns usados na validacao.
+     */
+    public static final String ANO_PATTERN = "\\d{4}";
+    public static final String CEP_PATTERN = "\\d{5}-\\d{3}";
+    public static final String TELEFONE_PATTERN = "\\(\\d{2}\\)\\d{8}";
+    public static final String DATE_PATTERN = "dd/MM/yyyy";
+    public static final String DATE_HOUR_PATTERN = "dd/MM/yyyy hh:mm";
+    public static final String IP_PATTERN = "(([0-1]?[0-9]{1,2}\\.)|(2[0-4][0-9]\\.)|(25[0-5]\\.)){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))";
+
     protected static final Logger LOGGER = Logger.getLogger(AbstractAjaxService.class.getName());
     protected static final String[] TRUE_VALUES = {"true", "on", "yes", "checked", "sim", "y", "s", "1"};
     protected MessageSource messageSource;
@@ -249,7 +260,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         final Long id = get(Long.class, key, params);
         E entity = null;
         if (id != null) {
-            entity = service.findById(id, joins);
+            entity = service.findById(id/*, joins*/);
         }
         return entity;
     }
@@ -402,7 +413,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         if (CollectionUtils.isNotEmpty(ids)) {
             final Collection<E> entities = new ArrayList<E>(ids.size());
             for (Long id : ids) {
-                final E entity = service.findById(id, joins);
+                final E entity = service.findById(id/*, joins*/);
                 if (entity != null) {
                     entities.add(entity);
                 }
@@ -551,7 +562,7 @@ public abstract class AbstractAjaxService extends ValidatorConstants {
         final E[] array = (E[]) Array.newInstance(targetClass, col.size());
         return col.toArray(array);
     }
-    
+
     /**
      * M�todo interno que faz o parse de um valor em formato String para um tipo desejado.
      * <p/>

@@ -4,7 +4,9 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Usuario;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  *
@@ -13,4 +15,7 @@ import br.ojimarcius.commons.persistence.dao.EntityDao;
 public interface UsuarioDao extends EntityDao<Long, Usuario> {
 
     public Usuario findByLogin(final String login, final Boolean onlyAtivos);
+    public Usuario findByLogin(final String login);
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException;
+    public void insertDefaultData();
 }

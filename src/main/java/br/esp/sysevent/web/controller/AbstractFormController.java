@@ -6,7 +6,7 @@ package br.esp.sysevent.web.controller;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.ojimarcius.commons.persistence.model.Entity;
 import br.ojimarcius.commons.persistence.service.EntityService;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.io.Serializable;
 import java.text.DateFormat;

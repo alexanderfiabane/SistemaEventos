@@ -4,7 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Estado;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 
 /**
  *
@@ -13,4 +13,6 @@ import br.ojimarcius.commons.persistence.dao.EntityDao;
 public interface EstadoDao extends EntityDao<Long, Estado> {
 
     public Estado findBySigla(final String sigla);
+    public boolean exists(final String sigla);
+    public void insertDefaultData();
 }

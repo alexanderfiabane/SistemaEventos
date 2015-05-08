@@ -7,7 +7,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Sexo;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;

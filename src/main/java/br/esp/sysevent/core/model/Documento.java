@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "DOCUMENTOS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_DOCUMENTO"))
-public class Documento extends AbstractEntity<Long> {
+public class Documento extends AbstractEntity {
 
     private static final long serialVersionUID = 5953359082579266700L;
     @Column(name = "RG", length = 16, nullable = true)
@@ -41,8 +41,8 @@ public class Documento extends AbstractEntity<Long> {
 
     public void setCertidaoNascimento(String certidaoNascimento) {
         this.certidaoNascimento = certidaoNascimento;
-    }   
-    
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -54,28 +54,28 @@ public class Documento extends AbstractEntity<Long> {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + hashCodeById(this);
-        hash = 59 * hash + (this.cpf != null ? this.cpf.hashCode() : 0);
-        hash = 59 * hash + (this.rg != null ? this.rg.hashCode() : 0);
+        hash = 79 * hash + (this.rg != null ? this.rg.hashCode() : 0);
+        hash = 79 * hash + (this.certidaoNascimento != null ? this.certidaoNascimento.hashCode() : 0);
+        hash = 79 * hash + (this.cpf != null ? this.cpf.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
-            return false;
-        }
         final Documento other = (Documento) obj;
-        if ((this.cpf == null) ? (other.cpf != null) : !this.cpf.equals(other.cpf)) {
+        if ((this.rg == null) ? (other.rg != null) : !this.rg.equals(other.rg)) {
             return false;
         }
-        if ((this.rg == null) ? (other.rg != null) : !this.rg.equals(other.rg)) {
+        if ((this.certidaoNascimento == null) ? (other.certidaoNascimento != null) : !this.certidaoNascimento.equals(other.certidaoNascimento)) {
+            return false;
+        }
+        if ((this.cpf == null) ? (other.cpf != null) : !this.cpf.equals(other.cpf)) {
             return false;
         }
         return true;

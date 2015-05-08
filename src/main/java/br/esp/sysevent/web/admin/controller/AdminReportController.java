@@ -4,19 +4,19 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
-import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.core.dao.CamisetaConfraternistaDao;
+import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.EventoDao;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.esp.sysevent.core.service.CamisetaConfraternistaService;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.EventoService;
-import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.ReportService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,22 +54,22 @@ public class AdminReportController {
 //    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha2.jpg";
     private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha3.png";
     @Autowired
-    private InscricaoService inscricaoService;
+    private InscricaoDao inscricaoDao;
     @Autowired
-    private EdicaoService edicaoService;
+    private EdicaoDao edicaoDao;
     @Autowired
     private ReportService reportService;
     @Autowired
-    private EventoService eventoService;
+    private EventoDao eventoDao;
     @Autowired
-    private CamisetaConfraternistaService camisetaConfraternistaService;
+    private CamisetaConfraternistaDao camisetaConfraternistaDao;
 
     @RequestMapping(value = "/admin/relatorio/reportConfCidadeEstado.html", method = RequestMethod.GET)
     public ModelAndView confraternistasCidadeEstadoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoCidadeEstado(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoCidadeEstado(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_CIDADES_ESTADO);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasCidadesEstado.pdf", "application/pdf", response);
         return null;
@@ -79,8 +79,8 @@ public class AdminReportController {
     public ModelAndView confraternistasOficinaReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoOficina(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoOficina(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_OFICINAS);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasOficinas.pdf", "application/pdf", response);
         return null;
@@ -90,8 +90,8 @@ public class AdminReportController {
     public ModelAndView confraternistasOficinaOficineirosReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoOficina(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoOficina(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_OFICINAS_OFICINEIROS);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasOficinasOficineiros.pdf", "application/pdf", response);
         return null;
@@ -100,8 +100,8 @@ public class AdminReportController {
     public ModelAndView confraternistasGrupoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoGrupoIdade(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoGrupoIdade(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_GRUPOS);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasGrupos.pdf", "application/pdf", response);
         return null;
@@ -111,39 +111,39 @@ public class AdminReportController {
     public ModelAndView confraternistasGrupoFacilitadoresReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoGrupoIdade(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoGrupoIdade(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_GRUPOS_FACILITADORES);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasGruposFacilitadores.pdf", "application/pdf", response);
         return null;
     }
-    
+
     @RequestMapping(value = "/admin/relatorio/reportConfDormitorio.html", method = RequestMethod.GET)
     public ModelAndView confraternistasDormitorioReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoDormitorio(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoDormitorio(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_DORMITORIOS);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasDormitorios.pdf", "application/pdf", response);
         return null;
     }
-    
+
     @RequestMapping(value = "/admin/relatorio/reportConfPresenca.html", method = RequestMethod.GET)
     public ModelAndView confraternistasPresencaReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
-            final HttpServletResponse response) throws Exception {        
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
+            final HttpServletResponse response) throws Exception {
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_PRESENCA);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasPresenca.pdf", "application/pdf", response);
         return null;
     }
-    
+
     @RequestMapping(value = "/admin/relatorio/reportConfSaudeAlimentacao.html", method = RequestMethod.GET)
     public ModelAndView confraternistasSaudeAlimentacaoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
-            final HttpServletResponse response) throws Exception {        
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
+            final HttpServletResponse response) throws Exception {
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoDeferidas(NumberUtils.parseLong(idEdicao));
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_SAUDE_ALIMENTACAO);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasSaudeAlimentacao.pdf", "application/pdf", response);
         return null;
@@ -153,8 +153,8 @@ public class AdminReportController {
     public ModelAndView confraternistasTipoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoTipo(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_TIPO);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasTipo.pdf", "application/pdf", response);
         return null;
@@ -164,8 +164,8 @@ public class AdminReportController {
     public ModelAndView crachaA3Report(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoTipo(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
         final InputStream imagem = getClass().getClassLoader().getResourceAsStream(FUNDO_CRACHAS);
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
         parametros.put("fundoCracha", imagem);
@@ -173,13 +173,13 @@ public class AdminReportController {
         ControllerUtils.writeHttpAttached(pdf, "crachasA3.pdf", "application/pdf", response);
         return null;
     }
-    
+
     @RequestMapping(value = "/admin/relatorio/reportCrachaA4.html", method = RequestMethod.GET)
     public ModelAndView crachaA4Report(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoTipo(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
         final InputStream imagem = getClass().getClassLoader().getResourceAsStream(FUNDO_CRACHAS);
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
         parametros.put("fundoCracha", imagem);
@@ -192,8 +192,8 @@ public class AdminReportController {
     public ModelAndView confraternistasSexoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoSexo(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoSexo(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_SEXO);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasSexo.pdf", "application/pdf", response);
         return null;
@@ -203,8 +203,8 @@ public class AdminReportController {
     public ModelAndView confraternistasCamisetasReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicaoCamiseta(edicao);
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoCamiseta(edicao);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CONFRATERNISTAS_CAMISETA);
         ControllerUtils.writeHttpAttached(pdf, "confraternistasCamisetas.pdf", "application/pdf", response);
         return null;
@@ -214,11 +214,11 @@ public class AdminReportController {
     public ModelAndView camisetasEncomendaReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
             final HttpServletResponse response) throws Exception {
-        final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+        final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         final HashMap<String, Object> parametros = new HashMap<String, Object>(2);
         parametros.put("numero", edicao.getNumero());
         parametros.put("sigla", edicao.getEvento().getSigla());
-        final Collection<CamisetaConfraternista> camisetas = camisetaConfraternistaService.findByEdicao(edicao);
+        final Collection<CamisetaConfraternista> camisetas = camisetaConfraternistaDao.findByEdicao(edicao);
         final byte[] pdf = reportService.geraRelatorio(camisetas, CAMISETA_ENCOMENDA, parametros);
         ControllerUtils.writeHttpAttached(pdf, "camisetasEncomenda.pdf", "application/pdf", response);
         return null;
@@ -227,7 +227,7 @@ public class AdminReportController {
     @RequestMapping(value = "/admin/relatorio/listEvento.html", method = RequestMethod.GET)
     public String listEvento(final ModelMap model) {
 
-        final Collection<Evento> eventos = eventoService.findAll();
+        final Collection<Evento> eventos = eventoDao.findAll();
         if (eventos == null) {
             throw new IllegalArgumentException("Eventos não encontrados.");
         }
@@ -240,8 +240,8 @@ public class AdminReportController {
         if (!CharSequenceUtils.isNumber(idEvento)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
-        final Evento evento = eventoService.findById(NumberUtils.parseLong(idEvento));
-        final Collection<Edicao> edicoes = edicaoService.findByProperty("evento", evento);
+        final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
+        final Collection<Edicao> edicoes = edicaoDao.findByProperty("evento", evento);
         if (edicoes == null) {
             throw new IllegalArgumentException("Edições não encontradas.");
         }
@@ -254,7 +254,7 @@ public class AdminReportController {
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
-        final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));
+        final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }

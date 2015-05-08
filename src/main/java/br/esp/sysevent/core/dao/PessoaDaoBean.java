@@ -4,40 +4,56 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Pessoa;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository
-public class PessoaDaoBean extends AbstractEntityDaoBean<Long, Pessoa> implements PessoaDao {
+public class PessoaDaoBean extends AbstractEntityDao<Long, Pessoa> implements PessoaDao {
 
-    @Override
     @Autowired
-    @Required
-    public void setSessionFactory(final SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public PessoaDaoBean(SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 
     @Override
     public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order) {
-        final DetachedCriteria c = createCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        final Criteria c = createCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         if (caseSensitive) {
             c.add(Restrictions.like("nome", nome, matchMode));
         } else {
             c.add(Restrictions.ilike("nome", nome, matchMode));
         }
-        return this.findByCriteria(c, order);
+        c.addOrder(order);
+        return this.findByCriteria(c);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Pessoa> findByNome(final String nome) {
+        return findByNome(nome, MatchMode.START, false, null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode) {
+        return findByNome(nome, matchMode, false, null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive) {
+        return findByNome(nome, matchMode, caseSensitive, null);
     }
 }

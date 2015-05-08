@@ -5,7 +5,7 @@
 package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.Noticia;
-import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import java.util.Calendar;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

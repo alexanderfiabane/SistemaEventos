@@ -7,33 +7,29 @@ import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class CamisetaConfraternistaDaoBean extends AbstractEntityDaoBean<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
+@Repository(value = "camisetaConfraternistaDao")
+public class CamisetaConfraternistaDaoBean extends AbstractEntityDao<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
 
-    @Override
     @Autowired
-    @Required
-    public void setSessionFactory(final SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public CamisetaConfraternistaDaoBean(final SessionFactory sessionFactory) {
+        super(sessionFactory);
     }
 
     @Override
     public Collection<CamisetaConfraternista> findByConfraternista(final Confraternista confraternista) {
-        final DetachedCriteria c = createCriteria().
+        final Criteria c = createCriteria().
                 setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).
                 add(Restrictions.eq("confraternista", confraternista));
         return findByCriteria(c);
@@ -41,7 +37,7 @@ public class CamisetaConfraternistaDaoBean extends AbstractEntityDaoBean<Long, C
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<CamisetaConfraternista> findByEdicao(final Edicao edicao){
+    public Collection<CamisetaConfraternista> findByEdicao(final Edicao edicao) {
         final StringBuilder builder = new StringBuilder(400);
         builder
                 .append("select camisetas ")
@@ -54,7 +50,7 @@ public class CamisetaConfraternistaDaoBean extends AbstractEntityDaoBean<Long, C
 
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
-                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 

@@ -3,15 +3,15 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
-import br.esp.sysevent.web.admin.validation.OficinaValidator;
-import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.OficinaDao;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Oficina;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.OficinaService;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.admin.validation.OficinaValidator;
+import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,9 +35,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormOficinaController extends AbstractFormController<Long, Oficina> {
 
     @Autowired
-    private EdicaoService edicaoService;
+    private EdicaoDao edicaoDao;
     @Autowired
-    private OficinaService oficinaService;
+    private OficinaDao oficinaDao;
     @Autowired
     private OficinaValidator validator;
 
@@ -47,8 +47,8 @@ public class FormOficinaController extends AbstractFormController<Long, Oficina>
     }
 
     @Override
-    protected OficinaService getCommandService() {
-        return oficinaService;
+    protected OficinaDao getCommandService() {
+        return oficinaDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
@@ -56,9 +56,9 @@ public class FormOficinaController extends AbstractFormController<Long, Oficina>
                               @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Oficina oficina;
         if (CharSequenceUtils.isNumber(idOficina)) {
-            oficina = oficinaService.findById(NumberUtils.parseLong(idOficina));
+            oficina = oficinaDao.findById(NumberUtils.parseLong(idOficina));
         } else if (CharSequenceUtils.isNumber(idEdicao)) {
-            final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+            final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");
             }
@@ -77,7 +77,7 @@ public class FormOficinaController extends AbstractFormController<Long, Oficina>
 
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Oficina command, final ModelMap model) {
-        model.addAttribute("oficinas", oficinaService.findByProperty("edicaoEvento", command.getEdicaoEvento()));
+        model.addAttribute("oficinas", oficinaDao.findByProperty("edicaoEvento", command.getEdicaoEvento()));
         //return form view
         return "admin/formOficina";
     }
@@ -93,7 +93,7 @@ public class FormOficinaController extends AbstractFormController<Long, Oficina>
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
         }
-        oficinaService.saveOrUpdate(command);
+        oficinaDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         status.setComplete();
         return "redirect:/admin/formOficina.html?idEdicao=" + command.getEdicaoEvento().getId();

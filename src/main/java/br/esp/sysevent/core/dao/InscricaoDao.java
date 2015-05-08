@@ -8,8 +8,7 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
-import java.util.Calendar;
+import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 
 /**
@@ -35,4 +34,5 @@ public interface InscricaoDao extends EntityDao<Long, Inscricao> {
     public Collection<Inscricao> findByEdicaoDeferidas(Long idEdicao);
     public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade);
     public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao);
+    public Long gravaInscricao(final Inscricao inscricao);
 }

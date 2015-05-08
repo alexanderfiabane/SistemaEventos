@@ -4,14 +4,14 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.NoticiaDao;
+import br.esp.sysevent.core.model.Noticia;
 import br.esp.sysevent.web.admin.validation.NoticiaValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.core.model.Noticia;
-import br.esp.sysevent.core.service.NoticiaService;
-import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
@@ -37,7 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormNoticiaController extends AbstractFormController<Long, Noticia> {
 
     @Autowired
-    private NoticiaService noticiaService;
+    private NoticiaDao noticiaDao;
     @Autowired
     private NoticiaValidator validator;
 
@@ -47,15 +47,15 @@ public class FormNoticiaController extends AbstractFormController<Long, Noticia>
     }
 
     @Override
-    protected NoticiaService getCommandService() {
-        return noticiaService;
+    protected NoticiaDao getCommandService() {
+        return noticiaDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
     public Noticia getCommand(@RequestParam(value = "idNoticia", required = false) final String idNoticia) {
         final Noticia noticia;
         if (CharSequenceUtils.isNumber(idNoticia)) {
-            noticia = noticiaService.findById(NumberUtils.parseLong(idNoticia));
+            noticia = noticiaDao.findById(NumberUtils.parseLong(idNoticia));
         } else {
             noticia = new Noticia();
         }
@@ -65,7 +65,7 @@ public class FormNoticiaController extends AbstractFormController<Long, Noticia>
     /* notícias para a listagem */
     @ModelAttribute("noticias")
     public Collection<Noticia> getNoticias() {
-        return noticiaService.findAll();
+        return noticiaDao.findAll();
     }
 
     @InitBinder
@@ -89,7 +89,7 @@ public class FormNoticiaController extends AbstractFormController<Long, Noticia>
         if (runValidator(command, result).hasErrors()) {
             return "admin/formNoticia";
         }
-        noticiaService.saveOrUpdate(command);
+        noticiaDao.saveOrUpdate(command);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         status.setComplete();
         return "redirect:/admin/formNoticia.html?idNoticia=" + command.getId();

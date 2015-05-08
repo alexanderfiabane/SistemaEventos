@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CAMISETAS_CONF")
 @AttributeOverride(name = "id", column = @Column(name = "ID_CAMISETA_CNF"))
-public class CamisetaConfraternista extends AbstractEntity<Long> {
+public class CamisetaConfraternista extends AbstractEntity {
 
     private static final long serialVersionUID = -2174770753829782943L;
     @ManyToOne()
@@ -79,22 +79,36 @@ public class CamisetaConfraternista extends AbstractEntity<Long> {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 79 * hash + hashCodeById(this);
+        hash = 17 * hash + (this.confraternista != null ? this.confraternista.hashCode() : 0);
+        hash = 17 * hash + (this.tamanhoCamiseta != null ? this.tamanhoCamiseta.hashCode() : 0);
+        hash = 17 * hash + (this.tipoCamiseta != null ? this.tipoCamiseta.hashCode() : 0);
+        hash = 17 * hash + (this.corCamiseta != null ? this.corCamiseta.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
+        final CamisetaConfraternista other = (CamisetaConfraternista) obj;
+        if (this.confraternista != other.confraternista && (this.confraternista == null || !this.confraternista.equals(other.confraternista))) {
             return false;
         }
-        final CamisetaConfraternista other = (CamisetaConfraternista) obj;
+        if (this.tamanhoCamiseta != other.tamanhoCamiseta && (this.tamanhoCamiseta == null || !this.tamanhoCamiseta.equals(other.tamanhoCamiseta))) {
+            return false;
+        }
+        if (this.tipoCamiseta != other.tipoCamiseta && (this.tipoCamiseta == null || !this.tipoCamiseta.equals(other.tipoCamiseta))) {
+            return false;
+        }
+        if (this.corCamiseta != other.corCamiseta && (this.corCamiseta == null || !this.corCamiseta.equals(other.corCamiseta))) {
+            return false;
+        }
         return true;
     }
+
+
 }

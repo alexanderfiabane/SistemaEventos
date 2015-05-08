@@ -7,10 +7,9 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Responsavel;
-import br.ojimarcius.commons.persistence.dao.AbstractEntityDaoBean;
+import com.javaleks.commons.core.dao.AbstractEntityDao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -18,13 +17,10 @@ import org.springframework.stereotype.Repository;
  * @author Alexander
  */
 @Repository
-public class ResponsavelDaoBean extends AbstractEntityDaoBean<Long, Responsavel> implements ResponsavelDao{
-    
-    @Override
+public class ResponsavelDaoBean extends AbstractEntityDao<Long, Responsavel> implements ResponsavelDao{
+
     @Autowired
-    @Required
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    } 
-    
+    public ResponsavelDaoBean(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
 }

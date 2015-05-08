@@ -4,8 +4,8 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CharSequenceUtils;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,10 +19,10 @@ import javax.persistence.Table;
 @Table(name = "INFO_SAUDE")
 @AttributeOverride(name = "id", column =
 @Column(name = "ID_INFO_SAUDE"))
-public class InformacoesSaude extends AbstractEntity<Long>{
-    
+public class InformacoesSaude extends AbstractEntity{
+
     private static final long serialVersionUID = 6264718982994575893L;
-    
+
     @Column(name = "MEDICACAO", nullable = true)
     private String medicacao;
     @Column(name = "CONVENIO", nullable = true)
@@ -30,9 +30,9 @@ public class InformacoesSaude extends AbstractEntity<Long>{
     @Column(name = "CONV_TELEFONE", nullable = true)
     private String convenioTelefone;
     @Column(name = "ALERGIA", nullable = true)
-    private String alergia;    
+    private String alergia;
     @Column(name = "DIETA", nullable = true)
-    private String dieta;    
+    private String dieta;
 
     public String getMedicacao() {
         return medicacao;
@@ -57,7 +57,7 @@ public class InformacoesSaude extends AbstractEntity<Long>{
     public void setConvenioTelefone(String convenioTelefone) {
         this.convenioTelefone = convenioTelefone;
     }
-    
+
     public String getAlergia() {
         return alergia;
     }
@@ -72,8 +72,8 @@ public class InformacoesSaude extends AbstractEntity<Long>{
 
     public void setDieta(String dieta) {
         this.dieta = dieta;
-    }   
-    
+    }
+
     public boolean temInformacao() {
         return !CharSequenceUtils.isBlank(medicacao) ||
                !CharSequenceUtils.isBlank(convenio) ||
@@ -109,6 +109,6 @@ public class InformacoesSaude extends AbstractEntity<Long>{
             return false;
         }
         return true;
-    }       
-    
+    }
+
 }

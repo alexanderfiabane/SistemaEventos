@@ -3,19 +3,19 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
-import br.esp.sysevent.web.admin.validation.DormitorioValidator;
-import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.core.dao.ConfraternistaDao;
+import br.esp.sysevent.core.dao.DormitorioDao;
+import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
-import br.esp.sysevent.core.service.ConfraternistaService;
-import br.esp.sysevent.core.service.DormitorioService;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.ojimarcius.commons.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
-import br.ojimarcius.commons.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.admin.validation.DormitorioValidator;
+import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import br.esp.sysevent.persistence.springframework.validation.Validator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +40,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormDormitorioController extends AbstractFormController<Long, Dormitorio> {
 
     @Autowired
-    private EdicaoService edicaoService;
+    private EdicaoDao edicaoDao;
     @Autowired
-    private ConfraternistaService confraternistaService;
+    private ConfraternistaDao confraternistaDao;
     @Autowired
-    private DormitorioService dormitorioService;
+    private DormitorioDao dormitorioDao;
     @Autowired
     private DormitorioValidator validator;
 
@@ -54,8 +54,8 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
     }
 
     @Override
-    protected DormitorioService getCommandService() {
-        return dormitorioService;
+    protected DormitorioDao getCommandService() {
+        return dormitorioDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
@@ -63,9 +63,9 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
             @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Dormitorio dormitorio;
         if (CharSequenceUtils.isNumber(idDormitorio)) {
-            dormitorio = dormitorioService.findById(NumberUtils.parseLong(idDormitorio));
+            dormitorio = dormitorioDao.findById(NumberUtils.parseLong(idDormitorio));
         } else if (CharSequenceUtils.isNumber(idEdicao)) {
-            final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+            final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");
             }
@@ -85,12 +85,12 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
 
     @InitBinder
     protected void initBinder(final WebDataBinder binder) {
-        binder.registerCustomEditor(Confraternista.class, new CustomEntityEditor<Confraternista>(confraternistaService));
+        binder.registerCustomEditor(Confraternista.class, new CustomEntityEditor<Confraternista>(confraternistaDao));
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Dormitorio command, final ModelMap model) {
-        model.addAttribute("dormitorios", dormitorioService.findByProperty("edicaoEvento", command.getEdicaoEvento()));
+        model.addAttribute("dormitorios", dormitorioDao.findByProperty("edicaoEvento", command.getEdicaoEvento()));
         //return form view
         return "admin/formDormitorio";
     }
@@ -103,7 +103,7 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
      * @param status
      * @param model
      * @param attributes
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Dormitorio command,
@@ -123,39 +123,39 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
             if (command.getId() == null) {
                 command.setVagasOcupadas(2);
             } else {
-                Dormitorio dormitorioAtual = dormitorioService.findById(command.getId());
+                Dormitorio dormitorioAtual = dormitorioDao.findById(command.getId());
                 Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
                 Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
                 if (coordenadorAtual.equals(viceCoordenadorAtual)) {
                     command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() + 1);
                 }
                 coordenadorAtual.setDormitorio(null);
-                confraternistaService.saveOrUpdate(coordenadorAtual);
+                confraternistaDao.saveOrUpdate(coordenadorAtual);
                 viceCoordenadorAtual.setDormitorio(null);
-                confraternistaService.saveOrUpdate(viceCoordenadorAtual);
+                confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
             }
         } else {
             if (command.getId() == null) {
                 command.setVagasOcupadas(1);
             } else {
-                Dormitorio dormitorioAtual = dormitorioService.findById(command.getId());
+                Dormitorio dormitorioAtual = dormitorioDao.findById(command.getId());
                 Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
                 Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
                 if (!coordenadorAtual.equals(viceCoordenadorAtual)) {
                     command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() - 1);
                 }
                 coordenadorAtual.setDormitorio(null);
-                confraternistaService.saveOrUpdate(coordenadorAtual);
+                confraternistaDao.saveOrUpdate(coordenadorAtual);
                 viceCoordenadorAtual.setDormitorio(null);
-                confraternistaService.saveOrUpdate(viceCoordenadorAtual);
+                confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
             }
-        }        
-        Long idDormitorio = dormitorioService.saveOrUpdate(command);        
-        Dormitorio domitorio = dormitorioService.findById(idDormitorio);
+        }
+        Long idDormitorio = dormitorioDao.saveOrUpdate(command);
+        Dormitorio domitorio = dormitorioDao.findById(idDormitorio);
         coordenadorNovo.setDormitorio(domitorio);
-        confraternistaService.saveOrUpdate(coordenadorNovo);
+        confraternistaDao.saveOrUpdate(coordenadorNovo);
         viceCoordenadorNovo.setDormitorio(domitorio);
-        confraternistaService.saveOrUpdate(viceCoordenadorNovo);
+        confraternistaDao.saveOrUpdate(viceCoordenadorNovo);
         attributes.addFlashAttribute("message", getMessage("message.success.save", locale));
         status.setComplete();
         return "redirect:/admin/formDormitorio.html?idEdicao=" + command.getEdicaoEvento().getId();

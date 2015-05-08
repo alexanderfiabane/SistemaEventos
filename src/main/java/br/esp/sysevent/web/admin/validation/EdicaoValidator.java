@@ -8,7 +8,7 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.service.EdicaoService;
 import br.ojimarcius.commons.persistence.model.PersistentPeriod;
-import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import br.ojimarcius.commons.util.NumberUtils;
 import java.math.BigDecimal;

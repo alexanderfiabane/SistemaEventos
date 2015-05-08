@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "ESTADOS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_ESTADO"))
-public class Estado extends AbstractEntity<Long> {
+public class Estado extends AbstractEntity {
 
     private static final long serialVersionUID = 2178711986985855434L;
     @Column(name = "NOME", length = 80, nullable = false)
@@ -51,22 +51,18 @@ public class Estado extends AbstractEntity<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + hashCodeById(this);
-        hash = 83 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 83 * hash + (this.sigla != null ? this.sigla.hashCode() : 0);
+        int hash = 7;
+        hash = 71 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 71 * hash + (this.sigla != null ? this.sigla.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
-            return false;
-        }
-        if (!equalsById(this, obj)) {
             return false;
         }
         final Estado other = (Estado) obj;
@@ -77,5 +73,6 @@ public class Estado extends AbstractEntity<Long> {
             return false;
         }
         return true;
-    }    
+    }
+
 }

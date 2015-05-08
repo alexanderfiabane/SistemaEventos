@@ -7,7 +7,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
-import br.ojimarcius.commons.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.ojimarcius.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;

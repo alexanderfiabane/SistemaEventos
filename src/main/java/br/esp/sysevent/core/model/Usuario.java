@@ -3,10 +3,18 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * NOTA!!! Mudei o nome de uns atributos para esta classe ser compatível com o UserDetails do spring-security!
  */
-public class Usuario extends AbstractEntity<Long> implements UserDetails {
+public class Usuario extends AbstractEntity implements UserDetails {
 
     private static final long serialVersionUID = 7466084620699902860L;
     @Column(name = "LOGIN", length = 80, unique = true, nullable = false)
@@ -119,23 +127,18 @@ public class Usuario extends AbstractEntity<Long> implements UserDetails {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + hashCodeById(this);
-        hash = 29 * hash + (this.username != null ? this.username.hashCode() : 0);
-        hash = 29 * hash + (this.password != null ? this.password.hashCode() : 0);
-        hash = 29 * hash + (this.role != null ? this.role.hashCode() : 0);
-        hash = 29 * hash + (this.enabled ? 1 : 0);
+        hash = 97 * hash + (this.username != null ? this.username.hashCode() : 0);
+        hash = 97 * hash + (this.password != null ? this.password.hashCode() : 0);
+        hash = 97 * hash + (this.pessoa != null ? this.pessoa.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
-            return false;
-        }
-        if (!equalsById(this, obj)) {
             return false;
         }
         final Usuario other = (Usuario) obj;
@@ -145,10 +148,7 @@ public class Usuario extends AbstractEntity<Long> implements UserDetails {
         if ((this.password == null) ? (other.password != null) : !this.password.equals(other.password)) {
             return false;
         }
-        if (this.role != other.role) {
-            return false;
-        }
-        if (this.enabled != other.enabled) {
+        if (this.pessoa != other.pessoa && (this.pessoa == null || !this.pessoa.equals(other.pessoa))) {
             return false;
         }
         return true;

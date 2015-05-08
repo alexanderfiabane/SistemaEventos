@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import javax.persistence.AttributeOverride;
@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
-public class PagamentoInscricao extends AbstractEntity<Long> {
+public class PagamentoInscricao extends AbstractEntity {
 
     private static final long serialVersionUID = 6548964156787845687L;
     @ManyToOne

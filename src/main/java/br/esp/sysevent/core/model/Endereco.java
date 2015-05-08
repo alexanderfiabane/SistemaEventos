@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.core.model;
 
-import br.ojimarcius.commons.persistence.model.AbstractEntity;
+import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "ENDERECOS")
 @AttributeOverride(name = "id", column =
                                 @Column(name = "ID_ENDERECO"))
-public class Endereco extends AbstractEntity<Long> {
+public class Endereco extends AbstractEntity {
 
     private static final long serialVersionUID = -2155619439655011984L;
     @Column(name = "LOGRADOURO", length = 80, nullable = false)
@@ -116,37 +116,33 @@ public class Endereco extends AbstractEntity<Long> {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + hashCodeById(this);
-        hash = 59 * hash + (this.logradouro != null ? this.logradouro.hashCode() : 0);
-        hash = 59 * hash + (this.numero != null ? this.numero.hashCode() : 0);
-        hash = 59 * hash + (this.complemento != null ? this.complemento.hashCode() : 0);
-        hash = 59 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
+        int hash = 7;
+        hash = 53 * hash + (this.logradouro != null ? this.logradouro.hashCode() : 0);
+        hash = 53 * hash + (this.bairro != null ? this.bairro.hashCode() : 0);
+        hash = 53 * hash + (this.cep != null ? this.cep.hashCode() : 0);
+        hash = 53 * hash + (this.cidade != null ? this.cidade.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
         if (getClass() != obj.getClass()) {
             return false;
         }
-        if (!equalsById(this, obj)) {
-            return false;
-        }
         final Endereco other = (Endereco) obj;
         if ((this.logradouro == null) ? (other.logradouro != null) : !this.logradouro.equals(other.logradouro)) {
             return false;
         }
-        if (this.numero != other.numero && (this.numero == null || !this.numero.equals(other.numero))) {
-            return false;
-        }
-        if ((this.complemento == null) ? (other.complemento != null) : !this.complemento.equals(other.complemento)) {
-            return false;
-        }
         if ((this.bairro == null) ? (other.bairro != null) : !this.bairro.equals(other.bairro)) {
+            return false;
+        }
+        if ((this.cep == null) ? (other.cep != null) : !this.cep.equals(other.cep)) {
+            return false;
+        }
+        if (this.cidade != other.cidade && (this.cidade == null || !this.cidade.equals(other.cidade))) {
             return false;
         }
         return true;

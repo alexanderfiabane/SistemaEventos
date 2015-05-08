@@ -4,8 +4,7 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Edicao;
-import br.esp.sysevent.core.model.Usuario;
-import br.ojimarcius.commons.persistence.dao.EntityDao;
+import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -16,5 +15,6 @@ import java.util.Collection;
 public interface EdicaoDao extends EntityDao<Long, Edicao> {
 
     public Collection<Edicao> findAbertas(Calendar dataAtual);
-    
+    public Collection<Edicao> findAbertas();
+
 }
