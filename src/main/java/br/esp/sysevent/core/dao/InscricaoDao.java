@@ -8,17 +8,13 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
-import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 
 /**
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface InscricaoDao extends EntityDao<Long, Inscricao> {
-
-    @Override
-    public Long saveOrUpdate(Inscricao entity);
+public interface InscricaoDao extends BaseTaperaDao<Long, Inscricao> {
 
     public Inscricao findById(final Long id, final String[] initProps);
     public Collection<Inscricao> findByEdicao(final Long idEdicao);

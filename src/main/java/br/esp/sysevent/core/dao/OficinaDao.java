@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface OficinaDao extends EntityDao<Long, Oficina> {
+public interface OficinaDao extends BaseTaperaDao<Long, Oficina> {
 
     public Collection<Oficina> findAll();
 }

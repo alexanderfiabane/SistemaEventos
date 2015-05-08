@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Estado;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import com.javaleks.commons.io.exception.RuntimeIOException;
 import com.javaleks.commons.util.ArrayUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -28,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository
-public class EstadoDaoBean extends AbstractEntityDao<Long, Estado> implements EstadoDao {
+public class EstadoDaoBean extends BaseTaperaDaoBean<Long, Estado> implements EstadoDao {
 
     @Autowired
     public EstadoDaoBean(SessionFactory sessionFactory) {
@@ -43,7 +42,7 @@ public class EstadoDaoBean extends AbstractEntityDao<Long, Estado> implements Es
     }
 
     public Collection<Estado> findAll() {
-        return super.findAll(Order.asc("nome"));
+        return super.findAll(new Order[] {Order.asc("nome")});
     }
 
     @Override

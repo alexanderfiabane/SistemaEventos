@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class EnderecoDaoBean extends AbstractEntityDao<Long, Endereco> implements EnderecoDao {
+public class EnderecoDaoBean extends BaseTaperaDaoBean<Long, Endereco> implements EnderecoDao {
 
     @Autowired
     public EnderecoDaoBean(SessionFactory sessionFactory) {

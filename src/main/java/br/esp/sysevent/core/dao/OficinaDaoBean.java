@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Oficina;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class OficinaDaoBean extends AbstractEntityDao<Long, Oficina> implements OficinaDao {
+public class OficinaDaoBean extends BaseTaperaDaoBean<Long, Oficina> implements OficinaDao {
 
     @Autowired
     public OficinaDaoBean(SessionFactory sessionFactory) {
@@ -24,7 +23,6 @@ public class OficinaDaoBean extends AbstractEntityDao<Long, Oficina> implements 
     }
 
     public Collection<Oficina> findAll() {
-        return super.findAll(Order.asc("nome"));
+        return super.findAll(new Order[]{Order.asc("nome")});
     }
-
 }

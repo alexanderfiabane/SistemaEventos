@@ -10,5 +10,5 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface EventoDao extends EntityDao<Long, Evento> {
+public interface EventoDao extends BaseTaperaDao<Long, Evento> {
 }

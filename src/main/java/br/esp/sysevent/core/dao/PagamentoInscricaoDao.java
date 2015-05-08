@@ -10,5 +10,5 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-public interface PagamentoInscricaoDao extends EntityDao<Long, PagamentoInscricao> {
+public interface PagamentoInscricaoDao extends BaseTaperaDao<Long, PagamentoInscricao> {
 }

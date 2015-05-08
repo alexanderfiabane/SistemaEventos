@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class CorCamisetaDaoBean extends AbstractEntityDao<Long, CorCamiseta> implements CorCamisetaDao {
+public class CorCamisetaDaoBean extends BaseTaperaDaoBean<Long, CorCamiseta> implements CorCamisetaDao {
 
     @Autowired
     public CorCamisetaDaoBean(SessionFactory sessionFactory) {

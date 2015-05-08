@@ -5,17 +5,10 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Noticia;
-import com.javaleks.commons.core.dao.EntityDao;
 
 /**
  *
  * @author Alexander
  */
-public interface NoticiaDao extends EntityDao<Long, Noticia>{
-
-     @Override
-     public Long save(final Noticia entity);
-     @Override
-     public Long saveOrUpdate(final Noticia entity);
-
+public interface NoticiaDao extends BaseTaperaDao<Long, Noticia>{
 }

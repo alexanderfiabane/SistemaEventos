@@ -8,7 +8,6 @@ import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> implements DormitorioDao {
+public class DormitorioDaoBean extends BaseTaperaDaoBean<Long, Dormitorio> implements DormitorioDao {
 
     @Autowired
     public DormitorioDaoBean(SessionFactory sessionFactory) {
@@ -40,6 +39,7 @@ public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> imple
     @Autowired
     private ConfraternistaDao confraternistaDao;
 
+    @Override
     public void alocaConfraternistaDormitorio(Confraternista confraternista, Dormitorio dormitorio) {
         if (!validaDormitorio(dormitorio, confraternista)) {
             throw new IllegalArgumentException("O sexo do confraternista é diferente"
@@ -49,6 +49,7 @@ public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> imple
         confraternistaDao.saveOrUpdate(confraternista);
     }
 
+    @Override
     public void alocaConfraternistasDormitorio(Collection<Confraternista> confraternistas, Dormitorio dormitorio) {
 
         for (Confraternista confraternista : confraternistas) {
@@ -58,26 +59,28 @@ public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> imple
             }
             confraternista.setDormitorio(dormitorio);
         }
-        saveOrUpdateAll(confraternistas);
+        confraternistaDao.saveOrUpdateAll(confraternistas);
     }
 
+    @Override
     public void desalocaConfraternistaDormitorio(Confraternista confraternista) {
         confraternista.setDormitorio(null);
-        saveOrUpdate(confraternista);
+        confraternistaDao.saveOrUpdate(confraternista);
     }
 
+    @Override
     public void desalocaConfraternistasDormitorio(Collection<Confraternista> confraternistas) {
 
         for (Confraternista confraternista : confraternistas) {
             confraternista.setDormitorio(null);
         }
-        saveOrUpdateAll(confraternistas);
+        confraternistaDao.saveOrUpdateAll(confraternistas);
     }
 
     @Override
     public void alocaConfraternistasAleatoriamente(final Edicao edicao) {
 
-        final Collection<Dormitorio> dormitorios = getDao().findByProperty("edicaoEvento", edicao);
+        final Collection<Dormitorio> dormitorios = findByProperty("edicaoEvento", edicao);
         if (dormitorios == null) {
             throw new IllegalArgumentException("Não há dormitórios cadastrados.");
         }
@@ -90,7 +93,7 @@ public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> imple
             for (Dormitorio dormitorio : dormitorios) {
                 if (validaDormitorio(dormitorio, inscricao.getConfraternista())) {
                     inscricao.getConfraternista().setDormitorio(dormitorio);
-                    saveOrUpdate(inscricao.getConfraternista());
+                    confraternistaDao.saveOrUpdate(inscricao.getConfraternista());
                 }
             }
         }
@@ -123,7 +126,7 @@ public class DormitorioDaoBean extends AbstractEntityDao<Long, Dormitorio> imple
                 return false;
             }
         }
-        Collection<Confraternista> confraternistas = findByDormitorio(dormitorio);
+        Collection<Confraternista> confraternistas = confraternistaDao.findByDormitorio(dormitorio);
         if (dormitorio.getVagas() <= confraternistas.size()) {
             return false;
         }

@@ -6,7 +6,6 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import java.util.HashSet;
 import org.hibernate.Criteria;
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Repository;
  * @author Fiabane
  */
 @Repository
-public class GrupoIdadeDaoBean extends AbstractEntityDao<Long, GrupoIdade> implements GrupoIdadeDao{
+public class GrupoIdadeDaoBean extends BaseTaperaDaoBean<Long, GrupoIdade> implements GrupoIdadeDao{
 
     @Autowired
     public GrupoIdadeDaoBean(SessionFactory sessionFactory) {
@@ -30,12 +29,12 @@ public class GrupoIdadeDaoBean extends AbstractEntityDao<Long, GrupoIdade> imple
     }
 
     public Collection<GrupoIdade> findAllByEdicao() {
-        return super.findAll(Order.asc("nome"));
+        return super.findAll(new Order[] {Order.asc("nome")});
     }
 
     @Override
     public Collection<GrupoIdade> findByIdade(int idade){
-        final DetachedCriteria c = createCriteria()
+        final DetachedCriteria c = createDetachedCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.le("idadeMinima", idade))
                 .add(Restrictions.ge("idadeMaxima", idade));
@@ -44,7 +43,7 @@ public class GrupoIdadeDaoBean extends AbstractEntityDao<Long, GrupoIdade> imple
 
     @Override
     public Collection<GrupoIdade> findByIdadeTipo(int idade, Confraternista.Tipo tipo){
-        final DetachedCriteria c = createCriteria()
+        final DetachedCriteria c = createDetachedCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.le("idadeMinima", idade))
                 .add(Restrictions.ge("idadeMaxima", idade))

@@ -13,6 +13,6 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Alexander
  */
-public interface ResponsavelDao extends EntityDao<Long, Responsavel>{
+public interface ResponsavelDao extends BaseTaperaDao<Long, Responsavel>{
     
 }

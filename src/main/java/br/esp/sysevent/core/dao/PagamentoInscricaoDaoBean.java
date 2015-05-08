@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
 @Repository
-public class PagamentoInscricaoDaoBean extends AbstractEntityDao<Long, PagamentoInscricao> implements PagamentoInscricaoDao {
+public class PagamentoInscricaoDaoBean extends BaseTaperaDaoBean<Long, PagamentoInscricao> implements PagamentoInscricaoDao {
 
     @Autowired
     public PagamentoInscricaoDaoBean(SessionFactory sessionFactory) {

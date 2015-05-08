@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class EventoDaoBean extends AbstractEntityDao<Long, Evento> implements EventoDao {
+public class EventoDaoBean extends BaseTaperaDaoBean<Long, Evento> implements EventoDao {
 
     @Autowired
     public EventoDaoBean(SessionFactory sessionFactory) {

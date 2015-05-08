@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class TamanhoCamisetaDaoBean extends AbstractEntityDao<Long, TamanhoCamiseta> implements TamanhoCamisetaDao {
+public class TamanhoCamisetaDaoBean extends BaseTaperaDaoBean<Long, TamanhoCamiseta> implements TamanhoCamisetaDao {
 
     @Autowired
     public TamanhoCamisetaDaoBean(SessionFactory sessionFactory) {

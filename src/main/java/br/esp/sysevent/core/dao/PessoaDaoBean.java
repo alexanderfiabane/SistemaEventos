@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository
-public class PessoaDaoBean extends AbstractEntityDao<Long, Pessoa> implements PessoaDao {
+public class PessoaDaoBean extends BaseTaperaDaoBean<Long, Pessoa> implements PessoaDao {
 
     @Autowired
     public PessoaDaoBean(SessionFactory sessionFactory) {

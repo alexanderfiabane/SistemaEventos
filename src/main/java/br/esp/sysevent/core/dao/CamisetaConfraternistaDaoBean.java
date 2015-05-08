@@ -7,7 +7,6 @@ import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository(value = "camisetaConfraternistaDao")
-public class CamisetaConfraternistaDaoBean extends AbstractEntityDao<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
+public class CamisetaConfraternistaDaoBean extends BaseTaperaDaoBean<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
 
     @Autowired
     public CamisetaConfraternistaDaoBean(final SessionFactory sessionFactory) {

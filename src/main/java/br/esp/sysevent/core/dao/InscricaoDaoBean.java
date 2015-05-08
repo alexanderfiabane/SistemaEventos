@@ -13,7 +13,6 @@ import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> implements InscricaoDao {
+public class InscricaoDaoBean extends BaseTaperaDaoBean<Long, Inscricao> implements InscricaoDao {
 
     @Autowired
     private OficinaDao oficinaDao;
@@ -50,23 +49,6 @@ public class InscricaoDaoBean extends AbstractEntityDao<Long, Inscricao> impleme
     @Autowired
     public InscricaoDaoBean(SessionFactory sessionFactory) {
         super(sessionFactory);
-    }
-
-    @Override
-    public Long saveOrUpdate(Inscricao entity) {
-        if(entity.getId() == null) {
-            getCurrentSession().persist(entity);
-        } else {
-            getCurrentSession().merge(entity);
-        }
-        return entity.getId();
-    }
-
-    @Override
-    public Inscricao findById(final Long id, final String[] initProps) {
-        final Inscricao inscricao = findById(id);
-        initialize(inscricao, initProps);
-        return inscricao;
     }
 
     @Override

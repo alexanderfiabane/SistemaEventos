@@ -12,7 +12,7 @@ import java.util.Collection;
  *
  * @author Alexander
  */
-public interface EdicaoDao extends EntityDao<Long, Edicao> {
+public interface EdicaoDao extends BaseTaperaDao<Long, Edicao> {
 
     public Collection<Edicao> findAbertas(Calendar dataAtual);
     public Collection<Edicao> findAbertas();

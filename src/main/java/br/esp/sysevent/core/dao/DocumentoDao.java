@@ -10,5 +10,5 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface DocumentoDao extends EntityDao<Long, Documento> {
+public interface DocumentoDao extends BaseTaperaDao<Long, Documento> {
 }

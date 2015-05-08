@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-public interface UsuarioDao extends EntityDao<Long, Usuario> {
+public interface UsuarioDao extends BaseTaperaDao<Long, Usuario> {
 
     public Usuario findByLogin(final String login, final Boolean onlyAtivos);
     public Usuario findByLogin(final String login);

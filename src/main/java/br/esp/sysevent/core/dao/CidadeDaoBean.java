@@ -5,7 +5,8 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
+import com.javaleks.commons.core.dao.annotation.PreSave;
+import com.javaleks.commons.core.dao.annotation.PreSaveOrUpdate;
 import com.javaleks.commons.io.exception.RuntimeIOException;
 import com.javaleks.commons.util.ArrayUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -30,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository(value = "cidadeDao")
-public class CidadeDaoBean extends AbstractEntityDao<Long, Cidade> implements CidadeDao {
+public class CidadeDaoBean extends BaseTaperaDaoBean<Long, Cidade> implements CidadeDao {
 
     @Autowired
     public CidadeDaoBean(SessionFactory sessionFactory) {
@@ -78,33 +79,21 @@ public class CidadeDaoBean extends AbstractEntityDao<Long, Cidade> implements Ci
 
     @Override
     @Transactional(readOnly = false)
-    public Long save(Cidade entity) {
+    public void insertDefaultData() {
+        saveOrUpdateAll(createCidades());
+    }
+
+    @PreSave
+    @PreSaveOrUpdate
+    protected void checkCapital(final Cidade entity) {
         if (entity.isCapital()) {
             final Cidade capital = findCapital(entity.getEstado());
             if (capital != null) {
                 throw new IllegalArgumentException("Já existe capital para " + entity.getEstado().getNome());
             }
         }
-        return super.save(entity);
     }
-
-    @Transactional(readOnly = false)
-    @Override
-    public Long saveOrUpdate(Cidade entity) {
-        if (entity.isCapital()) {
-            final Cidade capital = findCapital(entity.getEstado());
-            if (capital != null && !capital.getId().equals(entity.getId())) {
-                throw new IllegalArgumentException("Já existe capital para " + entity.getEstado().getNome());
-            }
-        }
-        return super.saveOrUpdate(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void insertDefaultData() {
-        saveOrUpdateAll(createCidades());
-    }
-
+            
     private Collection<Cidade> createCidades() {
         try {
             final Collection<Cidade> cidades = new ArrayList<Cidade>();

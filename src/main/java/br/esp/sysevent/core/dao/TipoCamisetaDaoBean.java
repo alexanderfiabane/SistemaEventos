@@ -1,7 +1,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.TipoCamiseta;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.hibernate.SessionFactory;
@@ -10,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class TipoCamisetaDaoBean extends AbstractEntityDao<Long, TipoCamiseta> implements TipoCamisetaDao {
+public class TipoCamisetaDaoBean extends BaseTaperaDaoBean<Long, TipoCamiseta> implements TipoCamisetaDao {
 
     @Autowired
-    public TipoCamisetaDaoBean(SessionFactory sessionFactory) {
+    public TipoCamisetaDaoBean(final SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

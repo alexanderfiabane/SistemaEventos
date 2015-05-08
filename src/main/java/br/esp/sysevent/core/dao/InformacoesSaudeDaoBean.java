@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Alexander
  */
-public class InformacoesSaudeDaoBean extends AbstractEntityDao<Long, InformacoesSaude> implements InformacoesSaudeDao{
+public class InformacoesSaudeDaoBean extends BaseTaperaDaoBean<Long, InformacoesSaude> implements InformacoesSaudeDao{
 
     @Autowired
     public InformacoesSaudeDaoBean(SessionFactory sessionFactory) {

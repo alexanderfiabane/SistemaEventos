@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository
-public class UsuarioDaoBean extends AbstractEntityDao<Long, Usuario> implements UsuarioDao {
+public class UsuarioDaoBean extends BaseTaperaDaoBean<Long, Usuario> implements UsuarioDao {
 
     @Autowired
     public UsuarioDaoBean(SessionFactory sessionFactory) {

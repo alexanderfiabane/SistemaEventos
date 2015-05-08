@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Alexander
  */
 @Repository
-public class EdicaoDaoBean extends AbstractEntityDao<Long, Edicao> implements EdicaoDao {
+public class EdicaoDaoBean extends BaseTaperaDaoBean<Long, Edicao> implements EdicaoDao {
 
     @Autowired
     public EdicaoDaoBean(SessionFactory sessionFactory) {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander
  */
 @Repository
-public class ResponsavelDaoBean extends AbstractEntityDao<Long, Responsavel> implements ResponsavelDao{
+public class ResponsavelDaoBean extends BaseTaperaDaoBean<Long, Responsavel> implements ResponsavelDao{
 
     @Autowired
     public ResponsavelDaoBean(SessionFactory sessionFactory) {

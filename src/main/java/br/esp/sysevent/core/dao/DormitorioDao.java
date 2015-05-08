@@ -7,14 +7,13 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
-import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 
 /**
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface DormitorioDao extends EntityDao<Long, Dormitorio> {
+public interface DormitorioDao extends BaseTaperaDao<Long, Dormitorio> {
 
     public void alocaConfraternistaDormitorio(Confraternista confraternista, Dormitorio dormitorio);
     public void alocaConfraternistasDormitorio(Collection<Confraternista> confraternistas, Dormitorio dormitorio);

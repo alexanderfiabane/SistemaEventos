@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository
-public class ConfraternistaDaoBean extends AbstractEntityDao<Long, Confraternista> implements ConfraternistaDao {
+public class ConfraternistaDaoBean extends BaseTaperaDaoBean<Long, Confraternista> implements ConfraternistaDao {
 
     @Autowired
     public ConfraternistaDaoBean(SessionFactory sessionFactory) {
