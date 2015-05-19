@@ -18,7 +18,7 @@
             <display:table id="edicao" name="edicoes" pagesize="10" requestURI="/admin/inscricao/listEdicao.html"  class="table table-striped table-condensed">
                 <c:url var="list_url" value="/admin/inscricao/list.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>                
                 <display:column media="html" titleKey="label.options" class="centered" headerClass="twoOption centered">
-                    <button type="button" class="btn btn-mini" title="Ir para inscrições desta edição" onclick="location.href = '${list_url}';"><i class="icon-plus"></i></button>                   
+                    <button type="button" class="btn btn-mini" title="Ir para inscrições desta edição" onclick="location.href = '${list_url}';"><i class="icon-share-alt"></i></button>                   
                 </display:column>
                 <display:column titleKey="label.number" property="numero" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.theme" property="tema" class="centered" headerClass="centered"/>

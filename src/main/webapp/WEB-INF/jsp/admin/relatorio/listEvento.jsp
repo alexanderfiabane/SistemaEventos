@@ -17,7 +17,7 @@
             <display:table id="evento" name="eventos" pagesize="10" requestURI="/admin/relatorio/listEvento.html" class="table table-striped table-condensed">                    
                 <display:column media="html" titleKey="label.options" class="twoOption centered" headerClass="centered">
                     <c:url var="list_edicao_url" value="/admin/relatorio/listEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>   
-                    <button type="button" class="btn btn-mini" title="Ir para edições deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-plus"></i></button>                     
+                    <button type="button" class="btn btn-mini" title="Ir para edições deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-share-alt"></i></button>                     
                 </display:column>
                 <display:column titleKey="label.name" property="nome" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.acronym" property="sigla" class="centered" headerClass="centered"/>

@@ -39,7 +39,7 @@
             <c:url var="edicao_url" value="/admin/formEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>
             <button type="button" class="btn btn-mini" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
             <button type="button" class="btn btn-mini" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
-            <button type="button" class="btn btn-mini" title="Criar edição deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-plus"></i></button>
+            <button type="button" class="btn btn-mini" title="Criar edição deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-share-alt"></i></button>
         </display:column>
         <display:column titleKey="label.name" property="nome" class="centered" headerClass="centered"/>
         <display:column titleKey="label.acronym" property="sigla" class="centered" headerClass="centered"/>
