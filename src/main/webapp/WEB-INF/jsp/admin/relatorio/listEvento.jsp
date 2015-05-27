@@ -2,10 +2,10 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Relatórios - Lista de Eventos" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Relatórios - Lista de Eventos" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <c:choose>

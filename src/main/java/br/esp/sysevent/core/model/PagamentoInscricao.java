@@ -5,7 +5,10 @@ package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,16 +25,19 @@ import javax.persistence.Temporal;
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
 public class PagamentoInscricao extends AbstractEntity {
+    private static final long serialVersionUID = -5680008393064758718L;
 
-    private static final long serialVersionUID = 6548964156787845687L;
     @ManyToOne
     @JoinColumn(name = "ID_INSCRICAO", nullable = false)
     private Inscricao inscricao;
-    @Column(name = "NUMERO_DOCUMENTO", length = 50, nullable = false)
-    private String numeroDocumento;
+    private String codPagamento;
+    @Column(name = "STATUS", nullable = false)
+    private StatusPagamento status;
+    @Column(name = "DESCRICAO_PG", nullable = false)
+    private String descricaoPagamento;
+    @Column(name = "DATA_PAGAMENTO", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Column(name = "DATA", nullable = false)
-    private Calendar data;
+    private Calendar dataPagamento;
     @Column(name = "VALOR", nullable = false)
     private BigDecimal valor;
 
@@ -43,20 +49,36 @@ public class PagamentoInscricao extends AbstractEntity {
         this.inscricao = inscricao;
     }
 
-    public String getNumeroDocumento() {
-        return numeroDocumento;
+    public String getCodPagamento() {
+        return codPagamento;
     }
 
-    public void setNumeroDocumento(String numeroDocumento) {
-        this.numeroDocumento = numeroDocumento;
+    public void setCodPagamento(String codPagamento) {
+        this.codPagamento = codPagamento;
     }
 
-    public Calendar getData() {
-        return data;
+    public StatusPagamento getStatus() {
+        return status;
     }
 
-    public void setData(Calendar data) {
-        this.data = data;
+    public void setStatus(StatusPagamento status) {
+        this.status = status;
+    }
+
+    public String getDescricaoPagamento() {
+        return descricaoPagamento;
+    }
+
+    public void setDescricaoPagamento(String descricaoPagamento) {
+        this.descricaoPagamento = descricaoPagamento;
+    }
+
+    public Calendar getDataPagamento() {
+        return dataPagamento;
+    }
+
+    public void setDataPagamento(Calendar dataPagamento) {
+        this.dataPagamento = dataPagamento;
     }
 
     public BigDecimal getValor() {
@@ -67,11 +89,36 @@ public class PagamentoInscricao extends AbstractEntity {
         this.valor = valor;
     }
 
+    private enum StatusPagamento {
+        AGUARDANDO("Aguardando Pagamento"),
+        CANCELADO("Pagamento Cancelado"),
+        RECUSADO("Pagamento Recusado");
+
+        private final String descricao;
+
+        private StatusPagamento(final String descricao) {
+            this.descricao = descricao;
+        }
+
+        public String getDescricao() {
+            return descricao;
+        }
+
+        public String getName() {
+            return name();
+        }
+
+        public static Collection<PagamentoInscricao.StatusPagamento> getTipos() {
+            return Arrays.asList(PagamentoInscricao.StatusPagamento.values());
+        }
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 19 * hash + (this.data != null ? this.data.hashCode() : 0);
-        hash = 19 * hash + (this.valor != null ? this.valor.hashCode() : 0);
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.inscricao);
+        hash = 59 * hash + Objects.hashCode(this.codPagamento);
+        hash = 59 * hash + Objects.hashCode(this.dataPagamento);
         return hash;
     }
 
@@ -84,16 +131,15 @@ public class PagamentoInscricao extends AbstractEntity {
             return false;
         }
         final PagamentoInscricao other = (PagamentoInscricao) obj;
-        if (this.inscricao != other.inscricao && (this.inscricao == null || !this.inscricao.equals(other.inscricao))) {
+        if (!Objects.equals(this.inscricao, other.inscricao)) {
             return false;
         }
-        if (this.data != other.data && (this.data == null || !this.data.equals(other.data))) {
+        if (!Objects.equals(this.codPagamento, other.codPagamento)) {
             return false;
         }
-        if (this.valor != other.valor && (this.valor == null || !this.valor.equals(other.valor))) {
+        if (!Objects.equals(this.dataPagamento, other.dataPagamento)) {
             return false;
         }
         return true;
     }
-
 }

@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-@Repository
-public class PessoaDaoBean extends BaseTaperaDaoBean<Long, Pessoa> implements PessoaDao {
+@Repository(value = "pessoaDao")
+public class PessoaDaoBean extends AbstractBaseSistemaDaoBean<Long, Pessoa> implements PessoaDao {
 
     @Autowired
     public PessoaDaoBean(SessionFactory sessionFactory) {

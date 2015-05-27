@@ -16,8 +16,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Alexander
  */
-@Repository
-public class NoticiaDaoBean extends BaseTaperaDaoBean<Long, Noticia> implements NoticiaDao {
+@Repository(value = "noticiaDao")
+public class NoticiaDaoBean extends AbstractBaseSistemaDaoBean<Long, Noticia> implements NoticiaDao {
 
     @Autowired
     public NoticiaDaoBean(SessionFactory sessionFactory) {

@@ -2,18 +2,18 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Detalhes da Inscrição" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/user/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Minhas Inscrições" isLabelKey="false"><msf:url><c:url value="/user/listUsuarioInscricoes.html"></c:url></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Detalhes da Inscrição" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/user/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Minhas Inscrições" isLabelKey="false"><javalek:url><c:url value="/user/listUsuarioInscricoes.html"></c:url></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
     <fieldset>
-        <legend><msf:message key="label.eventdetails"/></legend>
+        <legend><javalek:message key="label.eventdetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
             <see:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.confraternista.tipo.descricao}"/>
@@ -27,7 +27,7 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><msf:message key="label.personaldetails"/></legend>
+    <legend><javalek:message key="label.personaldetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
             <see:formFieldView label="label.fullname" isLabelKey="true" value="${command.confraternista.pessoa.nome}"/>
@@ -100,7 +100,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><msf:message key="label.healthfooddetails"/></legend>
+    <legend><javalek:message key="label.healthfooddetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
             <see:formFieldView label="Medicação" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.medicacao}"/>
@@ -126,7 +126,7 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><msf:message key="label.housedetails"/></legend>
+    <legend><javalek:message key="label.housedetails"/></legend>
     <div class="row-fluid">
         <div class="span12">
             <see:formFieldView label="label.name" isLabelKey="true" value="${command.confraternista.casaEspirita.nome}"/>
@@ -174,7 +174,7 @@
 
 <c:if test="${not empty command.edicaoEvento.oficinas}">        
     <fieldset>
-        <legend><msf:message key="label.workshopdetails"/></legend>
+        <legend><javalek:message key="label.workshopdetails"/></legend>
         <div class="row-fluid">
             <see:formFieldView label="label.workshopname" isLabelKey="true" value="${command.confraternista.oficina.nome}"/>
         </div>
@@ -182,7 +182,7 @@
 </c:if>
 <c:if test="${not empty command.edicaoEvento.gruposIdade}">        
     <fieldset>
-        <legend><msf:message key="label.groupagedetails"/></legend>
+        <legend><javalek:message key="label.groupagedetails"/></legend>
         <div class="row-fluid">
             <see:formFieldView label="label.groupagename" isLabelKey="true" value="${command.confraternista.grupoIdade.nome}"/>
         </div>
@@ -191,16 +191,16 @@
 
 <c:if test="${not empty command.confraternista.camisetas}">
     <fieldset>
-        <legend><msf:message key="label.shirtdetails"/></legend>
+        <legend><javalek:message key="label.shirtdetails"/></legend>
         <div class="row-fluid">
             <table id="camisetas" class="table table-striped table-condensed">
                 <thead>
-                    <tr><td colspan="4" class="centered"><msf:label label="label.shirts" isMandatory="false" isLabelKey="true" colonAfter="false"/></td></tr>
+                    <tr><td colspan="4" class="centered"><javalek:label label="label.shirts" isMandatory="false" isLabelKey="true" colonAfter="false"/></td></tr>
                     <tr>
-                        <td><msf:label label="label.shirttype" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><msf:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><msf:label label="label.shirtsize" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><msf:label label="label.shirtquant" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><javalek:label label="label.shirttype" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><javalek:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><javalek:label label="label.shirtsize" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <td><javalek:label label="label.shirtquant" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
                     </tr>
                 </thead>
                 <tbody>

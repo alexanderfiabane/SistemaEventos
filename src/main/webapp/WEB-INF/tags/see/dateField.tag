@@ -16,14 +16,14 @@
 <c:choose>
     <c:when test="${!empty id}">
         <c:choose>
-            <c:when test="${!empty path}"><form:input id="${id}" path="${path}" cssClass="textfield" disabled="${isDisabled}"/></c:when>
-            <c:otherwise><input type="text" id="${id}" class="textfield" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
+            <c:when test="${!empty path}"><form:input id="${id}" path="${path}" cssClass="textfield date" disabled="${isDisabled}"/></c:when>
+            <c:otherwise><input type="text" id="${id}" class="textfield date" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
         </c:choose>
     </c:when>
     <c:otherwise>
         <c:choose>
-            <c:when test="${!empty path}"><form:input path="${path}" cssClass="textfield" disabled="${isDisabled}"/></c:when>
-            <c:otherwise><input type="text" class="textfield" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
+            <c:when test="${!empty path}"><form:input path="${path}" cssClass="textfield date" disabled="${isDisabled}"/></c:when>
+            <c:otherwise><input type="text" class="textfield date" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
         </c:choose>
     </c:otherwise>
 </c:choose>

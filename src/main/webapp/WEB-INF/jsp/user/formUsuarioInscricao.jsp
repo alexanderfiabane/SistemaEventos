@@ -2,10 +2,10 @@
 <%@ include file="/WEB-INF/includes/dwr.jspf" %>
 
 <content tag="titlebarContent">
-    <msf:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></msf:icon>
-        <msf:breadcrumb label="Minhas Inscrições" isLabelKey="false"><msf:url><c:url value="/user/listUsuarioInscricoes.html"></c:url></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
+        <javalek:breadcrumb label="Minhas Inscrições" isLabelKey="false"><javalek:url><c:url value="/user/listUsuarioInscricoes.html"></c:url></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
@@ -13,32 +13,32 @@
 
 <form:form commandName="command">
     <fieldset>
-        <legend><msf:message key="label.eventdetails"/></legend>
+        <legend><javalek:message key="label.eventdetails"/></legend>
         <div class="row-fluid">
             <div class="span6">
-                <msf:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
                 <c:forEach var="item" items="${tiposConfraternista}">
                     <c:choose>
                         <c:when test="${command.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
                             <%--<c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">--%>
                             <c:if test="${not (item == 'OFICINEIRO')}">
-                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                <javalek:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                                </msf:label>
+                                </javalek:label>
                             </c:if>                                                    
                         </c:when>
                         <c:when test="${command.edicaoEvento.tipo == 'OFICINA'}">                            
                             <c:if test="${(not (item == 'FACILITADOR')) and (not (item == 'EVANGELIZADOR'))}">
-                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                <javalek:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                                </msf:label>
+                                </javalek:label>
                             </c:if>                                                    
                         </c:when>
                         <c:otherwise>
                             <c:if test="${(not (item == 'FACILITADOR')) and (not (item == 'EVANGELIZADOR')) and (not (item == 'OFICINEIRO'))}">
-                                <msf:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
+                                <javalek:label label="${item.descricao}" colonAfter="false" cssClass="radio" breakAfter="false">
                                     <form:radiobutton path="confraternista.tipo" value="${item.name}"/>
-                                </msf:label>
+                                </javalek:label>
                             </c:if>
                         </c:otherwise>
                     </c:choose>
@@ -53,14 +53,14 @@
     <c:if test="${(not empty command.edicaoEvento.gruposIdade) && (command.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
         <div id="grupoFacilitador" style="display: none;">    
             <fieldset>
-                <legend><msf:message key="label.eventcoordgroupdetails"/></legend>
+                <legend><javalek:message key="label.eventcoordgroupdetails"/></legend>
                 <div class="row-fluid">
                     <div class="span3">
-                        <msf:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                        <javalek:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                         <c:forEach var="grupo" items="${command.edicaoEvento.gruposIdade}">
-                            <msf:label label="${grupo.nome}" colonAfter="false" breakAfter="false" cssClass="radio">
+                            <javalek:label label="${grupo.nome}" colonAfter="false" breakAfter="false" cssClass="radio">
                                 <form:radiobutton path="confraternista.grupoIdade" value="${grupo.id}"/>
-                            </msf:label>
+                            </javalek:label>
                         </c:forEach>
                         <form:errors path="confraternista.grupoIdade" cssClass="fieldError"/>
                     </div>
@@ -70,7 +70,7 @@
     </c:if>
 
     <fieldset>
-        <legend><msf:message key="label.personaldetails"/></legend>
+        <legend><javalek:message key="label.personaldetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
                 <see:formField label="label.fullname" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.nome" maxlength="100"/>
@@ -112,7 +112,7 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estado">
                     <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
@@ -149,12 +149,12 @@
     </fieldset>
 
     <fieldset>
-        <legend><msf:message key="label.healthfooddetails"/></legend>
+        <legend><javalek:message key="label.healthfooddetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
-                <msf:label label="Não" for="medicacaoNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoNao" name="medicacao" value="false"/></msf:label>
-                <msf:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></msf:label>
+                <javalek:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="Não" for="medicacaoNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoNao" name="medicacao" value="false"/></javalek:label>
+                <javalek:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></javalek:label>
                 </div>
                 <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="confraternista.pessoa.informacoesSaude.medicacao" maxlength="255"/>
@@ -162,9 +162,9 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="Tem algum tipo de convênio?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
-                <msf:label label="Não" for="convenioNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioNao" name="convenio" value="false"/></msf:label>
-                <msf:label label="Sim" for="convenioSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioSim" name="convenio" value="true"/></msf:label>
+                <javalek:label label="Tem algum tipo de convênio?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="Não" for="convenioNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioNao" name="convenio" value="false"/></javalek:label>
+                <javalek:label label="Sim" for="convenioSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioSim" name="convenio" value="true"/></javalek:label>
                 </div>
                 <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="confraternista.pessoa.informacoesSaude.convenio" maxlength="255"/>
@@ -175,9 +175,9 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="Possui algum tipo de alergia?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
-                <msf:label label="Não" for="alergiaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaNao" name="alergia" value="false"/></msf:label>
-                <msf:label label="Sim" for="alergiaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaSim" name="alergia" value="true"/></msf:label>
+                <javalek:label label="Possui algum tipo de alergia?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="Não" for="alergiaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaNao" name="alergia" value="false"/></javalek:label>
+                <javalek:label label="Sim" for="alergiaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaSim" name="alergia" value="true"/></javalek:label>
                 </div>
                 <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255"/>
@@ -185,9 +185,9 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="Possui algum tipo de restrição alimentar?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
-                <msf:label label="Não" for="dietaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaNao" name="dieta" value="false"/></msf:label>
-                <msf:label label="Sim" for="dietaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaSim" name="dieta" value="true"/></msf:label>
+                <javalek:label label="Possui algum tipo de restrição alimentar?" isMandatory="false" isLabelKey="false" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="Não" for="dietaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaNao" name="dieta" value="false"/></javalek:label>
+                <javalek:label label="Sim" for="dietaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaSim" name="dieta" value="true"/></javalek:label>
                 </div>
                 <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255"/>
@@ -196,7 +196,7 @@
     </fieldset>
 
     <fieldset>
-        <legend><msf:message key="label.housedetails"/></legend>
+        <legend><javalek:message key="label.housedetails"/></legend>
         <div class="row-fluid">
             <div class="span12">
                 <see:formField label="Nome" isLabelKey="false" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="span12"/>
@@ -218,7 +218,7 @@
         </div>
         <div class="row-fluid">
             <div class="span3">
-                <msf:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                <javalek:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                 <select id="estadoCasa">
                     <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
@@ -253,14 +253,14 @@
 
     <c:if test="${(not empty command.edicaoEvento.oficinas) && (command.edicaoEvento.tipo == 'OFICINA')}">
         <fieldset>
-            <legend><msf:message key="label.workshopdetails"/></legend>
+            <legend><javalek:message key="label.workshopdetails"/></legend>
             <div class="row-fluid">
                 <div class="span3">
-                    <msf:label label="label.workshopname" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.workshopname" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <c:forEach var="oficina" items="${command.edicaoEvento.oficinas}">
-                        <msf:label label="${oficina.nome} (${oficina.saldoVagas} vagas)" breakAfter="false" cssClass="radio">
+                        <javalek:label label="${oficina.nome} (${oficina.saldoVagas} vagas)" breakAfter="false" cssClass="radio">
                             <form:radiobutton path="confraternista.oficina" value="${oficina.id}" disabled="${oficina.saldoVagas <= 0}"/>
-                        </msf:label>
+                        </javalek:label>
                     </c:forEach>
                     <form:errors path="confraternista.oficina" cssClass="fieldError"/>
                 </div>
@@ -269,10 +269,10 @@
     </c:if>
     <c:if test="${not empty command.edicaoEvento.tiposCamiseta}">
         <fieldset>
-            <legend><msf:message key="label.shirtdetails"/></legend>
+            <legend><javalek:message key="label.shirtdetails"/></legend>
             <div class="row-fluid">
                 <div class="span3">
-                    <msf:label label="label.shirttype" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.shirttype" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <select id="tipoCamiseta">
                         <option value="">-- Tipo --</option>
                         <c:forEach var="tipo" items="${command.edicaoEvento.tiposCamiseta}">
@@ -281,7 +281,7 @@
                     </select>
                 </div>
                 <div class="span3">
-                    <msf:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <select id="corCamiseta">
                         <option value="">-- Cor --</option>
                         <c:forEach var="cor" items="${command.edicaoEvento.coresCamiseta}">
@@ -290,7 +290,7 @@
                     </select>
                 </div>
                 <div class="span3">
-                    <msf:label label="label.shirtsize" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.shirtsize" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <select id="tamanhoCamiseta">
                         <option value="">-- Tamanho --</option>
                         <c:forEach var="tamanho" items="${command.edicaoEvento.tamanhosCamiseta}">
@@ -299,11 +299,11 @@
                     </select>
                 </div>
                 <div class="span2">
-                    <msf:label label="label.shirtquant" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.shirtquant" isMandatory="false" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <input type="text" id="quantCamiseta" maxlength="2" class="input-mini"/>
                 </div>
                 <div class="span1">
-                    <msf:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+                    <javalek:label label="label.options" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
                     <div>
                         <button type="button" class="btn btn" title="Adicionar" id="addCamiseta"><i class="icon-plus"></i></button>
                         <button type="button" class="btn btn-mini delete" title="Remover" id="removeCamiseta">Remover camiseta</button>
@@ -313,13 +313,13 @@
             <div class="row-fluid">
                 <table id="camisetas" class="table table-striped table-condensed">
                     <thead>
-                        <tr><th class="centered" colspan="5"><msf:message key="label.shirts"/></th></tr>
+                        <tr><th class="centered" colspan="5"><javalek:message key="label.shirts"/></th></tr>
                         <tr>
-                            <th><msf:message key="label.options"/></th>
-                            <th><msf:message key="label.shirttype"/></th>
-                            <th><msf:message key="label.shirtcolor"/></th>
-                            <th><msf:message key="label.shirtsize"/></th>
-                            <th><msf:message key="label.shirtquant"/></th>
+                            <th><javalek:message key="label.options"/></th>
+                            <th><javalek:message key="label.shirttype"/></th>
+                            <th><javalek:message key="label.shirtcolor"/></th>
+                            <th><javalek:message key="label.shirtsize"/></th>
+                            <th><javalek:message key="label.shirtquant"/></th>
                         </tr>
                     </thead>
                     <tbody>

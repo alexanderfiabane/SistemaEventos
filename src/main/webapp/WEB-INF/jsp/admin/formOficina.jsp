@@ -2,15 +2,15 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastro de Oficinas">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastro de Oficinas">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">

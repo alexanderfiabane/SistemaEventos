@@ -55,6 +55,8 @@ public class AdminInscricoesController {
         final Collection<Inscricao> inscricoes = inscricaoDao.findByProperty("edicaoEvento", edicao);
         model.addAttribute("edicao", edicao);
         model.addAttribute("inscricoes", inscricoes);
+        model.addAttribute("tipoInscricoes", Confraternista.Tipo.getValues());
+        model.addAttribute("inscricaoStatus", Inscricao.Status.values());
         return "admin/inscricao/list";
     }
 

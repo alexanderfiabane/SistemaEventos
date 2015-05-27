@@ -6,7 +6,7 @@ package br.esp.sysevent.web.admin.validation;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

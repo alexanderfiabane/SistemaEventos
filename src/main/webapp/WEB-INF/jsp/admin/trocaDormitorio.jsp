@@ -2,21 +2,21 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Troca de Dormitório do Confraternista">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Dormitório" isLabelKey="false"><msf:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Troca de Dormitório do Confraternista">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Dormitório" isLabelKey="false"><javalek:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <div class="row">
     <div class="span6">
-        <msf:label label="label.gender" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+        <javalek:label label="label.gender" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
         <select id="sexo" class="textfield">
             <option value="">Selecione o gênero do dormitório</option>
             <c:forEach var="sexo" items="${sexos}">
@@ -25,7 +25,7 @@
         </select>
     </div>
     <div class="span6">
-        <msf:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+        <javalek:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
         <select id="dormitorios" class="textfield">
             <option value="">Selecione um dormitório</option>
             <c:forEach var="dormitorio" items="${dormitorios}">
@@ -74,13 +74,13 @@
                                         </tr>
                                         <tr>
                                             <th style="text-align: center;">
-                                                <msf:message key="label.state"/>
+                                                <javalek:message key="label.state"/>
                                             </th>
                                             <th style="text-align: center;">
-                                                <msf:message key="label.city"/>
+                                                <javalek:message key="label.city"/>
                                             </th>
                                             <th style="text-align: center;">
-                                                <msf:message key="label.name"/>
+                                                <javalek:message key="label.name"/>
                                             </th>
                                         </tr>
                                     </thead>
@@ -122,11 +122,11 @@
                                             .append(dormitorio.nome + '<br/>' + 'Total de vagas: ' + dormitorio.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.state"/>'))
+                                            .append('<javalek:message key="label.state"/>'))
                                                                                 .append(jQuery('<th style="text-align: center;">')
-                                                                                        .append('<msf:message key="label.city"/>'))
+                                                                                        .append('<javalek:message key="label.city"/>'))
                                                                                                                             .append(jQuery('<th style="text-align: center;">')
-                                                                                                                                    .append('<msf:message key="label.name"/>'))));
+                                                                                                                                    .append('<javalek:message key="label.name"/>'))));
                                                                                                                                                         confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
                                                                                                                                                             jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
                                                                                                                                                             jQuery.each(confraternistas, function (index, value) {
@@ -154,11 +154,11 @@
                                                                                                                                                                                         .append("Confraternistas Sem Dormitório")))
                                                                                                                                                                         .append(jQuery('<tr>')
                                                                                                                                                                                 .append(jQuery('<th style="text-align: center;">')
-                                                                                                                                                                                        .append('<msf:message key="label.state"/>'))
+                                                                                                                                                                                        .append('<javalek:message key="label.state"/>'))
                                                                                                                                                                                                                         .append(jQuery('<th style="text-align: center;">')
-                                                                                                                                                                                                        .append('<msf:message key="label.city"/>'))
+                                                                                                                                                                                                        .append('<javalek:message key="label.city"/>'))
                                                                                                                                                                                                                                                                 .append(jQuery('<th style="text-align: center;">')
-                                                                                                                                                                                                        .append('<msf:message key="label.name"/>'))));
+                                                                                                                                                                                                        .append('<javalek:message key="label.name"/>'))));
                                                                                                                                                                                                                                                                                         jQuery(inputConfraternista).append('<tbody id="semDormitorio">');
                                                                                                                                                                                                                                                                                         if (confraternistas !== null) {
                                                                                                                                                                                                                                                                                             jQuery.each(confraternistas, function (index, value) {

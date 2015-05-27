@@ -5,12 +5,12 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.GrupoIdadeDao;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.GrupoIdadeService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,26 +26,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/admin/trocaGrupoIdade.html")
 public class TrocaGrupoIdadeController {
-    
+
     @Autowired
-    protected EdicaoService edicaoService;
+    protected EdicaoDao edicaoDao;
     @Autowired
-    protected GrupoIdadeService grupoIdadeService;
-    
+    protected GrupoIdadeDao grupoIdadeDao;
+
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@RequestParam(value="idEdicao",required=false) final String idEdicao, final ModelMap model) {
         if (!CharSequenceUtils.isNumber(idEdicao)) {
             throw new IllegalArgumentException("Parâmetros inválidos.");
         }
-        final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+        final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         if (edicao == null) {
             throw new IllegalArgumentException("Edição não encontrada.");
         }
-        Collection<GrupoIdade> grupos = grupoIdadeService.findByProperty("edicaoEvento", edicao);
+        Collection<GrupoIdade> grupos = grupoIdadeDao.findByProperty("edicaoEvento", edicao);
         model.addAttribute("edicao", edicao);
-        model.addAttribute("grupoIdade", grupos);        
-        
+        model.addAttribute("grupoIdade", grupos);
+
         return "admin/trocaGrupoIdade";
     }
-    
+
 }

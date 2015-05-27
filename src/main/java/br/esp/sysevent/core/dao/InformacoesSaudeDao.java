@@ -11,6 +11,6 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Alexander
  */
-public interface InformacoesSaudeDao extends BaseTaperaDao<Long, InformacoesSaude> {
+public interface InformacoesSaudeDao extends BaseSistemaDao<Long, InformacoesSaude> {
     
 }

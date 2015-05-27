@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Repository(value = "cidadeDao")
-public class CidadeDaoBean extends BaseTaperaDaoBean<Long, Cidade> implements CidadeDao {
+public class CidadeDaoBean extends AbstractBaseSistemaDaoBean<Long, Cidade> implements CidadeDao {
 
     @Autowired
     public CidadeDaoBean(SessionFactory sessionFactory) {

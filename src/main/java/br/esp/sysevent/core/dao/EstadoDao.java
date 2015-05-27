@@ -10,7 +10,7 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-public interface EstadoDao extends BaseTaperaDao<Long, Estado> {
+public interface EstadoDao extends BaseSistemaDao<Long, Estado> {
 
     public Estado findBySigla(final String sigla);
     public boolean exists(final String sigla);

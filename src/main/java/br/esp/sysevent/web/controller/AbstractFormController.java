@@ -3,24 +3,18 @@
  */
 package br.esp.sysevent.web.controller;
 
-import br.esp.sysevent.web.controller.util.ControllerUtils;
-import br.ojimarcius.commons.persistence.model.Entity;
-import br.ojimarcius.commons.persistence.service.EntityService;
 import br.esp.sysevent.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.core.dao.EntityDao;
+import com.javaleks.commons.core.model.Entity;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.NoSuchMessageException;
 import org.springframework.validation.BindingResult;
 
 /**
  * Base para todos os controllers de edição de entidade (Formulários).
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
+ * @param <ID>
+ * @param <T>
  */
 public abstract class AbstractFormController<ID extends Serializable & Comparable<ID>, T extends Entity<ID>> extends I18nController {
 
@@ -31,16 +25,22 @@ public abstract class AbstractFormController<ID extends Serializable & Comparabl
 
     /**
      * Retorna o validador do formulário, se houver.
+     * @return
      */
     protected abstract Validator<T> getValidator();
 
     /**
      * Retorna o Entityservice do command formulário.
+     * @param <S>
+     * @return
      */
-    protected abstract <S extends EntityService<ID, T>> S getCommandService();
+    protected abstract <S extends EntityDao<ID, T>> S getCommandService();
 
     /**
      * Executa a validação, se houver validador definido.
+     * @param command
+     * @param result
+     * @return
      */
     protected BindingResult runValidator(final T command, final BindingResult result) {
         if (getValidator() != null) {

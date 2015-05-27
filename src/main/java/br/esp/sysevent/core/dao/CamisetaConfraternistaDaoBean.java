@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository(value = "camisetaConfraternistaDao")
-public class CamisetaConfraternistaDaoBean extends BaseTaperaDaoBean<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
+public class CamisetaConfraternistaDaoBean extends AbstractBaseSistemaDaoBean<Long, CamisetaConfraternista> implements CamisetaConfraternistaDao {
 
     @Autowired
     public CamisetaConfraternistaDaoBean(final SessionFactory sessionFactory) {

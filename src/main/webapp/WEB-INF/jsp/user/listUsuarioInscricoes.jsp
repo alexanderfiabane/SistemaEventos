@@ -2,10 +2,10 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="label.menu.usersubscriptions" isLabelKey="true" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconMinhasInscricoes.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/user/menu.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="label.menu.usersubscriptions" isLabelKey="true" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconMinhasInscricoes.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/user/menu.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <c:choose>
@@ -49,7 +49,7 @@
                 <display:column titleKey="label.theme" value="${inscricao.edicaoEvento.tema}" class="centered" headerClass="centered"/>                        
                 <display:column titleKey="label.subscriptionstatus" value="${inscricao.status.value}" class="centered" headerClass="centered"/>                        
                 <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
-                    de <msf:formatPeriod value="${inscricao.edicaoEvento.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+                    de <javalek:formatPeriod value="${inscricao.edicaoEvento.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
                 </display:column>
             </display:table>
         </div>

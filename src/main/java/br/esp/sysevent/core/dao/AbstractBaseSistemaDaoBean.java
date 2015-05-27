@@ -9,7 +9,6 @@ import com.javaleks.commons.core.dao.AbstractEntityDao;
 import com.javaleks.commons.core.model.Entity;
 import com.javaleks.commons.util.ArgumentUtils;
 import com.javaleks.commons.util.ArrayUtils;
-import com.javaleks.commons.util.CollectionUtils;
 import com.javaleks.commons.util.ObjectUtils;
 import java.io.Serializable;
 import java.util.Collection;
@@ -27,11 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  */
-public class BaseTaperaDaoBean<ID extends Serializable & Comparable<ID>, T extends Entity<ID>>
-        extends AbstractEntityDao<ID, T> implements BaseTaperaDao<ID, T> {
+public abstract class AbstractBaseSistemaDaoBean<ID extends Serializable & Comparable<ID>, T extends Entity<ID>>
+        extends AbstractEntityDao<ID, T> implements BaseSistemaDao<ID, T> {
 
     @Autowired
-    public BaseTaperaDaoBean(final SessionFactory sessionFactory) {
+    public AbstractBaseSistemaDaoBean(final SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 

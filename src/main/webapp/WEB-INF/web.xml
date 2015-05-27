@@ -32,7 +32,7 @@
     <!-- Define o filtro do SiteMesh. -->
     <filter>
         <filter-name>sitemesh</filter-name>
-        <filter-class>com.opensymphony.module.sitemesh.filter.PageFilter</filter-class>
+        <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
     </filter>
 
     <!-- Define quais as urls devem ser testadas pelo filtro do Spring-Security -->

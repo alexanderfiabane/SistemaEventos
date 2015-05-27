@@ -8,7 +8,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -21,7 +21,7 @@ import org.springframework.validation.Errors;
 public class GrupoIdadeValidator extends AbstractValidator<GrupoIdade>{
 
     private final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
-    
+
     @Override
     public void validateCommand(GrupoIdade grupoIdade, Errors errors) {
         validateEdicao(grupoIdade.getEdicaoEvento(), errors);
@@ -30,7 +30,7 @@ public class GrupoIdadeValidator extends AbstractValidator<GrupoIdade>{
         validateVagas(grupoIdade.getVagas(), errors);
         validateFaixaEtaria(grupoIdade.getIdadeMinima(), grupoIdade.getIdadeMaxima(), errors);
     }
-    
+
     public void validateNome(final String nome, final Errors errors) {
         if (CharSequenceUtils.isBlankOrNull(nome)) {
             // nome obrigatório
@@ -64,5 +64,5 @@ public class GrupoIdadeValidator extends AbstractValidator<GrupoIdade>{
             errors.rejectValue("tipo", "errors.required");
         }
     }
-    
+
 }

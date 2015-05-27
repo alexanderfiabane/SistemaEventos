@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Evento;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class EventoDaoBean extends BaseTaperaDaoBean<Long, Evento> implements EventoDao {
+@Repository(value = "eventoDao")
+public class EventoDaoBean extends AbstractBaseSistemaDaoBean<Long, Evento> implements EventoDao {
 
     @Autowired
     public EventoDaoBean(SessionFactory sessionFactory) {

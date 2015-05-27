@@ -2,18 +2,18 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="label.page.payment" isLabelKey="true" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/user/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="label.menu.usersubscriptions"><msf:url><c:url value="/user/listUsuarioInscricoes.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="label.page.payment" isLabelKey="true" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/user/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="label.menu.usersubscriptions"><javalek:url><c:url value="/user/listUsuarioInscricoes.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
 <fieldset>
-    <legend><msf:message key="label.eventdetails"/></legend>
+    <legend><javalek:message key="label.eventdetails"/></legend>
     <div class="row-fluid">
         <div class="span3">
             <see:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.inscricao.confraternista.tipo.descricao}"/>
@@ -29,7 +29,7 @@
 
 <form:form commandName="command">
     <fieldset>
-        <legend><msf:message key="label.paymentdetails"/></legend>
+        <legend><javalek:message key="label.paymentdetails"/></legend>
         <div class="row-fluid">
             <div class="span3">
                 <see:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="numeroDocumento"/>

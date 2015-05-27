@@ -3,10 +3,10 @@
  */
 package br.esp.sysevent.web.admin.validation;
 
+import br.esp.sysevent.core.dao.EstadoDao;
 import br.esp.sysevent.core.model.Estado;
-import br.esp.sysevent.core.service.EstadoService;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.validation.Errors;
 
 /**
  * Valida uma Cidade.
- * 
+ *
  * @author Alexander Fiabane do Rego (alexander.fiabane@gmail.com)
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
@@ -30,7 +30,7 @@ public class EstadoValidator extends AbstractValidator<Estado> {
      */
     private final Pattern SIGLA_PATTERN = Pattern.compile("[a-zA-Z]{2}");
     @Autowired
-    EstadoService estadoService;
+    private EstadoDao estadoDao;
 
     /**
      * Valida o command inteiro.
@@ -62,7 +62,7 @@ public class EstadoValidator extends AbstractValidator<Estado> {
             // sigla obrigatória
             errors.rejectValue("sigla", "errors.required");
         } else {
-            final Estado estado = estadoService.findBySigla(sigla);
+            final Estado estado = estadoDao.findBySigla(sigla);
             if (!SIGLA_PATTERN.matcher(sigla).matches()) {
                 // sigla inválida
                 errors.rejectValue("sigla", "errors.invalid");

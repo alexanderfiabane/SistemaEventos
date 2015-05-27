@@ -2,15 +2,15 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastrar Notícia" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconNoticias.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastros Básicos" isLabelKey="false"><msf:url><c:url value="/admin/menuCadastrosBasicos.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastrar Notícia" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconNoticias.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastros Básicos" isLabelKey="false"><javalek:url><c:url value="/admin/menuCadastrosBasicos.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <div class="row-fluid">
@@ -36,7 +36,7 @@
         </display:column>
         <display:column titleKey="label.title" property="titulo" class="centered" headerClass="centered"/>
         <display:column titleKey="label.date" media="html" class="centered" headerClass="centered">
-            <msf:formatDate value="${noticia.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+            <javalek:formatDate value="${noticia.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
         </display:column>
     </display:table>
 </div>

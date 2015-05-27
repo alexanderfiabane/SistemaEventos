@@ -10,5 +10,5 @@ import br.esp.sysevent.core.model.Noticia;
  *
  * @author Alexander
  */
-public interface NoticiaDao extends BaseTaperaDao<Long, Noticia>{
+public interface NoticiaDao extends BaseSistemaDao<Long, Noticia>{
 }

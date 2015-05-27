@@ -5,13 +5,13 @@ package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
 import com.javaleks.commons.util.CollectionUtils;
-import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -36,7 +36,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @AttributeOverride(name = "id", column =
         @Column(name = "ID_EDICAO"))
 public class Edicao extends AbstractEntity {
-    private static final long serialVersionUID = -814676588800010502L;
+    private static final long serialVersionUID = 4133257161895949871L;
 
     @ManyToOne
     @JoinColumn(name = "ID_EVENTO", nullable = false)
@@ -96,6 +96,9 @@ public class Edicao extends AbstractEntity {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "edicaoEvento")
     private Collection<GrupoIdade> gruposIdade;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_FORMA_COBRANCA", nullable = true)
+    private FormaCobranca formaCobranca;
 
     public String getTema() {
         return tema;
@@ -121,7 +124,7 @@ public class Edicao extends AbstractEntity {
         this.vagasOcupadas = vagasOcupadas;
     }
 
-    public Period getPeriodoInscricao() {
+    public PersistentPeriod getPeriodoInscricao() {
         return periodoInscricao;
     }
 
@@ -236,6 +239,14 @@ public class Edicao extends AbstractEntity {
         return vagas - vagasOcupadas;
     }
 
+    public FormaCobranca getFormaCobranca() {
+        return formaCobranca;
+    }
+
+    public void setFormaCobranca(FormaCobranca formaCobranca) {
+        this.formaCobranca = formaCobranca;
+    }
+
     public boolean temVaga() {
         return getSaldoVagas() > 0;
     }
@@ -312,10 +323,7 @@ public class Edicao extends AbstractEntity {
         if (this.data != other.data && (this.data == null || !this.data.equals(other.data))) {
             return false;
         }
-        if (this.tipo != other.tipo) {
-            return false;
-        }
-        return true;
+        return this.tipo == other.tipo;
     }
 
 }

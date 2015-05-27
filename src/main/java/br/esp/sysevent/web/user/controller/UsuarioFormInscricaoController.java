@@ -4,12 +4,13 @@
  */
 package br.esp.sysevent.web.user.controller;
 
-import br.esp.sysevent.web.controller.util.ControllerUtils;
-import br.esp.sysevent.web.guest.controller.FormInscricaoController;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.controller.FormInscricaoController;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +25,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsuarioFormInscricaoController extends FormInscricaoController{
 
     protected static final String[] INIT_PROPS = {"confraternista.camisetas"};
+    private InscricaoDao inscricaoDao;
 
     @Override
     @ModelAttribute(COMMAND_NAME)
     public Inscricao getCommand(@RequestParam(value = "idInscricao", required = false) final String idInscricao) {
         final Inscricao command;
         if (CharSequenceUtils.isNumber(idInscricao)) {
-            command = inscricaoService.findById(NumberUtils.parseLong(idInscricao), INIT_PROPS);
+            command = inscricaoDao.findById(NumberUtils.parseLong(idInscricao), INIT_PROPS);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }

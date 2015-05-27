@@ -13,7 +13,7 @@ import org.hibernate.criterion.Order;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface CasaEspiritaDao extends BaseTaperaDao<Long, CasaEspirita> {
+public interface CasaEspiritaDao extends BaseSistemaDao<Long, CasaEspirita> {
 
     public Collection<CasaEspirita> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
 }

@@ -9,5 +9,5 @@ import br.esp.sysevent.core.model.PagamentoInscricao;
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-public interface PagamentoInscricaoDao extends BaseTaperaDao<Long, PagamentoInscricao> {
+public interface PagamentoInscricaoDao extends BaseSistemaDao<Long, PagamentoInscricao> {
 }

@@ -22,7 +22,7 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider user-service-ref="usuarioService">
+        <authentication-provider user-service-ref="usuarioDao">
             <!-- plaintext, sha, sha-256, md5, md4 -->
             <password-encoder hash="sha-256"/>
         </authentication-provider>

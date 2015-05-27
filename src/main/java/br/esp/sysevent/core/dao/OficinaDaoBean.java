@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class OficinaDaoBean extends BaseTaperaDaoBean<Long, Oficina> implements OficinaDao {
+@Repository(value = "oficinaDao")
+public class OficinaDaoBean extends AbstractBaseSistemaDaoBean<Long, Oficina> implements OficinaDao {
 
     @Autowired
     public OficinaDaoBean(SessionFactory sessionFactory) {

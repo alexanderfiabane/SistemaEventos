@@ -1,15 +1,19 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
+<%--
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastrar Evento" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastrar Evento" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
+--%>
+<mocca:title title="Cadastrar Evento" isTitleKey="false"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <form:hidden path="id"/>
@@ -36,10 +40,10 @@
             <table class="table striped hovered stroked">
                 <thead class="header">
                     <tr>
-                        <th class="centered" style="width: 10em;"><msf:message key="label.options"/></th>
-                        <th class="centered" style="width: 30em;"><msf:message key="label.name"/></th>
-                        <th class="centered"><msf:message key="label.acronym"/></th>
-                        <th class="centered"><msf:message key="label.site"/></th>
+                        <th class="align-center" style="width: 10em;"><fmt:message key="label.options"/></th>
+                        <th class="align-center"><fmt:message key="label.name"/></th>
+                        <th class="align-center" style="width: 18em;"><fmt:message key="label.acronym"/></th>
+                        <th class="align-center"><fmt:message key="label.site"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +56,7 @@
                                     <div class="btn-group">
                                         <button type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
                                     <button type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
-                                    <button type="button" class="btn small" title="Criar edição deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-folder-open"></i></button>
+                                    <button type="button" class="btn small" title="Criar ediÃ§Ã£o deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-share-alt"></i></button>
                                 </div>
                             </td>
                             <td class="centered">${evento.nome}</td>

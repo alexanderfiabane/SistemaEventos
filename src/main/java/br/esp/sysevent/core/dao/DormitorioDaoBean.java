@@ -27,8 +27,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class DormitorioDaoBean extends BaseTaperaDaoBean<Long, Dormitorio> implements DormitorioDao {
+@Repository(value = "dormitorioDao")
+public class DormitorioDaoBean extends AbstractBaseSistemaDaoBean<Long, Dormitorio> implements DormitorioDao {
 
     @Autowired
     public DormitorioDaoBean(SessionFactory sessionFactory) {

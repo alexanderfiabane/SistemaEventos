@@ -3,14 +3,14 @@
  */
 package br.esp.sysevent.web.controller.util;
 
-import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.ojimarcius.commons.mail.SimpleEmail;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.DateUtils;
-import br.ojimarcius.commons.velocity.ConfigurableVelocityProcessor;
-import br.ojimarcius.commons.velocity.VelocityProcessor;
+import br.esp.sysevent.util.ConfigurableVelocityProcessor;
+import br.esp.sysevent.util.VelocityProcessor;
+import br.esp.sysevent.web.guest.controller.FormInscricaoController;
+import com.javaleks.commons.mail.SimpleEmail;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;

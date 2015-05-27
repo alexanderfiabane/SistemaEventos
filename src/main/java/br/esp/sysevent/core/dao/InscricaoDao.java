@@ -14,7 +14,7 @@ import java.util.Collection;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface InscricaoDao extends BaseTaperaDao<Long, Inscricao> {
+public interface InscricaoDao extends BaseSistemaDao<Long, Inscricao> {
 
     public Collection<Inscricao> findByEdicao(final Long idEdicao);
     public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao Edicao);

@@ -10,7 +10,7 @@ import java.util.Collection;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface OficinaDao extends BaseTaperaDao<Long, Oficina> {
+public interface OficinaDao extends BaseSistemaDao<Long, Oficina> {
 
     public Collection<Oficina> findAll();
 }

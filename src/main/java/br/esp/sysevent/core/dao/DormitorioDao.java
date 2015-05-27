@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface DormitorioDao extends BaseTaperaDao<Long, Dormitorio> {
+public interface DormitorioDao extends BaseSistemaDao<Long, Dormitorio> {
 
     public void alocaConfraternistaDormitorio(Confraternista confraternista, Dormitorio dormitorio);
     public void alocaConfraternistasDormitorio(Collection<Confraternista> confraternistas, Dormitorio dormitorio);

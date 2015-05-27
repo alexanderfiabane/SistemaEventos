@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><msf:message key="application.name"/><c:if test="${!empty pageTitle_label}"> - ${pageTitle_label}</c:if></title>
+        <title><fmt:message key="application.name"/><c:if test="${!empty pageTitle_label}"> - ${pageTitle_label}</c:if></title>
 
         <%-- Head da pagina, contendo os javascripts e css usados. --%>
         <!-- Le styles -->
@@ -41,7 +41,6 @@
                 <div class="container">
                     <ul class="nav">
                         <li><a class="uppercase" href="${home_url}"><spring:message code="application.name"/></a></li>
-
                     </ul>
                     <ul class="nav pull-right">
                         <li>
@@ -89,7 +88,7 @@
                                 </object>
                             </div>
                             <div class="logo-txt">
-                                <h1><msf:message key="application.name"/></h1>
+                                <h1><fmt:message key="application.name"/></h1>
                             </div>
                         </div>
                     </div>
@@ -101,7 +100,7 @@
         <div class="band">
             <div class="container no-padding-bottom">
                 <div class="breadcrumb">
-                    <decorator:getProperty property="page.titlebarContent"/>
+                    <sitemesh:write property="page.titlebarContent"/>
                 </div>
             </div>
         </div>
@@ -109,12 +108,12 @@
         <%-- Conteúdo propriamente dito. --%>
         <div class="band">
             <div class="container">
-                <decorator:body/>
+                <sitemesh:write property='body'/>
             </div>
         </div>
 
         <%-- Uma barrinha de rodape discreta, contendo  nome/versao do app e o copyright. --%>
-        <div class="band footer mini-font-size no-print mini-padding-top">
+        <div class="band footer mini-font-size no-print padding-top">
             <div class="container narrow stroked-top">
                 <div class="row">
                     <div class="span6">
@@ -130,5 +129,12 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(':text').addClass('textfield');
+                $('select').addClass('selectfield');
+                $(':text.date').dateTimePicker({mode: 'date'});
+            });
+        </script>
     </body>
 </html>

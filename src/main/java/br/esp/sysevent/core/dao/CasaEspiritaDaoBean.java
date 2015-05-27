@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
 @Repository(value = "casaEspiritaDao")
-public class CasaEspiritaDaoBean extends BaseTaperaDaoBean<Long, CasaEspirita> implements CasaEspiritaDao {
+public class CasaEspiritaDaoBean extends AbstractBaseSistemaDaoBean<Long, CasaEspirita> implements CasaEspiritaDao {
 
     @Autowired
     public CasaEspiritaDaoBean(SessionFactory sessionFactory) {

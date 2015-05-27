@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><msf:message key="application.name"/><c:if test="${!empty pageTitle_label}"> - ${pageTitle_label}</c:if></title>
+        <title><fmt:message key="application.name"/><c:if test="${!empty pageTitle_label}"> - ${pageTitle_label}</c:if></title>
 
         <%-- Head da pagina, contendo os javascripts e css usados. --%>
         <%@ include file="/themes/mocca/page_includes.jspf" %>
@@ -65,10 +65,10 @@
         </div>
 
         <%-- Parte que conterah o conteudo propriamente dito. --%>
-        <decorator:body/>
+        <sitemesh:write property="body"/>
 
         <%-- Uma barrinha de rodape discreta, contendo  nome/versao do app e o copyright. --%>
-        <div class="band footer mini-font-size no-print mini-padding-top">
+        <div class="band footer mini-font-size no-print padding-top">
             <div class="container narrow">
                 <div class="row">
                     <div class="span6">

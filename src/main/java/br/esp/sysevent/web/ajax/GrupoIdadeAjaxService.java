@@ -5,12 +5,12 @@
  */
 package br.esp.sysevent.web.ajax;
 
+import br.esp.sysevent.core.dao.ConfraternistaDao;
+import br.esp.sysevent.core.dao.GrupoIdadeDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
-import br.esp.sysevent.core.service.ConfraternistaService;
-import br.esp.sysevent.core.service.GrupoIdadeService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,22 +23,22 @@ import org.springframework.stereotype.Service;
 public class GrupoIdadeAjaxService {
 
     @Autowired
-    private GrupoIdadeService grupoIdadeService;
+    private GrupoIdadeDao grupoIdadeDao;
     @Autowired
-    private ConfraternistaService confraternistaService;
+    private ConfraternistaDao confraternistaDao;
 
     public GrupoIdade findById(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
         }
-        return grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
+        return grupoIdadeDao.findById(NumberUtils.parseLong(idGrupoIdade));
     }
 
     public Collection<GrupoIdade> findSimilares(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
         } else {
-            return grupoIdadeService.findSimilares(NumberUtils.parseLong(idGrupoIdade));
+            return grupoIdadeDao.findSimilares(NumberUtils.parseLong(idGrupoIdade));
         }
     }
 
@@ -46,10 +46,10 @@ public class GrupoIdadeAjaxService {
         if (idConfraternista == null || idGrupoIdade == null) {
             return "Ocorreu um erro no sistema";
         }
-        Confraternista confraternista = confraternistaService.findById(NumberUtils.parseLong(idConfraternista));
-        GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
+        Confraternista confraternista = confraternistaDao.findById(NumberUtils.parseLong(idConfraternista));
+        GrupoIdade grupoIdade = grupoIdadeDao.findById(NumberUtils.parseLong(idGrupoIdade));
         GrupoIdade grupoIdadeConfraternista = confraternista.getGrupoIdade();
-        Collection<Confraternista> facilitadores = confraternistaService.findFacilitadoresByGrupo(grupoIdadeConfraternista);
+        Collection<Confraternista> facilitadores = confraternistaDao.findFacilitadoresByGrupo(grupoIdadeConfraternista);
         for (Confraternista facilitador : facilitadores) {
             if (facilitador.equals(confraternista)) {
                 return "Este confraternista é facilitador deste grupo. Para trocá-lo vá em 'Cadastrar Grupo Idade'";
@@ -59,11 +59,11 @@ public class GrupoIdadeAjaxService {
             return "Grupo sem vagas";
         } else {
             grupoIdadeConfraternista.setVagasOcupadas(grupoIdadeConfraternista.getVagasOcupadas() - 1);
-            grupoIdadeService.saveOrUpdate(grupoIdadeConfraternista);
+            grupoIdadeDao.saveOrUpdate(grupoIdadeConfraternista);
             confraternista.setGrupoIdade(grupoIdade);
-            confraternistaService.saveOrUpdate(confraternista);
+            confraternistaDao.saveOrUpdate(confraternista);
             grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() + 1);
-            grupoIdadeService.saveOrUpdate(grupoIdade);
+            grupoIdadeDao.saveOrUpdate(grupoIdade);
 
             return "Confraternista trocado para " + grupoIdade.getNome();
         }

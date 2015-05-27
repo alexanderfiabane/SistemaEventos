@@ -12,7 +12,7 @@ import java.util.Collection;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
 */
-public interface CamisetaConfraternistaDao extends BaseTaperaDao<Long, CamisetaConfraternista> {
+public interface CamisetaConfraternistaDao extends BaseSistemaDao<Long, CamisetaConfraternista> {
 
     public Collection<CamisetaConfraternista> findByConfraternista(final Confraternista confraternista);
     

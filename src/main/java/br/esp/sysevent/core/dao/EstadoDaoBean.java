@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-@Repository
-public class EstadoDaoBean extends BaseTaperaDaoBean<Long, Estado> implements EstadoDao {
+@Repository(value = "estadoDao")
+public class EstadoDaoBean extends AbstractBaseSistemaDaoBean<Long, Estado> implements EstadoDao {
 
     @Autowired
     public EstadoDaoBean(SessionFactory sessionFactory) {

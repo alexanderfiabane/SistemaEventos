@@ -2,10 +2,10 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/index.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
@@ -13,7 +13,7 @@
 
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><msf:message key="label.eventdetails"/></h3>
+            <h3><javalek:message key="label.eventdetails"/></h3>
     </legend>
     <div class="row">
         <div class="span3">
@@ -31,7 +31,7 @@
 <!--DADOS PESSOAIS-->
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><msf:message key="label.personaldetails"/></h3>
+        <h3><javalek:message key="label.personaldetails"/></h3>
     </legend>
     <div class="row">
         <div class="span3">
@@ -106,7 +106,7 @@
 
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><msf:message key="label.healthfooddetails"/></h3>
+        <h3><javalek:message key="label.healthfooddetails"/></h3>
     </legend>
     <div class="row">
         <div class="span12">
@@ -135,7 +135,7 @@
 
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><msf:message key="label.housedetails"/></h3>
+        <h3><javalek:message key="label.housedetails"/></h3>
     </legend>
     <div class="row">
         <div class="span12">
@@ -185,7 +185,7 @@
 <c:if test="${not empty command.edicaoEvento.oficinas}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><msf:message key="label.workshopdetails"/></h3>
+            <h3><javalek:message key="label.workshopdetails"/></h3>
         </legend>
         <div class="row">
             <see:formFieldView label="label.workshopname" isLabelKey="true" value="${command.confraternista.oficina.nome}"/>
@@ -196,7 +196,7 @@
 <c:if test="${not empty command.edicaoEvento.gruposIdade}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><msf:message key="label.groupagedetails"/></h3>
+            <h3><javalek:message key="label.groupagedetails"/></h3>
         </legend>
         <div class="row">
             <see:formFieldView label="label.groupagename" isLabelKey="true" value="${command.confraternista.grupoIdade.nome}"/>
@@ -207,18 +207,18 @@
 <c:if test="${not empty command.confraternista.camisetas}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><msf:message key="label.shirtdetails"/></h3>
+            <h3><javalek:message key="label.shirtdetails"/></h3>
         </legend>
         <div class="row">
             <div class="table-wrapper scrollable bordered rounded">
                 <table id="camisetas" class="table striped hovered stroked">
                     <thead class="header">
-                        <tr><th class="centered" colspan="4"><msf:message key="label.shirts"/></th></tr>
+                        <tr><th class="centered" colspan="4"><javalek:message key="label.shirts"/></th></tr>
                         <tr>
-                            <th class="centered"><msf:message key="label.shirttype"/></th>
-                            <th class="centered"><msf:message key="label.shirtcolor"/></th>
-                            <th class="centered"><msf:message key="label.shirtsize"/></th>
-                            <th class="centered"><msf:message key="label.shirtquant"/></th>
+                            <th class="centered"><javalek:message key="label.shirttype"/></th>
+                            <th class="centered"><javalek:message key="label.shirtcolor"/></th>
+                            <th class="centered"><javalek:message key="label.shirtsize"/></th>
+                            <th class="centered"><javalek:message key="label.shirtquant"/></th>
                         </tr>
                     </thead>
                     <tbody>

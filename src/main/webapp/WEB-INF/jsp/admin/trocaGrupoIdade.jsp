@@ -3,22 +3,22 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Troca de Grupo do Confraternista">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Grupo por Idade" isLabelKey="false"><msf:url><c:url value="/admin/menuGrupoIdade.html?idEdicao=${edicao.id}"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Troca de Grupo do Confraternista">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Grupo por Idade" isLabelKey="false"><javalek:url><c:url value="/admin/menuGrupoIdade.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <div class="row-fluid">
     <div class="row-fluid">
         <div class="span6">            
-            <msf:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+            <javalek:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
             <select id="selectGrupoA" class="span12">
                 <option value="">Selecione um grupo</option>
                 <c:forEach var="grupoa" items="${grupoIdade}">
@@ -27,7 +27,7 @@
             </select>
         </div>
         <div class="span6">            
-            <msf:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+            <javalek:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
             <select id="selectGrupoB" class="span12">
                 <option value="">Selecione um grupo</option>
                 <c:forEach var="grupob" items="${grupoIdadeb}">
@@ -113,11 +113,11 @@
                                             .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.state"/>'))
+                                            .append('<javalek:message key="label.state"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.city"/>'))
+                                            .append('<javalek:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.name"/>'))));
+                                            .append('<javalek:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
                         jQuery.each(confraternistas, function (index, value) {
@@ -153,11 +153,11 @@
                                             .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.state"/>'))
+                                            .append('<javalek:message key="label.state"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.city"/>'))
+                                            .append('<javalek:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<msf:message key="label.name"/>'))));
+                                            .append('<javalek:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoB">');
                         jQuery.each(confraternistas, function (index, value) {

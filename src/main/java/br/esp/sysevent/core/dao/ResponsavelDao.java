@@ -12,6 +12,6 @@ import br.esp.sysevent.core.model.Responsavel;
  *
  * @author Alexander
  */
-public interface ResponsavelDao extends BaseTaperaDao<Long, Responsavel>{
+public interface ResponsavelDao extends BaseSistemaDao<Long, Responsavel>{
     
 }

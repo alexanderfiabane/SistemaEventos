@@ -2,17 +2,17 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastro de Dormitórios">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea" isLabelKey="true"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Edição" isLabelKey="false"><msf:url><c:url value="/admin/formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Dormitório" isLabelKey="false"><msf:url><c:url value="/admin/menuDormitorio.html?idEdicao=${command.edicaoEvento.id}"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastro de Dormitórios">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Dormitório" isLabelKey="false"><javalek:url><c:url value="/admin/menuDormitorio.html?idEdicao=${command.edicaoEvento.id}"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form  commandName="command">
     <mocca:title title="Cadastrar Dormitório" isTitleKey="false" level="2"/>
@@ -42,12 +42,12 @@
     <table class="table bordered rounded hovered striped stroked shadowed">
         <thead>
             <tr>
-                <th class="centered" style="width: 8em;"><msf:message key="label.options"/></th>
-                <th class="centered"><msf:message key="label.name"/></th>
-                <th class="centered" style="width: 4em;"><msf:message key="label.vacancies"/></th>
-                <th class="centered" style="width: 6em;"><msf:message key="label.gender"/></th>
-                <th class="centered"><msf:message key="label.coordinator"/></th>
-                <th class="centered"><msf:message key="label.vicecoordinator"/></th>
+                <th class="centered" style="width: 8em;"><javalek:message key="label.options"/></th>
+                <th class="centered"><javalek:message key="label.name"/></th>
+                <th class="centered" style="width: 4em;"><javalek:message key="label.vacancies"/></th>
+                <th class="centered" style="width: 6em;"><javalek:message key="label.gender"/></th>
+                <th class="centered"><javalek:message key="label.coordinator"/></th>
+                <th class="centered"><javalek:message key="label.vicecoordinator"/></th>
             </tr>
         </thead>
         <tbody>
@@ -79,7 +79,7 @@
 <div id="localizar" title="Localizar Confraternista" style="display: none;">
     <div class="row">
         <input type="hidden" id="field"/>
-        <msf:label label="Nome do Confraternista" for="nomeLocalizar" cssClass="control-label"/>
+        <javalek:label label="Nome do Confraternista" for="nomeLocalizar" cssClass="control-label"/>
         <input type="text" id="nomeLocalizar" class="textfield width-100"/>
     </div>
     <see:notice id="msgLocalizar" closeable="false" type="error">
@@ -92,12 +92,12 @@
         <table id="resultadosLocalizar" class="table rounded hovered striped bordered stroked" style="display: none;">
             <thead class="header">
                 <tr>
-                    <th colspan="3" class="centered"><msf:message key="label.participants"/></th>
+                    <th colspan="3" class="centered"><javalek:message key="label.participants"/></th>
                 </tr>
                 <tr>
                     <th class="centered" style="width: 2em;">#</th>
-                    <th class="centered"><msf:message key="label.name"/></th>
-                    <th class="centered" style="width: 5em;"><msf:message key="label.sex"/></th>
+                    <th class="centered"><javalek:message key="label.name"/></th>
+                    <th class="centered" style="width: 5em;"><javalek:message key="label.sex"/></th>
                 </tr>
             </thead>
             <tbody>

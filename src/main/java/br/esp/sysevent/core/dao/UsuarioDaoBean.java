@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-@Repository
-public class UsuarioDaoBean extends BaseTaperaDaoBean<Long, Usuario> implements UsuarioDao {
+@Repository(value = "usuarioDao")
+public class UsuarioDaoBean extends AbstractBaseSistemaDaoBean<Long, Usuario> implements UsuarioDao {
 
     @Autowired
     public UsuarioDaoBean(SessionFactory sessionFactory) {
@@ -50,7 +50,7 @@ public class UsuarioDaoBean extends BaseTaperaDaoBean<Long, Usuario> implements 
      * Este metodo vem da interface "org.springframework.security.core.userdetails.UserDetailsService".
      * Ele é usado pelo spring-security para fazer a autenticação do usuário.
      * @param username
-     * @return 
+     * @return
      */
     @Override
     @Transactional(readOnly = true)

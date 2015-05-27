@@ -2,7 +2,7 @@ package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -13,7 +13,7 @@ import org.springframework.validation.Errors;
  */
 @Component
 public class CorCamisetaValidator extends AbstractValidator<CorCamiseta> {
-    
+
     private final Pattern DESCRICAO_PATTERN = Pattern.compile("[\\p{L} ]+");
 
     @Override

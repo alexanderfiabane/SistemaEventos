@@ -3,7 +3,7 @@
  */
 package br.esp.sysevent.web.context;
 
-import br.ojimarcius.commons.util.LocaleUtils;
+import com.javaleks.commons.util.LocaleUtils;
 import java.io.IOException;
 import java.sql.Driver;
 import java.util.Properties;

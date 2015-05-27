@@ -9,7 +9,7 @@
 <%@attribute name="closeable"       type="java.lang.Boolean" %>
 
 <%-- defaults --%>
-<c:set var="id"><msf:idGenerator prefix="NoticeTag" defaultValue="${id}"/></c:set>
+<c:set var="id"><javalek:idGenerator prefix="NoticeTag" defaultValue="${id}"/></c:set>
 <c:if test="${empty visible}"><c:set var="visible" value="${true}"/></c:if>
 <c:if test="${empty closeable}"><c:set var="closeable" value="${false}"/></c:if>
 <c:if test="${empty type}"><c:set var="type" value="info"/></c:if>
@@ -18,7 +18,7 @@
 
 <%-- source --%>
 <c:if test="${visible}">
-    <div id="${id}" class="box bordered tip ${type}">
+    <div id="${id}" class="box bordered tip ${type} align-left">
         <c:if test="${closeable}"><button type="button" class="close" data-dismiss="box">&times;</button></c:if>
         <jsp:doBody/>
     </div>

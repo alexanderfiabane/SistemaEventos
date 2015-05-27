@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.Edicao;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Calendar;
 import java.util.Collection;
 import org.hibernate.Criteria;
@@ -18,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Alexander
  */
-@Repository
-public class EdicaoDaoBean extends BaseTaperaDaoBean<Long, Edicao> implements EdicaoDao {
+@Repository(value = "edicaoDao")
+public class EdicaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Edicao> implements EdicaoDao {
 
     @Autowired
     public EdicaoDaoBean(SessionFactory sessionFactory) {
@@ -28,6 +27,13 @@ public class EdicaoDaoBean extends BaseTaperaDaoBean<Long, Edicao> implements Ed
 
     @Override
     public Collection<Edicao> findAbertas(Calendar dataAtual){
+//        StringBuilder select = new StringBuilder();
+//        select.append("from Edicao where "
+//                + "periodoInscricao.period.start <= :dataAtual "
+//                + "and periodoInscricao.period.end >= :dataAtual");
+//        Query query = createQuery(select);
+//        query.setDate("dataAtual", dataAtual.getTime());
+//        return query.list();
         final Criteria criteria = createCriteria().
                 setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).
                 add(Restrictions.le("periodoInscricao.start", dataAtual)).

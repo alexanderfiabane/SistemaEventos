@@ -4,12 +4,12 @@
  */
 package br.esp.sysevent.web.user.controller;
 
-import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.esp.sysevent.core.service.InscricaoService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +28,13 @@ public class UsuarioInscricoesController {
     protected static final String[] INIT_PROPS = {"confraternista.camisetas"};
 
     @Autowired
-    private InscricaoService inscricaoService;
+    private InscricaoDao inscricaoDao;
 
     @RequestMapping(value = "/user/listUsuarioInscricoes.html", method = RequestMethod.GET)
     public String listUsuarioInscricoes(final ModelMap model) {
 
         final Usuario loggedUser = ControllerUtils.getLoggedUser();
-        final Collection<Inscricao> inscricoes = inscricaoService.findByUsuario(loggedUser);
+        final Collection<Inscricao> inscricoes = inscricaoDao.findByUsuario(loggedUser);
         if (inscricoes == null) {
             throw new IllegalArgumentException("Não há edições cadastradas.");
         }
@@ -53,7 +53,7 @@ public class UsuarioInscricoesController {
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
-        final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao), initProps);
+        final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao), initProps);
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }

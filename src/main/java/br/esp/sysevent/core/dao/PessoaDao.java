@@ -12,7 +12,7 @@ import org.hibernate.criterion.Order;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-public interface PessoaDao extends BaseTaperaDao<Long, Pessoa> {
+public interface PessoaDao extends BaseSistemaDao<Long, Pessoa> {
 
     public Collection<Pessoa> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
     public Collection<Pessoa> findByNome(final String nome);

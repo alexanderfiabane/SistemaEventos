@@ -22,7 +22,7 @@
 
 <%-- source --%>
 <div class="control-group">
-    <msf:label label="${label}" isLabelKey="${isLabelKey}" isMandatory="false" breakAfter="${isBreak}"/>
+    <javalek:label label="${label}" isLabelKey="${isLabelKey}" isMandatory="false" breakAfter="${isBreak}"/>
     <c:choose>
         <c:when test="${empty value}">
             <span style="font-weight: normal;"><em>Não informado</em></span>

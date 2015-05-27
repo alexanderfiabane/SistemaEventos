@@ -1,33 +1,38 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
+<%--
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastrar Edição de Evento" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Evento" isLabelKey="false"><msf:url><c:url value="/admin/formEvento.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastrar EdiÃ§Ã£o de Evento" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
-
+--%>
+<mocca:title title="Cadastrar EdiÃ§Ã£o de Evento - ${command.evento.sigla}"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
-    <!--Conteúdo Tab-->
+    <!--ConteÃºdo Tab-->
     <div class="tabbable">
         <!--Tab-->
         <ul class="nav tabs" id="EdicaoTab">
-            <li class="active"><a href="#cadastroBasico"><msf:message key="label.edition"/></a></li>
-            <li><a href="#camisetas"><msf:message key="label.shirts"/></a></li>
+            <li class="active"><a href="#cadastroBasico"><fmt:message key="label.edition"/></a></li>
+            <li><a href="#camisetas"><fmt:message key="label.shirts"/></a></li>
         </ul>
         <div class="content">
-            <!--Cadastro Básico-->
+            <!--Cadastro BÃ¡sico-->
             <div class="pane active" id="cadastroBasico">
                 <fieldset>
                     <mocca:title title="label.editiondetails" isTitleKey="true" level="2"/>
                     <div class="row">
                         <div class="span6">
-                            <msf:label label="label.editiontype" isLabelKey="true" isMandatory="true" breakAfter="false" cssClass="control-label"/>
+                            <label class="label control">
+                                <fmt:message key="label.editiontype"/>
+                            </label>
                             <ul class="no-bullet no-padding">
                                 <c:forEach var="item" items="${tiposEdicao}">
                                     <li class="mini-padding">
@@ -55,13 +60,13 @@
                     </div>
                     <div class="row">
                         <div class="span3">
-                            <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.start" maxlength="10" inputClass="textfield"/>
+                            <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.start" maxlength="10"/>
                         </div>
                         <div class="span3">
-                            <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.end" maxlength="10" inputClass="textfield"/>
+                            <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.end" maxlength="10"/>
                         </div>
                         <div class="span3">
-                            <see:formField label="label.subscriptionDate" isLabelKey="true" isMandatory="true" type="date" path="data" maxlength="10" inputClass="textfield"/>
+                            <see:formField label="label.subscriptionDate" isLabelKey="true" isMandatory="true" type="date" path="data" maxlength="10"/>
                         </div>
                         <div class="span3">
                             <see:formField label="label.subscriptionminage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3" inputClass="textfield"/>
@@ -77,7 +82,7 @@
                         <table class="table bordered rounded stroked">
                             <thead class="header">
                                 <tr>
-                                    <th colspan="4" class="centered">Selecione os Tipos, Cores e Tamanhos de camiseta oferecidos na Edição</th>
+                                    <th colspan="4" class="centered">Selecione os Tipos, Cores e Tamanhos de camiseta oferecidos na EdiÃ§Ã£o</th>
                                 </tr>
                                 <tr>
                                     <th class="centered">Tipos</th>
@@ -104,7 +109,7 @@
                             </tbody>
                             <tfoot class="footer">
                                 <tr>
-                                    <td colspan="4" class="small-font-size padding">* Para desativar as camisetas para essa edição, simplesmente deixe todas as opções acima desmarcadas.</td>
+                                    <td colspan="4" class="small-font-size padding">* Para desativar as camisetas para essa ediÃ§Ã£o, simplesmente deixe todas as opÃ§Ãµes acima desmarcadas.</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -118,22 +123,22 @@
 
 <c:choose>
     <c:when test="${empty edicoes}">
-        <see:notice type="info" closeable="true">Nenhuma edição foi encontrada</see:notice>
+        <see:notice type="info" closeable="true">Nenhuma ediÃ§Ã£o foi encontrada</see:notice>
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable">
             <table class="table bordered rounded shadowed striped hovered stroked">
                 <thead class="header">
                     <tr>
-                        <th class="centered" style="width: 7em;"><msf:message key="label.options"/></th>
-                        <th class="centered" style="width: 5em;">#</th>
-                        <th class="centered"><msf:message key="label.theme"/></th>
-                        <th class="centered" style="width: 6em;"># vagas</th>
-                        <th class="centered" style="width: 8em;"><msf:message key="label.subscriptionValue"/></th>
-                        <th class="centered" style="width: 12em;"><msf:message key="label.subscriptionPeriod"/></th>
-                        <th class="centered" style="width: 8em;"><msf:message key="label.subscriptionDate"/></th>
-                        <th class="centered" style="width: 6em;"><msf:message key="label.subscriptionminage"/></th>
-                    </tr>
+                        <th class="centered" style="width: 7em;"><fmt:message key="label.options"/></th>
+                <th class="centered" style="width: 5em;">#</th>
+                <th class="centered"><fmt:message key="label.theme"/></th>
+                <th class="centered" style="width: 6em;"># vagas</th>
+                <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionValue"/></th>
+                <th class="centered" style="width: 12em;"><fmt:message key="label.subscriptionPeriod"/></th>
+                <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionDate"/></th>
+                <th class="centered" style="width: 6em;"><fmt:message key="label.subscriptionminage"/></th>
+                </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${edicoes}" var="edicao">
@@ -142,37 +147,39 @@
                         <c:url var="grupoIdade_url" value="/admin/menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="oficina_url" value="/admin/formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="dormitorio_url" value="/admin/menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="cobranca_url" value="/admin/menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                             <tr>
                                 <td class="centered ">
                                     <div class="btn-group mini">
                                         <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                    <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
-                                    <div class="btn-group" title="Mais opções">
-                                        <a class="btn small dropdown-toggle dropup" data-toggle="dropdown" href="#">
-                                            <i class="icon-list"></i>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu alignLeft dropup-menu">
-                                            <c:if test="${edicao.faixaEtaria}">
-                                                <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
+                                        <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                                        <div class="btn-group" title="Mais opÃ§Ãµes">
+                                            <a class="btn small dropdown-toggle dropup" data-toggle="dropdown" href="#">
+                                                <i class="icon-list"></i>
+                                                <span class="caret"></span>
+                                            </a>
+                                            <ul class="dropdown-menu alignLeft dropup-menu">
+                                                <c:if test="${edicao.faixaEtaria}">
+                                                    <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
                                                 </c:if>
                                                 <c:if test="${edicao.oficina}">
-                                                <li><a href="${oficina_url}">Oficinas</a></li>
+                                                    <li><a href="${oficina_url}">Oficinas</a></li>
                                                 </c:if>
-                                            <li><a href="${dormitorio_url}">Dormitórios</a></li>
-                                        </ul>
-                                    </div>
+                                                <li><a href="${dormitorio_url}">DormitÃ³rios</a></li>
+                                                <li><a href="${cobranca_url}">CobranÃ§a</a></li>
+                                            </ul>
+                                        </div>
                                 </div>
                             </td>
                             <td class="centered">${edicao.numero}</td>
                             <td>${edicao.tema}</td>
                             <td class="centered">${edicao.vagas}</td>
                             <td class="centered">R$ ${edicao.valorInscricao}</td>
-                            <td class="centered">de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                            <td class="centered"><msf:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                            <td class="centered">${edicao.idadeMinima}</td>
-                        </tr>
-                    </c:forEach>
+                            <td class="centered">de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
+                    <td class="centered"><javalek:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
+                    <td class="centered">${edicao.idadeMinima}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -194,12 +201,13 @@
             }
         }
 
-        $('[name="vagas"]').mask('9999');
-        $('[name="valorInscricao"]').mask('9999');
-        $('[name="valorCamiseta"]').mask('999');
-        $('[name="idadeMinima"]').mask('999');
+        $("[name='vagas']").mask('9999');
+        $("[name='valorInscricao']").mask('9999');
+        $("[name='valorCamiseta']").mask('999');
+        $("[name='idadeMinima']").mask('999');
 
-        $("#periodoInscricao_start").dateTimePicker({
+//        $("#periodoInscricao_start").dateTimePicker({
+        $("[name='periodoInscricao_start']").dateTimePicker({
             'mode': 'date',
             'showExample': false,
             picker: {

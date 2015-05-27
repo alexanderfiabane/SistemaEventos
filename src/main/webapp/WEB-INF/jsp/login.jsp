@@ -1,3 +1,4 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 <div class="band jumbotron masthead stroked-bottom shadowed">
     <div class="jumbotron-inner">
@@ -11,19 +12,19 @@
                         </object>
                     </div>
                     <div class="row logo-txt no-margin no-padding-top padding-bottom">
-                        <h1><msf:message key="application.name"/></h1>
+                        <h1><fmt:message key="application.name"/></h1>
                     </div>
                 </div>
                 <div class="span4 padding-top">
                     <div class="box rounded form pull-right-tablet-desktop control large-margin">
                         <see:notice type="error" visible="${not empty param.error}">
-                            <h4><msf:message key="message.loginFail"/>:</h4>
+                            <h4><fmt:message key="message.loginFail"/>:</h4>
                             ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
                         </see:notice>
                         <form class="form-signin" name='f' action="<c:url value='j_spring_security_check'/>" method='POST'>
                             <div class="row">
                                 <div class="span12 padding-top align-left">
-                                    <label for="login" class="label">Usu·rio</label>
+                                    <label for="login" class="label">Usu√°rio</label>
                                     <input name='j_username' type="text" class="textfield width-100 block"/>
                                 </div>
                             </div>
@@ -31,7 +32,7 @@
                                 <div class="span12 padding-top align-left">
                                     <label for="login" class="label">Senha</label>
                                     <input id="senha" name='j_password' type="password" class="textfield width-100 block"/>
-                                    <span id="capsAlert_senha" class="pill danger" style="display: none;">AtenÁ„o! O CAPS LOCK est· ligado!</span>
+                                    <span id="capsAlert_senha" class="pill danger" style="display: none;">Aten√ß√£o! O CAPS LOCK est√° ligado!</span>
                                 </div>
                             </div>
                             <div class="row">

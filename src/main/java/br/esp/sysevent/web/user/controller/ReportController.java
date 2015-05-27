@@ -3,13 +3,13 @@
  */
 package br.esp.sysevent.web.user.controller;
 
-import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.esp.sysevent.core.service.InscricaoService;
 import br.esp.sysevent.core.service.ReportService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ReportController {
 
     @Autowired
-    private InscricaoService inscricaoService;
+    private InscricaoDao inscricaoDao;
     @Autowired
     private ReportService reportService;
 
@@ -45,7 +45,7 @@ public class ReportController {
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
-        final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));
+        final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }

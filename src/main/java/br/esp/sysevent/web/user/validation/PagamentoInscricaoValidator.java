@@ -5,7 +5,7 @@ package br.esp.sysevent.web.user.validation;
 
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -18,11 +18,11 @@ public class PagamentoInscricaoValidator extends AbstractValidator<PagamentoInsc
 
     @Override
     public void validateCommand(PagamentoInscricao target, Errors errors) {
-        if(CharSequenceUtils.isBlank(target.getNumeroDocumento())) {
-            errors.rejectValue("numeroDocumento", "errors.required");
+        if(CharSequenceUtils.isBlank(target.getCodPagamento())) {
+            errors.rejectValue("codPagamento", "errors.required");
         }
-        if(target.getData() == null) {
-            errors.rejectValue("data", "errors.required");
+        if(target.getDataPagamento()== null) {
+            errors.rejectValue("dataPagamento", "errors.required");
         }
         if(target.getValor() == null) {
             errors.rejectValue("valor", "errors.required");

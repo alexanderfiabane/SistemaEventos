@@ -11,7 +11,7 @@
                     http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
     <dwr:configuration >
-        <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">
+        <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">            
             <dwr:include method="name"/>
             <dwr:include method="sigla"/>
             <dwr:include method="descricao"/>
@@ -68,6 +68,7 @@
     </bean>
 
     <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
+<!--    
     <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
         <dwr:remote javascript="testeAjaxService">
             <dwr:include method="teste" />
@@ -106,4 +107,5 @@
             <dwr:include method="troca" />
         </dwr:remote>
     </bean>
+    -->
 </beans>

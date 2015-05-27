@@ -3,18 +3,18 @@
  */
 package br.esp.sysevent.web.user.controller;
 
-import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.core.dao.InscricaoDao;
+import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.core.model.Usuario;
-import br.esp.sysevent.core.service.InscricaoService;
-import br.esp.sysevent.core.service.PagamentoInscricaoService;
-import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.esp.sysevent.persistence.springframework.validation.Validator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collection;
@@ -42,9 +42,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PagamentoFormController  extends AbstractFormController<Long, PagamentoInscricao> {
 
     @Autowired
-    private InscricaoService inscricaoService;
+    private InscricaoDao inscricaoDao;
     @Autowired
-    private PagamentoInscricaoService pagamentoInscricaoService;
+    private PagamentoInscricaoDao pagamentoInscricaoDao;
     @Autowired
     private PagamentoInscricaoValidator validator;
 
@@ -54,8 +54,8 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
     }
 
     @Override
-    protected PagamentoInscricaoService getCommandService() {
-        return pagamentoInscricaoService;
+    protected PagamentoInscricaoDao getCommandService() {
+        return pagamentoInscricaoDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
@@ -64,7 +64,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
         if(inscricao.getStatus() != Inscricao.Status.AGUARDANDO_PAGAMENTO) {
             throw new IllegalStateException("Pagamento não está liberado para esta inscrição");
         }
-        final Collection<PagamentoInscricao> pagamentos = pagamentoInscricaoService.findByProperty("inscricao", inscricao);
+        final Collection<PagamentoInscricao> pagamentos = pagamentoInscricaoDao.findByProperty("inscricao", inscricao);
         if(pagamentos.isEmpty()) {
             final PagamentoInscricao pagamento = new PagamentoInscricao();
             pagamento.setInscricao(inscricao);
@@ -97,7 +97,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
         }
-        pagamentoInscricaoService.save(command);
+        pagamentoInscricaoDao.save(command);
         model.addAttribute("message", getMessage("message.success.save", locale));
 
         // clear the command object from the session and return form success view
@@ -109,7 +109,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parâmetros inválidos.");
         }
-        final Inscricao inscricao = inscricaoService.findById(NumberUtils.parseLong(idInscricao));
+        final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }

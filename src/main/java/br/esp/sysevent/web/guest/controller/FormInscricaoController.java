@@ -3,6 +3,16 @@
  */
 package br.esp.sysevent.web.guest.controller;
 
+import br.esp.sysevent.core.dao.CidadeDao;
+import br.esp.sysevent.core.dao.CorCamisetaDao;
+import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.EstadoDao;
+import br.esp.sysevent.core.dao.GrupoIdadeDao;
+import br.esp.sysevent.core.dao.InscricaoDao;
+import br.esp.sysevent.core.dao.OficinaDao;
+import br.esp.sysevent.core.dao.ResponsavelDao;
+import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
+import br.esp.sysevent.core.dao.TipoCamisetaDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Confraternista;
@@ -20,23 +30,13 @@ import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
-import br.esp.sysevent.core.service.CidadeService;
-import br.esp.sysevent.core.service.CorCamisetaService;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.EstadoService;
-import br.esp.sysevent.core.service.GrupoIdadeService;
-import br.esp.sysevent.core.service.InscricaoService;
-import br.esp.sysevent.core.service.OficinaService;
-import br.esp.sysevent.core.service.ResponsavelService;
-import br.esp.sysevent.core.service.TamanhoCamisetaService;
-import br.esp.sysevent.core.service.TipoCamisetaService;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.validation.InscricaoValidator;
-import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
-import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -65,25 +65,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class FormInscricaoController extends AbstractFormController<Long, Inscricao> {
 
     @Autowired
-    protected ResponsavelService responsavelService;
+    protected ResponsavelDao responsavelDao;
     @Autowired
-    protected EstadoService estadoService;
+    protected EstadoDao estadoDao;
     @Autowired
-    protected CidadeService cidadeService;
+    protected CidadeDao cidadeDao;
     @Autowired
-    protected EdicaoService edicaoService;
+    protected EdicaoDao edicaoDao;
     @Autowired
-    protected InscricaoService inscricaoService;
+    protected InscricaoDao inscricaoDao;
     @Autowired
-    protected OficinaService oficinaService;
+    protected OficinaDao oficinaDao;
     @Autowired
-    protected GrupoIdadeService grupoIdadeService;
+    protected GrupoIdadeDao grupoIdadeDao;
     @Autowired
-    protected CorCamisetaService corCamisetaService;
+    protected CorCamisetaDao corCamisetaDao;
     @Autowired
-    protected TamanhoCamisetaService tamanhoCamisetaService;
+    protected TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
-    protected TipoCamisetaService tipoCamisetaService;
+    protected TipoCamisetaDao tipoCamisetaDao;
     @Autowired
     protected InscricaoValidator validator;
 
@@ -93,15 +93,15 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     }
 
     @Override
-    protected InscricaoService getCommandService() {
-        return inscricaoService;
+    protected InscricaoDao getCommandService() {
+        return inscricaoDao;
     }
 
     @ModelAttribute(COMMAND_NAME)
     public Inscricao getCommand(@RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         final Inscricao command;
         if (CharSequenceUtils.isNumber(idEdicao)) {
-            final Edicao edicao = edicaoService.findById(NumberUtils.parseLong(idEdicao));
+            final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
                 throw new IllegalArgumentException("Edição não encontrada");
             }
@@ -123,7 +123,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de tipos de confraternista ao referenceData.
-     * @return 
+     * @return
      */
     @ModelAttribute("tiposConfraternista")
     public Collection<Confraternista.Tipo> getTiposConfraternista() {
@@ -132,7 +132,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de sexos ao referenceData.
-     * @return 
+     * @return
      */
     @ModelAttribute("sexos")
     public Collection<Sexo> getSexos() {
@@ -141,11 +141,11 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
 
     /**
      * Adiciona a lista de Estados ao referenceData.
-     * @return 
+     * @return
      */
     @ModelAttribute("estados")
     public Collection<Estado> getEstados() {
-        return estadoService.findAll();
+        return estadoDao.findAll();
     }
 
     /**
@@ -156,20 +156,20 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     @InitBinder
     public void initBinder(final WebDataBinder binder, final Locale locale) {
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
-        binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<Responsavel>(responsavelService));        
-        binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<Cidade>(cidadeService));
-        binder.registerCustomEditor(Oficina.class, new CustomEntityEditor<Oficina>(oficinaService));
-        binder.registerCustomEditor(GrupoIdade.class, new CustomEntityEditor<GrupoIdade>(grupoIdadeService));
-        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaService));
-        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaService));
-        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<TamanhoCamiseta>(tamanhoCamisetaService));
+        binder.registerCustomEditor(Responsavel.class, new CustomEntityEditor<>(responsavelDao));
+        binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<>(cidadeDao));
+        binder.registerCustomEditor(Oficina.class, new CustomEntityEditor<>(oficinaDao));
+        binder.registerCustomEditor(GrupoIdade.class, new CustomEntityEditor<>(grupoIdadeDao));
+        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
+        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<>(tipoCamisetaDao));
+        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));
     }
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
      * @param command
      * @param model
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Inscricao command, final ModelMap model) {
@@ -185,7 +185,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
      * @param status
      * @param model
      * @param attributes
-     * @return 
+     * @return
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Inscricao command,
@@ -213,9 +213,8 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
             }
             return onGet(command, model);
         }
-
         boolean isNova = command.getId() == null;
-        inscricaoService.gravaInscricao(command);
+        inscricaoDao.gravaInscricao(command);
         model.addAttribute("message", getMessage("message.success.save", locale));
 
         if(isNova) {

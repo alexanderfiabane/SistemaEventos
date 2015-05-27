@@ -2,16 +2,16 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Cadastrar Cidade" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconStateCity.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastros Básicos" isLabelKey="false"><msf:url><c:url value="/admin/menuCadastrosBasicos.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Cadastrar Estado" isLabelKey="false"><msf:url><c:url value="/admin/formEstado.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Cadastrar Cidade" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconStateCity.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastros Básicos" isLabelKey="false"><javalek:url><c:url value="/admin/menuCadastrosBasicos.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Estado" isLabelKey="false"><javalek:url><c:url value="/admin/formEstado.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<msf:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <form:form commandName="command">
     <form:hidden path="id"/>

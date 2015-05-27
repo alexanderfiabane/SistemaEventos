@@ -2,7 +2,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="msf" uri="http://code.google.com/msf/commons-tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="mocca" tagdir="/WEB-INF/tags/mocca" %>
 <%@ taglib prefix="see" tagdir="/WEB-INF/tags/see" %>
 
 <%@attribute name="label"       type="java.lang.String" required="true" %>
@@ -29,8 +30,18 @@
 
 <%-- source --%>
 <c:if test="${type != 'check'}">
-    <msf:label label="${label}" isLabelKey="${isLabelKey}" for="${id}"
-               isMandatory="${isMandatory}" breakAfter="false" cssClass="label"/>
+    <c:choose>        
+        <c:when test="${!isLabelKey}">
+            <label class="label control">
+                ${label}
+            </label>        
+        </c:when>
+        <c:otherwise>
+            <label class="label control">
+                <fmt:message key="${label}"/>
+            </label> 
+        </c:otherwise>
+    </c:choose>
 </c:if>
 
 <c:choose>
@@ -50,9 +61,24 @@
         </form:select>
     </c:when>
     <c:when test="${type == 'check'}">
-        <msf:label label="${label}" isLabelKey="${isLabelKey}" colonAfter="false" cssClass="checkbox" breakAfter="false">
-            <form:checkbox path="${path}" id="${id}" />
-        </msf:label>        
+        <c:choose>            
+            <c:when test="${!isLabelKey}">
+                <label class="label checkbox">
+                    ${label}
+                </label>        
+                <form:checkbox path="${path}" id="${id}" />
+            </c:when>
+            <c:otherwise>
+                <label class="label checkbox">
+                    <fmt:message key="${label}"/>
+                    <form:checkbox path="${path}" id="${id}" />
+                </label> 
+            </c:otherwise>
+        </c:choose>
+<%--        
+        <javalek:label label="${label}" isLabelKey="${isLabelKey}" colonAfter="false" cssClass="checkbox" breakAfter="false">
+        </javalek:label>
+--%>
     </c:when>
     <c:when test="${type == 'date'}">
         <see:dateField id="${id}" path="${path}" isShowFormat="false"/>

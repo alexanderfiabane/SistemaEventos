@@ -2,84 +2,84 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Relatórios  - (${edicao.tema})" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.adminArea"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><msf:url><c:url value="/admin/relatorio/listEvento.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Relatórios - Lista de Edições" isLabelKey="false"><msf:url><c:url value="/admin/relatorio/listEdicao.html?idEvento=${edicao.evento.id}"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Relatórios  - (${edicao.tema})" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEvento.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Relatórios - Lista de Edições" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <!-- Estas duas divs implementam um workaround para centralizar o menu -->
 <div id="outerMenu" class="centered" style="display: table; margin: auto;">
     <div id="innerMenu" style="display: table-cell;">
-        <msf:menu id="menu" defaultIconSize="64" itensPerRow="4" >
+        <javalek:menu id="menu" defaultIconSize="64" itensPerRow="4" >
 
-            <msf:menuItem label="Relatório Geral por Tipo de Inscrição">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfTipo.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório Geral por Cidades e Estado">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfCidadeEstado.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório Geral por Sexo">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfSexo.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
+            <javalek:menuItem label="Relatório Geral por Tipo de Inscrição">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfTipo.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório Geral por Cidades e Estado">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfCidadeEstado.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório Geral por Sexo">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfSexo.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
             <c:if test="${(edicao.tipo == 'OFICINA')}">
-                <msf:menuItem label="Relatório de confraternistas por Oficinas">
-                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                    <msf:url><c:url value="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/></msf:url>
-                </msf:menuItem>
+                <javalek:menuItem label="Relatório de confraternistas por Oficinas">
+                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                    <javalek:url><c:url value="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/></javalek:url>
+                </javalek:menuItem>
             </c:if>
             <c:if test="${(edicao.tipo == 'OFICINA')}">
-                <msf:menuItem label="Relatório de confraternistas por Oficinas - Oficineiros">
-                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                    <msf:url><c:url value="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/></msf:url>
-                </msf:menuItem>                
+                <javalek:menuItem label="Relatório de confraternistas por Oficinas - Oficineiros">
+                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                    <javalek:url><c:url value="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/></javalek:url>
+                </javalek:menuItem>                
             </c:if>
             <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
-                <msf:menuItem label="Relatório de confraternistas por Grupos">
-                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                    <msf:url><c:url value="/admin/relatorio/reportConfGrupo.html?idEdicao=${edicao.id}"/></msf:url>
-                </msf:menuItem>
+                <javalek:menuItem label="Relatório de confraternistas por Grupos">
+                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                    <javalek:url><c:url value="/admin/relatorio/reportConfGrupo.html?idEdicao=${edicao.id}"/></javalek:url>
+                </javalek:menuItem>
             </c:if>
             <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
-                <msf:menuItem label="Relatório de confraternistas por Grupos - Facilitadores">
-                    <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                    <msf:url><c:url value="/admin/relatorio/reportConfGrupoFacilitador.html?idEdicao=${edicao.id}"/></msf:url>
-                </msf:menuItem>                
+                <javalek:menuItem label="Relatório de confraternistas por Grupos - Facilitadores">
+                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                    <javalek:url><c:url value="/admin/relatorio/reportConfGrupoFacilitador.html?idEdicao=${edicao.id}"/></javalek:url>
+                </javalek:menuItem>                
             </c:if>
-            <msf:menuItem label="Relatório de Confraternistas por Dormitório">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfDormitorio.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório de Presença dos Confraternistas">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfPresenca.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório de Saúde e Dieta dos Confraternistas">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório de camisetas dos confraternistas">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportConfCamiseta.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Relatório de camisetas para encomenda">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportEncomendaCamiseta.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Crachás (Folha A3)">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
-            <msf:menuItem label="Crachás (Folha A4)">
-                <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-                <msf:url><c:url value="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/></msf:url>
-            </msf:menuItem>
+            <javalek:menuItem label="Relatório de Confraternistas por Dormitório">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfDormitorio.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório de Presença dos Confraternistas">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfPresenca.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório de Saúde e Dieta dos Confraternistas">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório de camisetas dos confraternistas">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportConfCamiseta.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Relatório de camisetas para encomenda">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportEncomendaCamiseta.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Crachás (Folha A3)">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
+            <javalek:menuItem label="Crachás (Folha A4)">
+                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+                <javalek:url><c:url value="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/></javalek:url>
+            </javalek:menuItem>
 
-        </msf:menu>
+        </javalek:menu>
     </div>
 </div>

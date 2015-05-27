@@ -2,11 +2,11 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Relatórios - Lista de Edições (${evento.nome})" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/admin/menu.html"/></msf:url></msf:breadcrumb>
-        <msf:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><msf:url><c:url value="/admin/relatorio/listEvento.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <javalek:pagetitle label="Relatórios - Lista de Edições (${evento.nome})" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEvento.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
 </content>
 
 <c:choose>
@@ -25,7 +25,7 @@
                 <display:column titleKey="label.vacancies" property="vagas" class="centered" headerClass="centered"/>
                 <display:column titleKey="label.subscriptionValue" property="valorInscricao" class="centered" headerClass="centered"/>                
                 <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
-                    de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+                    de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
                 </display:column>
             </display:table>
         </div>

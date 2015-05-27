@@ -20,8 +20,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Fiabane
  */
-@Repository
-public class GrupoIdadeDaoBean extends BaseTaperaDaoBean<Long, GrupoIdade> implements GrupoIdadeDao{
+@Repository(value = "grupoIdadeDao")
+public class GrupoIdadeDaoBean extends AbstractBaseSistemaDaoBean<Long, GrupoIdade> implements GrupoIdadeDao{
 
     @Autowired
     public GrupoIdadeDaoBean(SessionFactory sessionFactory) {

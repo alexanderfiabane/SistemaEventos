@@ -13,7 +13,7 @@ import java.util.Collection;
  *
  * @author Fiabane
  */
-public interface GrupoIdadeDao extends BaseTaperaDao<Long, GrupoIdade>{
+public interface GrupoIdadeDao extends BaseSistemaDao<Long, GrupoIdade>{
 
     public Collection<GrupoIdade> findByIdade(int idade);
     public Collection<GrupoIdade> findByIdadeTipo(int idade, Confraternista.Tipo tipo);

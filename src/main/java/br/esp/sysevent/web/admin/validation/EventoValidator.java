@@ -4,10 +4,10 @@
  */
 package br.esp.sysevent.web.admin.validation;
 
+import br.esp.sysevent.core.dao.EstadoDao;
 import br.esp.sysevent.core.model.Evento;
-import br.esp.sysevent.core.service.EstadoService;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class EventoValidator extends AbstractValidator<Evento> {
     //private final Pattern WEBSITE_PATTERN = Pattern.compile("^(http[s]?://|ftp://)?(www\\\\.)?[a-zA-Z0-9-\\\\.]+\\\\.(com|org|net|mil|edu|ca|co.uk|com.au|gov|br)$");
 
     @Autowired
-    EstadoService eventoService;
+    private EstadoDao eventoDao;
 
     @Override
     public void validateCommand(final Evento evento, final Errors errors) {
@@ -58,7 +58,7 @@ public class EventoValidator extends AbstractValidator<Evento> {
         if (CharSequenceUtils.isBlankOrNull(site)) {
             // site obrigatório
             errors.rejectValue("site", "errors.required");
-        } 
+        }
 //        else if (!WEBSITE_PATTERN.matcher(site).matches()) {
 //            // site inválida
 //            errors.rejectValue("site", "errors.invalid");

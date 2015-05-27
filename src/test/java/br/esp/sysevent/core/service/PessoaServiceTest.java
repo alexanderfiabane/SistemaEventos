@@ -1,15 +1,16 @@
 package br.esp.sysevent.core.service;
 
+import br.esp.sysevent.core.dao.CidadeDao;
+import br.esp.sysevent.core.dao.PessoaDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
-import br.ojimarcius.commons.util.CalendarUtils;
+import com.javaleks.commons.util.CalendarUtils;
 import java.util.Collection;
 import java.util.logging.Level;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 
 /**
  * Classe que executa testes básicos do PessoaService, usando o banco Derby (JavaDB) em memória.
@@ -26,10 +27,10 @@ public class PessoaServiceTest extends AbstractServiceTest {
 
     //@Test
     public void testSave() {
-        final CidadeService cidadeService = getService(CidadeService.class);
-        final PessoaService pessoaService = getService(PessoaService.class);
-        LOGGER.log(Level.INFO, cidadeService.findAll().toString());
-        final Cidade c = cidadeService.findByProperty("nome", "Alegrete").iterator().next();
+        final CidadeDao cidadeDao = getService(CidadeDao.class);
+        final PessoaDao pessoaDao = getService(PessoaDao.class);
+        LOGGER.log(Level.INFO, cidadeDao.findAll().toString());
+        final Cidade c = cidadeDao.findByProperty("nome", "Alegrete").iterator().next();
 
         Endereco end = new Endereco();
         end.setCidade(c);
@@ -52,14 +53,14 @@ public class PessoaServiceTest extends AbstractServiceTest {
         p.setDocumentos(d);
         p.setDataNascimento(CalendarUtils.today());
         p.setSexo(Sexo.MASCULINO);
-        pessoaService.save(p);
+        pessoaDao.save(p);
         LOGGER.log(Level.INFO, "Pessoa salva com id {0}.", p.getId());
     }
 
     //@Test
     public void testFindByNome() {
-        final PessoaService pessoaService = getService(PessoaService.class);
-        final Collection<Pessoa> pessoas = pessoaService.findAll();
+        final PessoaDao pessoaDao = getService(PessoaDao.class);
+        final Collection<Pessoa> pessoas = pessoaDao.findAll();
         LOGGER.log(Level.INFO, "a pesquisa retornou {0} resultados.", pessoas.size());
     }
 }

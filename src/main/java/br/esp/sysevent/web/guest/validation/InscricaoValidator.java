@@ -3,6 +3,8 @@
  */
 package br.esp.sysevent.web.guest.validation;
 
+import br.esp.sysevent.core.dao.EnderecoDao;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.CasaEspirita;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Documento;
@@ -12,10 +14,8 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
-import br.esp.sysevent.core.service.EnderecoService;
-import br.esp.sysevent.core.service.InscricaoService;
-import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
+import br.esp.sysevent.web.controller.util.ControllerUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.PeriodUtils;
 import java.text.DateFormat;
@@ -40,9 +40,9 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     @Autowired
-    protected InscricaoService inscricaoService;
+    protected InscricaoDao inscricaoDao;
     @Autowired
-    protected EnderecoService enderecoService;
+    protected EnderecoDao enderecoDao;
 
     /**
      * Valida o command inteiro.
@@ -59,7 +59,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         if (edicaoEvento == null) {
             errors.rejectValue("edicaoEvento", "errors.required");
         } else {
-            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao(), true) && !ControllerUtils.isLoggedInAsAdmin()) {
+            if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao()) && !ControllerUtils.isLoggedInAsAdmin()) {
                 errors.rejectValue("edicaoEvento", "errors.subscriptionPeriod.invalid");
             } else if (inscricao.getId() == null && !edicaoEvento.temVaga()) {
                 errors.rejectValue("edicaoEvento", "errors.subscription.full");
@@ -135,7 +135,7 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
                 errors.rejectValue("confraternista.oficina", "errors.workshop.full");
             }
         } else {
-            final Inscricao inscricaoAtual = inscricaoService.findById(inscricao.getId());
+            final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
             final Oficina oficinaAtual = inscricaoAtual.getConfraternista().getOficina();
             if (!oficina.getId().equals(oficinaAtual.getId())) {
                 //trocou de oficina
@@ -214,23 +214,23 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
         final Documento documentos = inscricao.getConfraternista().getPessoa().getDocumentos();
         final String email = inscricao.getConfraternista().getPessoa().getEndereco().getEmail();
         final String emailPath = "confraternista.pessoa.endereco.email";
-        final Inscricao inscricaoDocumentos = inscricaoService.findByEdicaoDocumentos(edicao.getId(), documentos);
+        final Inscricao inscricaoDocumentos = inscricaoDao.findByEdicaoDocumentos(edicao.getId(), documentos);
 
         if (isNova) {
             if (inscricaoDocumentos != null) {
                 errors.rejectValue("id", "errors.alreadyExists");
             }
-            if (!errors.hasFieldErrors(emailPath) && !enderecoService.findByProperty("email", email).isEmpty()) {
+            if (!errors.hasFieldErrors(emailPath) && !enderecoDao.findByProperty("email", email).isEmpty()) {
                 errors.rejectValue(emailPath, "errors.alreadyExists");
             }
         } else {
-            final Inscricao inscricaoAtual = inscricaoService.findById(inscricao.getId());
+            final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
             if (inscricaoDocumentos != null && !inscricaoDocumentos.getId().equals(inscricao.getId())) {
                 errors.rejectValue("id", "errors.alreadyExists");
             }
             final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
             if (!errors.hasFieldErrors(emailPath)) {
-                if (!email.equals(emailAtual) && !enderecoService.findByProperty("email", email).isEmpty()) {
+                if (!email.equals(emailAtual) && !enderecoDao.findByProperty("email", email).isEmpty()) {
                     errors.rejectValue(emailPath, "errors.alreadyExists");
                 }
             }

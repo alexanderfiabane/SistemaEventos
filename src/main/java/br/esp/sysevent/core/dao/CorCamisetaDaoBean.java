@@ -1,7 +1,6 @@
 package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.CorCamiseta;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.hibernate.SessionFactory;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public class CorCamisetaDaoBean extends BaseTaperaDaoBean<Long, CorCamiseta> implements CorCamisetaDao {
+@Repository(value = "corCamisetaDao")
+public class CorCamisetaDaoBean extends AbstractBaseSistemaDaoBean<Long, CorCamiseta> implements CorCamisetaDao {
 
     @Autowired
     public CorCamisetaDaoBean(SessionFactory sessionFactory) {

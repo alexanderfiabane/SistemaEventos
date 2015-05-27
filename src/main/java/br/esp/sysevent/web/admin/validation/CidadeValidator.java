@@ -3,11 +3,11 @@
  */
 package br.esp.sysevent.web.admin.validation;
 
+import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
-import br.esp.sysevent.core.service.CidadeService;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import org.springframework.validation.Errors;
 
 /**
  * Valida uma Cidade.
- * 
+ *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Component
@@ -25,9 +25,9 @@ public class CidadeValidator extends AbstractValidator<Cidade> {
      * Nomes de cidades aceitam apenas letras e espaços.
      */
     private final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
-    
+
     @Autowired
-    CidadeService cidadeService;
+    private CidadeDao cidadeDao;
 
     /**
      * Valida o command inteiro.

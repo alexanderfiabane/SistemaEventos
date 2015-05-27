@@ -2,10 +2,13 @@
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <msf:pagetitle label="Inscrições Abertas" defaultIsLabelKey="true">
-        <msf:icon><c:url value="/assets/application/img/icons/iconInscricoesAbertas.png"/></msf:icon>
-        <msf:breadcrumb label="label.page.mainMenu"><msf:url><c:url value="/index.html"/></msf:url></msf:breadcrumb>
-    </msf:pagetitle>
+    <mocca:title title="Inscrições Abertas"/>
+<%--
+    <javalek:pagetitle label="Inscrições Abertas" defaultIsLabelKey="true">
+        <javalek:icon><c:url value="/assets/application/img/icons/iconInscricoesAbertas.png"/></javalek:icon>
+        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
+    </javalek:pagetitle>
+--%>
 </content>
 
 <c:choose>
@@ -17,11 +20,11 @@
             <table class="table striped hovered stroked">
                 <thead class="header">
                     <tr>
-                        <th class="centered" style="width: 10em;"><msf:message key="label.options"/></th>
-                        <th class="centered"><msf:message key="label.event"/></th>
-                        <th class="centered"><msf:message key="label.number"/></th>
-                        <th class="centered" style="width: 20em;"><msf:message key="label.theme"/></th>
-                        <th class="centered"><msf:message key="label.subscriptionPeriod"/></th>
+                        <th class="centered" style="width: 10em;"><fmt:message key="label.options"/></th>
+                        <th class="centered"><fmt:message key="label.event"/></th>
+                        <th class="centered"><fmt:message key="label.number"/></th>
+                        <th class="centered" style="width: 20em;"><fmt:message key="label.theme"/></th>
+                        <th class="centered"><fmt:message key="label.subscriptionPeriod"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +38,9 @@
                             <td class="centered">${edicao.numero}</td>
                             <td class="centered">${edicao.tema}</td>
                             <td class="centered">
-                                de <msf:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+                                <%--
+                                de <see:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
+                                --%>
                             </td>
                         </tr>
                     </c:forEach>

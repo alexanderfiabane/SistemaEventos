@@ -3,14 +3,14 @@
  */
 package br.esp.sysevent.web.ajax;
 
+import br.esp.sysevent.core.dao.ConfraternistaDao;
+import br.esp.sysevent.core.dao.GrupoIdadeDao;
+import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
-import br.esp.sysevent.core.service.ConfraternistaService;
-import br.esp.sysevent.core.service.GrupoIdadeService;
-import br.esp.sysevent.core.service.InscricaoService;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,34 +25,34 @@ import org.springframework.stereotype.Service;
 public class ConfraternistaAjaxService {
 
     @Autowired
-    private ConfraternistaService confraternistaService;    
+    private ConfraternistaDao confraternistaDao;
     @Autowired
-    private InscricaoService inscricaoService;
+    private InscricaoDao inscricaoDao;
     @Autowired
-    private GrupoIdadeService grupoIdadeService;
+    private GrupoIdadeDao grupoIdadeDao;
 
     public Collection<Confraternista> findByNome(final String nome) {
         if (CharSequenceUtils.isBlank(nome)) {
             return Collections.emptyList();
         }
-        return confraternistaService.findByNome(nome);
+        return confraternistaDao.findByNome(nome);
     }
 
     public Collection<Confraternista> findByIdDormitorio(final String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
             return Collections.emptyList();
         }
-        return confraternistaService.findByDormitorio(NumberUtils.parseLong(idDormitorio));
+        return confraternistaDao.findByDormitorio(NumberUtils.parseLong(idDormitorio));
     }
-    
+
     //Otimizar em consulta
     public Collection<Confraternista> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();
-        }        
-        final GrupoIdade grupoIdade = grupoIdadeService.findById(NumberUtils.parseLong(idGrupoIdade));
+        }
+        final GrupoIdade grupoIdade = grupoIdadeDao.findById(NumberUtils.parseLong(idGrupoIdade));
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(grupoIdade.getEdicaoEvento().getId());
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicao(grupoIdade.getEdicaoEvento().getId());
         for (Inscricao inscricao : inscricoes) {
             if(inscricao.getConfraternista().getGrupoIdade() != null && (inscricao.getConfraternista().getGrupoIdade().equals(grupoIdade))
                     && (!inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.FACILITADOR))
@@ -68,7 +68,7 @@ public class ConfraternistaAjaxService {
         if (CharSequenceUtils.isBlankOrNull(genero) || CharSequenceUtils.isBlankOrNull(idEdicao)) {
             return null;
         } else {
-            Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(NumberUtils.parseLong(idEdicao));
+            Collection<Inscricao> inscricoes = inscricaoDao.findByEdicao(NumberUtils.parseLong(idEdicao));
             Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
             for (Inscricao inscricao : inscricoes) {
                 if (inscricao.getConfraternista().getDormitorio() == null
@@ -84,16 +84,16 @@ public class ConfraternistaAjaxService {
 
     //Otimizar em consulta
     public Collection<Confraternista> findByEdicao(final String idEdicao) {
-        Collection<Inscricao> inscricoes = inscricaoService.findByEdicao(NumberUtils.parseLong(idEdicao));
+        Collection<Inscricao> inscricoes = inscricaoDao.findByEdicao(NumberUtils.parseLong(idEdicao));
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
         for (Inscricao inscricao : inscricoes) {
             if (inscricao.getConfraternista().getGrupoIdade() != null
                     && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))
-                    && (inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.CONFRATERNISTA) 
+                    && (inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)
                     || inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.EVANGELIZADOR))) {
                 confraternistas.add(inscricao.getConfraternista());
             }
         }
         return confraternistas;
-    }   
+    }
 }

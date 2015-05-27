@@ -7,7 +7,6 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Sexo;
-import com.javaleks.commons.core.dao.EntityDao;
 import java.util.Collection;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -16,12 +15,13 @@ import org.hibernate.criterion.Order;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface ConfraternistaDao extends BaseTaperaDao<Long, Confraternista> {
+public interface ConfraternistaDao extends BaseSistemaDao<Long, Confraternista> {
 
     public Collection<Confraternista> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
-    public Collection<Confraternista> findByDormitorio(final Long idDormitorio, final Order order);
+    public Collection<Confraternista> findByNome(final String nome);
+    public Collection<Confraternista> findByDormitorio(final Long idDormitorio);
     public Collection<Confraternista> findByDormitorio(Dormitorio dormitorio);
-    public Collection<Confraternista> findBySemDormitorio(Order order);
+    public Collection<Confraternista> findBySemDormitorio();
     public Collection<Confraternista> findBySexoSemDormitorio(Sexo genero, Order asc);
     public Collection<Confraternista> findFacilitadoresByGrupo(GrupoIdade grupoIdade);
 }

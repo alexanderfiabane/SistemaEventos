@@ -4,13 +4,13 @@
  */
 package br.esp.sysevent.web.admin.validation;
 
+import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.ojimarcius.commons.persistence.model.PersistentPeriod;
+import br.esp.sysevent.core.model.PersistentPeriod;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
-import br.ojimarcius.commons.util.CharSequenceUtils;
-import br.ojimarcius.commons.util.NumberUtils;
+import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
 
     private final Pattern TEMA_PATTERN = Pattern.compile("[\\p{L} ]+");
     @Autowired
-    EdicaoService edicaoService;
+    private EdicaoDao edicaoDao;
 
     @Override
     public void validateCommand(final Edicao edicao, final Errors errors) {

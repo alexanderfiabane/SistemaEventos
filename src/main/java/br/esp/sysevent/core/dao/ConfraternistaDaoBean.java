@@ -8,7 +8,6 @@ import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Sexo;
-import com.javaleks.commons.core.dao.AbstractEntityDao;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,8 +24,8 @@ import org.springframework.stereotype.Repository;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class ConfraternistaDaoBean extends BaseTaperaDaoBean<Long, Confraternista> implements ConfraternistaDao {
+@Repository(value = "confraternistaDao")
+public class ConfraternistaDaoBean extends AbstractBaseSistemaDaoBean<Long, Confraternista> implements ConfraternistaDao {
 
     @Autowired
     public ConfraternistaDaoBean(SessionFactory sessionFactory) {
@@ -46,6 +45,10 @@ public class ConfraternistaDaoBean extends BaseTaperaDaoBean<Long, Confraternist
         return findByCriteria(c);
     }
 
+    public Collection<Confraternista> findByNome(final String nome){
+        return findByNome(nome, MatchMode.START, true, Order.asc("pessoa.nome"));
+    }
+
     @Override
     public Collection<Confraternista> findByDormitorio(final Dormitorio dormitorio) {
 
@@ -56,7 +59,7 @@ public class ConfraternistaDaoBean extends BaseTaperaDaoBean<Long, Confraternist
     }
 
     @Override
-    public Collection<Confraternista> findByDormitorio(final Long idDormitorio, final Order order) {
+    public Collection<Confraternista> findByDormitorio(final Long idDormitorio) {
 
         final Criteria c = createCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         c.createAlias("dormitorio", "dormitorio");
@@ -64,17 +67,17 @@ public class ConfraternistaDaoBean extends BaseTaperaDaoBean<Long, Confraternist
         c.createAlias("pessoa.endereco", "endereco");
         c.createAlias("endereco.cidade", "cidade");
         c.add(Restrictions.eq("dormitorio.id", idDormitorio));
-        c.addOrder(order);
+        c.addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(c);
     }
 
     @Override
-    public Collection<Confraternista> findBySemDormitorio(Order order) {
+    public Collection<Confraternista> findBySemDormitorio() {
 
         final Criteria c = createCriteria().setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         c.add(Restrictions.isNull("dormitorio"));
         c.createAlias("pessoa", "pessoa");
-        c.addOrder(order);
+        c.addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(c);
     }
 

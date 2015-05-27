@@ -14,7 +14,7 @@ import org.hibernate.criterion.Order;
  *
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
-public interface CidadeDao extends BaseTaperaDao<Long, Cidade> {
+public interface CidadeDao extends BaseSistemaDao<Long, Cidade> {
 
     public Collection<Cidade> findByNome(final String nome, final MatchMode matchMode, final boolean caseSensitive, final Order order);
     public Collection<Cidade> findByEstado(final Estado estado, final Order order);

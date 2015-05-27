@@ -31,6 +31,8 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PersistentPeriod extends Period {
 
+
+
     /**
      * Default constructor.
      */

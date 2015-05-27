@@ -3,6 +3,11 @@
  */
 package br.esp.sysevent.web.controller;
 
+import br.esp.sysevent.core.dao.CidadeDao;
+import br.esp.sysevent.core.dao.ConfraternistaDao;
+import br.esp.sysevent.core.dao.EstadoDao;
+import br.esp.sysevent.core.dao.NoticiaDao;
+import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Estado;
@@ -11,19 +16,8 @@ import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
-import br.esp.sysevent.core.service.CidadeService;
-import br.esp.sysevent.core.service.ConfraternistaService;
-import br.esp.sysevent.core.service.CorCamisetaService;
-import br.esp.sysevent.core.service.EdicaoService;
-import br.esp.sysevent.core.service.EstadoService;
-import br.esp.sysevent.core.service.EventoService;
-import br.esp.sysevent.core.service.NoticiaService;
-import br.esp.sysevent.core.service.OficinaService;
-import br.esp.sysevent.core.service.TamanhoCamisetaService;
-import br.esp.sysevent.core.service.TipoCamisetaService;
-import br.esp.sysevent.core.service.UsuarioService;
-import br.ojimarcius.commons.util.CalendarUtils;
-import br.ojimarcius.commons.util.CollectionUtils;
+import com.javaleks.commons.util.CalendarUtils;
+import com.javaleks.commons.util.CollectionUtils;
 import java.util.Collection;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,35 +36,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioDao usuarioDao;
     @Autowired
-    private NoticiaService noticiaService;
+    private NoticiaDao noticiaDao;
     @Autowired
-    private TipoCamisetaService tipoCamisetaService;
+    private ConfraternistaDao confraternistaDao;
     @Autowired
-    private CorCamisetaService corCamisetaService;
+    private EstadoDao estadoDao;
     @Autowired
-    private TamanhoCamisetaService tamanhoCamisetaService;
-    @Autowired
-    private EventoService eventoService;
-    @Autowired
-    private EdicaoService edicaoService;
-    @Autowired
-    private OficinaService oficinaService;
-    @Autowired
-    private ConfraternistaService confraternistaService;
-    @Autowired
-    private EstadoService estadoService;
-    @Autowired
-    private CidadeService cidadeService;
+    private CidadeDao cidadeDao;
 
 
     /**
      * Adiciona a lista de Estados ao referenceData, para popular a tabela.
+     * @return
      */
     @ModelAttribute("noticias")
     public Collection<Noticia> getNoticias() {
-        return noticiaService.findAll();
+        return noticiaDao.findAll();
     }
 
     @RequestMapping(value = "/login.html", method = RequestMethod.GET)
@@ -83,65 +66,15 @@ public class LoginController {
      * Insere o user admin com a senha padrão (adminadmin), caso nao exista nenhum user na tabela.
      */
     private void setupData() {
-        Collection<Usuario> users = usuarioService.findAll();
+        Collection<Usuario> users = usuarioDao.findAll();
         if (CollectionUtils.isEmptyOrNull(users)) {
 
             // insere o usuario admin
-            usuarioService.insertDefaultData();
+            usuarioDao.insertDefaultData();
 
             // insere cidades e estados
-            estadoService.insertDefaultData();
-            cidadeService.insertDefaultData();
-
-            // insere dados das camisetas
-//            tipoCamisetaService.insertDefaultData();
-//            corCamisetaService.insertDefaultData();
-//            tamanhoCamisetaService.insertDefaultData();
-//
-//            // Dados para testes
-//            Evento evento = new Evento();
-//            evento.setNome("Encontro de Música Espírita");
-//            evento.setSigla("EMUSE");
-//            eventoService.save(evento);
-//
-//            Edicao edicao = new Edicao();
-//            edicao.setEvento(evento);
-//            edicao.setNumero(1);
-//            edicao.setTema("Vivenciando na Arte a Plenitude do Amor");
-//            edicao.setVagas(20);
-//            edicao.setVagasOcupadas(0);
-//            edicao.setValorInscricao(BigDecimal.TEN);
-//            edicao.setValorCamiseta(BigDecimal.ONE);
-//            edicao.setPeriodoInscricao(new Period(CalendarUtils.today(), CalendarUtils.tomorrow()));
-//            edicao.setTiposCamiseta(tipoCamisetaService.findAll());
-//            edicao.setCoresCamiseta(corCamisetaService.findAll());
-//            edicao.setTamanhosCamiseta(tamanhoCamisetaService.findAll());
-//            edicaoService.save(edicao);
-//
-//            Oficina oficina = new Oficina();
-//            oficina.setEdicaoEvento(edicao);
-//            oficina.setNome("Canto Coral");
-//            oficina.setVagas(20);
-//            oficina.setVagasOcupadas(0);
-//            oficinaService.save(oficina);
-//
-//            oficina = new Oficina();
-//            oficina.setEdicaoEvento(edicao);
-//            oficina.setNome("Bolemuse");
-//            oficina.setVagas(30);
-//            oficina.setVagasOcupadas(25);
-//            oficinaService.save(oficina);
-//
-//            oficina = new Oficina();
-//            oficina.setEdicaoEvento(edicao);
-//            oficina.setNome("Dramatização");
-//            oficina.setVagas(20);
-//            oficina.setVagasOcupadas(10);
-//            oficinaService.save(oficina);
-//
-//            addConfraternista("Giuliano Ferreira", oficina);
-//
-//            addConfraternista("Giuliano Pereira", oficina);
+            estadoDao.insertDefaultData();
+            cidadeDao.insertDefaultData();
         }
     }
 
@@ -157,7 +90,7 @@ public class LoginController {
         user.setPassword(DigestUtils.sha256Hex("teste001"));
         user.setPessoa(pessoa);
         user.setRole(Usuario.Role.ROLE_USER);
-        usuarioService.save(user);
+        usuarioDao.save(user);
 
         Confraternista confraternista = new Confraternista();
         confraternista.setNomeCracha(nome);
@@ -165,13 +98,13 @@ public class LoginController {
         confraternista.setTipo(Confraternista.Tipo.CONFRATERNISTA);
         confraternista.setOficina(oficina);
         confraternista.setAtividadeCasaEspirita("Teste");
-        confraternistaService.save(confraternista);
+        confraternistaDao.save(confraternista);
     }
 
     protected void addCidade(String nome, Estado estado) {
         Cidade cidade = new Cidade();
         cidade.setNome(nome);
         cidade.setEstado(estado);
-        cidadeService.save(cidade);
+        cidadeDao.save(cidade);
     }
 }

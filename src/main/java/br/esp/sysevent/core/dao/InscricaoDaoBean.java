@@ -32,8 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-@Repository
-public class InscricaoDaoBean extends BaseTaperaDaoBean<Long, Inscricao> implements InscricaoDao {
+@Repository(value = "inscricaoDao")
+public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao> implements InscricaoDao {
 
     @Autowired
     private OficinaDao oficinaDao;

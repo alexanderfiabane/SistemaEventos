@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public class TipoCamisetaDaoBean extends BaseTaperaDaoBean<Long, TipoCamiseta> implements TipoCamisetaDao {
+@Repository(value = "tipoCamisetaDao")
+public class TipoCamisetaDaoBean extends AbstractBaseSistemaDaoBean<Long, TipoCamiseta> implements TipoCamisetaDao {
 
     @Autowired
     public TipoCamisetaDaoBean(final SessionFactory sessionFactory) {

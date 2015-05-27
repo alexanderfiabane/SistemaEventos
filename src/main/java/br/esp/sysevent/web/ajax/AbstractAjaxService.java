@@ -1,8 +1,11 @@
 package br.esp.sysevent.web.ajax;
 
 
+import com.javaleks.commons.core.dao.EntityDao;
+import com.javaleks.commons.core.model.Entity;
 import com.javaleks.commons.text.EnhancedStringBuilder;
 import com.javaleks.commons.util.ArgumentUtils;
+import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.CollectionUtils;
 import com.javaleks.commons.util.DateUtils;
@@ -17,8 +20,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
-import javax.persistence.Entity;
-import org.eclipse.jdt.core.dom.PrefixExpression.Operator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
@@ -27,7 +28,7 @@ import org.springframework.context.NoSuchMessageException;
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  */
-public abstract class AbstractAjaxService{
+public abstract class AbstractAjaxService {
 
     /**
      * Pattern usado para contruir o nome do metodo de validacao nas chamadas ajax.
@@ -115,16 +116,6 @@ public abstract class AbstractAjaxService{
     protected static org.hibernate.criterion.Order getHibernateOrder(final Map<String, String> params) {
         final Order order = getOrder(params);
         return order != null ? order.toHibernateOrder() : null;
-    }
-    /**
-     * Retorna um {@link br.ufsm.cpd.commons.search.Operator.Order Order} que representa a ordena��o da tabela.
-     *
-     * @param params mapa de parametros que conter� os parametros de ordena��o.
-     * @return O {@link br.ufsm.cpd.commons.search.Operator.Order Order} representando a ordena��o da tabela, ou null se esta n�o estiver ordenada.
-     */
-    protected static Operator.Order getChainOrder(final Map<String, String> params) {
-        final Order order = getOrder(params);
-        return order != null ? order.toChainOrder(): null;
     }
 
     /**
@@ -255,7 +246,7 @@ public abstract class AbstractAjaxService{
      * @param joins       Joins a serem efetuados na consulta.
      * @return O parametro desejado convertido para o tipo desejado.
      */
-    protected static <E extends Entity<Long>> E get(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityService<Long, E> service, final String... joins) {
+    protected static <E extends Entity<Long>> E get(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityDao<Long, E> service, final String... joins) {
         ArgumentUtils.rejectIfAnyNull(targetClass, service);
         final Long id = get(Long.class, key, params);
         E entity = null;
@@ -408,7 +399,7 @@ public abstract class AbstractAjaxService{
      * @param joins       Joins a serem efetuados na consulta.
      * @return O parametro desejado em formato de cole��o.
      */
-    protected static <E extends Entity<Long>> Collection<E> getNullsafeCollection(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityService<Long, E> service, final String... joins) {
+    protected static <E extends Entity<Long>> Collection<E> getNullsafeCollection(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityDao<Long, E> service, final String... joins) {
         final Collection<Long> ids = getNullsafeCollection(Long.class, key, params);
         if (CollectionUtils.isNotEmpty(ids)) {
             final Collection<E> entities = new ArrayList<E>(ids.size());
@@ -557,7 +548,7 @@ public abstract class AbstractAjaxService{
      * @param joins       Joins a serem efetuados na consulta.
      * @return O parametro desejado em formato de array.
      */
-    protected static <E extends Entity<Long>> E[] getNullsafeArray(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityService<Long, E> service, final String... joins) {
+    protected static <E extends Entity<Long>> E[] getNullsafeArray(final Class<E> targetClass, final String key, final Map<String, String> params, final EntityDao<Long, E> service, final String... joins) {
         final Collection<E> col = getNullsafeCollection(targetClass, key, params, service, joins);
         final E[] array = (E[]) Array.newInstance(targetClass, col.size());
         return col.toArray(array);
@@ -635,14 +626,14 @@ public abstract class AbstractAjaxService{
             }
         } else if (Date.class.isAssignableFrom(targetClass)) {
             if (CharSequenceUtils.isNotBlank(sval)) {
-                val = DateUtils.parseDate(sval, dp, l);
+                val = DateUtils.parse(sval, dp, l);
             } else if (nullsafe) {
                 // n�o sei o que assumir em caso de Date nula e nullsafe = true
                 throw new IllegalArgumentException("Could not get a NullSafe Date.");
             }
         } else if (Calendar.class.isAssignableFrom(targetClass)) {
             if (CharSequenceUtils.isNotBlank(sval)) {
-                val = DateUtils.parseCalendar(sval, dp, l);
+                val = CalendarUtils.parse(sval, dp, l);
             } else if (nullsafe) {
                 // n�o sei o que assumir em caso de Calendar nula e nullsafe = true
                 throw new IllegalArgumentException("Could not get a NullSafe Calendar.");
@@ -737,9 +728,6 @@ public abstract class AbstractAjaxService{
          */
         public org.hibernate.criterion.Order toHibernateOrder() {
             return "asc".equalsIgnoreCase(mode) ? org.hibernate.criterion.Order.asc(column) : org.hibernate.criterion.Order.desc(column);
-        }
-        public Operator.Order toChainOrder() {
-            return new Operator.Order(column, ("asc".equalsIgnoreCase(mode)? Operator.Order.Type.Asc : Operator.Order.Type.Desc));
         }
     }
 }

@@ -16,7 +16,7 @@ import org.hibernate.criterion.Order;
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
  */
-public interface BaseTaperaDao<ID extends Serializable & Comparable<ID>, T extends Entity<ID>> extends EntityDao<ID, T> {
+public interface BaseSistemaDao<ID extends Serializable & Comparable<ID>, T extends Entity<ID>> extends EntityDao<ID, T> {
 
     public Collection<T> findAll(final Order[] orders, final String... joins);
     

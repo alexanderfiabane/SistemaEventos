@@ -17,5 +17,4 @@
     <context:component-scan base-package="br.esp.sysevent" />
     <mvc:annotation-driven />
     <import resource="spring-dwr.xml"/>
-
 </beans>

@@ -10,5 +10,5 @@ import com.javaleks.commons.core.dao.EntityDao;
  *
  * @author Alexander Fiabane do Rego (alexanderfiabane@yahoo.com.br)
  */
-public interface EnderecoDao extends BaseTaperaDao<Long, Endereco> {
+public interface EnderecoDao extends BaseSistemaDao<Long, Endereco> {
 }
