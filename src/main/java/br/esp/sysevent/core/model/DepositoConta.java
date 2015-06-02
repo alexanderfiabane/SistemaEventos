@@ -26,6 +26,8 @@ public class DepositoConta extends AbstractEntity{
     private String banco;
     @Column(name = "AGENCIA", nullable = true)
     private String agencia;
+    @Column(name = "FAVORECIDO", nullable = true)
+    private String favorecido;
     @Column(name = "NUMERO_CONTA", nullable = true)
     private String numeroConta;
     @Column(name = "OPERACAO", nullable = true)
@@ -45,6 +47,14 @@ public class DepositoConta extends AbstractEntity{
 
     public void setAgencia(String agencia) {
         this.agencia = agencia;
+    }
+
+    public String getFavorecido() {
+        return favorecido;
+    }
+
+    public void setFavorecido(String favorecido) {
+        this.favorecido = favorecido;
     }
 
     public String getNumeroConta() {

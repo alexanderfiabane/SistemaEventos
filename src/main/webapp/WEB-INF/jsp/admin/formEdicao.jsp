@@ -27,7 +27,7 @@
             <!--Cadastro Básico-->
             <div class="pane active" id="cadastroBasico">
                 <fieldset>
-                    <mocca:title title="label.editiondetails" isTitleKey="true" level="2"/>
+                    <%--<mocca:title title="label.editiondetails" isTitleKey="true" level="2"/>--%>
                     <div class="row">
                         <div class="span6">
                             <label class="label control">
@@ -77,7 +77,7 @@
             <!--Camisetas-->
             <div class="pane" id="camisetas">
                 <fieldset>
-                    <mocca:title title="label.shirts" isTitleKey="true" level="2"/>
+                    <%--<mocca:title title="label.shirts" isTitleKey="true" level="2"/>--%>
                     <div class="table-wrapper">
                         <table class="table bordered rounded stroked">
                             <thead class="header">

@@ -16,7 +16,7 @@
 
 <c:choose>
     <c:when test="${empty inscricoes}">
-        <see:notice type="info" closeable="true">Nenhuma inscrição encontrada</see:notice>
+        <see:notice type="info" closeable="false">Nenhuma inscrição encontrada</see:notice>
     </c:when>
     <c:otherwise>
         <div id="searchParams" class="box bordered rounded gradient control">
@@ -133,7 +133,7 @@
                                 <td>${inscricao.confraternista.tipo.descricao}</td>
                                 <td>${inscricao.status.value}</td>
                                 <td><fmt:formatNumber value="${inscricao.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
-                                <td><javalek:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" /></td>
+                                <td><fmt:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" /></td>
                                 <td>${inscricao.pagamento.numeroDocumento}</td>
                                 <td><fmt:formatNumber value="${inscricao.pagamento.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
                             </tr>

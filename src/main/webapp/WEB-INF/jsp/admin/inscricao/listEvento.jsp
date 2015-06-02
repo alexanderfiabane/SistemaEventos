@@ -17,8 +17,8 @@
         <see:notice type="info" closeable="true">Não há eventos cadastrados</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="table-wrapper scrollable">
-            <table class="table bordered rounded shadowed striped hovered stroked">
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked">
                 <thead class="header">
                     <tr>
                         <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>

@@ -5,6 +5,7 @@ package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
 import com.javaleks.commons.util.CollectionUtils;
+import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -56,7 +57,7 @@ public class Edicao extends AbstractEntity {
         @AttributeOverride(name = "start", column = @Column(name = "DATA_INSCRICAO_INI")),
         @AttributeOverride(name = "end", column = @Column(name = "DATA_INSCRICAO_FIM"))
     })
-    private PersistentPeriod periodoInscricao;
+    private Period periodoInscricao;
     @Column(name = "DATA_EDICAO", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar data;
@@ -124,11 +125,11 @@ public class Edicao extends AbstractEntity {
         this.vagasOcupadas = vagasOcupadas;
     }
 
-    public PersistentPeriod getPeriodoInscricao() {
+    public Period getPeriodoInscricao() {
         return periodoInscricao;
     }
 
-    public void setPeriodoInscricao(final PersistentPeriod periodoInscricao) {
+    public void setPeriodoInscricao(Period periodoInscricao) {
         this.periodoInscricao = periodoInscricao;
     }
 

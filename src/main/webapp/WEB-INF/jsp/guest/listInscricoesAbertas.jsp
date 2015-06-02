@@ -1,10 +1,11 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
 <content tag="titlebarContent">
-    <mocca:title title="Inscrições Abertas"/>
+    <mocca:title title="InscriÃ§Ãµes Abertas"/>
 <%--
-    <javalek:pagetitle label="Inscrições Abertas" defaultIsLabelKey="true">
+    <javalek:pagetitle label="InscriÃ§Ãµes Abertas" defaultIsLabelKey="true">
         <javalek:icon><c:url value="/assets/application/img/icons/iconInscricoesAbertas.png"/></javalek:icon>
         <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
     </javalek:pagetitle>
@@ -13,7 +14,7 @@
 
 <c:choose>
     <c:when test="${empty edicoes}">
-        <see:notice type="info" closeable="true">Nenhuma edição com inscrição aberta foi encontrada</see:notice>
+        <see:notice type="danger" closeable="false">Nenhuma ediÃ§Ã£o com inscriÃ§Ã£o aberta foi encontrada</see:notice>
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable bordered rounded shadowed">
@@ -32,7 +33,7 @@
                         <tr>
                             <td class="centered">
                                 <c:url var="inscricao_url" value="/guest/formInscricao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                                <button type="button" class="btn small" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>
+                                <button type="button" class="btn small" title="Fazer inscriÃ§Ã£o" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>
                             </td>
                             <td class="centered">${edicao.evento.nome}</td>
                             <td class="centered">${edicao.numero}</td>

@@ -18,8 +18,8 @@
         <see:notice type="info" closeable="true">Não há edições cadastradas para este evento</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="table-wrapper scrollable">
-            <table class="table bordered rounded shadowed striped hovered stroked">
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked">
                 <thead class="header">
                     <tr>
                         <th class="align-center" style="width: 6em;"><fmt:message key="label.options"/></th>
