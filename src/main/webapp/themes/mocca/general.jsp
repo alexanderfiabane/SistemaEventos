@@ -133,7 +133,7 @@
             $(document).ready(function () {
                 $(':text').addClass('textfield');
                 $('select').addClass('selectfield');
-                $(':text.date').dateTimePicker({mode: 'date'});
+                $(':text.date:not(.manual-init)').dateTimePicker({mode: 'date'});
             });
         </script>
     </body>

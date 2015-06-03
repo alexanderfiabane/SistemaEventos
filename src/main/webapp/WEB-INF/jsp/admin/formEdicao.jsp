@@ -60,13 +60,13 @@
                     </div>
                     <div class="row">
                         <div class="span3">
-                            <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.start" maxlength="10"/>
+                            <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.start" inputClass="manual-init"/>
                         </div>
                         <div class="span3">
-                            <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="date" path="periodoInscricao.end" maxlength="10"/>
+                            <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.end"/>
                         </div>
                         <div class="span3">
-                            <see:formField label="label.subscriptionDate" isLabelKey="true" isMandatory="true" type="date" path="data" maxlength="10"/>
+                            <see:formField label="label.subscriptionDate" isLabelKey="true" isMandatory="true" type="text" path="data"/>
                         </div>
                         <div class="span3">
                             <see:formField label="label.subscriptionminage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3" inputClass="textfield"/>
@@ -126,19 +126,19 @@
         <see:notice type="info" closeable="true">Nenhuma edição foi encontrada</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="table-wrapper scrollable">
-            <table class="table bordered rounded shadowed striped hovered stroked">
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked">
                 <thead class="header">
                     <tr>
                         <th class="centered" style="width: 7em;"><fmt:message key="label.options"/></th>
-                <th class="centered" style="width: 5em;">#</th>
-                <th class="centered"><fmt:message key="label.theme"/></th>
-                <th class="centered" style="width: 6em;"># vagas</th>
-                <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionValue"/></th>
-                <th class="centered" style="width: 12em;"><fmt:message key="label.subscriptionPeriod"/></th>
-                <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionDate"/></th>
-                <th class="centered" style="width: 6em;"><fmt:message key="label.subscriptionminage"/></th>
-                </tr>
+                        <th class="centered" style="width: 5em;">#</th>
+                        <th class="centered"><fmt:message key="label.theme"/></th>
+                        <th class="centered" style="width: 6em;"># vagas</th>
+                        <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionValue"/></th>
+                        <th class="centered" style="width: 12em;"><fmt:message key="label.subscriptionPeriod"/></th>
+                        <th class="centered" style="width: 8em;"><fmt:message key="label.subscriptionDate"/></th>
+                        <th class="centered" style="width: 6em;"><fmt:message key="label.subscriptionminage"/></th>
+                    </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${edicoes}" var="edicao">
@@ -152,23 +152,23 @@
                                 <td class="centered ">
                                     <div class="btn-group mini">
                                         <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                        <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
-                                        <div class="btn-group" title="Mais opções">
-                                            <a class="btn small dropdown-toggle dropup" data-toggle="dropdown" href="#">
-                                                <i class="icon-list"></i>
-                                                <span class="caret"></span>
-                                            </a>
-                                            <ul class="dropdown-menu alignLeft dropup-menu">
-                                                <c:if test="${edicao.faixaEtaria}">
-                                                    <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
+                                    <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                                    <div class="btn-group" title="Mais opções">
+                                        <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="icon-list"></i>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu alignLeft" role="menu">
+                                            <c:if test="${edicao.faixaEtaria}">
+                                                <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
                                                 </c:if>
                                                 <c:if test="${edicao.oficina}">
-                                                    <li><a href="${oficina_url}">Oficinas</a></li>
+                                                <li><a href="${oficina_url}">Oficinas</a></li>
                                                 </c:if>
-                                                <li><a href="${dormitorio_url}">Dormitórios</a></li>
-                                                <li><a href="${cobranca_url}">Cobrança</a></li>
-                                            </ul>
-                                        </div>
+                                            <li><a href="${dormitorio_url}">Dormitórios</a></li>
+                                            <li><a href="${cobranca_url}">Cobrança</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                             <td class="centered">${edicao.numero}</td>
@@ -206,23 +206,22 @@
         $("[name='valorCamiseta']").mask('999');
         $("[name='idadeMinima']").mask('999');
 
-//        $("#periodoInscricao_start").dateTimePicker({
-        $("[name='periodoInscricao_start']").dateTimePicker({
+        $("#periodoInscricao_start").dateTimePicker({
             'mode': 'date',
-            'showExample': false,
-            picker: {
+            'showExample': true,
+            'picker': {
                 showClearButton: true,
-                onClose: function (selectedDate) {
+                'onClose': function (selectedDate) {
                     $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
                 }
             }
         });
         $("#periodoInscricao_end").dateTimePicker({
             'mode': 'date',
-            'showExample': false,
+            'showExample': true,
             picker: {
                 showClearButton: true,
-                onClose: function (selectedDate) {
+                'onSelect': function (selectedDate) {
                     $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
                     $("#data").datepicker("option", "minDate", selectedDate);
                 }
@@ -230,7 +229,7 @@
         });
         $("#data").dateTimePicker({
             'mode': 'date',
-            'showExample': false,
+            'showExample': true,
             picker: {
                 showClearButton: true
             }

@@ -190,6 +190,7 @@
                         <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                         <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>tag</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
                 </configuration>
                 <dependencies>
@@ -228,6 +229,7 @@
                         <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
                         <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>tag</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
                     <webResources>
                         <resource>

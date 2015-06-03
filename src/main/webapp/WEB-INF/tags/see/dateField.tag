@@ -6,6 +6,7 @@
 
 <%@attribute name="id"%>
 <%@attribute name="path"%>
+<%@attribute name="cssClass"%>
 <%@attribute name="isDisabled" type="java.lang.Boolean"%>
 <%@attribute name="isShowFormat" type="java.lang.Boolean"%>
 
@@ -16,13 +17,13 @@
 <c:choose>
     <c:when test="${!empty id}">
         <c:choose>
-            <c:when test="${!empty path}"><form:input id="${id}" path="${path}" cssClass="textfield date" disabled="${isDisabled}"/></c:when>
+            <c:when test="${!empty path}"><form:input id="${id}" path="${path}" cssClass="textfield date ${cssClass}" disabled="${isDisabled}"/></c:when>
             <c:otherwise><input type="text" id="${id}" class="textfield date" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
         </c:choose>
     </c:when>
     <c:otherwise>
         <c:choose>
-            <c:when test="${!empty path}"><form:input path="${path}" cssClass="textfield date" disabled="${isDisabled}"/></c:when>
+            <c:when test="${!empty path}"><form:input path="${path}" cssClass="textfield date ${cssClass}" disabled="${isDisabled}"/></c:when>
             <c:otherwise><input type="text" class="textfield date" <c:if test="${isDisabled}">disabled</c:if>/></c:otherwise>
         </c:choose>
     </c:otherwise>

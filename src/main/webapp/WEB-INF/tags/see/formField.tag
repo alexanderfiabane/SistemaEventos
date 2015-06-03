@@ -81,7 +81,7 @@
 --%>
     </c:when>
     <c:when test="${type == 'date'}">
-        <see:dateField id="${id}" path="${path}" isShowFormat="false"/>
+        <see:dateField id="${id}" path="${path}" isShowFormat="false" cssClass="${inputClass}"/>
     </c:when>
     <c:when test="${type == 'textarea'}">
         <form:textarea path="${path}" cols="80" maxlength="${maxlength}" id="${id}" cssClass="${inputClass}" rows="5"/>

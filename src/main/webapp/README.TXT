@@ -1,5 +1,5 @@
 
-    mocca-framework 1.0.0-SNAPSHOT - build 66
+    mocca-framework 1.0.0-SNAPSHOT - build 90
 --------------------------------------------------------------------------------
 
     A Responsive CSS framework
@@ -13,6 +13,155 @@
   [=] Feature enhancement.
   [v] Visual enhancement.
   [b] Bugfix.
+
+  Version 1.0.0-SNAPSHOT - build 89
+  ------------------------------------------------------------------------------
+  [=] confirmDialog()'s 'content' option now get access to the $dialogCaller
+      via argument, when this option is a function:
+      $('.mybtn').confirmDialog({
+            'content': function($dialogCaller) {
+                var $content;
+                // jquery $content creation logic here
+                return $content;
+            }
+      });
+
+  Version 1.0.0-SNAPSHOT - build 88
+  ------------------------------------------------------------------------------
+  [=] wizard enhancements.
+
+  Version 1.0.0-SNAPSHOT - build 87
+  ------------------------------------------------------------------------------
+  [b] fix error "jQuery.BooleanUtils.isBooleanString is not a function".
+  [+] added new function: jQuery.BooleanUtils.isBooleanString(obj).
+
+  Version 1.0.0-SNAPSHOT - build 86
+  ------------------------------------------------------------------------------
+  [b] fix tableSorter date-type="[date|time|datetime]" sorting.
+
+  Version 1.0.0-SNAPSHOT - build 85
+  ------------------------------------------------------------------------------
+  [+] added new functions:
+        $(element).numberVal()
+        $(element).numberValOrText()
+        $(element).booleanVal()
+        $(element).booleanValOrText()
+
+  Version 1.0.0-SNAPSHOT - build 84
+  ------------------------------------------------------------------------------
+  [+] div table now supports nowrap.
+
+  Version 1.0.0-SNAPSHOT - build 83
+  ------------------------------------------------------------------------------
+  [=] ajax[Pseudo]Table now formats totals on totalbar.
+
+  Version 1.0.0-SNAPSHOT - build 82
+  ------------------------------------------------------------------------------
+  [+] findDialog now has a option to extend the default search panel:
+        'search': {
+            'panelExt': function($panel) {...},
+            ...
+        }
+  [+] findDialog now has a option 'refreshOnShow'
+
+  Version 1.0.0-SNAPSHOT - build 81
+  ------------------------------------------------------------------------------
+  [b] qtip dialogs now are palced at "top center".
+  [b] removed overflow from body.
+
+  Version 1.0.0-SNAPSHOT - build 80
+  ------------------------------------------------------------------------------
+  [b] fix download session
+  [b] fix panel close button regression
+
+  Version 1.0.0-SNAPSHOT - build 79
+  ------------------------------------------------------------------------------
+  [v] fix div size of documentDialog to NUP
+
+  Version 1.0.0-SNAPSHOT - build 78
+  ------------------------------------------------------------------------------
+  [b] dockable fix.
+  [b] removed body "height: 100%;" from css reset. It messes out nome things.
+
+  Version 1.0.0-SNAPSHOT - build 77
+  ------------------------------------------------------------------------------
+  [=] wizard plugin enhancements.
+
+  Version 1.0.0-SNAPSHOT - build 76
+  ------------------------------------------------------------------------------
+  [+] ajaxTable and ajaxPseudoTable now can have preRefresh/postRefresh
+      functions.
+
+  Version 1.0.0-SNAPSHOT - build 75
+  ------------------------------------------------------------------------------
+  [=] stroked-top removed from default class of pseudoAjaxTable wrapper.
+
+  Version 1.0.0-SNAPSHOT - build 74
+  ------------------------------------------------------------------------------
+  [=] improved div made tables.
+
+  Version 1.0.0-SNAPSHOT - build 73
+  ------------------------------------------------------------------------------
+  [=] ajaxTable and ajaxPseudoTable postAddLines() now receives an object
+      containing a property named 'params' that is the params used in the last
+      search.
+
+  Version 1.0.0-SNAPSHOT - build 72
+  ------------------------------------------------------------------------------
+  [+] new full div made table. Ex:
+      <div class="table responsive">
+          <div class="thead">
+              <div class="tr">
+                  <div class="th">head1</div>
+                  <div class="th">head2</div>
+              </div>
+          </div>
+          <div class="tbody">
+              <div class="tr">
+                  <div class="td">col[1,1]</div>
+                  <div class="td">col[1,2]</div>
+              </div>
+              <div class="tr">
+                  <div class="td">col[2,1]</div>
+                  <div class="td">col[2,2]</div>
+              </div>
+          </div>
+          <div class="tfoot">
+              <div class="tr">
+                  <div class="td">foot1</div>
+                  <div class="td">foot2</div>
+              </div>
+          </div>
+      </div>
+
+  Version 1.0.0-SNAPSHOT - build 71
+  ------------------------------------------------------------------------------
+  [b] fixed tableSorter() plugin bug when comparing blank values.
+
+  Version 1.0.0-SNAPSHOT - build 70
+  ------------------------------------------------------------------------------
+  [b] fixed target not working on openUrl() plugin.
+
+  Version 1.0.0-SNAPSHOT - build 69
+  ------------------------------------------------------------------------------
+  [+] Added switch to @{expression}: @{propertyVal|switch=o1:v1;o2:v2;}
+  [+] Added new functions to $.DateUtils
+  [=] qtip css tweaks for mobile
+
+  Version 1.0.0-SNAPSHOT - build 68
+  ------------------------------------------------------------------------------
+  [v] print media enhancements.
+
+  Version 1.0.0-SNAPSHOT - build 67
+  ------------------------------------------------------------------------------
+  [+] new width-Xem classes.
+  [=] openUrl() plugin converted to JqueryUI Widget.
+  [v] tweaks for div themes.
+  [v] tweaks for print media.
+
+  Version 1.0.0-SNAPSHOT - build 66
+  ------------------------------------------------------------------------------
+  [+] Added a new plugin - helperBox.
 
   Version 1.0.0-SNAPSHOT - build 65
   ------------------------------------------------------------------------------
