@@ -1,16 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Cadastrar Edição de Evento" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 <mocca:title title="Cadastrar Edição de Evento - ${command.evento.sigla}"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
@@ -152,7 +142,7 @@
                                 <td class="centered ">
                                     <div class="btn-group mini">
                                         <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                    <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                                        <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
                                     <div class="btn-group" title="Mais opções">
                                         <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
                                             <i class="icon-list"></i>

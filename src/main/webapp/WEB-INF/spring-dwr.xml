@@ -56,8 +56,11 @@
             <dwr:include method="confraternista"/>            
         </dwr:convert>
     </dwr:configuration>
-
-    <dwr:controller id="dwrController" debug="true" />
+    
+    <dwr:controller id="dwrController" debug="true">
+        <dwr:config-param name="activeReverseAjaxEnabled" value="true"/>
+    </dwr:controller>
+        
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">

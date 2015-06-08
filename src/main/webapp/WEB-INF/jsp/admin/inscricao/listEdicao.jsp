@@ -2,16 +2,6 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="Gerenciamento de Inscrições - Edições (${evento.sigla})" isTitleKey="false"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Gerenciamento de Inscrições - Edições (${evento.sigla})" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.page.managesubscription.event"><javalek:url><c:url value="/admin/inscricao/listEvento.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 
 <c:choose>
     <c:when test="${empty edicoes}">

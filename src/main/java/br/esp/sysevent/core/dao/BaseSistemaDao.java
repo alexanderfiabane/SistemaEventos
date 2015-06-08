@@ -15,6 +15,8 @@ import org.hibernate.criterion.Order;
 /**
  *
  * @author Marcius da Silva da Fonseca (mfonseca@ufsm.br)
+ * @param <ID>
+ * @param <T>
  */
 public interface BaseSistemaDao<ID extends Serializable & Comparable<ID>, T extends Entity<ID>> extends EntityDao<ID, T> {
 

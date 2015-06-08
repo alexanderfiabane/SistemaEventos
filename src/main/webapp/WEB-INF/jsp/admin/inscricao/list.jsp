@@ -86,7 +86,7 @@
                                 <th data-name="${inscricao.confraternista.tipo.descricao}" class="centered"><fmt:message key="label.subscriptiontype"/></th>
                                 <th data-name="${inscricao.status.value}" class="centered"><fmt:message key="label.subscriptionstatus"/></th>
                                 <th data-name="${inscricao.valor}" class="centered"><fmt:message key="label.subscriptionvalue"/></th>
-                                <th data-name="${inscricao.pagamento.data}" class="centered"><fmt:message key="label.paymentdate"/></th>
+                                <th data-name="" class="centered"><fmt:message key="label.paymentdate"/></th>
                                 <th data-name="${inscricao.pagamento.numeroDocumento}" class="centered"><v:message key="label.paymentnumber"/></th>
                                 <th data-name="${inscricao.pagamento.valor}" class="centered"><fmt:message key="label.paymentvalue"/></th>
                             </tr>
@@ -133,9 +133,9 @@
                                 <td>${inscricao.confraternista.tipo.descricao}</td>
                                 <td>${inscricao.status.value}</td>
                                 <td><fmt:formatNumber value="${inscricao.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
-                                <td><fmt:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" /></td>
+                                <td><%--<fmt:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" />--%></td>
                                 <td>${inscricao.pagamento.numeroDocumento}</td>
-                                <td><fmt:formatNumber value="${inscricao.pagamento.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
+                                <td><%--<fmt:formatNumber value="${inscricao.pagamento.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/>--%></td>
                             </tr>
                         </tbody>
                     </table>

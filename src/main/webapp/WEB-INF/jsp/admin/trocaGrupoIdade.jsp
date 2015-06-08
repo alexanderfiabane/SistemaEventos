@@ -1,24 +1,18 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 <%@ include file="/WEB-INF/includes/dwr.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Troca de Grupo do Confraternista">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Grupo por Idade" isLabelKey="false"><javalek:url><c:url value="/admin/menuGrupoIdade.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
+<mocca:title title="Troca de Grupo do Confraternista"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-<javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
-<div class="row-fluid">
-    <div class="row-fluid">
-        <div class="span6">            
-            <javalek:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+<div class="row">
+    <div class="row">
+        <div class="span6">                        
+            <label class="label control">
+                <fmt:message key="label.group"/>
+            </label>
             <select id="selectGrupoA" class="span12">
                 <option value="">Selecione um grupo</option>
                 <c:forEach var="grupoa" items="${grupoIdade}">
@@ -27,7 +21,9 @@
             </select>
         </div>
         <div class="span6">            
-            <javalek:label label="label.group" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+            <label class="label control">
+                <fmt:message key="label.group"/>
+            </label>
             <select id="selectGrupoB" class="span12">
                 <option value="">Selecione um grupo</option>
                 <c:forEach var="grupob" items="${grupoIdadeb}">
@@ -45,37 +41,41 @@
                             <!--Tabela que mostra os confraternista do grupoA selecionado-->
                             <div class="centeredDivOuter" style="width: 400px;">
                                 <div class="centeredDivInner">
-                                    <!-- Lista de confraternistas do grupoA -->                
-                                    <table id="confraternistasGrupoA" class="table table-bordered table-striped table-condensed connectedSortable">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: center;" colspan="3">
-                                                    Selecione um grupo
-                                                </th>
-                                            </tr>                                           
-                                        </thead>                                        
-                                    </table>
+                                    <!-- Lista de confraternistas do grupoA -->
+                                    <div class="table-wrapper bordered shadowed rounded narrow">
+                                        <table id="confraternistasGrupoA" class="table stroked striped hovered connectedSortable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;" colspan="3">
+                                                        Selecione um grupo
+                                                    </th>
+                                                </tr>                                           
+                                            </thead>                                        
+                                        </table>                                        
+                                    </div>
                                 </div>
                             </div>
                         </td>
                         <td class="centered" style="padding-top: 5%;">
                             <p class="text-info"><strong>Arraste a linha</strong></p>                            
-                            <img scr="/assets/application/img/icons/arrow.png"/>
+                            <i class="icon-exchange"></i>
                             <p class="text-info"><strong>para trocar</strong></p>
                         </td>
                         <td>
                             <div class="centeredDivOuter" style="width: 400px">
                                 <div class="centeredDivInner">
                                     <!-- Lista de confraternistas do grupoB -->
-                                    <table id="confraternistasGrupoB" class="table table-bordered table-striped table-condensed connectedSortable">
-                                        <thead>
-                                            <tr>
-                                                <th style="text-align: center;" colspan="3">
-                                                    Selecione um grupo
-                                                </th>
-                                            </tr>                                           
-                                        </thead>                                        
-                                    </table>
+                                    <div class="table-wrapper bordered shadowed rounded narrow">
+                                        <table id="confraternistasGrupoB" class="table stroked striped hovered connectedSortable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;" colspan="3">
+                                                        Selecione um grupo
+                                                    </th>
+                                                </tr>                                           
+                                            </thead>                                        
+                                        </table>                                        
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -89,9 +89,9 @@
 <script type="text/javascript">
 
     /**
-     * Carrega os confraternisto do dormitório selecionado.
+     * Carrega os confraternisto do dormitÃ³rio selecionado.
      * 
-     * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormitório.
+     * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormitÃ³rio.
      * @param {Dormitorio} selectedGrupoIdade
      * @param {ID Div} inputConfraternista
      * @returns {Collection<Confraternista>}
@@ -120,7 +120,7 @@
                                             .append('<javalek:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
-                        jQuery.each(confraternistas, function (index, value) {
+                        jQuery.each(confraternistas, function(index, value) {
                             jQuery('#grupoA').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
                                             .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
@@ -160,7 +160,7 @@
                                             .append('<javalek:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoB">');
-                        jQuery.each(confraternistas, function (index, value) {
+                        jQuery.each(confraternistas, function(index, value) {
                             jQuery('#grupoB').append(jQuery('<tr id="' + value.id + '">')
                                     .append(jQuery('<td>')
                                             .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
@@ -181,7 +181,7 @@
 
     /**
      * Plugin para trocar(arrastar) os confraternistas de um grupoIdade
-     * para outro grupoIdade da mesma faixa etária.
+     * para outro grupoIdade da mesma faixa etÃ¡ria.
      
      * @returns {undefined}     */
     function trocaConfraternistaGrupo() {
@@ -190,16 +190,16 @@
                     connectWith: ".connectedSortable",
                     cursor: "move",
                     items: '> tbody > *',
-                    receive: function (ev, ui) {
+                    receive: function(ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
-                        //método que valida e salva troca                        
+                        //mÃ©todo que valida e salva troca                        
                         var idConfraternista = ui.item.context.id;
                         var idGrupoIdade = ev.target.tHead.rows[0].getAttribute("id");
-                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function (retorno) {
-                            bootbox.alert(retorno, function () {
+                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function(retorno) {
+                            bootbox.alert(retorno, function() {
                                 loadConfraternistas(jQuery('#selectGrupoA'), jQuery('#confraternistasGrupoA'), true);
                                 loadConfraternistas(jQuery('#selectGrupoB').val(), '#confraternistasGrupoB', false);
-                            });                         
+                            });
                         });
                     },
                     cursorAt: {left: 20},
@@ -209,7 +209,7 @@
     }
 
     /**
-     * Carrega os dormitórios segundo o gênero escolhido
+     * Carrega os dormitÃ³rios segundo o gÃªnero escolhido
      
      * @param {selectGrupoA} grupoA
      * @param {selectGrupoB} grupoB
@@ -226,11 +226,11 @@
             loadConfraternistas(grupoA, jQuery('#confraternistasGrupoA'), true);
             grupoIdadeAjaxService.findSimilares(grupoASelecionado, function callback(grupo) {
                 if (grupo.length === 0) {
-                    bootbox.alert("Não existem grupos similares ao selecionado.");
+                    bootbox.alert("NÃ£o existem grupos similares ao selecionado.");
                     grupoB.append(jQuery('<option value="">').append('Para trocar selecione outro grupo'));
                 } else {
                     grupoB.append(jQuery('<option value="">').append('Selecione um grupo'));
-                    jQuery.each(grupo, function (index, value) {
+                    jQuery.each(grupo, function(index, value) {
                         grupoB.append(jQuery('<option>').val(value.id).append(value.nome));
                     });
                 }
@@ -239,17 +239,17 @@
     }
 
     /**
-     * Inicializa os métodos javascript
+     * Inicializa os mÃ©todos javascript
      * @returns {undefined}     */
-    jQuery(function () {
-        $(document).ready(function () {
+    jQuery(function() {
+        $(document).ready(function() {
             loadGrupos(jQuery('#selectGrupoA'), jQuery('#selectGrupoB'));
             trocaConfraternistaGrupo();
             //Carrega o painel com os confraternistas do dormitorio selecionado
-            jQuery('#selectGrupoB').change(function () {
+            jQuery('#selectGrupoB').change(function() {
                 loadConfraternistas(jQuery(this).val(), '#confraternistasGrupoB', false);
             });
-            jQuery('#selectGrupoA').change(function () {
+            jQuery('#selectGrupoA').change(function() {
                 loadGrupos(jQuery(this), jQuery('#selectGrupoB'));
             });
         });
