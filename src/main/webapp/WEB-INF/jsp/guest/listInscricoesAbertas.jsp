@@ -3,15 +3,7 @@
 
 
 <mocca:title title="Inscrições Abertas"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Inscrições Abertas" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconInscricoesAbertas.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
+
 <c:choose>
     <c:when test="${empty edicoes}">
         <see:notice type="danger" closeable="false">Nenhuma edição com inscrição aberta foi encontrada</see:notice>
@@ -48,5 +40,6 @@
                 </tbody>
             </table>
         </div>
+        <see:formButtonGroup putSubmit="false" backUrl="../index.html"/>
     </c:otherwise>
 </c:choose>

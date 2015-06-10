@@ -14,14 +14,14 @@ import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-@Service
+@RemoteProxy(name = "confraternistaAjaxService")
 public class ConfraternistaAjaxService {
 
     @Autowired
@@ -54,9 +54,9 @@ public class ConfraternistaAjaxService {
         Collection<Confraternista> confraternistas = new HashSet<Confraternista>();
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicao(grupoIdade.getEdicaoEvento().getId());
         for (Inscricao inscricao : inscricoes) {
-            if(inscricao.getConfraternista().getGrupoIdade() != null && (inscricao.getConfraternista().getGrupoIdade().equals(grupoIdade))
+            if (inscricao.getConfraternista().getGrupoIdade() != null && (inscricao.getConfraternista().getGrupoIdade().equals(grupoIdade))
                     && (!inscricao.getConfraternista().getTipo().equals(Confraternista.Tipo.FACILITADOR))
-                    && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))){
+                    && (inscricao.getStatus().equals(Inscricao.Status.AGUARDANDO_PAGAMENTO) || inscricao.getStatus().equals(Inscricao.Status.EFETIVADA))) {
                 confraternistas.add(inscricao.getConfraternista());
             }
         }

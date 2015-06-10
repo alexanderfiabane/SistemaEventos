@@ -12,14 +12,14 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Alexander
  */
-@Service
+@RemoteProxy(name = "grupoIdadeAjaxService")
 public class GrupoIdadeAjaxService {
 
     @Autowired

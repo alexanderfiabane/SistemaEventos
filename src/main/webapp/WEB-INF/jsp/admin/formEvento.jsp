@@ -28,7 +28,7 @@
             <see:formField label="label.eventsite" isLabelKey="true" isMandatory="true" path="site" maxlength="150" inputClass="textfield width-100"/>
         </div>
     </div>
-    <see:formButtonGroup formUrl="/admin/formEvento.html"/>
+    <see:formButtonGroup clearUrl="/admin/formEvento.html" putSubmit="true" backUrl="menu.html"/>
 </form:form>
 
 <c:choose>
@@ -70,7 +70,7 @@
     </c:otherwise>
 </c:choose>
 <script type="text/javascript">
-    onload = function () {
+    onload = function() {
         document.getElementById("nome").focus();
     };
 </script>

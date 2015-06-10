@@ -1,7 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-
 <mocca:title title="Oooops"/>
 
 <c:set var="exception" value="${requestScope['javax.servlet.error.exception'].cause}"/>

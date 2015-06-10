@@ -12,14 +12,14 @@ import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Fiabane
  */
-@Service
+@RemoteProxy(name = "inscricaoAjaxService")
 public class InscricaoAjaxService {
 
     @Autowired

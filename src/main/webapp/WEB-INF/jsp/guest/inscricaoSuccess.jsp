@@ -1,23 +1,14 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<%--
-<content tag="titlebarContent">
-    <javalek:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 <mocca:title title="label.page.subscription" isTitleKey="true"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
-<fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
-    <legend class="label">
-        <h3><fmt:message key="label.eventdetails"/></h3>
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
+            <h4><fmt:message key="label.eventdetails"/></h4>
     </legend>
     <div class="row">
         <div class="span3">
@@ -35,7 +26,7 @@
 <!--DADOS PESSOAIS-->
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><fmt:message key="label.personaldetails"/></h3>
+        <h4><fmt:message key="label.personaldetails"/></h4>
     </legend>
     <div class="row">
         <div class="span3">
@@ -110,7 +101,7 @@
 
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><fmt:message key="label.healthfooddetails"/></h3>
+        <h4><fmt:message key="label.healthfooddetails"/></h4>
     </legend>
     <div class="row">
         <div class="span12">
@@ -139,7 +130,7 @@
 
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
-        <h3><fmt:message key="label.housedetails"/></h3>
+        <h4><fmt:message key="label.housedetails"/></h4>
     </legend>
     <div class="row">
         <div class="span12">
@@ -189,7 +180,7 @@
 <c:if test="${not empty command.edicaoEvento.oficinas}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.workshopdetails"/></h3>
+            <h4><fmt:message key="label.workshopdetails"/></h4>
         </legend>
         <div class="row">
             <see:formFieldView label="label.workshopname" isLabelKey="true" value="${command.confraternista.oficina.nome}"/>
@@ -200,7 +191,7 @@
 <c:if test="${not empty command.edicaoEvento.gruposIdade}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.groupagedetails"/></h3>
+            <h4><fmt:message key="label.groupagedetails"/></h4>
         </legend>
         <div class="row">
             <see:formFieldView label="label.groupagename" isLabelKey="true" value="${command.confraternista.grupoIdade.nome}"/>
@@ -211,7 +202,7 @@
 <c:if test="${not empty command.confraternista.camisetas}">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.shirtdetails"/></h3>
+            <h4><fmt:message key="label.shirtdetails"/></h4>
         </legend>
         <div class="row">
             <div class="table-wrapper scrollable bordered rounded">
@@ -244,15 +235,15 @@
 <c:url var="url_print" value="/user/fichaInscricao.html">
     <c:param name="idInscricao" value="${command.id}"/>
 </c:url>
-<div class="align-right">
-    <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" onclick="imprimiInscricao('${url_print}');"><i class="icon-print"></i> Imprimir Inscrição</button>
-</div>
+<see:formButtonGroup putSubmit="false" backUrl="../index.html">
+    <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" onclick="imprimiInscricao('${url_print}');"><i class="icon-print"></i> Imprimir Inscrição</button>                
+</see:formButtonGroup>
+
 <script type="text/javascript">
     function imprimiInscricao(url) {
         alert("Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.");
         location.href = url;
     }
     $(document).ready({
-        
     });
 </script>

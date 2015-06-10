@@ -43,7 +43,7 @@
     <!-- Define quais as urls devem ser testadas pelo filtro do SiteMesh -->
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/*</url-pattern>        
     </filter-mapping>
 
     <!-- Define quais as urls devem ser tratadas pelo dispatcher do Spring -->

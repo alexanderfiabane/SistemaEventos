@@ -10,7 +10,7 @@
                     http://www.directwebremoting.org/schema/spring-dwr
                     http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
 
-    <dwr:configuration >
+    <dwr:configuration>
         <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">            
             <dwr:include method="name"/>
             <dwr:include method="sigla"/>

@@ -7,14 +7,14 @@ import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.model.Cidade;
 import java.util.Collection;
 import java.util.Collections;
+import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-@Service
+@RemoteProxy(name = "enderecoAjaxService")
 public class EnderecoAjaxService {
 
     @Autowired

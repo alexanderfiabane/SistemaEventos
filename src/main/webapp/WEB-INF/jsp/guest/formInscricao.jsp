@@ -1,18 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-<javalek:pagetitle label="label.page.subscription" isLabelKey="true" defaultIsLabelKey="true">
-    <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
-    <i class="icon-file-text large"></i>
-    <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/index.html"/></javalek:url></javalek:breadcrumb>
-    <javalek:breadcrumb label="label.page.openedSubscription"><javalek:url><c:url value="/guest/listInscricoesAbertas.html"/></javalek:url></javalek:breadcrumb>
-</javalek:pagetitle>
-</content>
---%>
-
 <mocca:title title="label.page.subscription" isTitleKey="true"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
@@ -20,13 +8,14 @@
 
 <form:form commandName="command">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
-        <legend class="label">
-            <h3><fmt:message key="label.eventdetails"/></h3>
+        <legend class="label">            
+            <h4><fmt:message key="label.eventdetails"/></h4>
         </legend>
         <div class="row">
-            <div class="span12">
-                <!--<javalek:label label="label.subscriptiontype" isLabelKey="true" isMandatory="true" breakAfter="true" cssClass="control-label"/>-->
-                <label label="label.subscriptiontype" class="label"/>
+            <div class="span12">                
+                <label class="label">
+                    <fmt:message key="label.subscriptiontype"/>
+                </label>                
                 <ul class="no-bullet no-padding">
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
@@ -71,12 +60,14 @@
         <div id="grupoFacilitador" style="display: none;">
             <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
                 <legend class="label">
-                    <h3><fmt:message key="label.eventcoordgroupdetails"/></h3>
+                    <h4><fmt:message key="label.eventcoordgroupdetails"/></h4>
                 </legend>
                 <div class="row">
                     <div class="span12">
                         <!--<javalek:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
-                        <label label="label.groupname" class="label"/>
+                        <label class="label">
+                            <fmt:message key="label.groupname"/>
+                        </label>
                         <ul class="no-bullet no-padding">
                             <c:forEach var="grupo" items="${command.edicaoEvento.gruposIdade}">
                                 <li class="mini-padding">
@@ -94,7 +85,7 @@
     </c:if>
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.personaldetails"/></h3>
+            <h4><fmt:message key="label.personaldetails"/></h4>
         </legend>
         <div class="row">
             <div class="span3">
@@ -177,19 +168,19 @@
 
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.healthfooddetails"/></h3>
+            <h4><fmt:message key="label.healthfooddetails"/></h4>
         </legend>
         <div class="row">
             <div class="span3">
-<!--                <javalek:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
-                <javalek:label label="Não" for="medicacaoNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoNao" name="medicacao" value="false"/></javalek:label>
-                <javalek:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></javalek:label>-->
+                <!--                <javalek:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
+                                <javalek:label label="Não" for="medicacaoNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoNao" name="medicacao" value="false"/></javalek:label>
+                                <javalek:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></javalek:label>-->
                 <label class="label">
                     Faz uso rotineiro de medicação?
                 </label>
-                <label class="radio inline">
-                    <input type="radio" id="medicacaoNao" name="medicacao" value="false"/>
-                    <input type="radio" id="medicacaoSim" name="medicacao" value="true"/>
+                <label class="radio inline"><br>
+                    <label><input type="radio" id="medicacaoNao" name="medicacao" value="false"/>Não</label>
+                    <label><input type="radio" id="medicacaoSim" name="medicacao" value="true"/>Sim</label>
                 </label>
             </div>
             <div class="span3">
@@ -198,15 +189,12 @@
         </div>
         <div class="row">
             <div class="span3">
-<!--                <javalek:label label="Tem algum tipo de convênio?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
-                <javalek:label label="Não" for="convenioNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioNao" name="convenio" value="false"/></javalek:label>
-                <javalek:label label="Sim" for="convenioSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="convenioSim" name="convenio" value="true"/></javalek:label>-->
                 <label class="label">
                     Tem algum tipo de convênio?
                 </label>
-                <label class="radio inline">
-                    <input type="radio" id="convenioNao" name="convenio" value="false"/>
-                    <input type="radio" id="convenioSim" name="convenio" value="true"/>
+                <label class="radio inline"><br>
+                    <label><input type="radio" id="convenioNao" name="convenio" value="false"/>Não</label>
+                    <label><input type="radio" id="convenioSim" name="convenio" value="true"/>Sim</label>
                 </label>
             </div>
             <div class="span3">
@@ -217,10 +205,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="span3">
-                <javalek:label label="Possui algum tipo de alergia?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
-                <javalek:label label="Não" for="alergiaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaNao" name="alergia" value="false"/></javalek:label>
-                <javalek:label label="Sim" for="alergiaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="alergiaSim" name="alergia" value="true"/></javalek:label>
+            <div class="span3">                
+                <label class="label">
+                    Possui algum tipo de alergia?
+                </label>
+                <label class="radio inline"><br>
+                    <label><input type="radio" id="alergiaNao" name="alergia" value="false"/>Não</label>
+                    <label><input type="radio" id="alergiaSim" name="alergia" value="true"/>Sim</label>
+                </label>
             </div>
             <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255" inputClass="textfield width-100"/>
@@ -228,9 +220,13 @@
         </div>
         <div class="row">
             <div class="span3">
-                <javalek:label label="Possui algum tipo de restrição alimentar?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
-                <javalek:label label="Não" for="dietaNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaNao" name="dieta" value="false"/></javalek:label>
-                <javalek:label label="Sim" for="dietaSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="dietaSim" name="dieta" value="true"/></javalek:label>
+                <label class="label">
+                    Possui algum tipo de restrição alimentar?
+                </label>
+                <label class="radio inline"><br>
+                    <label><input type="radio" id="dietaNao" name="dieta" value="false"/>Não</label>
+                    <label><input type="radio" id="dietaSim" name="dieta" value="true"/>Sim</label>
+                </label>
             </div>
             <div class="span3">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255" inputClass="textfield width-100"/>
@@ -240,7 +236,7 @@
 
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
-            <h3><fmt:message key="label.housedetails"/></h3>
+            <h4><fmt:message key="label.housedetails"/></h4>
         </legend>
         <div class="row">
             <div class="span12">
@@ -300,7 +296,7 @@
     <c:if test="${(not empty command.edicaoEvento.oficinas) && (command.edicaoEvento.tipo == 'OFICINA')}">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
-                <h3><fmt:message key="label.workshopdetails"/></h3>
+                <h4><fmt:message key="label.workshopdetails"/></h4>
             </legend>
             <div class="row">
                 <div class="span3">
@@ -330,7 +326,7 @@
     <c:if test="${not empty command.edicaoEvento.tiposCamiseta}">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
-                <h3><fmt:message key="label.shirtdetails"/></h3>
+                <h4><fmt:message key="label.shirtdetails"/></h4>
             </legend>
             <div class="row">
                 <div class="span3">
@@ -383,21 +379,21 @@
                     </label>
                     <div>
                         <button type="button" class="btn small" title="Adicionar" id="addCamiseta">Adicionar</button>
-                        <button type="button" class="btn small delete" title="Remover" id="removeCamiseta">Remover camiseta</button>
+                        <button type="button" class="btn small delete" title="Remover" id="removeCamiseta">Remover</button>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="table-wrapper scrollable bordered rounded">
-                    <table id="camisetas" class="table striped hovered stroked">
+                    <table id="camisetas" class="table striped hovered stroked narrow">
                         <thead class="header">
-                            <tr><th class="centered" colspan="5"><javalek:message key="label.shirts"/></th></tr>
+                            <tr><th class="centered" colspan="5"><fmt:message key="label.shirts"/></th></tr>
                         <tr>
-                            <th class="centered"><javalek:message key="label.options"/></th>
-                        <th class="centered"><javalek:message key="label.shirttype"/></th>
-                        <th class="centered"><javalek:message key="label.shirtcolor"/></th>
-                        <th class="centered"><javalek:message key="label.shirtsize"/></th>
-                        <th class="centered"><javalek:message key="label.shirtquant"/></th>
+                            <th class="centered" style="width: 2em;"><fmt:message key="label.options"/></th>
+                        <th class="centered"><fmt:message key="label.shirttype"/></th>
+                        <th class="centered"><fmt:message key="label.shirtcolor"/></th>
+                        <th class="centered"><fmt:message key="label.shirtsize"/></th>
+                        <th class="centered"><fmt:message key="label.shirtquant"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -440,8 +436,8 @@
                 </div>
             </div>
         </fieldset>
-    </c:if>
-    <see:formButtonGroup formUrl="/admin/inscricao/form.html?idInscricao=${command.id}"/>
+    </c:if>    
+    <see:formButtonGroup clearUrl="formInscricao.html?idEdicao=${command.edicaoEvento.id}" backUrl="listInscricoesAbertas.html" putSubmit="true"/>
 </form:form>
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
@@ -468,20 +464,20 @@
             enderecoAjaxService.getCidades(
                     estadoSelecionado,
                     {
-                        'callback': function (cidades) {
+                        'callback': function(cidades) {
                             inputCidade.append($('<option value="">').append('Selecione uma cidade'));
-                            $.each(cidades, function (index, value) {
+                            $.each(cidades, function(index, value) {
                                 inputCidade.append($('<option>').val(value.id).append(value.nome));
                             });
                             if (idCidadeAtual) {
                                 inputCidade.val(idCidadeAtual);
                             }
                         },
-                        'preHook': function () {
+                        'preHook': function() {
                             //lock
                             $.WidgetUtils.blockUI('Aguarde...');
                         },
-                        'postHook': function () {
+                        'postHook': function() {
                             //unlock
                             $.WidgetUtils.unblockUI();
                         }
@@ -576,7 +572,7 @@
         return new Date(array[2], array[1], array[0]);
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
 
         $("#atividadeIE").textCounter({
             maxChars: 500
@@ -596,11 +592,11 @@
         $('.delete').click(removeCamiseta);
         $('#removeCamiseta').hide();
 
-        $('[name="confraternista.oficina"]').each(function () {
+        $('[name="confraternista.oficina"]').each(function() {
             $(this).attr('checked', $(this).val() == '${command.confraternista.oficina.id}');
         });
 
-        $('[name="confraternista.tipo"]').change(function () {
+        $('[name="confraternista.tipo"]').change(function() {
             if ($(this).val() == 'FACILITADOR') {
                 $('#grupoFacilitador').show();
             } else {
@@ -608,14 +604,14 @@
             }
         });
 
-        $('[name=medicacao]').change(function () {
+        $('[name=medicacao]').change(function() {
             if ($(this).val() == 'true') {
                 $('#medicacao').attr('readonly', false);
             } else {
                 $('#medicacao').attr('readonly', true).val('');
             }
         });
-        $('[name=convenio]').change(function () {
+        $('[name=convenio]').change(function() {
             if ($(this).val() == 'true') {
                 $('#convenio').attr('readonly', false);
                 $('#foneConvenio').attr('readonly', false);
@@ -624,14 +620,14 @@
                 $('#foneConvenio').attr('readonly', true).val('');
             }
         });
-        $('[name=alergia]').change(function () {
+        $('[name=alergia]').change(function() {
             if ($(this).val() == 'true') {
                 $('#alergia').attr('readonly', false);
             } else {
                 $('#alergia').attr('readonly', true).val('');
             }
         });
-        $('[name=dieta]').change(function () {
+        $('[name=dieta]').change(function() {
             if ($(this).val() == 'true') {
                 $('#dieta').attr('readonly', false);
             } else {
@@ -660,23 +656,24 @@
             $('#dietaSim').click();
         }
 
-        $('#estado').change(function () {
+        $('#estado').change(function() {
             loadCidades($(this), $('#cidade'));
         });
-        $('#estadoCasa').change(function () {
+        $('#estadoCasa').change(function() {
             loadCidades($(this), $('#cidadeCasa'));
         });
-        $('#dataNascimento').blur(function () {
-            var texto = $(this).val();
+        $('[name=confraternista\\.tipo]').change(function() {
             var tipoEvento = '${command.edicaoEvento.tipo}';
-
+            if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
+                $('#evangelizadorResponsavel').show();
+            } else {
+                $('#evangelizadorResponsavel').hide();
+            }
+        });
+        $('#dataNascimento').blur(function() {
+            var texto = $(this).val();
             if (typeof texto !== 'undefined' && texto !== '') {
                 var dataNascimento = parseDate(texto);
-                if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
-                    $('#evangelizadorResponsavel').show();
-                } else {
-                    $('#evangelizadorResponsavel').hide();
-                }
                 if (!calculaMaiorIdade(dataNascimento)) {
                     $('#responsavel').show();
                 } else {

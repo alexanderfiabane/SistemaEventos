@@ -107,7 +107,7 @@
                 </fieldset>
             </div>
         </div>
-        <see:formButtonGroup formUrl="/admin/formEdicao.html?idEvento=${command.evento.id}"/>
+        <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}" backUrl="formEvento.html"/>
     </div>
 </form:form>
 
@@ -142,7 +142,7 @@
                                 <td class="centered ">
                                     <div class="btn-group mini">
                                         <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                        <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                                    <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
                                     <div class="btn-group" title="Mais opções">
                                         <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
                                             <i class="icon-list"></i>
@@ -177,7 +177,7 @@
 </c:choose>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         document.getElementById("numero").focus();
 
         function toogleMenu(idEdicao) {
@@ -201,7 +201,7 @@
             'showExample': true,
             'picker': {
                 showClearButton: true,
-                'onClose': function (selectedDate) {
+                'onClose': function(selectedDate) {
                     $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
                 }
             }
@@ -211,7 +211,7 @@
             'showExample': true,
             picker: {
                 showClearButton: true,
-                'onSelect': function (selectedDate) {
+                'onSelect': function(selectedDate) {
                     $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
                     $("#data").datepicker("option", "minDate", selectedDate);
                 }

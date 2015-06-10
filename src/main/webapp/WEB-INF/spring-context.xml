@@ -16,5 +16,6 @@
     <context:annotation-config />
     <context:component-scan base-package="br.esp.sysevent" />
     <mvc:annotation-driven />
+    <!--<dwr:annotation-scan />-->
     <import resource="spring-dwr.xml"/>
 </beans>
