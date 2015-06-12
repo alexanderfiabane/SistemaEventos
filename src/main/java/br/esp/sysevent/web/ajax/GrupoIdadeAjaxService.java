@@ -12,6 +12,7 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
+import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Alexander
  */
-@RemoteProxy(name = "grupoIdadeAjaxService")
+@RemoteProxy
 public class GrupoIdadeAjaxService {
 
     @Autowired
@@ -27,13 +28,14 @@ public class GrupoIdadeAjaxService {
     @Autowired
     private ConfraternistaDao confraternistaDao;
 
+    @RemoteMethod
     public GrupoIdade findById(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
         }
         return grupoIdadeDao.findById(NumberUtils.parseLong(idGrupoIdade));
     }
-
+    @RemoteMethod
     public Collection<GrupoIdade> findSimilares(String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return null;
@@ -41,7 +43,7 @@ public class GrupoIdadeAjaxService {
             return grupoIdadeDao.findSimilares(NumberUtils.parseLong(idGrupoIdade));
         }
     }
-
+    @RemoteMethod
     public String troca(String idGrupoIdade, String idConfraternista) {
         if (idConfraternista == null || idGrupoIdade == null) {
             return "Ocorreu um erro no sistema";

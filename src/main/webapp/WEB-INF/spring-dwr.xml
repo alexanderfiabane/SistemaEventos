@@ -8,107 +8,133 @@
                     http://www.springframework.org/schema/context
                     http://www.springframework.org/schema/context/spring-context-3.1.xsd
                     http://www.directwebremoting.org/schema/spring-dwr
-                    http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd">
+                    http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
 
-    <dwr:configuration>
-        <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">            
-            <dwr:include method="name"/>
-            <dwr:include method="sigla"/>
-            <dwr:include method="descricao"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Pessoa" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="nome"/>
-            <dwr:include method="sexo"/>
-            <dwr:include method="endereco"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Confraternista" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="pessoa"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Endereco" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="cidade"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Cidade" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="nome"/>
-            <dwr:include method="estado"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Estado" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="sigla"/>            
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Dormitorio" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="nome"/>
-            <dwr:include method="vagas"/>
-            <dwr:include method="vagasOcupadas"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.GrupoIdade" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="nome"/>
-            <dwr:include method="vagas"/>
-            <dwr:include method="vagasOcupadas"/>
-        </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Inscricao" type="hibernate3">
-            <dwr:include method="id"/>
-            <dwr:include method="confraternista"/>            
-        </dwr:convert>
-    </dwr:configuration>
+    <!-- DWR will scan all Spring managed beans containing @RemoteProxy or 
+    @RemoteMethod annotations and register Creator proxies for them. 
+    This will NOT scan any classes not managed by Spring. -->
+    <dwr:annotation-config />
+ 
+    <!-- DWR will scan the classpath and search classes containing @RemoteProxy or 
+    @RemoteMethod annotations. This will register the beans and Creator proxies for these classes.-->
+    <dwr:annotation-scan base-package="br.esp.sysevent.web.ajax" scanDataTransferObject="true" scanRemoteProxy="true" />
+ 
+    <!-- DWR will map util.js and engine.js files to the dwrController.
+    You can then include this files as external Javascript references from your JSP -->
+    <dwr:url-mapping />
+ 
+    <!-- Defines the dwrController. During production, set the debug property to false -->
+    <dwr:controller id="dwrController" debug="true" />
+ 
+    <!-- This is required if you want to configure any beans not managed by
+    Spring. Leaving it enabled doesn't do any negative effects. Here's a
+    sample config: 
+    <dwr:configuration> 
+     <dwr:convert type="bean" class="org.krams.tutorial.CustomClass" /> 
+    </dwr:configuration> -->
+    <dwr:configuration />
     
-    <dwr:controller id="dwrController" debug="true">
-        <dwr:config-param name="activeReverseAjaxEnabled" value="true"/>
-    </dwr:controller>
-        
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="alwaysUseFullPath" value="true"/>
-        <property name="mappings">
-            <props>
-                <prop key="/dwr/**/*">dwrController</prop>
-            </props>
-        </property>
-    </bean>
-
-    <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
-<!--    
-    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
-        <dwr:remote javascript="testeAjaxService">
-            <dwr:include method="teste" />
-        </dwr:remote>
-    </bean>
-    <bean id="inscricaoAjaxService" class="br.esp.sysevent.web.ajax.InscricaoAjaxService">        
-        <dwr:remote javascript="inscricaoAjaxService">            
-            <dwr:include method="findByIdGrupoIdade" />
-            <dwr:include method="findSemDormitorioBySexo" />
-        </dwr:remote>
-    </bean>
-    <bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">        
-        <dwr:remote javascript="confraternistaAjaxService">
-            <dwr:include method="findByNome" />
-            <dwr:include method="findByIdDormitorio" />
-            <dwr:include method="findByIdGrupoIdade" />
-            <dwr:include method="findSemDormitorio" />
-        </dwr:remote>
-    </bean>
-    <bean id="enderecoAjaxService" class="br.esp.sysevent.web.ajax.EnderecoAjaxService">
-        <dwr:remote javascript="enderecoAjaxService">
-            <dwr:include method="getCidades" />
-        </dwr:remote>
-    </bean>
-    <bean id="dormitorioAjaxService" class="br.esp.sysevent.web.ajax.DormitorioAjaxService">
-        <dwr:remote javascript="dormitorioAjaxService">
-            <dwr:include method="findById" />
-            <dwr:include method="findByGenero" />
-            <dwr:include method="troca" />
-        </dwr:remote>
-    </bean>
-    <bean id="grupoIdadeAjaxService" class="br.esp.sysevent.web.ajax.GrupoIdadeAjaxService">
-        <dwr:remote javascript="grupoIdadeAjaxService">            
-            <dwr:include method="findById" />
-            <dwr:include method="findSimilares" />
-            <dwr:include method="troca" />
-        </dwr:remote>
-    </bean>
-    -->
 </beans>
+<!--
+<dwr:configuration>
+    <dwr:convert class="br.esp.sysevent.core.model.Sexo" type="hibernate3">            
+        <dwr:include method="name"/>
+        <dwr:include method="sigla"/>
+        <dwr:include method="descricao"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Pessoa" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="nome"/>
+        <dwr:include method="sexo"/>
+        <dwr:include method="endereco"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Confraternista" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="pessoa"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Endereco" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="cidade"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Cidade" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="nome"/>
+        <dwr:include method="estado"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Estado" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="sigla"/>            
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Dormitorio" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="nome"/>
+        <dwr:include method="vagas"/>
+        <dwr:include method="vagasOcupadas"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.GrupoIdade" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="nome"/>
+        <dwr:include method="vagas"/>
+        <dwr:include method="vagasOcupadas"/>
+    </dwr:convert>
+    <dwr:convert class="br.esp.sysevent.core.model.Inscricao" type="hibernate3">
+        <dwr:include method="id"/>
+        <dwr:include method="confraternista"/>            
+    </dwr:convert>
+</dwr:configuration>
+    
+<dwr:controller id="dwrController" debug="true">
+    <dwr:config-param name="activeReverseAjaxEnabled" value="true"/>
+</dwr:controller>
+        
+<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="alwaysUseFullPath" value="true"/>
+    <property name="mappings">
+        <props>
+            <prop key="/dwr/**/*">dwrController</prop>
+        </props>
+    </property>
+</bean>
+
+http://localhost:8080/sysevent-web/dwr/test/testeAjaxService
+
+<bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
+    <dwr:remote javascript="testeAjaxService">
+        <dwr:include method="teste" />
+    </dwr:remote>
+</bean>
+<bean id="inscricaoAjaxService" class="br.esp.sysevent.web.ajax.InscricaoAjaxService">        
+    <dwr:remote javascript="inscricaoAjaxService">            
+        <dwr:include method="findByIdGrupoIdade" />
+        <dwr:include method="findSemDormitorioBySexo" />
+    </dwr:remote>
+</bean>
+<bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">        
+    <dwr:remote javascript="confraternistaAjaxService">
+        <dwr:include method="findByNome" />
+        <dwr:include method="findByIdDormitorio" />
+        <dwr:include method="findByIdGrupoIdade" />
+        <dwr:include method="findSemDormitorio" />
+    </dwr:remote>
+</bean>
+<bean id="enderecoAjaxService" class="br.esp.sysevent.web.ajax.EnderecoAjaxService">
+    <dwr:remote javascript="enderecoAjaxService">
+        <dwr:include method="getCidades" />
+    </dwr:remote>
+</bean>
+<bean id="dormitorioAjaxService" class="br.esp.sysevent.web.ajax.DormitorioAjaxService">
+    <dwr:remote javascript="dormitorioAjaxService">
+        <dwr:include method="findById" />
+        <dwr:include method="findByGenero" />
+        <dwr:include method="troca" />
+    </dwr:remote>
+</bean>
+<bean id="grupoIdadeAjaxService" class="br.esp.sysevent.web.ajax.GrupoIdadeAjaxService">
+    <dwr:remote javascript="grupoIdadeAjaxService">            
+        <dwr:include method="findById" />
+        <dwr:include method="findSimilares" />
+        <dwr:include method="troca" />
+    </dwr:remote>
+</bean>
+</beans>
+-->    

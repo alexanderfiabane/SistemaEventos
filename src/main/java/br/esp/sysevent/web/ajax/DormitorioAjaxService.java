@@ -14,6 +14,7 @@ import br.esp.sysevent.core.model.Sexo;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
+import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Fiabane
  */
-@RemoteProxy(name = "dormitorioAjaxService")
+@RemoteProxy
 public class DormitorioAjaxService {
 
     @Autowired
@@ -31,13 +32,14 @@ public class DormitorioAjaxService {
     @Autowired
     private EdicaoDao edicaoDao;
 
+    @RemoteMethod
     public Dormitorio findById(String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
             return null;
         }
         return dormitorioDao.findById(NumberUtils.parseLong(idDormitorio));
     }
-
+    @RemoteMethod
     public Collection<Dormitorio> findByGenero(String genero, String idEdicao) {
         if (CharSequenceUtils.isBlank(genero) || CharSequenceUtils.isBlank(idEdicao)) {
             return null;
@@ -49,7 +51,7 @@ public class DormitorioAjaxService {
             return dormitorioDao.findBySexoEdicao(Sexo.FEMININO, edicao);
         }
     }
-
+    @RemoteMethod
     public String troca(String idDormitorio, String idConfraternista) {
         Confraternista confraternista;
         Dormitorio dormitorio;
