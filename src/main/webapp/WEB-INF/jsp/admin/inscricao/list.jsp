@@ -2,24 +2,12 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="Gerenciamento de Inscrições (${edicao.tema})" isTitleKey="false"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Gerenciamento de Inscrições (${edicao.tema})" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.page.managesubscription.event" isLabelKey="true"><javalek:url><c:url value="/admin/inscricao/listEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.page.managesubscription.subscription" isLabelKey="true"><javalek:url><c:url value="/admin/inscricao/listEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
-
 <c:choose>
     <c:when test="${empty inscricoes}">
         <see:notice type="info" closeable="false">Nenhuma inscrição encontrada</see:notice>
     </c:when>
     <c:otherwise>
-        <div id="searchParams" class="box bordered rounded gradient control">
+        <div id="searchParams" class="box bordered rounded shadowed control">
             <div class="row">
                 <div class="span9">
                     <label class="label">
@@ -71,13 +59,13 @@
                 </div>
             </div>
             <div class="form-actions stroked-top mini-padding no-margin-bottom">
-                <button type="button" class="btn control bold table-refresh" name="search">Pesquisar</button>
+                <button type="button" class="btn control bold table-refresh" name="search"><i class="icon-search"></i> Pesquisar</button>
             </div>
         </div>
         <div class="row">
             <fieldset class="box rounded bordered shadowed no-margin">
                 <legend class="label">Resultados</legend>
-                <div id="paginationWrapper" class="table-wrapper scrollable">
+                <div id="paginationWrapper" class="table-wrapper scrollable" data-role="tableRow">
                     <table class="table hovered stroked striped nowrap">
                         <thead class="header">
                             <tr>

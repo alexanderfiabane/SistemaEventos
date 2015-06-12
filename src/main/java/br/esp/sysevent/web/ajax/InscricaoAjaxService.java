@@ -12,28 +12,26 @@ import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
-import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Fiabane
  */
-@RemoteProxy
+
 public class InscricaoAjaxService {
 
     @Autowired
     private InscricaoDao inscricaoDao;
-    
-    @RemoteMethod
+
+
     public Collection<Inscricao> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();
         }
         return inscricaoDao.findByIdGrupoIdade(NumberUtils.parseLong(idGrupoIdade));
     }
-    @RemoteMethod
+
     public Collection<Inscricao> findSemDormitorioBySexo(String genero, String idEdicao){
         if (CharSequenceUtils.isBlankOrNull(genero) || CharSequenceUtils.isBlankOrNull(idEdicao)) {
             return null;

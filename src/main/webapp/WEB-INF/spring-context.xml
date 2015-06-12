@@ -13,11 +13,13 @@
             http://www.directwebremoting.org/schema/spring-dwr
             http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
 
+    <!--    
+    -->
     <context:annotation-config />
-    <context:component-scan base-package="br.esp.sysevent">
-        <context:exclude-filter type="aspectj" expression="br.esp.sysevent.web.ajax.*AjaxService"/>
+    <context:component-scan base-package="br.esp.sysevent">        
+        <!--<context:exclude-filter type="assignable" expression="br.esp.sysevent.web.ajax.InscricaoAjaxService" />-->
     </context:component-scan>
     <mvc:annotation-driven />
-    <!--<dwr:annotation-scan base-package="br.esp.sysevent" />-->
+    <!--<dwr:annotation-scan base-package="br.esp.sysevent" scanDataTransferObject="true" scanRemoteProxy="true"/>-->
     <import resource="spring-dwr.xml"/>
 </beans>

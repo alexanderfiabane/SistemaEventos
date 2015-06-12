@@ -5,6 +5,7 @@
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
+<mocca:title title="Formulário de cadastro" level="2"/>
 <form:form commandName="command">
     <!--Conteúdo Tab-->
     <div class="tabbable">
@@ -107,10 +108,11 @@
                 </fieldset>
             </div>
         </div>
-        <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}" backUrl="formEvento.html"/>
+        <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}"/>
     </div>
 </form:form>
 
+<mocca:title title="Edições cadastradas" level="2"/>
 <c:choose>
     <c:when test="${empty edicoes}">
         <see:notice type="info" closeable="true">Nenhuma edição foi encontrada</see:notice>
@@ -175,9 +177,9 @@
         </div>
     </c:otherwise>
 </c:choose>
-
+<see:formButtonGroup putSubmit="false" backUrl="formEvento.html"/>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         document.getElementById("numero").focus();
 
         function toogleMenu(idEdicao) {
@@ -201,7 +203,7 @@
             'showExample': true,
             'picker': {
                 showClearButton: true,
-                'onClose': function(selectedDate) {
+                'onClose': function (selectedDate) {
                     $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
                 }
             }
@@ -211,7 +213,7 @@
             'showExample': true,
             picker: {
                 showClearButton: true,
-                'onSelect': function(selectedDate) {
+                'onSelect': function (selectedDate) {
                     $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
                     $("#data").datepicker("option", "minDate", selectedDate);
                 }

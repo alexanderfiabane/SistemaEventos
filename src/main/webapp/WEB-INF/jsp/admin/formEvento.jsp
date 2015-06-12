@@ -15,6 +15,7 @@
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
+<mocca:title title="Formulário de cadastro" level="2"/>
 <form:form commandName="command">
     <form:hidden path="id"/>
     <div class="row">
@@ -28,9 +29,10 @@
             <see:formField label="label.eventsite" isLabelKey="true" isMandatory="true" path="site" maxlength="150" inputClass="textfield width-100"/>
         </div>
     </div>
-    <see:formButtonGroup clearUrl="/admin/formEvento.html" putSubmit="true" backUrl="menu.html"/>
+    <see:formButtonGroup clearUrl="/admin/formEvento.html" putSubmit="true"/>
 </form:form>
 
+<mocca:title title="Eventos cadastrados" level="2"/>
 <c:choose>
     <c:when test="${empty eventos}">
         <see:notice type="info" closeable="true">Nenhum evento foi encontrado</see:notice>
@@ -69,8 +71,9 @@
         </div>
     </c:otherwise>
 </c:choose>
+<see:formButtonGroup putSubmit="false"backUrl="menu.html"/>
 <script type="text/javascript">
-    onload = function() {
+    onload = function () {
         document.getElementById("nome").focus();
     };
 </script>
