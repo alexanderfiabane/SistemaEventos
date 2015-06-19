@@ -1,6 +1,21 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
+<head>
+    <style>
+        .qtip.qtip-dialog-huge{
+            min-width: 95%;
+            max-width: 95%;
+        }
+        @media all and (min-width: 50em) {
+            .qtip.qtip-dialog-huge{
+                min-width: 60em;
+                max-width: 60em;
+            }
+        }
+    </style>
+</head>
+
 <mocca:title title="Cadastrar Edição de Evento - ${command.evento.sigla}"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
@@ -148,7 +163,7 @@
                                 <button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>
                             </div>
                             <div id="menuMaisOpcoes_${edicao.id}" class="hidden">
-                                <div class="mini-font-size">                                    
+                                <div class="mini-font-size">
                                     <mocca:menu>
                                         <c:if test="${edicao.faixaEtaria}">
                                         <mocca:menuItem iconClass="icon-group" label="Grupos por Idade" url="${grupoIdade_url}"/>
@@ -158,12 +173,12 @@
                                         </c:if>
                                         <mocca:menuItem iconClass="icon-building" label="Dormitórios" url="${dormitorio_url}"/>
                                         <mocca:menuItem iconClass="icon-money" label="Cobrança" url="${cobranca_url}"/>
-                                    </mocca:menu>                                    
+                                    </mocca:menu>
                                 </div>
                             </div>
 <%--                                <div class="btn-group" title="Mais opções">
                                     <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="icon-list"></i>                                        
+                                        <i class="icon-list"></i>
                                     </a>
                                     <ul class="dropdown-menu alignLeft" role="menu">
                                         <c:if test="${edicao.faixaEtaria}">
@@ -247,15 +262,15 @@
                 var $content = $("<div>").append($("#menuMaisOpcoes_"+id).html());
                 return $content;
             },
-            'class': "qtip-dialog-large",
+            class: 'qtip-dialog-huge',
             'yesBtn': false,
             'noBtn':{
                 label:"Fechar"
             }
         });
-        $(".deletaEdicao").confirmDialog({           
+        $(".deletaEdicao").confirmDialog({
             'title':"Deletar Edição",
             'content': "Tem ceteza que deseja deletar essa edição?"
-        });        
+        });
     });
 </script>

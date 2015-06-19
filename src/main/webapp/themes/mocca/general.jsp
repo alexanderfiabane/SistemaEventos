@@ -22,6 +22,7 @@
         <!-- DWR -->
         <script type="text/javascript" src="<c:url value='/dwr/engine.js'/>"></script>
         <script src="<c:url value='/assets/application/js/SystemUtils.js'/>"></script>
+        <sitemesh:write property='head'/>
     </head>
 
     <body>
