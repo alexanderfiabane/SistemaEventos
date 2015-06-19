@@ -7,9 +7,9 @@ import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.dao.EstadoDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Estado;
+import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.esp.sysevent.web.admin.validation.CidadeValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
-import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
@@ -92,6 +92,9 @@ public class FormCidadeController extends AbstractFormController<Long, Cidade> {
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     * @param command
+     * @param model
+     * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Cidade command, final ModelMap model) {

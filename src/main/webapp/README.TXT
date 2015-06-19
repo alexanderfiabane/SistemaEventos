@@ -1,5 +1,5 @@
 
-    mocca-framework 1.0.0-SNAPSHOT - build 90
+    mocca-framework 1.0.0-SNAPSHOT - build 93
 --------------------------------------------------------------------------------
 
     A Responsive CSS framework
@@ -13,6 +13,11 @@
   [=] Feature enhancement.
   [v] Visual enhancement.
   [b] Bugfix.
+
+  Version 1.0.0-SNAPSHOT - build 90
+  ------------------------------------------------------------------------------
+  [v] Added qtip-dialog-huge class.
+  [v] Added no-bold class for checkboxes and radiobuttons labels.
 
   Version 1.0.0-SNAPSHOT - build 89
   ------------------------------------------------------------------------------

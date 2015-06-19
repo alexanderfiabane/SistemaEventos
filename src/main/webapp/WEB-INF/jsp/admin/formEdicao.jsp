@@ -1,21 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<head>
-    <style>
-        .qtip.qtip-dialog-huge{
-            min-width: 95%;
-            max-width: 95%;
-        }
-        @media all and (min-width: 50em) {
-            .qtip.qtip-dialog-huge{
-                min-width: 60em;
-                max-width: 60em;
-            }
-        }
-    </style>
-</head>
-
 <mocca:title title="Cadastrar Edição de Evento - ${command.evento.sigla}"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
@@ -163,34 +148,17 @@
                                 <button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>
                             </div>
                             <div id="menuMaisOpcoes_${edicao.id}" class="hidden">
-                                <div class="mini-font-size">
-                                    <mocca:menu>
-                                        <c:if test="${edicao.faixaEtaria}">
-                                        <mocca:menuItem iconClass="icon-group" label="Grupos por Idade" url="${grupoIdade_url}"/>
-                                        </c:if>
-                                        <c:if test="${edicao.oficina}">
-                                        <mocca:menuItem iconClass="icon-group" label="Oficinas" url="${oficina_url}"/>
-                                        </c:if>
-                                        <mocca:menuItem iconClass="icon-building" label="Dormitórios" url="${dormitorio_url}"/>
-                                        <mocca:menuItem iconClass="icon-money" label="Cobrança" url="${cobranca_url}"/>
-                                    </mocca:menu>
-                                </div>
+                                <mocca:menu>
+                                    <c:if test="${edicao.faixaEtaria}">
+                                    <mocca:menuItem iconClass="icon-group" label="Grupos por Idade" url="${grupoIdade_url}"/>
+                                    </c:if>
+                                    <c:if test="${edicao.oficina}">
+                                    <mocca:menuItem iconClass="icon-group" label="Oficinas" url="${oficina_url}"/>
+                                    </c:if>
+                                    <mocca:menuItem iconClass="icon-building" label="Dormitórios" url="${dormitorio_url}"/>
+                                    <mocca:menuItem iconClass="icon-money" label="Cobrança" url="${cobranca_url}"/>
+                                </mocca:menu>
                             </div>
-<%--                                <div class="btn-group" title="Mais opções">
-                                    <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="icon-list"></i>
-                                    </a>
-                                    <ul class="dropdown-menu alignLeft" role="menu">
-                                        <c:if test="${edicao.faixaEtaria}">
-                                            <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
-                                            </c:if>
-                                            <c:if test="${edicao.oficina}">
-                                            <li><a href="${oficina_url}">Oficinas</a></li>
-                                            </c:if>
-                                        <li><a href="${dormitorio_url}">Dormitórios</a></li>
-                                        <li><a href="${cobranca_url}">Cobrança</a></li>
-                                    </ul>
-                                </div>--%>
                         </td>
                         <td class="centered">${edicao.numero}</td>
                         <td>${edicao.tema}</td>

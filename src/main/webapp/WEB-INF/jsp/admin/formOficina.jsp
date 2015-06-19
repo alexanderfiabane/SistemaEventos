@@ -10,11 +10,11 @@
 <mocca:title title="Formulário de cadastro" level="2"/>
 <form:form commandName="command">
     <div class="row">
-        <div class="span3">
+        <div class="span6">
             <see:formField label="label.workshopname" isLabelKey="true" isMandatory="true" path="nome" maxlength="80"/>
         </div>
-        <div class="span3">
-            <see:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="3"/>
+        <div class="span6">
+            <see:formField label="label.vacancies" isLabelKey="true" isMandatory="true" path="vagas" maxlength="4"/>
         </div>
     </div>
     <see:formButtonGroup putSubmit="true" clearUrl="formOficina.html?idEdicao=${command.edicaoEvento.id}"/>
@@ -22,7 +22,7 @@
 
 <mocca:title title="Oficinas cadastradas" level="2"/>
 <div class="table-wrapper scrollable bordered rounded shadowed">
-    <table class="table striped hovered stroked">
+    <table class="table striped hovered stroked small-font-size">
         <thead class="header">
             <tr>
                 <th class="align-center" style="width: 2em;"><fmt:message key="label.options"/></th>
@@ -36,9 +36,9 @@
                     <td>
                         <c:url var="edit_url" value="/admin/formOficina.html"><c:param name="idOficina" value="${oficina.id}"/></c:url>
                         <c:url var="delete_url" value="/admin/deleteOficina.html"><c:param name="idOficina" value="${oficina.id}"/></c:url>
-                            <div class="btn-group small">
-                                <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                            <button  type="button" class="btn" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                        <div class="btn-group small">
+                            <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
+                            <button  type="button" class="btn" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-trash"></i></button>
                         </div>
                     </td>
                     <td>${oficina.nome}</td>
@@ -49,3 +49,8 @@
     </table>
 </div>
 <see:formButtonGroup putSubmit="false" backUrl="formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/>
+<script>
+    $(document).ready(function(){
+        $("#vagas").mask('9999');
+    });
+</script>
