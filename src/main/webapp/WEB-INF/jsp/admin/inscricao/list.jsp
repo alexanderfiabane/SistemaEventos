@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="form-actions stroked-top mini-padding no-margin-bottom">
-                <button type="button" class="btn control bold table-refresh" name="search">Pesquisar</button>
+                <button type="button" class="btn control bold table-refresh" name="search"><i class="icon-search"></i> Pesquisar</button>
             </div>
         </div>
         <div class="row">

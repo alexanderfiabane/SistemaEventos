@@ -14,15 +14,13 @@ import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import org.directwebremoting.annotations.RemoteMethod;
-import org.directwebremoting.annotations.RemoteProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-@RemoteProxy
+
 public class ConfraternistaAjaxService {
 
     @Autowired
@@ -32,7 +30,7 @@ public class ConfraternistaAjaxService {
     @Autowired
     private GrupoIdadeDao grupoIdadeDao;
 
-    @RemoteMethod
+
     public Collection<Confraternista> findByNome(final String nome) {
         if (CharSequenceUtils.isBlank(nome)) {
             return Collections.emptyList();
@@ -40,7 +38,6 @@ public class ConfraternistaAjaxService {
         return confraternistaDao.findByNome(nome);
     }
 
-    @RemoteMethod
     public Collection<Confraternista> findByIdDormitorio(final String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
             return Collections.emptyList();
@@ -49,7 +46,6 @@ public class ConfraternistaAjaxService {
     }
 
     //Otimizar em consulta
-    @RemoteMethod
     public Collection<Confraternista> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();
@@ -68,7 +64,6 @@ public class ConfraternistaAjaxService {
     }
 
     //Otimizar em consulta
-    @RemoteMethod
     public Collection<Confraternista> findSemDormitorio(String genero, String idEdicao) {
         if (CharSequenceUtils.isBlankOrNull(genero) || CharSequenceUtils.isBlankOrNull(idEdicao)) {
             return null;
@@ -88,7 +83,6 @@ public class ConfraternistaAjaxService {
     }
 
     //Otimizar em consulta
-    @RemoteMethod
     public Collection<Confraternista> findByEdicao(final String idEdicao) {
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicao(NumberUtils.parseLong(idEdicao));
         Collection<Confraternista> confraternistas = new HashSet<>();

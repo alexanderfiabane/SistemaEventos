@@ -217,7 +217,7 @@
             'showExample': true,
             'picker': {
                 showClearButton: true,
-                'onClose': function(selectedDate) {
+                'onClose': function (selectedDate) {
                     $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
                 }
             }
@@ -227,7 +227,7 @@
             'showExample': true,
             picker: {
                 showClearButton: true,
-                'onSelect': function(selectedDate) {
+                'onSelect': function (selectedDate) {
                     $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
                     $("#data").datepicker("option", "minDate", selectedDate);
                 }

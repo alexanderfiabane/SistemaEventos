@@ -69,7 +69,7 @@
     <button type="button" class="btn primary" onclick="location.href = '${aloca_url}';">Alocar Confraternistas nos Dormitórios</button>    
 </see:formButtonGroup>
 
-<div id="localizar" title="Localizar Confraternista" style="display: none;">
+    <div id="localizar" title="Localizar Confraternista" style="display: none;">
     <div class="row">
         <input type="hidden" id="field"/>
         <label class="control label">Nome do Confraternista</label>

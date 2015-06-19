@@ -64,7 +64,7 @@
 </c:choose>
 <see:formButtonGroup putSubmit="false" backUrl="menu.html"/>
 <script type="text/javascript">
-    onload = function() {
+    onload = function () {
         document.getElementById("nome").focus();
     };
 </script>

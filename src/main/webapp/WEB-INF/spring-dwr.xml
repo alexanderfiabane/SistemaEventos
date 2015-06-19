@@ -84,10 +84,8 @@
         </dwr:convert>
     </dwr:configuration>
     
-    <dwr:controller id="dwrController" debug="true">
-        <dwr:config-param name="activeReverseAjaxEnabled" value="true"/>
-    </dwr:controller>
-        
+    <dwr:controller id="dwrController" debug="false" />    
+
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
@@ -96,9 +94,7 @@
             </props>
         </property>
     </bean>
-
     <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
-
 <!--    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
         <dwr:remote javascript="testeAjaxService">
             <dwr:include method="teste" />
