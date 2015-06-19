@@ -2,24 +2,13 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="Gerenciamento de Inscrições (${edicao.tema})" isTitleKey="false"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Gerenciamento de Inscrições (${edicao.tema})" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.page.managesubscription.event" isLabelKey="true"><javalek:url><c:url value="/admin/inscricao/listEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.page.managesubscription.subscription" isLabelKey="true"><javalek:url><c:url value="/admin/inscricao/listEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 
-<c:choose>
+<%--<c:choose>
     <c:when test="${empty inscricoes}">
         <see:notice type="info" closeable="false">Nenhuma inscrição encontrada</see:notice>
     </c:when>
-    <c:otherwise>
-        <div id="searchParams" class="box bordered rounded gradient control">
+    <c:otherwise>--%>
+        <div id="searchParams" class="box bordered rounded control">
             <div class="row">
                 <div class="span9">
                     <label class="label">
@@ -78,7 +67,7 @@
             <fieldset class="box rounded bordered shadowed no-margin">
                 <legend class="label">Resultados</legend>
                 <div id="paginationWrapper" class="table-wrapper scrollable">
-                    <table class="table hovered stroked striped nowrap">
+                    <table class="table small-font-size">
                         <thead class="header">
                             <tr>
                                 <th class="centered"><fmt:message key="label.options"/></th>
@@ -88,8 +77,8 @@
                                 <th data-name="${inscricao.valor}" class="centered"><fmt:message key="label.subscriptionvalue"/></th>
                                 <th data-name="" class="centered"><fmt:message key="label.paymentdate"/></th>
                                 <th data-name="${inscricao.pagamento.numeroDocumento}" class="centered"><v:message key="label.paymentnumber"/></th>
-                                <th data-name="${inscricao.pagamento.valor}" class="centered"><fmt:message key="label.paymentvalue"/></th>
-                            </tr>
+                        <th data-name="${inscricao.pagamento.valor}" class="centered"><fmt:message key="label.paymentvalue"/></th>
+                        </tr>
                         </thead>
                         <tbody>
                             <tr data-role="tableRow">
@@ -133,24 +122,26 @@
                                 <td>${inscricao.confraternista.tipo.descricao}</td>
                                 <td>${inscricao.status.value}</td>
                                 <td><fmt:formatNumber value="${inscricao.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
-                                <td><%--<fmt:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" />--%></td>
+                                <td><fmt:formatDate value="${inscricao.pagamento.data}" pattern="dd/MM/yyyy" /></td>
                                 <td>${inscricao.pagamento.numeroDocumento}</td>
-                                <td><%--<fmt:formatNumber value="${inscricao.pagamento.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/>--%></td>
+                                <td><fmt:formatNumber value="${inscricao.pagamento.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </fieldset>
         </div>
+                            <%--
     </c:otherwise>
 </c:choose>
-
+                            --%>
+<see:formButtonGroup putSubmit="false" backUrl="listEdicao.html?idEvento=${edicao.evento.id}"/>
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#resultado').ajaxTable({
             ajaxTable: ${ajaxService},
-            refreshOnCreate: false,
-            hideOnCreate: true,
+            refreshOnCreate: true,
+            hideOnCreate: false,
             externalParams: {
                 containerId: 'searchParams'
             }

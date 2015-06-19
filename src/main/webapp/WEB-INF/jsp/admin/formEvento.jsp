@@ -1,20 +1,12 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Cadastrar Evento" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 <mocca:title title="Cadastrar Evento" isTitleKey="false"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
+<mocca:title title="Formulário de cadastro" level="2"/>
 <form:form commandName="command">
     <form:hidden path="id"/>
     <div class="row">
@@ -28,16 +20,17 @@
             <see:formField label="label.eventsite" isLabelKey="true" isMandatory="true" path="site" maxlength="150" inputClass="textfield width-100"/>
         </div>
     </div>
-    <see:formButtonGroup clearUrl="/admin/formEvento.html" putSubmit="true" backUrl="menu.html"/>
+    <see:formButtonGroup clearUrl="formEvento.html" putSubmit="true"/>
 </form:form>
 
+<mocca:title title="Eventos cadastrados" level="2"/>
 <c:choose>
     <c:when test="${empty eventos}">
         <see:notice type="info" closeable="true">Nenhum evento foi encontrado</see:notice>
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable bordered rounded shadowed">
-            <table class="table striped hovered stroked">
+            <table class="table striped hovered stroked small-font-size">
                 <thead class="header">
                     <tr>
                         <th class="align-center" style="width: 10em;"><fmt:message key="label.options"/></th>
@@ -69,6 +62,7 @@
         </div>
     </c:otherwise>
 </c:choose>
+<see:formButtonGroup putSubmit="false" backUrl="menu.html"/>
 <script type="text/javascript">
     onload = function() {
         document.getElementById("nome").focus();

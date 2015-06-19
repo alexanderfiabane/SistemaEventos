@@ -42,9 +42,9 @@
                             <div class="centeredDivOuter" style="width: 400px;">
                                 <div class="centeredDivInner">
                                     <!-- Lista de confraternistas do grupoA -->
-                                    <div class="table-wrapper bordered shadowed rounded narrow">
-                                        <table id="confraternistasGrupoA" class="table stroked striped hovered connectedSortable">
-                                            <thead>
+                                    <div class="table-wrapper bordered shadowed rounded">
+                                        <table id="confraternistasGrupoA" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                            <thead class="header">
                                                 <tr>
                                                     <th style="text-align: center;" colspan="3">
                                                         Selecione um grupo
@@ -65,9 +65,9 @@
                             <div class="centeredDivOuter" style="width: 400px">
                                 <div class="centeredDivInner">
                                     <!-- Lista de confraternistas do grupoB -->
-                                    <div class="table-wrapper bordered shadowed rounded narrow">
-                                        <table id="confraternistasGrupoB" class="table stroked striped hovered connectedSortable">
-                                            <thead>
+                                    <div class="table-wrapper bordered shadowed rounded">
+                                        <table id="confraternistasGrupoB" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                            <thead class="header">
                                                 <tr>
                                                     <th style="text-align: center;" colspan="3">
                                                         Selecione um grupo
@@ -84,6 +84,7 @@
         </div>
     </div>                    
 </div>
+<see:formButtonGroup putSubmit="false" backUrl="menuGrupoIdade.html?idEdicao=${edicao.id}"/>
 <script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/grupoIdadeAjaxService.js"/>"></script>
 <script type="text/javascript">
@@ -101,23 +102,23 @@
             var grupoIdadeSelecionado = selectedGrupoIdade.val();
             jQuery(inputConfraternista).empty();
             if (grupoIdadeSelecionado === null || grupoIdadeSelecionado === '') {
-                jQuery(inputConfraternista).append(jQuery('<thead>')
+                jQuery(inputConfraternista).append(jQuery('<thead class="header">')
                         .append(jQuery('<tr>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
                                         .append('Selecione um grupo'))));
             } else {
                 grupoIdadeAjaxService.findById(grupoIdadeSelecionado, function callback(grupoIdade) {
-                    jQuery(inputConfraternista).append(jQuery('<thead>')
+                    jQuery(inputConfraternista).append(jQuery('<thead class="header">')
                             .append(jQuery('<tr id="' + grupoIdade.id + '">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
                                             .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.state"/>'))
+                                            .append('<fmt:message key="label.state"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.city"/>'))
+                                            .append('<fmt:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.name"/>'))));
+                                            .append('<fmt:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoA">');
                         jQuery.each(confraternistas, function(index, value) {
@@ -129,7 +130,7 @@
                                     .append(jQuery('<td>')
                                             .append(value.confraternista.pessoa.nome)));
                         });
-                        jQuery(inputConfraternista).append(jQuery('<tfoot>')
+                        jQuery(inputConfraternista).append(jQuery('<tfoot class="footer">')
                                 .append(jQuery('<tr>')
                                         .append(jQuery('<td colspan="3">')
                                                 .append("<strong>Vagas ocupadas: " + grupoIdade.vagasOcupadas + "</strong>"))));
@@ -141,23 +142,23 @@
             jQuery(inputConfraternista).empty();
             //Grupo B
             if (grupoIdadeSelecionado === null || grupoIdadeSelecionado === '') {
-                jQuery(inputConfraternista).append(jQuery('<thead>')
+                jQuery(inputConfraternista).append(jQuery('<thead class="header">')
                         .append(jQuery('<tr>')
                                 .append(jQuery('<th style="text-align: center;" colspan="3">')
                                         .append('Selecione um grupo'))));
             } else {
                 grupoIdadeAjaxService.findById(grupoIdadeSelecionado, function callback(grupoIdade) {
-                    jQuery(inputConfraternista).append(jQuery('<thead>')
+                    jQuery(inputConfraternista).append(jQuery('<thead class="header">')
                             .append(jQuery('<tr id="' + grupoIdade.id + '">')
                                     .append(jQuery('<th style="text-align: center;" colspan="3">')
                                             .append(grupoIdade.nome + '<br/>' + 'Total de vagas: ' + grupoIdade.vagas)))
                             .append(jQuery('<tr>')
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.state"/>'))
+                                            .append('<fmt:message key="label.state"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.city"/>'))
+                                            .append('<fmt:message key="label.city"/>'))
                                     .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.name"/>'))));
+                                            .append('<fmt:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         jQuery(inputConfraternista).append('<tbody id="grupoB">');
                         jQuery.each(confraternistas, function(index, value) {
@@ -169,7 +170,7 @@
                                     .append(jQuery('<td>')
                                             .append(value.confraternista.pessoa.nome)));
                         });
-                        jQuery(inputConfraternista).append(jQuery('<tfoot>')
+                        jQuery(inputConfraternista).append(jQuery('<tfoot class="footer">')
                                 .append(jQuery('<tr>')
                                         .append(jQuery('<td colspan="3">')
                                                 .append("<strong>Vagas ocupadas: " + grupoIdade.vagasOcupadas + "</strong>"))));

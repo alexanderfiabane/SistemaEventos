@@ -9,7 +9,7 @@
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable bordered rounded shadowed">
-            <table class="table striped hovered stroked">
+            <table class="table striped hovered stroked small-font-size">
                 <thead class="header">
                     <tr>
                         <th class="align-center" style="width: 6em;"><fmt:message key="label.options"/></th>
@@ -41,4 +41,5 @@
         </div>
     </c:otherwise>
 </c:choose>
+<see:formButtonGroup putSubmit="false" backUrl="listEvento.html"/>        
 

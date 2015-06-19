@@ -5,6 +5,7 @@
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
+<mocca:title title="Formulário de cadastro" level="2"/>
 <form:form commandName="command">
     <!--Conteúdo Tab-->
     <div class="tabbable">
@@ -17,7 +18,6 @@
             <!--Cadastro Básico-->
             <div class="pane active" id="cadastroBasico">
                 <fieldset>
-                    <%--<mocca:title title="label.editiondetails" isTitleKey="true" level="2"/>--%>
                     <div class="row">
                         <div class="span6">
                             <label class="label control">
@@ -67,7 +67,7 @@
             <!--Camisetas-->
             <div class="pane" id="camisetas">
                 <fieldset>
-                    <%--<mocca:title title="label.shirts" isTitleKey="true" level="2"/>--%>
+                    <mocca:title title="label.shirts" isTitleKey="true" level="3"/>
                     <div class="table-wrapper">
                         <table class="table bordered rounded stroked">
                             <thead class="header">
@@ -107,17 +107,18 @@
                 </fieldset>
             </div>
         </div>
-        <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}" backUrl="formEvento.html"/>
+        <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}"/>
     </div>
 </form:form>
 
+<mocca:title title="Edições cadastradas" level="2"/>
 <c:choose>
     <c:when test="${empty edicoes}">
         <see:notice type="info" closeable="true">Nenhuma edição foi encontrada</see:notice>
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable bordered rounded shadowed">
-            <table class="table striped hovered stroked">
+            <table class="table striped hovered stroked small-font-size">
                 <thead class="header">
                     <tr>
                         <th class="centered" style="width: 7em;"><fmt:message key="label.options"/></th>
@@ -132,42 +133,57 @@
                 </thead>
                 <tbody>
                     <c:forEach items="${edicoes}" var="edicao">
-                        <c:url var="edit_url" value="/admin/formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="delete_url" value="/admin/deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="grupoIdade_url" value="/admin/menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="oficina_url" value="/admin/formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="dormitorio_url" value="/admin/menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="cobranca_url" value="/admin/menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                            <tr>
-                                <td class="centered ">
-                                    <div class="btn-group mini">
-                                        <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                    <button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
-                                    <div class="btn-group" title="Mais opções">
-                                        <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="icon-list"></i>
-                                            <span class="caret"></span>
-                                        </a>
-                                        <ul class="dropdown-menu alignLeft" role="menu">
-                                            <c:if test="${edicao.faixaEtaria}">
-                                                <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
-                                                </c:if>
-                                                <c:if test="${edicao.oficina}">
-                                                <li><a href="${oficina_url}">Oficinas</a></li>
-                                                </c:if>
-                                            <li><a href="${dormitorio_url}">Dormitórios</a></li>
-                                            <li><a href="${cobranca_url}">Cobrança</a></li>
-                                        </ul>
-                                    </div>
+                    <c:url var="edit_url" value="formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                    <tr>
+                        <td class="centered ">
+                            <div class="btn-group small">
+                                <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
+                                <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
+                                <button  type="button" class="btn small deletaEdicao" title="Deletar"><i class="icon-trash"></i></button>
+                                <button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>
+                            </div>
+                            <div id="menuMaisOpcoes_${edicao.id}" class="hidden">
+                                <div class="mini-font-size">                                    
+                                    <mocca:menu>
+                                        <c:if test="${edicao.faixaEtaria}">
+                                        <mocca:menuItem iconClass="icon-group" label="Grupos por Idade" url="${grupoIdade_url}"/>
+                                        </c:if>
+                                        <c:if test="${edicao.oficina}">
+                                        <mocca:menuItem iconClass="icon-group" label="Oficinas" url="${oficina_url}"/>
+                                        </c:if>
+                                        <mocca:menuItem iconClass="icon-building" label="Dormitórios" url="${dormitorio_url}"/>
+                                        <mocca:menuItem iconClass="icon-money" label="Cobrança" url="${cobranca_url}"/>
+                                    </mocca:menu>                                    
                                 </div>
-                            </td>
-                            <td class="centered">${edicao.numero}</td>
-                            <td>${edicao.tema}</td>
-                            <td class="centered">${edicao.vagas}</td>
-                            <td class="centered">R$ ${edicao.valorInscricao}</td>
-                            <td class="centered">de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                    <td class="centered"><javalek:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                    <td class="centered">${edicao.idadeMinima}</td>
+                            </div>
+<%--                                <div class="btn-group" title="Mais opções">
+                                    <a class="btn small dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="icon-list"></i>                                        
+                                    </a>
+                                    <ul class="dropdown-menu alignLeft" role="menu">
+                                        <c:if test="${edicao.faixaEtaria}">
+                                            <li><a href="${grupoIdade_url}">Grupos por Idade</a></li>
+                                            </c:if>
+                                            <c:if test="${edicao.oficina}">
+                                            <li><a href="${oficina_url}">Oficinas</a></li>
+                                            </c:if>
+                                        <li><a href="${dormitorio_url}">Dormitórios</a></li>
+                                        <li><a href="${cobranca_url}">Cobrança</a></li>
+                                    </ul>
+                                </div>--%>
+                        </td>
+                        <td class="centered">${edicao.numero}</td>
+                        <td>${edicao.tema}</td>
+                        <td class="centered">${edicao.vagas}</td>
+                        <td class="centered">R$ ${edicao.valorInscricao}</td>
+                        <td class="centered">de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
+                        <td class="centered"><javalek:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
+                        <td class="centered">${edicao.idadeMinima}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -175,21 +191,21 @@
         </div>
     </c:otherwise>
 </c:choose>
+<see:formButtonGroup putSubmit="false" backUrl="formEvento.html"/>
 
 <script type="text/javascript">
+    function toogleMenu(idEdicao) {
+        var menuId = "#menu_" + idEdicao;
+        var hidden = $(menuId).children("ul").is(":hidden");
+        $(menuId + ">ul").hide();
+        if (hidden) {
+            $(menuId).children("ul").toggle();
+            $(menuId).css("top", -50);
+            $(menuId).css("left", 150);
+        }
+    }
     $(document).ready(function() {
         document.getElementById("numero").focus();
-
-        function toogleMenu(idEdicao) {
-            var menuId = "#menu_" + idEdicao;
-            var hidden = $(menuId).children("ul").is(":hidden");
-            $(menuId + ">ul").hide();
-            if (hidden) {
-                $(menuId).children("ul").toggle();
-                $(menuId).css("top", -50);
-                $(menuId).css("left", 150);
-            }
-        }
 
         $("[name='vagas']").mask('9999');
         $("[name='valorInscricao']").mask('9999');
@@ -224,5 +240,22 @@
                 showClearButton: true
             }
         });
+        $(".maisOpcoes").confirmDialog({
+            'title': "Mais opções",
+            'content': function($dialogCaller){
+                var id = $dialogCaller.data("id");
+                var $content = $("<div>").append($("#menuMaisOpcoes_"+id).html());
+                return $content;
+            },
+            'class': "qtip-dialog-large",
+            'yesBtn': false,
+            'noBtn':{
+                label:"Fechar"
+            }
+        });
+        $(".deletaEdicao").confirmDialog({           
+            'title':"Deletar Edição",
+            'content': "Tem ceteza que deseja deletar essa edição?"
+        });        
     });
 </script>

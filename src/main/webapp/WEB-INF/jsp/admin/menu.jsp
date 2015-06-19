@@ -2,15 +2,6 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="label.page.adminArea" isTitleKey="true"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="label.page.adminArea" isLabelKey="true" defaultIsLabelKey="true">
-<%-- TODO : trocar icone!
-<javalek:icon><c:url value="/assets/application/img/icons/iconFuncoesAdmin.png"/></javalek:icon>
-</javalek:pagetitle>
-</content>
---%>
 
 <mocca:menu>
     <mocca:menuItem iconClass="icon-group" label="Gerenciamento de Inscrições" isLabelKey="false"

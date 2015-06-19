@@ -1,33 +1,38 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
+<%-- este elemento <content> passa o breadcrumbs para o titlebar do layout 
 <content tag="titlebarContent">
-    <javalek:pagetitle label="Troca de Dormit髍io do Confraternista">
+    <javalek:pagetitle label="Troca de Dormit贸rio do Confraternista">
         <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
         <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
         <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Edi玢o" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Dormit髍io" isLabelKey="false"><javalek:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Cadastrar Edi莽茫o" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
+        <javalek:breadcrumb label="Dormit贸rio" isLabelKey="false"><javalek:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
     </javalek:pagetitle>
-</content>
-
+</content>--%>
+<mocca:title title="Troca de Dormit贸rio do Confraternista"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
-    <javalek:message var="confirmDeleteMsg" key="message.confirm.delete"/>
+<fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
-    <div class="row">
-        <div class="span6">
-            <javalek:label label="label.gender" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
-            <select id="sexo" class="textfield">
-                <option value="">Selecione o g阯ero do dormit髍io</option>
+<div class="row">
+    <div class="span6">
+        <label class="control label">
+            <fmt:message key="label.gender"/>
+        </label>
+        <select id="sexo" class="textfield">
+            <option value="">Selecione o g锚nero do dormit贸rio</option>
             <c:forEach var="sexo" items="${sexos}">
                 <option value="${sexo.descricao}">${sexo.descricao}</option>
             </c:forEach>
         </select>
     </div>
     <div class="span6">
-        <javalek:label label="label.dormitory" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>
+        <label class="control label">
+            <fmt:message key="label.dormitory"/>
+        </label>        
         <select id="dormitorios" class="textfield">
-            <option value="">Selecione um dormit髍io</option>
+            <option value="">Selecione um dormit贸rio</option>
             <c:forEach var="dormitorio" items="${dormitorios}">
                 <option value="${dormitorio.id}">${dormitorio.nome}</option>
             </c:forEach>
@@ -40,19 +45,21 @@
             <tbody>
                 <tr>
                     <td>
-                        <!--Tabela que mostra os confraternista do dormit髍io selecionado-->
+                        <!--Tabela que mostra os confraternista do dormit贸rio selecionado-->
                         <div class="centeredDivOuter" style="width: 400px;">
                             <div class="centeredDivInner">
-                                <!-- Lista de confraternistas do dormit髍io -->
-                                <table id="confraternistasComDormitorio" class="table bordered striped condensed connectedSortable">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;" colspan="3">
-                                                Selecione um dormit髍io
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <!-- Lista de confraternistas do dormit贸rio -->
+                                <div class="table-wrapper bordered shadowed rounded">
+                                    <table id="confraternistasComDormitorio" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                        <thead class="header">
+                                            <tr>
+                                                <th style="text-align: center;" colspan="3">
+                                                    Selecione um dormit贸rio
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -64,27 +71,29 @@
                     <td>
                         <div class="centeredDivOuter" style="width: 400px">
                             <div class="centeredDivInner">
-                                <!-- Lista de confraternistas sem dormit髍io -->
-                                <table id="confraternistasSemDormitorio" class="table bordered striped condensed connectedSortable">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;" colspan="3">
-                                                Confraternistas Sem Dormit髍io
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align: center;">
-                                    <javalek:message key="label.state"/>
-                                    </th>
-                                    <th style="text-align: center;">
-                                    <javalek:message key="label.city"/>
-                                    </th>
-                                    <th style="text-align: center;">
-                                    <javalek:message key="label.name"/>
-                                    </th>
-                                    </tr>
-                                    </thead>
-                                </table>
+                                <!-- Lista de confraternistas sem dormit贸rio -->
+                                <div class="table-wrapper bordered shadowed rounded">
+                                    <table id="confraternistasSemDormitorio" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                        <thead class="header">
+                                            <tr>
+                                                <th style="text-align: center;" colspan="3">
+                                                    Confraternistas Sem Dormit贸rio
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align: center;">
+                                                    <fmt:message key="label.state"/>
+                                                </th>
+                                                <th style="text-align: center;">
+                                                    <fmt:message key="label.city"/>
+                                                </th>
+                                                <th style="text-align: center;">
+                                                    <fmt:message key="label.name"/>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>                                    
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -92,16 +101,16 @@
         </table>
     </div>
 </div>
-
+<see:formButtonGroup putSubmit="false" backUrl="menuDormitorio.html?idEdicao=${edicao.id}"/>
 <script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/dormitorioAjaxService.js"/>"></script>
 <script type="text/javascript">
 
     /**
-     * Carrega os confraternisto do dormit髍io selecionado.
+     * Carrega os confraternisto do dormit贸rio selecionado.
      *
-     * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormit髍io.
+     * @param {boolean} situacaoConfraternista se true, busca pelos confraternistas que possuem dormit贸rio.
      * @param {Dormitorio} inputDormitorio
      * @param {ID Div} inputConfraternista
      * @returns {Collection<Confraternista>}
@@ -109,81 +118,81 @@
     function loadConfraternistas(inputDormitorio, inputConfraternista, situacaoConfraternista) {
         if (situacaoConfraternista) {
             var dormitorioSelecionado = inputDormitorio.val();
-            jQuery(inputConfraternista).empty();
+            $(inputConfraternista).empty();
             if (dormitorioSelecionado === null || dormitorioSelecionado === '') {
-                jQuery(inputConfraternista).append(jQuery('<thead>')
-                        .append(jQuery('<tr>')
-                                .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                        .append('Selecione um dormit髍io'))));
+                $(inputConfraternista).append($('<thead class="header">')
+                        .append($('<tr>')
+                                .append($('<th style="text-align: center;" colspan="3">')
+                                        .append('Selecione um dormit贸rio'))));
             } else {
                 dormitorioAjaxService.findById(dormitorioSelecionado, function callback(dormitorio) {
-                    jQuery(inputConfraternista).append(jQuery('<thead>')
-                            .append(jQuery('<tr id="' + dormitorio.id + '">')
-                                    .append(jQuery('<th style="text-align: center;" colspan="3">')
+                    $(inputConfraternista).append($('<thead class="header">')
+                            .append($('<tr id="' + dormitorio.id + '">')
+                                    .append($('<th style="text-align: center;" colspan="3">')
                                             .append(dormitorio.nome + '<br/>' + 'Total de vagas: ' + dormitorio.vagas)))
-                            .append(jQuery('<tr>')
-                                    .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.state"/>'))
-                                    .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.city"/>'))
-                                    .append(jQuery('<th style="text-align: center;">')
-                                            .append('<javalek:message key="label.name"/>'))));
+                            .append($('<tr>')
+                                    .append($('<th style="text-align: center;">')
+                                            .append('<fmt:message key="label.state"/>'))
+                                    .append($('<th style="text-align: center;">')
+                                            .append('<fmt:message key="label.city"/>'))
+                                    .append($('<th style="text-align: center;">')
+                                            .append('<fmt:message key="label.name"/>'))));
                     confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
-                        jQuery(inputConfraternista).append('<tbody id="dormitorioSelec">');
-                        jQuery.each(confraternistas, function (index, value) {
-                            jQuery('#dormitorioSelec').append(jQuery('<tr id="' + value.id + '">')
-                                    .append(jQuery('<td>')
+                        $(inputConfraternista).append('<tbody id="dormitorioSelec">');
+                        $.each(confraternistas, function(index, value) {
+                            $('#dormitorioSelec').append($('<tr id="' + value.id + '">')
+                                    .append($('<td>')
                                             .append(value.pessoa.endereco.cidade.estado.sigla))
-                                    .append(jQuery('<td>')
+                                    .append($('<td>')
                                             .append(value.pessoa.endereco.cidade.nome))
-                                    .append(jQuery('<td>')
+                                    .append($('<td>')
                                             .append(value.pessoa.nome)));
                         });
-                        jQuery(inputConfraternista).append(jQuery('<tfoot>')
-                                .append(jQuery('<tr>')
-                                        .append(jQuery('<td colspan="3">')
+                        $(inputConfraternista).append($('<tfoot class="footer">')
+                                .append($('<tr>')
+                                        .append($('<td colspan="3">')
                                                 .append("<strong>Total: " + dormitorio.vagasOcupadas + "</strong>"))));
                     });
                 });
             }
         } else {
             inscricaoAjaxService.findSemDormitorioBySexo(inputDormitorio, ${edicao.id}, function callback(confraternistas) {
-                jQuery(inputConfraternista).empty();
-                jQuery(inputConfraternista).append(jQuery('<thead>')
-                        .append(jQuery('<tr id="null">')
-                                .append(jQuery('<th style="text-align: center;" colspan="3">')
-                                        .append("Confraternistas Sem Dormit髍io")))
-                        .append(jQuery('<tr>')
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<javalek:message key="label.state"/>'))
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<javalek:message key="label.city"/>'))
-                                .append(jQuery('<th style="text-align: center;">')
-                                        .append('<javalek:message key="label.name"/>'))));
-                jQuery(inputConfraternista).append('<tbody id="semDormitorio">');
+                $(inputConfraternista).empty();
+                $(inputConfraternista).append($('<thead class="header">')
+                        .append($('<tr id="null">')
+                                .append($('<th style="text-align: center;" colspan="3">')
+                                        .append("Confraternistas Sem Dormit贸rio")))
+                        .append($('<tr>')
+                                .append($('<th style="text-align: center;">')
+                                        .append('<fmt:message key="label.state"/>'))
+                                .append($('<th style="text-align: center;">')
+                                        .append('<fmt:message key="label.city"/>'))
+                                .append($('<th style="text-align: center;">')
+                                        .append('<fmt:message key="label.name"/>'))));
+                $(inputConfraternista).append('<tbody id="semDormitorio">');
                 if (confraternistas !== null) {
-                    jQuery.each(confraternistas, function (index, value) {
-                        jQuery('#semDormitorio').append(jQuery('<tr id="' + value.id + '">')
-                                .append(jQuery('<td>')
+                    $.each(confraternistas, function(index, value) {
+                        $('#semDormitorio').append($('<tr id="' + value.id + '">')
+                                .append($('<td>')
                                         .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
-                                .append(jQuery('<td>')
+                                .append($('<td>')
                                         .append(value.confraternista.pessoa.endereco.cidade.nome))
-                                .append(jQuery('<td>')
+                                .append($('<td>')
                                         .append(value.confraternista.pessoa.nome)));
                     });
                 }
-                jQuery(inputConfraternista).append(jQuery('<tfoot>')
-                        .append(jQuery('<tr>')
-                                .append(jQuery('<td colspan="3">')
-                                        .append("<strong>Total: " + jQuery("#confraternistasSemDormitorio tbody tr").length + "</strong>"))));
+                $(inputConfraternista).append($('<tfoot class="footer">')
+                        .append($('<tr>')
+                                .append($('<td colspan="3">')
+                                        .append("<strong>Total: " + $("#confraternistasSemDormitorio tbody tr").length + "</strong>"))));
             });
         }
     }
 
     /**
-     * Plugin para trocar(arrastar) os confraternistas de um dormit髍io
-     * para o grupo de 'sem dormit髍io' e vice-versa.
-
+     * Plugin para trocar(arrastar) os confraternistas de um dormit贸rio
+     * para o grupo de 'sem dormit贸rio' e vice-versa.
+     
      * @returns {undefined}     */
     function trocaDormitorios() {
         $("#confraternistasComDormitorio, #confraternistasSemDormitorio").sortable(
@@ -192,15 +201,15 @@
                     //placeholder: "ui-state-highlight",
                     cursor: "move",
                     items: '> tbody > *',
-                    receive: function (ev, ui) {
+                    receive: function(ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
-                        //m閠odo que valida e salva troca
+                        //m茅todo que valida e salva troca
                         var idConfraternista = ui.item.context.id;
                         var idDormitorio = ev.target.tHead.rows[0].getAttribute("id");
-                        dormitorioAjaxService.troca(idDormitorio, idConfraternista, function (retorno) {
-                            bootbox.alert(retorno, function () {
-                                loadConfraternistas(jQuery('#dormitorios'), jQuery('#confraternistasComDormitorio'), true);
-                                loadConfraternistas(jQuery('#sexo').val(), '#confraternistasSemDormitorio', false);
+                        dormitorioAjaxService.troca(idDormitorio, idConfraternista, function(retorno) {
+                            bootbox.alert(retorno, function() {
+                                loadConfraternistas($('#dormitorios'), $('#confraternistasComDormitorio'), true);
+                                loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);
                             });
                         });
                     },
@@ -210,44 +219,43 @@
     }
 
     /**
-     * Carrega os dormit髍ios segundo o g阯ero escolhido
-
+     * Carrega os dormit贸rios segundo o g锚nero escolhido
+     
      * @param {Sexo} inputSexo
      * @param {Dormitorio} inputDormitorio
      * @returns {Collection<Dormitorio>}     */
     function loadDormitorios(inputSexo, inputDormitorio) {
         var sexoSelecionado = inputSexo.val();
         inputDormitorio.empty();
-        loadConfraternistas(inputDormitorio, jQuery('#confraternistasComDormitorio'), true);
+        loadConfraternistas(inputDormitorio, $('#confraternistasComDormitorio'), true);
         if (sexoSelecionado === '') {
-            inputDormitorio.append(jQuery('<option>').append('Selecione primeiro um g阯ero'));
+            inputDormitorio.append($('<option>').append('Selecione primeiro um g锚nero'));
             loadConfraternistas(null, '#confraternistasSemDormitorio', false);
         } else {
             loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
             dormitorioAjaxService.findByGenero(sexoSelecionado, ${edicao.id}, function callback(dormitorio) {
-                inputDormitorio.append(jQuery('<option value="">').append('Selecione um dormit髍io'));
-                jQuery.each(dormitorio, function (index, value) {
-                    inputDormitorio.append(jQuery('<option>').val(value.id).append(value.nome));
+                inputDormitorio.append($('<option value="">').append('Selecione um dormit贸rio'));
+                $.each(dormitorio, function(index, value) {
+                    inputDormitorio.append($('<option>').val(value.id).append(value.nome));
                 });
             });
         }
     }
 
     /**
-     * Inicializa os m閠odos javascript
+     * Inicializa os m茅todos javascript
      * @returns {undefined}     */
-    jQuery(function () {
-        $(document).ready(function () {
-            loadDormitorios(jQuery('#sexo'), jQuery('#dormitorios'));
-            trocaDormitorios();
-            //Carrega o painel com os confraternistas do dormitorio selecionado
-            jQuery('#dormitorios').change(function () {
-                loadConfraternistas(jQuery(this), jQuery('#confraternistasComDormitorio'), true);
-                loadConfraternistas(jQuery('#sexo').val(), '#confraternistasSemDormitorio', false);
-            });
-            jQuery('#sexo').change(function () {
-                loadDormitorios(jQuery(this), jQuery('#dormitorios'));
-            });
+
+    $(document).ready(function() {
+        loadDormitorios($('#sexo'), $('#dormitorios'));
+        trocaDormitorios();
+        //Carrega o painel com os confraternistas do dormitorio selecionado
+        $('#dormitorios').change(function() {
+            loadConfraternistas($(this), $('#confraternistasComDormitorio'), true);
+            loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);
+        });
+        $('#sexo').change(function() {
+            loadDormitorios($(this), $('#dormitorios'));
         });
     });
 
