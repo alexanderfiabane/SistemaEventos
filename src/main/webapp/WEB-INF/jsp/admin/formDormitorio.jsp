@@ -36,7 +36,7 @@
         <thead>
             <tr>
                 <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>
-                <th><javalek:message key="label.name"/></th>
+                <th><fmt:message key="label.name"/></th>
                 <th style="width: 4em;"><fmt:message key="label.vacancies"/></th>
                 <th style="width: 6em;"><fmt:message key="label.gender"/></th>
                 <th><fmt:message key="label.coordinator"/></th>

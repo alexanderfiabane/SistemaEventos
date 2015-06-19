@@ -51,8 +51,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.html</url-pattern> <!-- Todas as urls html devem possuir um controller do Spring -->
     </servlet-mapping>
-    
-    
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/dwr/*</url-pattern>
