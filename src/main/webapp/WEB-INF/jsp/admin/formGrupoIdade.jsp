@@ -38,7 +38,7 @@
     <c:otherwise>        
         <div class="table-wrapper scrollable bordered rounded shadowed">
             <table class="table striped hovered stroked small-font-size">
-                <thead>
+                <thead class="header">
                     <tr>
                         <th style="width: 2em;" class="centered"><fmt:message key="label.options"/></th>
                         <th><fmt:message key="label.name"/></th>

@@ -28,7 +28,7 @@
                     <label class="label">
                         <fmt:message key="label.subscriptiontype"/>
                     </label>
-                    <select name="inscricao.confraternista.tipo" title="Tipo de inscrição">
+                    <select name="inscricao.confraternista.tipo" title="Tipo de inscrição" class="selectfield">
                         <option value="">Selecione um tipo de inscrição</option>
                         <c:forEach items="${tipoInscricoes}" var="tipoInscricao">
                             <option value="${tipoInscricao.descricao}">${tipoInscricao.descricao}</option>
@@ -39,7 +39,7 @@
                     <label class="label">
                         <fmt:message key="label.subscriptionstatus"/>
                     </label>
-                    <select name="inscricao.status.value" title="Situação da inscrição">
+                    <select name="inscricao.status.value" title="Situação da inscrição" class="selectfield">
                         <option value="">Selecione a situação da inscrição</option>
                         <c:forEach items="${inscricaoStatus}" var="status">
                             <option value="${status.value}">${status.value}</option>
@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="form-actions stroked-top mini-padding no-margin-bottom">
-                <button type="button" class="btn control bold table-refresh" name="search"><i class="icon-search"></i> Pesquisar</button>
+                <button type="button" class="btn primary bold table-refresh" name="search"><i class="icon-search"></i> Pesquisar</button>
             </div>
         </div>
         <div class="row">
@@ -82,7 +82,7 @@
                         </thead>
                         <tbody>
                             <tr data-role="tableRow">
-                                <td>
+                                <td class="centered">
                                     <c:url var="url_view" value="/admin/inscricao/view.html">
                                         <c:param name="idInscricao" value="${inscricao.id}"/>
                                     </c:url>

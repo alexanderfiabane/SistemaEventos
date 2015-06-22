@@ -32,8 +32,8 @@
 
 <mocca:title title="Dormitórios cadastrados" isTitleKey="false" level="2"/>
 <div class="table-wrapper">
-    <table class="table bordered rounded hovered striped stroked shadowed small-font-size">
-        <thead>
+    <table class="table bordered rounded shadowed hovered striped stroked small-font-size">
+        <thead class="header">
             <tr>
                 <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>
                 <th><fmt:message key="label.name"/></th>
