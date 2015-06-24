@@ -1,16 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<%-- este elemento <content> passa o breadcrumbs para o titlebar do layout 
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Troca de Dormitório do Confraternista">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconCadastro.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea" isLabelKey="true"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Evento" isLabelKey="false"><javalek:url><c:url value="/admin/formEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Cadastrar Edição" isLabelKey="false"><javalek:url><c:url value="/admin/formEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Dormitório" isLabelKey="false"><javalek:url><c:url value="/admin/menuDormitorio.html?idEdicao=${edicao.id}"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>--%>
 <mocca:title title="Troca de Dormitório do Confraternista"/>
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
@@ -30,7 +20,7 @@
     <div class="span6">
         <label class="control label">
             <fmt:message key="label.dormitory"/>
-        </label>        
+        </label>
         <select id="dormitorios" class="textfield">
             <option value="">Selecione um dormitório</option>
             <c:forEach var="dormitorio" items="${dormitorios}">
@@ -49,8 +39,8 @@
                         <div class="centeredDivOuter" style="width: 400px;">
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas do dormitório -->
-                                <div class="table-wrapper bordered shadowed rounded">
-                                    <table id="confraternistasComDormitorio" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                <div class="table-wrapper">
+                                    <table id="confraternistasComDormitorio" class="table bordered small-font-size stroked striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -72,8 +62,8 @@
                         <div class="centeredDivOuter" style="width: 400px">
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas sem dormitório -->
-                                <div class="table-wrapper bordered shadowed rounded">
-                                    <table id="confraternistasSemDormitorio" class="table small-font-size stroked striped hovered narrow connectedSortable">
+                                <div class="table-wrappe">
+                                    <table id="confraternistasSemDormitorio" class="table bordered small-font-size stroked striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -92,7 +82,7 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                    </table>                                    
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -192,7 +182,7 @@
     /**
      * Plugin para trocar(arrastar) os confraternistas de um dormitório
      * para o grupo de 'sem dormitório' e vice-versa.
-     
+
      * @returns {undefined}     */
     function trocaDormitorios() {
         $("#confraternistasComDormitorio, #confraternistasSemDormitorio").sortable(
@@ -220,7 +210,7 @@
 
     /**
      * Carrega os dormitórios segundo o gênero escolhido
-     
+
      * @param {Sexo} inputSexo
      * @param {Dormitorio} inputDormitorio
      * @returns {Collection<Dormitorio>}     */

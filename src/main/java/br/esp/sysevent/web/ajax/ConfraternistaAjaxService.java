@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-
 public class ConfraternistaAjaxService {
 
     @Autowired
@@ -37,7 +36,7 @@ public class ConfraternistaAjaxService {
         }
         return confraternistaDao.findByNome(nome);
     }
-
+    
     public Collection<Confraternista> findByIdDormitorio(final String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
             return Collections.emptyList();

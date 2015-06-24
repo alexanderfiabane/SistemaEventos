@@ -12,29 +12,19 @@
 
 <!--     DWR will scan all Spring managed beans containing @RemoteProxy or 
     @RemoteMethod annotations and register Creator proxies for them. 
-    This will NOT scan any classes not managed by Spring. 
+    This will NOT scan any classes not managed by Spring. -->
     <dwr:annotation-config />
  
-     DWR will scan the classpath and search classes containing @RemoteProxy or 
-    @RemoteMethod annotations. This will register the beans and Creator proxies for these classes.
+<!--     DWR will scan the classpath and search classes containing @RemoteProxy or 
+    @RemoteMethod annotations. This will register the beans and Creator proxies for these classes.-->
     <dwr:annotation-scan base-package="br.esp.sysevent.web.ajax" scanDataTransferObject="true" scanRemoteProxy="true" />
  
-     DWR will map util.js and engine.js files to the dwrController.
-    You can then include this files as external Javascript references from your JSP 
+<!--     DWR will map util.js and engine.js files to the dwrController.
+    You can then include this files as external Javascript references from your JSP -->
     <dwr:url-mapping />
  
-     Defines the dwrController. During production, set the debug property to false 
+<!--     Defines the dwrController. During production, set the debug property to false -->
     <dwr:controller id="dwrController" debug="true" />
- 
-     This is required if you want to configure any beans not managed by
-    Spring. Leaving it enabled doesn't do any negative effects. Here's a
-    sample config: 
-    <dwr:configuration> 
-     <dwr:convert type="bean" class="org.krams.tutorial.CustomClass" /> 
-    </dwr:configuration> 
-    <dwr:configuration />
-    
-    </beans>-->
     <!--
     -->    
     <dwr:configuration>
@@ -82,20 +72,18 @@
             <dwr:include method="id"/>
             <dwr:include method="confraternista"/>            
         </dwr:convert>
-    </dwr:configuration>
-    
-    <dwr:controller id="dwrController" debug="false" />    
+    </dwr:configuration>        
 
-    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+<!--    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="alwaysUseFullPath" value="true"/>
         <property name="mappings">
             <props>
                 <prop key="/dwr/**/*">dwrController</prop>
             </props>
         </property>
-    </bean>
+    </bean>-->
     <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
-<!--    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
+    <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
         <dwr:remote javascript="testeAjaxService">
             <dwr:include method="teste" />
         </dwr:remote>
@@ -132,5 +120,7 @@
             <dwr:include method="findSimilares" />
             <dwr:include method="troca" />
         </dwr:remote>
-    </bean>-->
+    </bean>
+<!--    
+    -->
 </beans>

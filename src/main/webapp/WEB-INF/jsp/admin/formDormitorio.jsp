@@ -1,7 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<mocca:title title="Cadastro de Dormitórios"/>    
+<mocca:title title="Cadastro de Dormitórios"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
@@ -31,8 +31,8 @@
 </form:form>
 
 <mocca:title title="Dormitórios cadastrados" isTitleKey="false" level="2"/>
-<div class="table-wrapper">
-    <table class="table bordered rounded shadowed hovered striped stroked small-font-size">
+<div class="table-wrapper scrollable bordered rounded shadowed">
+    <table class="table hovered striped stroked small-font-size">
         <thead class="header">
             <tr>
                 <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>
@@ -66,7 +66,7 @@
 </div>
 <see:formButtonGroup putSubmit="false" backUrl="menuDormitorio.html?idEdicao=${command.edicaoEvento.id}">
     <c:url var="aloca_url" value="alocaDormitorio.html"><c:param name="idEdicao" value="${command.edicaoEvento.id}"/></c:url>
-    <button type="button" class="btn primary" onclick="location.href = '${aloca_url}';">Alocar Confraternistas nos Dormitórios</button>    
+    <button type="button" class="btn primary" onclick="location.href = '${aloca_url}';">Alocar Confraternistas nos Dormitórios</button>
 </see:formButtonGroup>
 
     <div id="localizar" title="Localizar Confraternista" style="display: none;">

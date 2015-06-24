@@ -1,24 +1,24 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
-    
+
 <mocca:title title="Cadastrar Tipo de Camiseta"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
-<mocca:title title="Formulário de cadastro" isTitleKey="false" level="2"/>
+<mocca:title title="FormulÃ¡rio de cadastro" isTitleKey="false" level="2"/>
 <form:form commandName="command">
     <div class="row">
         <div class="span4">
             <see:formField label="label.description" isLabelKey="true" isMandatory="true" path="descricao" maxlength="30"/>
-        </div>                
+        </div>
     </div>
     <see:formButtonGroup putSubmit="true" clearUrl="formTipoCamiseta.html"/>
 </form:form>
 
 <mocca:title title="Tipos de camisetas cadastradas" isTitleKey="false" level="2"/>
-<div class="table-wrapper ">
-    <table class="table bordered rounded shadowed hovered striped stroked small-font-size">
+<div class="table-wrapper scrollable bordered rounded shadowed">
+    <table class="table hovered striped stroked small-font-size">
         <thead class="header">
             <tr>
                 <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>

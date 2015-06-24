@@ -16,11 +16,10 @@
     <!--    
     -->
     <context:annotation-config />
-
-    <context:component-scan base-package="br.esp.sysevent"/>
-<!--        <context:exclude-filter type="aspectj" expression="br.esp.sysevent.web.ajax.*AjaxService"/>
-    </context:component-scan>-->    
+    <context:component-scan base-package="br.esp.sysevent">
+        <context:exclude-filter type="regex" expression="br.esp.sysevent.web.ajax.*AjaxService.*" />
+    </context:component-scan>
     <mvc:annotation-driven />
-    <!--<dwr:annotation-scan base-package="br.esp.sysevent" scanDataTransferObject="true" scanRemoteProxy="true"/>-->
-    <import resource="spring-dwr.xml"/>
+    <!--<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />-->
+    <!--<import resource="spring-dwr.xml"/>-->
 </beans>

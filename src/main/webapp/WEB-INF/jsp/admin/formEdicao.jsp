@@ -68,8 +68,8 @@
             <div class="pane" id="camisetas">
                 <fieldset>
                     <mocca:title title="label.shirts" isTitleKey="true" level="3"/>
-                    <div class="table-wrapper">
-                        <table class="table bordered rounded stroked">
+                    <div class="table-wrapper scrollable bordered rounded">
+                        <table class="table stroked">
                             <thead class="header">
                                 <tr>
                                     <th colspan="4" class="centered">Selecione os Tipos, Cores e Tamanhos de camiseta oferecidos na Edição</th>
