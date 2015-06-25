@@ -24,7 +24,7 @@
     <dwr:url-mapping />
  
 <!--     Defines the dwrController. During production, set the debug property to false -->
-    <dwr:controller id="dwrController" debug="true" />
+    <dwr:controller id="dwrController" debug="false" />
     <!--
     -->    
     <dwr:configuration>
@@ -81,8 +81,7 @@
                 <prop key="/dwr/**/*">dwrController</prop>
             </props>
         </property>
-    </bean>-->
-    <!--http://localhost:8080/sysevent-web/dwr/test/testeAjaxService-->
+    </bean>    -->
     <bean id="testeAjaxService" class="br.esp.sysevent.web.ajax.TesteAjaxService">        
         <dwr:remote javascript="testeAjaxService">
             <dwr:include method="teste" />
@@ -121,6 +120,4 @@
             <dwr:include method="troca" />
         </dwr:remote>
     </bean>
-<!--    
-    -->
 </beans>

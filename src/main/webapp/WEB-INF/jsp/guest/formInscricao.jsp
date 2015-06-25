@@ -171,10 +171,7 @@
             <h4><fmt:message key="label.healthfooddetails"/></h4>
         </legend>
         <div class="row">
-            <div class="span3">
-                <!--                <javalek:label label="Faz uso rotineiro de medicação?" isMandatory="false" isLabelKey="false" breakAfter="true" cssClass="control-label"/>
-                                <javalek:label label="Não" for="medicacaoNao" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoNao" name="medicacao" value="false"/></javalek:label>
-                                <javalek:label label="Sim" for="medicacaoSim" breakAfter="false" cssClass="radio inline"><input type="radio" id="medicacaoSim" name="medicacao" value="true"/></javalek:label>-->
+            <div class="span4">                
                 <label class="label">
                     Faz uso rotineiro de medicação?
                 </label>
@@ -183,12 +180,12 @@
                     <label><input type="radio" id="medicacaoSim" name="medicacao" value="true"/>Sim</label>
                 </label>
             </div>
-            <div class="span3">
+            <div class="span8">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="confraternista.pessoa.informacoesSaude.medicacao" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
-            <div class="span3">
+            <div class="span4">
                 <label class="label">
                     Tem algum tipo de convênio?
                 </label>
@@ -197,7 +194,7 @@
                     <label><input type="radio" id="convenioSim" name="convenio" value="true"/>Sim</label>
                 </label>
             </div>
-            <div class="span3">
+            <div class="span5">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="confraternista.pessoa.informacoesSaude.convenio" maxlength="255" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
@@ -205,7 +202,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span3">                
+            <div class="span4">                
                 <label class="label">
                     Possui algum tipo de alergia?
                 </label>
@@ -214,12 +211,12 @@
                     <label><input type="radio" id="alergiaSim" name="alergia" value="true"/>Sim</label>
                 </label>
             </div>
-            <div class="span3">
+            <div class="span8">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
-            <div class="span3">
+            <div class="span4">
                 <label class="label">
                     Possui algum tipo de restrição alimentar?
                 </label>
@@ -228,7 +225,7 @@
                     <label><input type="radio" id="dietaSim" name="dieta" value="true"/>Sim</label>
                 </label>
             </div>
-            <div class="span3">
+            <div class="span8">
                 <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>

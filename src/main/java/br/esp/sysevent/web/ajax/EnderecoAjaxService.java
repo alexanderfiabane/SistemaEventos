@@ -13,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
-
 public class EnderecoAjaxService {
 
     @Autowired
     private CidadeDao cidadeDao;
-
-
+    
     public Collection<Cidade> getCidades(final Long idEstado) {
         if (idEstado == null) {
             return Collections.emptyList();

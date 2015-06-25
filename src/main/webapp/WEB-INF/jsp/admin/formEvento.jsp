@@ -48,7 +48,7 @@
                                 <td class="centered">
                                     <div class="btn-group">
                                         <button type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                    <button type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>
+                                    <button type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-trash"></i></button>
                                     <button type="button" class="btn small" title="Criar edição deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-share-alt"></i></button>
                                 </div>
                             </td>

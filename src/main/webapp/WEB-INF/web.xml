@@ -21,7 +21,7 @@
     <!-- Configura o local do arquivo de contexto do Spring-Security -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring-context.xml, /WEB-INF/spring-security.xml, /WEB-INF/spring-dwr.xml</param-value>
+        <param-value>/WEB-INF/spring-context.xml, /WEB-INF/spring-security.xml</param-value>
     </context-param>
 
     <!-- Define o filtro do Spring-Security -->

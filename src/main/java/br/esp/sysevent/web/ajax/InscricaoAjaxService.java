@@ -12,6 +12,7 @@ import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Collections;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -24,7 +25,16 @@ public class InscricaoAjaxService {
     @Autowired
     private InscricaoDao inscricaoDao;
 
-
+    public Collection<Inscricao> search(){
+        return inscricaoDao.findByProperties(null, Order.asc("nome"));
+    }
+    
+    public Long count(){
+        Collection<Inscricao> inscricoes;
+        inscricoes = inscricaoDao.findByProperties(null, Order.asc("nome"));
+        return NumberUtils.toLong(inscricoes.size());
+    }
+    
     public Collection<Inscricao> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();

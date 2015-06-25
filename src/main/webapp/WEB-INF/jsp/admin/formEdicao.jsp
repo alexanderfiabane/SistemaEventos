@@ -238,7 +238,10 @@
         });
         $(".deletaEdicao").confirmDialog({
             'title':"Deletar Edição",
-            'content': "Tem ceteza que deseja deletar essa edição?"
+            'content': "Tem ceteza que deseja deletar essa edição?",
+            'yesBtn': function(){
+                
+            }
         });
     });
 </script>
