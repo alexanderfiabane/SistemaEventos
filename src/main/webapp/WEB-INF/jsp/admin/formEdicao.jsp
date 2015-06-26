@@ -237,6 +237,10 @@
             'content': "Tem ceteza que deseja deletar essa edição?",
             'yesBtn': {
                 clickFunction: function () {
+//                    clickFunction: function(event, $content) {
+//                                                var opcao = '&opcao=' + $content.find('[name=opcaoInativa' + item.id + ']:checked').val();
+//                                                return location.href = '${url_inativar}' + item.id + opcao;
+//                                            }
                     window.location = $(this).data("url");
                 }
             }
