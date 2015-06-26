@@ -31,9 +31,9 @@
                             <td class="align-right">${edicao.numero}</td>
                             <td>${edicao.tema}</td>
                             <td class="align-right">${edicao.vagas}</td>
-                            <td class="align-right">${edicao.valorInscricao}</td>
-                            <td class="centered">de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                            <td class="centered"><javalek:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
+                            <td class="align-right">R$ ${edicao.valorInscricao}</td>
+                            <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
+                            <td class="centered"><fmt:formatDate value="${edicao.data.time}" pattern="dd/MM/yyyy"/></td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -41,5 +41,5 @@
         </div>
     </c:otherwise>
 </c:choose>
-<see:formButtonGroup putSubmit="false" backUrl="listEvento.html"/>        
+<see:formButtonGroup putSubmit="false" backUrl="listEvento.html"/>
 

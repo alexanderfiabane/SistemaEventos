@@ -15,12 +15,16 @@ import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.DateUtils;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +56,115 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
 
     @Override
-    public Collection<Inscricao> findByEdicao(final Long idEdicao){
+    public Collection<Inscricao> searchInscricoes(final Long idEdicao,
+            final String nomePessoa,
+            final Calendar dataSendInscricao,
+            final String tipoConfraternista,
+            final String situacaoInscricao,
+            final String numeroDocPagamento,
+            final Calendar dataPagamentoInscricao,
+            Integer firstResult,
+            Integer maxResults) {
+
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("confraternista.pessoa", "pessoa")
+                .createAlias("confraternista", "confraternista")
+                .add(Restrictions.eq("edicaoEvento.id", idEdicao));
+        Collection<Criterion> r = new ArrayList<>();
+        if (CharSequenceUtils.isNotBlank(nomePessoa)) {
+            r.add(Restrictions.ilike("pessoa.nome", nomePessoa, MatchMode.ANYWHERE));
+        }
+        if (DateUtils.isDate(dataSendInscricao, false)) {
+            r.add(Restrictions.eq("dataRecebimento", dataSendInscricao));
+        }
+       if (CharSequenceUtils.isNotBlank(tipoConfraternista)) {
+            Confraternista.Tipo tipoConf = null;
+            Collection<Confraternista.Tipo> tipos = Confraternista.Tipo.getValues();
+            for (Confraternista.Tipo tipo : tipos) {
+                if (tipo.getDescricao().equals(tipoConfraternista)){
+                    tipoConf = tipo;
+                }
+            }
+            r.add(Restrictions.eq("confraternista.tipo", tipoConf));
+        }
+        if (CharSequenceUtils.isNotBlank(situacaoInscricao)) {
+            Inscricao.Status statusInsc = null;
+            Inscricao.Status[] statusInscricoes = Inscricao.Status.values();
+            for (Inscricao.Status status : statusInscricoes) {
+                if (status.getValue().equals(situacaoInscricao)){
+                    statusInsc = status;
+                }
+            }
+            r.add(Restrictions.eq("status", statusInsc));
+        }
+        if (CharSequenceUtils.isNotBlank(numeroDocPagamento)) {
+            r.add(Restrictions.eq("numeroDocPagamento", numeroDocPagamento));
+        }
+        if (DateUtils.isDate(dataPagamentoInscricao, false)) {
+            r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
+        }
+        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
+                .addOrder(Order.asc("pessoa.nome"))
+                .setFirstResult(firstResult)
+                .setMaxResults(maxResults);
+        return findByCriteria(criteria);
+    }
+
+    @Override
+    public Long countInscricoes(final Long idEdicao,
+            final String nomePessoa,
+            final Calendar dataSendInscricao,
+            final String tipoConfraternista,
+            final String situacaoInscricao,
+            final String numeroDocPagamento,
+            final Calendar dataPagamentoInscricao) {
+
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("confraternista.pessoa", "pessoa")
+                .createAlias("confraternista", "confraternista")
+                .add(Restrictions.eq("edicaoEvento.id", idEdicao));
+        Collection<Criterion> r = new ArrayList<>();
+        if (CharSequenceUtils.isNotBlank(nomePessoa)) {
+            r.add(Restrictions.ilike("pessoa.nome", nomePessoa, MatchMode.ANYWHERE));
+        }
+        if (DateUtils.isDate(dataSendInscricao, false)) {
+            r.add(Restrictions.eq("dataRecebimento", dataSendInscricao));
+        }
+        if (CharSequenceUtils.isNotBlank(tipoConfraternista)) {
+            Confraternista.Tipo tipoConf = null;
+            Collection<Confraternista.Tipo> tipos = Confraternista.Tipo.getValues();
+            for (Confraternista.Tipo tipo : tipos) {
+                if (tipo.getDescricao().equals(tipoConfraternista)){
+                    tipoConf = tipo;
+                }
+            }
+            r.add(Restrictions.eq("confraternista.tipo", tipoConf));
+        }
+        if (CharSequenceUtils.isNotBlank(situacaoInscricao)) {
+            Inscricao.Status statusInsc = null;
+            Inscricao.Status[] statusInscricoes = Inscricao.Status.values();
+            for (Inscricao.Status status : statusInscricoes) {
+                if (status.getValue().equals(situacaoInscricao)){
+                    statusInsc = status;
+                }
+            }
+            r.add(Restrictions.eq("status", statusInsc));
+        }
+        if (CharSequenceUtils.isNotBlank(numeroDocPagamento)) {
+            r.add(Restrictions.eq("numeroDocPagamento", numeroDocPagamento));
+        }
+        if (DateUtils.isDate(dataPagamentoInscricao, false)) {
+            r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
+        }
+        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
+                .addOrder(Order.asc("pessoa.nome"));
+        return (long) findByCriteria(criteria).size();
+    }
+
+    @Override
+    public Collection<Inscricao> findByEdicao(final Long idEdicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista.pessoa", "pessoa")
@@ -62,7 +174,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoDeferidas(final Long idEdicao){
+    public Collection<Inscricao> findByEdicaoDeferidas(final Long idEdicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista.pessoa", "pessoa")
@@ -71,15 +183,15 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("cidade.estado", "estado")
                 .add(Restrictions.eq("edicaoEvento.id", idEdicao))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao edicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista.pessoa", "pessoa")
@@ -88,9 +200,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("cidade.estado", "estado")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .addOrder(Order.asc("estado.nome"))
                 .addOrder(Order.asc("cidade.nome"))
                 .addOrder(Order.asc("pessoa.nome"));
@@ -98,23 +210,23 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoTipo(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoTipo(final Edicao edicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista", "confraternista")
                 .createAlias("confraternista.pessoa", "pessoa")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .addOrder(Order.asc("confraternista.tipo"))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoDormitorio(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoDormitorio(final Edicao edicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista", "confraternista")
@@ -122,9 +234,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.dormitorio", "dormitorio")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .addOrder(Order.asc("dormitorio.sexo"))
                 .addOrder(Order.asc("dormitorio.nome"))
                 .addOrder(Order.asc("pessoa.nome"));
@@ -132,7 +244,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
 
     @Override
-    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade){
+    public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista", "confraternista")
@@ -140,16 +252,16 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.grupoIdade", "grupoIdade")
                 .add(Restrictions.eq("grupoIdade.id", idGrupoIdade))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .add(Restrictions.ne("confraternista.tipo", Confraternista.Tipo.FACILITADOR))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
 
     @Override
-    public Collection<Inscricao> findSemDormitorioBySexo(final Sexo sexo, final Long idEdicao){
+    public Collection<Inscricao> findSemDormitorioBySexo(final Sexo sexo, final Long idEdicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista", "confraternista")
@@ -157,32 +269,32 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .add(Restrictions.eq("edicaoEvento.id", idEdicao))
                 .add(Restrictions.isNull("confraternista.dormitorio.id"))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .add(Restrictions.eq("pessoa.sexo", sexo))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoSexo(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoSexo(final Edicao edicao) {
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("confraternista", "confraternista")
                 .createAlias("confraternista.pessoa", "pessoa")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
-                    Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                    Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                ))
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+                        ))
                 .addOrder(Order.asc("pessoa.sexo"))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
 
     @Override
-    public Collection<Inscricao> findByEdicaoCamiseta(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoCamiseta(final Edicao edicao) {
 
         final StringBuilder builder = new StringBuilder(400);
         builder
@@ -197,7 +309,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
-                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
@@ -213,7 +325,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao) {
         final StringBuilder builder = new StringBuilder(400);
         builder
                 .append("select i ")
@@ -230,7 +342,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
                 .setParameterList("tipo", new Confraternista.Tipo[]{Confraternista.Tipo.CONFRATERNISTA, Confraternista.Tipo.COORDENADOR})
-                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
@@ -238,7 +350,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
     @Override
     @SuppressWarnings("unchecked")
-    public Collection<Inscricao> findByEdicaoGrupoIdade(final Edicao edicao){
+    public Collection<Inscricao> findByEdicaoGrupoIdade(final Edicao edicao) {
         final StringBuilder builder = new StringBuilder(400);
         builder
                 .append("select i ")
@@ -255,27 +367,27 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
                 .setParameterList("tipo", new Confraternista.Tipo[]{Confraternista.Tipo.CONFRATERNISTA, Confraternista.Tipo.COORDENADOR, Confraternista.Tipo.EVANGELIZADOR})
-                .setParameterList("status", new Inscricao.Status[] {Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
     @Override
-    public Inscricao findByEdicaoDocumentos(final Long idEdicao, Documento documento){
+    public Inscricao findByEdicaoDocumentos(final Long idEdicao, Documento documento) {
         final Criteria criteria = createCriteria().
                 createAlias("confraternista.pessoa", "pessoa").
                 createAlias("pessoa.documentos", "documentos").
                 add(Restrictions.eq("edicaoEvento.id", idEdicao)).
                 add(Restrictions.or(
-                    Restrictions.eq("documentos.cpf", documento.getCpf()),
-                    Restrictions.eq("documentos.rg", documento.getRg())
-                ));
+                                Restrictions.eq("documentos.cpf", documento.getCpf()),
+                                Restrictions.eq("documentos.rg", documento.getRg())
+                        ));
 
         return DataAccessUtils.uniqueResult(findByCriteria(criteria));
     }
 
     @Override
-    public Collection<Inscricao> findByUsuario(Usuario usuario){
+    public Collection<Inscricao> findByUsuario(Usuario usuario) {
         final Criteria criteria = createCriteria().
                 setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).
                 createCriteria("confraternista").

@@ -133,42 +133,38 @@
                 </thead>
                 <tbody>
                     <c:forEach items="${edicoes}" var="edicao">
-                    <c:url var="edit_url" value="formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                    <tr>
-                        <td class="centered ">
-                            <div class="btn-group small">
-                                <button  type="button" class="btn small" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
-                                <button  type="button" class="btn small deletaEdicao" title="Deletar"><i class="icon-trash"></i></button>
-                                <button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>
-                            </div>
-                            <div id="menuMaisOpcoes_${edicao.id}" class="hidden">
-                                <mocca:menu>
+                        <c:url var="edit_url" value="formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                            <tr>
+                                <td class="centered ">
+                                    <div class="btn-group small">
+                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
+                                        <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
+                                    <button  type="button" class="btn deletaEdicao" data-url="${delete_url}" title="Deletar"><i class="icon-trash"></i></button>
+                                    <!--<button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>-->
                                     <c:if test="${edicao.faixaEtaria}">
-                                    <mocca:menuItem iconClass="icon-group" label="Grupos por Idade" url="${grupoIdade_url}"/>
-                                    </c:if>
-                                    <c:if test="${edicao.oficina}">
-                                    <mocca:menuItem iconClass="icon-group" label="Oficinas" url="${oficina_url}"/>
-                                    </c:if>
-                                    <mocca:menuItem iconClass="icon-building" label="Dormitórios" url="${dormitorio_url}"/>
-                                    <mocca:menuItem iconClass="icon-money" label="Cobrança" url="${cobranca_url}"/>
-                                </mocca:menu>
-                            </div>
-                        </td>
-                        <td class="centered">${edicao.numero}</td>
-                        <td>${edicao.tema}</td>
-                        <td class="centered">${edicao.vagas}</td>
-                        <td class="centered">R$ ${edicao.valorInscricao}</td>
-                        <td class="centered">de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                        <td class="centered"><javalek:formatDate value="${edicao.data}" pattern="i18n.dateFormat.java" isPatternKey="true"/></td>
-                        <td class="centered">${edicao.idadeMinima}</td>
-                    </tr>
-                </c:forEach>
+                                        <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
+                                        </c:if>
+                                        <c:if test="${edicao.oficina}">
+                                        <button  type="button" class="btn" title="Oficinas" onclick="location.href = '${oficina_url}';"><i class="icon-wrench"></i></button>
+                                        </c:if>
+                                    <button  type="button" class="btn" title="Dormitórios" onclick="location.href = '${dormitorio_url}';"><i class="icon-building"></i></button>
+                                    <button  type="button" class="btn" title="Cobrança" onclick="location.href = '${cobranca_url}';"><i class="icon-money"></i></button>
+                                </div>
+                            </td>
+                            <td class="centered">${edicao.numero}</td>
+                            <td>${edicao.tema}</td>
+                            <td class="align-right">${edicao.vagas}</td>
+                            <td class="align-right">R$ ${edicao.valorInscricao}</td>
+                            <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
+                            <td class="centered"><fmt:formatDate value="${edicao.data.time}" pattern="dd/MM/yyyy"/></td>
+                            <td class="centered">${edicao.idadeMinima}</td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -187,7 +183,7 @@
             $(menuId).css("left", 150);
         }
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
         document.getElementById("numero").focus();
 
         $("[name='vagas']").mask('9999');
@@ -225,22 +221,24 @@
         });
         $(".maisOpcoes").confirmDialog({
             'title': "Mais opções",
-            'content': function($dialogCaller){
+            'content': function ($dialogCaller) {
                 var id = $dialogCaller.data("id");
-                var $content = $("<div>").append($("#menuMaisOpcoes_"+id).html());
+                var $content = $("<div>").append($("#menuMaisOpcoes_" + id).html());
                 return $content;
             },
             class: 'qtip-dialog-huge',
             'yesBtn': false,
-            'noBtn':{
-                label:"Fechar"
+            'noBtn': {
+                label: "Fechar"
             }
         });
         $(".deletaEdicao").confirmDialog({
-            'title':"Deletar Edição",
+            'title': "Deletar Edição",
             'content': "Tem ceteza que deseja deletar essa edição?",
-            'yesBtn': function(){
-                
+            'yesBtn': {
+                clickFunction: function () {
+                    window.location = $(this).data("url");
+                }
             }
         });
     });

@@ -10,9 +10,10 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
-import org.hibernate.criterion.Order;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -20,21 +21,35 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Fiabane
  */
 
-public class InscricaoAjaxService {
+public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
 
     @Autowired
     private InscricaoDao inscricaoDao;
 
-    public Collection<Inscricao> search(){
-        return inscricaoDao.findByProperties(null, Order.asc("nome"));
+    @Override
+    public Collection<Inscricao> search(int firstResult, int maxResults, Map<String, String> params) throws Exception {
+        Long idEdicao = get(Long.class, "edicao.id", params);
+        String nomePessoa = get(String.class, "inscricao.confraternista.pessoa.nome", params);
+        Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
+        String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
+        String situacaoInscricao = get(String.class, "inscricao.status.value", params);
+        String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
+        return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, firstResult, maxResults);
     }
-    
-    public Long count(){
-        Collection<Inscricao> inscricoes;
-        inscricoes = inscricaoDao.findByProperties(null, Order.asc("nome"));
-        return NumberUtils.toLong(inscricoes.size());
+
+    @Override
+    public long count(Map<String, String> params) throws Exception {
+        Long idEdicao = get(Long.class, "edicao.id", params);
+        String nomePessoa = get(String.class, "inscricao.confraternista.pessoa.nome", params);
+        Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
+        String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
+        String situacaoInscricao = get(String.class, "inscricao.status.value", params);
+        String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
+        return inscricaoDao.countInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao);
     }
-    
+
     public Collection<Inscricao> findByIdGrupoIdade(final String idGrupoIdade) {
         if (CharSequenceUtils.isBlank(idGrupoIdade)) {
             return Collections.emptyList();

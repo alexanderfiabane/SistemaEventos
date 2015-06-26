@@ -8,6 +8,7 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
@@ -16,6 +17,22 @@ import java.util.Collection;
  */
 public interface InscricaoDao extends BaseSistemaDao<Long, Inscricao> {
 
+    public Collection<Inscricao> searchInscricoes(final Long idEdicao,
+            final String nomePessoa,
+            final Calendar dataSendInscricao,
+            final String tipoConfraternista,
+            final String situacaoInscricao,
+            final String numeroDocPagamento,
+            final Calendar dataPagamentoInscricao,
+            Integer firstResult,
+            Integer maxResults);
+    public Long countInscricoes(final Long idEdicao,
+            final String nomePessoa,
+            final Calendar dataSendInscricao,
+            final String tipoConfraternista,
+            final String situacaoInscricao,
+            final String numeroDocPagamento,
+            final Calendar dataPagamentoInscricao);
     public Collection<Inscricao> findByEdicao(final Long idEdicao);
     public Collection<Inscricao> findByEdicaoCidadeEstado(final Edicao Edicao);
     public Collection<Inscricao> findByEdicaoOficina(final Edicao edicao);

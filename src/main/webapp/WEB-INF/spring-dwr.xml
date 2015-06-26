@@ -42,6 +42,10 @@
         <dwr:convert class="br.esp.sysevent.core.model.Confraternista" type="hibernate3">
             <dwr:include method="id"/>
             <dwr:include method="pessoa"/>
+            <dwr:include method="tipo"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Confraternista$Tipo" type="bean">
+            <dwr:include method="descricao"/>            
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Endereco" type="hibernate3">
             <dwr:include method="id"/>
@@ -71,6 +75,18 @@
         <dwr:convert class="br.esp.sysevent.core.model.Inscricao" type="hibernate3">
             <dwr:include method="id"/>
             <dwr:include method="confraternista"/>            
+            <dwr:include method="status"/>            
+            <dwr:include method="valor"/>            
+            <dwr:include method="pagamento"/>            
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Pagamento" type="hibernate3">
+            <dwr:include method="id"/>            
+            <dwr:include method="numeroDocumento"/>            
+            <dwr:include method="data"/>            
+            <dwr:include method="valor"/>                        
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.Inscricao$Status" type="bean">
+            <dwr:include method="value"/>            
         </dwr:convert>
     </dwr:configuration>        
 
@@ -89,6 +105,8 @@
     </bean>
     <bean id="inscricaoAjaxService" class="br.esp.sysevent.web.ajax.InscricaoAjaxService">        
         <dwr:remote javascript="inscricaoAjaxService">            
+            <dwr:include method="search" />
+            <dwr:include method="count" />
             <dwr:include method="findByIdGrupoIdade" />
             <dwr:include method="findSemDormitorioBySexo" />
         </dwr:remote>
