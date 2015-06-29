@@ -21,16 +21,16 @@ import javax.persistence.Table;
 public class CamisetaConfraternista extends AbstractEntity {
 
     private static final long serialVersionUID = -2174770753829782943L;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ID_CONF", nullable = false)
     private Confraternista confraternista;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ID_TAMANHO", nullable = false)
     private TamanhoCamiseta tamanhoCamiseta;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ID_TIPO", nullable = false)
     private TipoCamiseta tipoCamiseta;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ID_COR", nullable = false)
     private CorCamiseta corCamiseta;
     @Column(name = "QUANTIDADE", nullable = false)

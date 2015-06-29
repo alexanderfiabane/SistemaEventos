@@ -5,12 +5,13 @@ package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -25,7 +26,8 @@ public class CasaEspirita extends AbstractEntity {
     private static final long serialVersionUID = 5425316136115356131L;
     @Column(name = "NOME", length = 80, nullable = false)
     private String nome;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_ENDERECO", nullable = false)
     private Endereco endereco;
 

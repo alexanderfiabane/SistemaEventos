@@ -14,7 +14,7 @@
         </div>
         <div class="span3">
             <label class="label">
-                Data recebimento inscrição
+                <fmt:message key="label.subscriptionDateReceive"/>
             </label>
             <input type="text" name="inscricao.dataInscricao" class="textfield date" title="Data de recebimento da inscrição"/>
         </div>
@@ -62,64 +62,62 @@
 
 
 <div id="paginationWrapper" class="table-wrapper scrollable">
-    <table class="table hovered narrow small-font-size">
+    <table class="table striped stroked hovered narrow small-font-size">
         <thead class="header">
             <tr>
                 <th class="centered"><fmt:message key="label.options"/></th>
                 <th ><fmt:message key="label.name"/></th>
                 <th ><fmt:message key="label.subscriptiontype"/></th>
                 <th ><fmt:message key="label.subscriptionstatus"/></th>
-                <th ><fmt:message key="label.subscriptionvalue"/></th>
+                <th ><fmt:message key="label.subscriptionDateReceive"/></th>
                 <th ><fmt:message key="label.paymentdate"/></th>
-                <th ><fmt:message key="label.paymentnumber"/></th>
-                <th ><fmt:message key="label.paymentvalue"/></th>
+                <th ><fmt:message key="label.paymentnumber"/></th>                
             </tr>
         </thead>
         <tbody>
             <tr data-role="tableRow">
                 <td class="centered">
                     <c:url var="url_view" value="view.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <c:url var="url_edit" value="form.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <c:url var="url_aprova" value="aprova.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <c:url var="url_efetiva" value="efetiva.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <c:url var="url_indefere" value="indefere.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <c:url var="url_reabre" value="reabre.html">
-                        <c:param name="idInscricao" value="@{id}"/>
+                        <c:param name="idInscricao" value=""/>@{id}
                     </c:url>
                     <div class="btn-group">
-                        <button type="button" class="btn mini" title="Visualizar Inscrição" id="detalhesInscricao" onclick="location.href = '${url_view}';"><i class="icon-eye-open"></i></button>
-                        <button  type="button" class="btn mini" title="Editar Inscrição" id="editarInscricao" onclick="location.href = '${url_edit}';"><i class="icon-edit"></i></button>
+                        <button type="button" class="btn mini" title="Visualizar Inscrição" onclick="location.href = '${url_view}';"><i class="icon-eye-open"></i></button>
+                        <button  type="button" class="btn mini" title="Editar Inscrição" onclick="location.href = '${url_edit}';"><i class="icon-edit"></i></button>
                             <c:choose>
                                 <c:when test="@{podeAprovar}">
-                                <button type="button" class="btn mini" title="Confirmar Inscrição " id="aprovarInscricao" onclick="location.href = '${url_aprova}';"><i class="icon-check"></i></button>
-                                <button type="button" class="btn mini" title="Reabrir para Edição" id="reabreInscricao" onclick="location.href = '${url_reabre}';"><i class="icon-share"></i></button>
+                                <button type="button" class="btn mini" title="Confirmar Inscrição " onclick="location.href = '${url_aprova}';"><i class="icon-check"></i></button>
+                                <button type="button" class="btn mini" title="Reabrir para Edição" onclick="location.href = '${url_reabre}';"><i class="icon-share"></i></button>
                                 </c:when>
                                 <c:when test="@{podeEfetivar}">
-                                <button type="button" class="btn mini" title="Efetivar Inscrição" id="efetivarInscricao" onclick="location.href = '${url_efetiva}';"><i class="icon-thumbs-up"></i></button>
+                                <button type="button" class="btn mini" title="Efetivar Inscrição" onclick="location.href = '${url_efetiva}';"><i class="icon-thumbs-up"></i></button>
                                 </c:when>
                             </c:choose>
                             <c:if test="@{not indeferida}">
-                            <button type="button" class="btn mini" title="Indeferir Inscrição" id="indeferirInscricao" onclick="location.href = '${url_indefere}';"><i class="icon-thumbs-down"></i></button>
+                            <button type="button" class="btn mini" title="Indeferir Inscrição" onclick="location.href = '${url_indefere}';"><i class="icon-thumbs-down"></i></button>
                             </c:if>
                     </div>
                 </td>
                 <td>@{confraternista.pessoa.nome}</td>
                 <td>@{confraternista.tipo.descricao}</td>
                 <td>@{status.value}</td>
-                <td class="align-right">R$ @{valor|format=#,###.00}</td>
+                <td>@{dataRecebimento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
                 <td>@{pagamento.data|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td>@{pagamento.numeroDocumento|ifBlank=Não informado}</td>
-                <td>@{pagamento.valor|format=#,###.00|ifBlank=Não informado}</td>
+                <td>@{pagamento.numeroDocumento|ifBlank=Não informado}</td>                
             </tr>
         </tbody>
     </table>

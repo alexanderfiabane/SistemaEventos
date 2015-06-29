@@ -7,7 +7,6 @@ import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -36,10 +37,12 @@ public class Confraternista extends AbstractEntity {
     private String nomeCracha;
     @Column(name = "ATIV_CASA_ESP", length = 500, nullable = false)
     private String atividadeCasaEspirita;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_PESSOA", nullable = false)
     private Pessoa pessoa;
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_RESPONSAVEL", nullable = true)
     private Responsavel responsavelEvento;
     @ManyToOne
@@ -51,10 +54,11 @@ public class Confraternista extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "ID_DORMITORIO", nullable = true)
     private Dormitorio dormitorio;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_CASA_ESP", nullable = true)
     private CasaEspirita casaEspirita;
-    @OneToMany(mappedBy = "confraternista", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "confraternista", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)    
     private Collection<CamisetaConfraternista> camisetas;
 
     public Tipo getTipo() {

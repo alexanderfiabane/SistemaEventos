@@ -32,7 +32,8 @@
                                     </li>
                                 </c:forEach>
                             </ul>
-                        </div>
+                            <form:errors path="tipo" cssClass="pill error"/>
+                        </div>                            
                     </div>
                     <div class="row">
                         <div class="span3">
@@ -134,18 +135,17 @@
                 <tbody>
                     <c:forEach items="${edicoes}" var="edicao">
                         <c:url var="edit_url" value="formEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value=""/></c:url>
                         <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                            <tr>
-                                <td class="centered ">
-                                    <div class="btn-group small">
-                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                        <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
-                                    <button  type="button" class="btn deletaEdicao" data-url="${delete_url}" title="Deletar"><i class="icon-trash"></i></button>
-                                    <!--<button  type="button" class="btn small maisOpcoes" data-id="${edicao.id}" title="Mais opções"><i class="icon-list"></i></button>-->
+                        <tr>
+                            <td>
+                                <div class="btn-group small">
+                                    <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
+                                    <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
+                                    <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>                                    
                                     <c:if test="${edicao.faixaEtaria}">
                                         <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
                                         </c:if>
@@ -162,7 +162,7 @@
                             <td class="align-right">R$ ${edicao.valorInscricao}</td>
                             <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
                             <td class="centered"><fmt:formatDate value="${edicao.data.time}" pattern="dd/MM/yyyy"/></td>
-                            <td class="centered">${edicao.idadeMinima}</td>
+                            <td class="align-right">${edicao.idadeMinima}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -232,18 +232,25 @@
                 label: "Fechar"
             }
         });
-        $(".deletaEdicao").confirmDialog({
-            'title': "Deletar Edição",
-            'content': "Tem ceteza que deseja deletar essa edição?",
-            'yesBtn': {
-                clickFunction: function () {
-//                    clickFunction: function(event, $content) {
-//                                                var opcao = '&opcao=' + $content.find('[name=opcaoInativa' + item.id + ']:checked').val();
-//                                                return location.href = '${url_inativar}' + item.id + opcao;
-//                                            }
-                    window.location = $(this).data("url");
-                }
-            }
+        $(".deletaEdicao").each(function() {
+            var $this = $(this);
+            var id = $this.data("id"); // cata o id
+            var thisUrl = '${delete_url}' + id; // concatena na url
+            $this.openUrl({
+                    'url': thisUrl,
+                    'showConfirmDialog': true
+            });
         });
+		
+	
+//        $(".deletaEdicao").confirmDialog({
+//            'title': "Deletar Edição",
+//            'content': "Tem ceteza que deseja deletar essa edição?",
+//            'yesBtn': {
+//                clickFunction: function (event,$content,$caller) {
+//                    window.location = $caller.attr("data-url");
+//                }
+//            }
+//        });
     });
 </script>

@@ -21,8 +21,17 @@
 <c:if test="${empty datePattern}"><c:set var="datePattern" value="dd/MM/yyyy"/></c:if>
 
 <%-- source --%>
-<div class="control-group">
-    <javalek:label label="${label}" isLabelKey="${isLabelKey}" isMandatory="false" breakAfter="${isBreak}"/>
+<div class="control">
+    <label>
+        <c:choose>
+            <c:when test="${not (isLabelKey == false)}">
+                <fmt:message key="${label}"/>:                
+            </c:when>            
+            <c:otherwise>
+                ${label}:
+            </c:otherwise>
+        </c:choose>
+    </label>    
     <c:choose>
         <c:when test="${empty value}">
             <span style="font-weight: normal;"><em>Não informado</em></span>

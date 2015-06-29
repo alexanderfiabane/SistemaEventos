@@ -27,6 +27,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
 
     @Override
     public void validateCommand(final Edicao edicao, final Errors errors) {
+        validateTipo(edicao.getTipo(), errors);
         validateEvento(edicao.getEvento(), errors); // valida o evento da edição
         validateTema(edicao.getTema(), errors); // valida o tema
         validateNumero(edicao.getNumero(), errors); // valida o número de edições
@@ -35,6 +36,12 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validatePeriodoInscricao(edicao.getPeriodoInscricao(), errors); // valida o perído de inscrição
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
         validateValorCamiseta(edicao.getValorCamiseta(), errors);
+    }
+    
+    private void validateTipo(Edicao.Tipo tipo, Errors errors) {
+        if (tipo == null){
+            errors.rejectValue("tipo", "errors.required");        
+        }
     }
 
     private void validateEvento(Evento evento, Errors errors) {
@@ -108,4 +115,5 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             }
         }
     }
+
 }

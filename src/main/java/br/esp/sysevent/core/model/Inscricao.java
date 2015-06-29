@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -44,7 +45,8 @@ public class Inscricao extends AbstractEntity {
     @Column(name = "DT_INSC_PG", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataPagamento;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_CONFRATERNISTA", nullable = false)
     private Confraternista confraternista;
     @ManyToOne

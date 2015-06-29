@@ -7,7 +7,6 @@ import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,7 +42,8 @@ public class Usuario extends AbstractEntity implements UserDetails {
     private Role role;
     @Column(name = "IND_ATIVO", nullable = false)
     private boolean enabled;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_PESSOA", nullable = false)
     private Pessoa pessoa;
 

@@ -10,11 +10,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -26,9 +27,11 @@ import javax.persistence.Table;
 public class FormaCobranca extends AbstractEntity{
     private static final long serialVersionUID = -7286761908204052652L;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @Cascade({CascadeType.ALL})
     private DepositoConta deposito;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @Cascade({CascadeType.ALL})
     private PagSeguro pagSeguro;
     @Column(name = "TIPO_COBRANCA", nullable = true)
     private TipoCobranca tipoCobranca;

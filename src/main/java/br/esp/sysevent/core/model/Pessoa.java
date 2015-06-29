@@ -6,7 +6,6 @@ package br.esp.sysevent.core.model;
 import com.javaleks.commons.core.model.AbstractEntity;
 import java.util.Calendar;
 import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +16,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -37,16 +38,20 @@ public class Pessoa extends AbstractEntity {
     @Column(name = "SEXO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_RESPONSAVEL", nullable = true)
     private Responsavel responsavel;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_ENDERECO", nullable = true)
     private Endereco endereco;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_DOCUMENTOS", nullable = true)
     private Documento documentos;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_INFO_SAUDE", nullable = true)
     private InformacoesSaude informacoesSaude;
 

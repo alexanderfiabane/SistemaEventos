@@ -75,9 +75,13 @@
         <dwr:convert class="br.esp.sysevent.core.model.Inscricao" type="hibernate3">
             <dwr:include method="id"/>
             <dwr:include method="confraternista"/>            
+            <dwr:include method="dataRecebimento"/>            
             <dwr:include method="status"/>            
             <dwr:include method="valor"/>            
             <dwr:include method="pagamento"/>            
+            <dwr:include method="podeAprovar"/>            
+            <dwr:include method="podeEfetivar"/>            
+            <dwr:include method="indeferida"/>            
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Pagamento" type="hibernate3">
             <dwr:include method="id"/>            

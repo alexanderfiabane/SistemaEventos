@@ -208,12 +208,12 @@
             <div class="table-wrapper scrollable bordered rounded">
                 <table id="camisetas" class="table striped hovered stroked">
                     <thead class="header">
-                        <tr><th class="centered" colspan="4"><javalek:message key="label.shirts"/></th></tr>
+                        <tr><th class="centered" colspan="4"><fmt:message key="label.shirts"/></th></tr>
                     <tr>
-                        <th class="centered"><javalek:message key="label.shirttype"/></th>
-                    <th class="centered"><javalek:message key="label.shirtcolor"/></th>
-                    <th class="centered"><javalek:message key="label.shirtsize"/></th>
-                    <th class="centered"><javalek:message key="label.shirtquant"/></th>
+                        <th class="centered"><fmt:message key="label.shirttype"/></th>
+                    <th class="centered"><fmt:message key="label.shirtcolor"/></th>
+                    <th class="centered"><fmt:message key="label.shirtsize"/></th>
+                    <th class="centered"><fmt:message key="label.shirtquant"/></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -236,14 +236,21 @@
     <c:param name="idInscricao" value="${command.id}"/>
 </c:url>
 <see:formButtonGroup putSubmit="false" backUrl="../index.html">
-    <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" onclick="imprimiInscricao('${url_print}');"><i class="icon-print"></i> Imprimir Inscrição</button>                
+    <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" data-url="${url_print}"><i class="icon-print"></i> Imprimir Inscrição</button>                
 </see:formButtonGroup>
 
 <script type="text/javascript">
-    function imprimiInscricao(url) {
-        alert("Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.");
-        location.href = url;
-    }
-    $(document).ready({
+    $(document).ready(function (){        
+        $("#imprimirInscricao").confirmDialog({
+            'title': "Atenção",
+            'content': "Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.",
+            'yesBtn': {false},
+            'noBtn':{
+                label: "Fechar",
+                clickFunction: function (event,$content,$caller) {
+                    window.location = $caller.attr("data-url");
+                }
+            }
+        });
     });
 </script>
