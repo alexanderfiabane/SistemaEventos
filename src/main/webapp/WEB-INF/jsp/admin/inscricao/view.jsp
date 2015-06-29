@@ -1,20 +1,16 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Detalhes da Inscrição" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Gerenciamento de Inscrições" isLabelKey="false"><javalek:url><c:url value="/admin/inscricao/list.html"><c:param name="idEdicao" value="${command.edicaoEvento.id}"/></c:url></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
+<mocca:title title="Detalhes da inscriÃ§Ã£o"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
-    <fieldset>
-        <legend><javalek:message key="label.eventdetails"/></legend>
-    <div class="row-fluid">
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
+            <h4><fmt:message key="label.eventdetails"/></h4>
+    </legend>
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.confraternista.tipo.descricao}"/>
         </div>
@@ -27,9 +23,12 @@
     </div>
 </fieldset>
 
-<fieldset>
-    <legend><javalek:message key="label.personaldetails"/></legend>
-    <div class="row-fluid">
+<!--DADOS PESSOAIS-->
+<fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+    <legend class="label">
+        <h4><fmt:message key="label.personaldetails"/></h4>
+    </legend>
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.fullname" isLabelKey="true" value="${command.confraternista.pessoa.nome}"/>
         </div>
@@ -43,7 +42,7 @@
             <see:formFieldView label="label.sex" isLabelKey="true" value="${command.confraternista.pessoa.sexo.descricao}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.cpf" isLabelKey="true" value="${command.confraternista.pessoa.documentos.cpf}"/>
         </div>
@@ -54,7 +53,7 @@
             <see:formFieldView label="label.birthcertificate" isLabelKey="true" value="${command.confraternista.pessoa.documentos.certidaoNascimento}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.street" isLabelKey="true" value="${command.confraternista.pessoa.endereco.logradouro}"/>
         </div>
@@ -68,7 +67,7 @@
             <see:formFieldView label="label.district" isLabelKey="true" value="${command.confraternista.pessoa.endereco.bairro}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.city" isLabelKey="true" value="${command.confraternista.pessoa.endereco.cidade.nome}"/>
         </div>
@@ -79,61 +78,66 @@
             <see:formFieldView label="label.zipcode" isLabelKey="true" value="${command.confraternista.pessoa.endereco.cep}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.email" isLabelKey="true" value="${command.confraternista.pessoa.endereco.email}"/>
         </div>
         <div class="span3">
             <see:formFieldView label="label.phone" isLabelKey="true" value="${command.confraternista.pessoa.endereco.telefone}"/>
         </div>
-        <div class="span3">
+        <div class="span6">
             <see:formFieldView label="label.phoneatevent" isLabelKey="true" value="${command.confraternista.pessoa.endereco.telefoneEvento}"/>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="span9">
             <see:formFieldView label="label.responsible" isLabelKey="true" value="${command.confraternista.pessoa.responsavel.nome}"/>
         </div>
         <div class="span3">
             <see:formFieldView label="label.phone" isLabelKey="true" value="${command.confraternista.pessoa.responsavel.telefone}"/>
-        </div>        
+        </div>
     </div>
 </fieldset>
 
-<fieldset>
-    <legend><javalek:message key="label.healthfooddetails"/></legend>
-    <div class="row-fluid">
-        <div class="span3">
-            <see:formFieldView label="Medicação" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.medicacao}"/>
+<fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+    <legend class="label">
+        <h4><fmt:message key="label.healthfooddetails"/></h4>
+    </legend>
+    <div class="row">
+        <div class="span12">
+            <see:formFieldView label="MedicaÃ§Ã£o" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.medicacao}"/>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span3">
-            <see:formFieldView label="Convênio" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.convenio}"/>
+    <div class="row">
+        <div class="span6">
+            <see:formFieldView label="ConvÃªnio" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.convenio}"/>
         </div>
-        <div class="span3">
+        <div class="span6">
             <see:formFieldView label="Telefone" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.convenioTelefone}"/>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span3">
+    <div class="row">
+        <div class="span12">
             <see:formFieldView label="Alergia" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.alergia}"/>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span3">
-            <see:formFieldView label="Alimentação" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.dieta}"/>
+    <div class="row">
+        <div class="span12">
+            <see:formFieldView label="AlimentaÃ§Ã£o" isLabelKey="false" value="${command.confraternista.pessoa.informacoesSaude.dieta}"/>
         </div>
     </div>
 </fieldset>
-<fieldset>
-    <legend><javalek:message key="label.housedetails"/></legend>
-    <div class="row-fluid">
+
+<fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+    <legend class="label">
+        <h4><fmt:message key="label.housedetails"/></h4>
+    </legend>
+    <div class="row">
         <div class="span12">
             <see:formFieldView label="label.name" isLabelKey="true" value="${command.confraternista.casaEspirita.nome}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.street" isLabelKey="true" value="${command.confraternista.casaEspirita.endereco.logradouro}"/>
         </div>
@@ -147,7 +151,7 @@
             <see:formFieldView label="label.district" isLabelKey="true" value="${command.confraternista.casaEspirita.endereco.bairro}"/>
         </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.city" isLabelKey="true" value="${command.confraternista.casaEspirita.endereco.cidade.nome}"/>
         </div>
@@ -158,61 +162,72 @@
             <see:formFieldView label="label.zipcode" isLabelKey="true" value="${command.confraternista.casaEspirita.endereco.cep}"/>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span6">
+    <div class="row">
+        <div class="span9">
             <see:formFieldView label="label.responsibleevent" isLabelKey="true" value="${command.confraternista.responsavelEvento.nome}"/>
         </div>
         <div class="span3">
             <see:formFieldView label="label.phone" isLabelKey="true" value="${command.confraternista.responsavelEvento.telefone}"/>
-        </div>        
+        </div>
     </div>
-    <div class="row-fluid">
+    <div class="row">
         <div class="span12">
             <see:formFieldView label="label.activityatie" isLabelKey="true" value="${command.confraternista.atividadeCasaEspirita}"/>
         </div>
     </div>
 </fieldset>
-<c:if test="${not empty command.edicaoEvento.oficinas}">        
-    <fieldset>
-        <legend><javalek:message key="label.workshopdetails"/></legend>
-        <div class="row-fluid">
+
+<c:if test="${not empty command.edicaoEvento.oficinas}">
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
+            <h4><fmt:message key="label.workshopdetails"/></h4>
+        </legend>
+        <div class="row">
             <see:formFieldView label="label.workshopname" isLabelKey="true" value="${command.confraternista.oficina.nome}"/>
         </div>
     </fieldset>
 </c:if>
-<c:if test="${not empty command.edicaoEvento.gruposIdade}">        
-    <fieldset>
-        <legend><javalek:message key="label.groupagedetails"/></legend>
-        <div class="row-fluid">
+
+<c:if test="${not empty command.edicaoEvento.gruposIdade}">
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
+            <h4><fmt:message key="label.groupagedetails"/></h4>
+        </legend>
+        <div class="row">
             <see:formFieldView label="label.groupagename" isLabelKey="true" value="${command.confraternista.grupoIdade.nome}"/>
         </div>
     </fieldset>
 </c:if>
+
 <c:if test="${not empty command.confraternista.camisetas}">
-    <fieldset>
-        <legend><javalek:message key="label.shirtdetails"/></legend>
-        <div class="row-fluid">
-            <table id="camisetas" class="table table-striped table-condensed">
-                <thead>
-                    <tr><td colspan="4" class="centered"><javalek:label label="label.shirts" isMandatory="false" isLabelKey="true" colonAfter="false"/></td></tr>
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
+            <h4><fmt:message key="label.shirtdetails"/></h4>
+        </legend>
+        <div class="row">
+            <div class="table-wrapper scrollable bordered rounded">
+                <table id="camisetas" class="table striped hovered stroked">
+                    <thead class="header">
+                        <tr><th class="centered" colspan="4"><fmt:message key="label.shirts"/></th></tr>
                     <tr>
-                        <td><javalek:label label="label.shirttype" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><javalek:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><javalek:label label="label.shirtsize" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
-                        <td><javalek:label label="label.shirtquant" isMandatory="false" isLabelKey="true" colonAfter="false"/></td>
+                        <th class="centered"><fmt:message key="label.shirttype"/></th>
+                    <th class="centered"><fmt:message key="label.shirtcolor"/></th>
+                    <th class="centered"><fmt:message key="label.shirtsize"/></th>
+                    <th class="centered"><fmt:message key="label.shirtquant"/></th>
                     </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="camiseta" items="${command.confraternista.camisetas}">
-                        <tr>
-                            <td>${camiseta.tipoCamiseta.descricao}</td>
-                            <td>${camiseta.corCamiseta.descricao}</td>
-                            <td>${camiseta.tamanhoCamiseta.descricao}</td>
-                            <td>${camiseta.quantidadeCamiseta}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="camiseta" items="${command.confraternista.camisetas}">
+                            <tr>
+                                <td class="centered">${camiseta.tipoCamiseta.descricao}</td>
+                                <td class="centered">${camiseta.corCamiseta.descricao}</td>
+                                <td class="centered">${camiseta.tamanhoCamiseta.descricao}</td>
+                                <td class="align-right">${camiseta.quantidadeCamiseta}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </fieldset>
 </c:if>

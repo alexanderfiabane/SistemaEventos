@@ -33,7 +33,7 @@
                                 </c:forEach>
                             </ul>
                             <form:errors path="tipo" cssClass="pill error"/>
-                        </div>                            
+                        </div>
                     </div>
                     <div class="row">
                         <div class="span3">
@@ -145,7 +145,7 @@
                                 <div class="btn-group small">
                                     <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
                                     <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
-                                    <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>                                    
+                                    <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>
                                     <c:if test="${edicao.faixaEtaria}">
                                         <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
                                         </c:if>
@@ -238,19 +238,11 @@
             var thisUrl = '${delete_url}' + id; // concatena na url
             $this.openUrl({
                     'url': thisUrl,
-                    'showConfirmDialog': true
+                    'showConfirmDialog': true,
+                    'confirmDialog': {
+                        'content': "Tem certeza que deseja deletar essa edição?"
+                    }
             });
         });
-		
-	
-//        $(".deletaEdicao").confirmDialog({
-//            'title': "Deletar Edição",
-//            'content': "Tem ceteza que deseja deletar essa edição?",
-//            'yesBtn': {
-//                clickFunction: function (event,$content,$caller) {
-//                    window.location = $caller.attr("data-url");
-//                }
-//            }
-//        });
     });
 </script>

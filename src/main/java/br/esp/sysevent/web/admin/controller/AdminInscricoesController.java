@@ -30,18 +30,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AdminInscricoesController {
 
-    protected static final String[] INIT_PROPS = {"confraternista.camisetas"};
+    private static final String[] INIT_PROPS = {"confraternista.camisetas"};
 
     @Autowired
-    protected EdicaoDao edicaoDao;
+    private EdicaoDao edicaoDao;
     @Autowired
-    protected OficinaDao oficinaDao;
+    private OficinaDao oficinaDao;
     @Autowired
-    protected GrupoIdadeDao grupoIdadeDao;
+    private GrupoIdadeDao grupoIdadeDao;
     @Autowired
-    protected InscricaoDao inscricaoDao;
+    private InscricaoDao inscricaoDao;
     @Autowired
-    protected EventoDao eventoDao;
+    private EventoDao eventoDao;
 
     @RequestMapping(value = "/admin/inscricao/list.html", method = RequestMethod.GET)
     public String list(@RequestParam(value = "idEdicao", required = false) final String idEdicao, final ModelMap model) {
@@ -130,7 +130,7 @@ public class AdminInscricoesController {
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricao.getEdicaoEvento().getId();
     }
 
-    protected Inscricao getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
+    private Inscricao getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
