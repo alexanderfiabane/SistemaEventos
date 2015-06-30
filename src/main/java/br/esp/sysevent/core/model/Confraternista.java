@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,6 +19,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -58,7 +61,8 @@ public class Confraternista extends AbstractEntity {
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_CASA_ESP", nullable = true)
     private CasaEspirita casaEspirita;
-    @OneToMany(mappedBy = "confraternista", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true)    
+    @OneToMany(mappedBy = "confraternista", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private Collection<CamisetaConfraternista> camisetas;
 
     public Tipo getTipo() {

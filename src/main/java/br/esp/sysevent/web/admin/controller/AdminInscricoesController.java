@@ -30,8 +30,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AdminInscricoesController {
 
-    private static final String[] INIT_PROPS = {"confraternista.camisetas"};
-
     @Autowired
     private EdicaoDao edicaoDao;
     @Autowired
@@ -88,7 +86,7 @@ public class AdminInscricoesController {
 
     @RequestMapping(value = "/admin/inscricao/view.html", method = RequestMethod.GET)
     public String view(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao, INIT_PROPS);
+        final Inscricao inscricao = getInscricao(idInscricao);
         model.addAttribute("command", inscricao);
         return "admin/inscricao/view";
     }

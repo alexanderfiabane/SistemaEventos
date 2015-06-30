@@ -8,14 +8,14 @@
 
 <form:form commandName="command">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
-        <legend class="label">            
+        <legend class="label">
             <h4><fmt:message key="label.eventdetails"/></h4>
         </legend>
         <div class="row">
-            <div class="span12">                
+            <div class="span12">
                 <label class="label">
                     <fmt:message key="label.subscriptiontype"/>
-                </label>                
+                </label>
                 <ul class="no-bullet no-padding">
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
@@ -171,7 +171,7 @@
             <h4><fmt:message key="label.healthfooddetails"/></h4>
         </legend>
         <div class="row">
-            <div class="span4">                
+            <div class="span4">
                 <label class="label">
                     Faz uso rotineiro de medicação?
                 </label>
@@ -202,7 +202,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span4">                
+            <div class="span4">
                 <label class="label">
                     Possui algum tipo de alergia?
                 </label>
@@ -308,10 +308,6 @@
                                     <form:radiobutton path="confraternista.oficina" value="${oficina.id}" disabled="${oficina.saldoVagas <= 0}"/> ${oficina.nome} (${oficina.saldoVagas} vagas)
                                 </label>
                             </li>
-                            <%--<javalek:label label="${oficina.nome} (${oficina.saldoVagas} vagas)" colonAfter="false" breakAfter="true" cssClass="radio"/>--%>
-                            <label class="label radio">
-                                ${oficina.nome} (${oficina.saldoVagas} vagas)
-                            </label>
                         </c:forEach>
                     </ul>
                     <form:errors path="confraternista.oficina" cssClass="pill error"/>
@@ -433,7 +429,7 @@
                 </div>
             </div>
         </fieldset>
-    </c:if>    
+    </c:if>
     <see:formButtonGroup clearUrl="formInscricao.html?idEdicao=${command.edicaoEvento.id}" backUrl="listInscricoesAbertas.html" putSubmit="true"/>
 </form:form>
 
