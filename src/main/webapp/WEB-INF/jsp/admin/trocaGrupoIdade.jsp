@@ -38,11 +38,11 @@
                     <tr>
                         <td>
                             <!--Tabela que mostra os confraternista do grupoA selecionado-->
-                            <div class="centeredDivOuter" style="width: 400px;">
+                            <div class="centeredDivOuter">
                                 <div class="centeredDivInner">
                                     <!-- Lista de confraternistas do grupoA -->
-                                    <div class="table-wrapper">
-                                        <table id="confraternistasGrupoA" class="table bordered small-font-size stroked striped narrow connectedSortable">
+                                    <div class="table-wrapper scrollable bordered rounded">
+                                        <table id="confraternistasGrupoA" class="table small-font-size stroked striped narrow connectedSortable">
                                             <thead class="header">
                                                 <tr>
                                                     <th style="text-align: center;" colspan="3">
@@ -61,11 +61,11 @@
                             <p class="text-info"><strong>para trocar</strong></p>
                         </td>
                         <td>
-                            <div class="centeredDivOuter" style="width: 400px">
+                            <div class="centeredDivOuter">
                                 <div class="centeredDivInner">
                                     <!-- Lista de confraternistas do grupoB -->
-                                    <div class="table-wrapper">
-                                        <table id="confraternistasGrupoB" class="table bordered small-font-size stroked striped narrow connectedSortable">
+                                    <div class="table-wrapper scrollable bordered rounded">
+                                        <table id="confraternistasGrupoB" class="table small-font-size stroked striped narrow connectedSortable">
                                             <thead class="header">
                                                 <tr>
                                                     <th style="text-align: center;" colspan="3">

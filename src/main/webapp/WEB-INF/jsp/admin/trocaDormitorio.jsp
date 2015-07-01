@@ -36,11 +36,11 @@
                 <tr>
                     <td>
                         <!--Tabela que mostra os confraternista do dormitório selecionado-->
-                        <div class="centeredDivOuter" style="width: 400px;">
+                        <div class="centeredDivOuter">
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas do dormitório -->
-                                <div class="table-wrapper">
-                                    <table id="confraternistasComDormitorio" class="table bordered small-font-size stroked striped narrow connectedSortable">
+                                <div class="table-wrapper scrollable bordered rounded">
+                                    <table id="confraternistasComDormitorio" class="table small-font-size stroked striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -59,11 +59,11 @@
                         <strong>para trocar</strong>
                     </td>
                     <td>
-                        <div class="centeredDivOuter" style="width: 400px">
+                        <div class="centeredDivOuter">
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas sem dormitório -->
-                                <div class="table-wrappe">
-                                    <table id="confraternistasSemDormitorio" class="table bordered small-font-size stroked striped narrow connectedSortable">
+                                <div class="table-wrapper scrollable bordered rounded">
+                                    <table id="confraternistasSemDormitorio" class="table small-font-size stroked striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -197,6 +197,13 @@
                         var idConfraternista = ui.item.context.id;
                         var idDormitorio = ev.target.tHead.rows[0].getAttribute("id");
                         dormitorioAjaxService.troca(idDormitorio, idConfraternista, function(retorno) {
+//                            $.openUrl({
+//                                'url': thisUrl,
+//                                'showConfirmDialog': true,
+//                                'confirmDialog': {
+//                                    'content': "Tem certeza que deseja deletar essa edição?"
+//                                }
+//                            });
                             bootbox.alert(retorno, function() {
                                 loadConfraternistas($('#dormitorios'), $('#confraternistasComDormitorio'), true);
                                 loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);

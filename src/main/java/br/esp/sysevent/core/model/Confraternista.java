@@ -61,7 +61,8 @@ public class Confraternista extends AbstractEntity {
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_CASA_ESP", nullable = true)
     private CasaEspirita casaEspirita;
-    @OneToMany(mappedBy = "confraternista", cascade = javax.persistence.CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "confraternista", orphanRemoval = true, fetch = FetchType.EAGER)
+    @Cascade({CascadeType.ALL})
     @Fetch(value = FetchMode.SUBSELECT)
     private Collection<CamisetaConfraternista> camisetas;
 
