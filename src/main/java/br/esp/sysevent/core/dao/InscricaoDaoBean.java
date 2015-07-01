@@ -63,6 +63,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             final String situacaoInscricao,
             final String numeroDocPagamento,
             final Calendar dataPagamentoInscricao,
+            Order order,
             Integer firstResult,
             Integer maxResults) {
 
@@ -105,9 +106,11 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
         }
         criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
-                .addOrder(Order.asc("pessoa.nome"))
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResults);
+        if (order != null){
+            criteria.addOrder(order);
+        }
         return findByCriteria(criteria);
     }
 
@@ -158,8 +161,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         if (DateUtils.isDate(dataPagamentoInscricao, false)) {
             r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
         }
-        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
-                .addOrder(Order.asc("pessoa.nome"));
+        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})));
         return (long) findByCriteria(criteria).size();
     }
 

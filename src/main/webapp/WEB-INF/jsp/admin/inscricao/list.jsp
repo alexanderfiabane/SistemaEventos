@@ -66,36 +66,16 @@
         <thead class="header">
             <tr>
                 <th class="centered"><fmt:message key="label.options"/></th>
-                <th ><fmt:message key="label.name"/></th>
-                <th ><fmt:message key="label.subscriptiontype"/></th>
-                <th ><fmt:message key="label.subscriptionstatus"/></th>
-                <th ><fmt:message key="label.subscriptionDateReceive"/></th>
-                <th ><fmt:message key="label.paymentdate"/></th>
-                <th ><fmt:message key="label.paymentnumber"/></th>
+                <th data-name="pessoa.nome"><fmt:message key="label.name"/></th>
+                <th data-name="confraternista.tipo.descricao"><fmt:message key="label.subscriptiontype"/></th>
+                <th data-name="status.value"><fmt:message key="label.subscriptionstatus"/></th>
+                <th data-name="dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
+                <th data-name="pagamento.data"><fmt:message key="label.paymentdate"/></th>
+                <th data-name="pagamento.numeroDocumento"><fmt:message key="label.paymentnumber"/></th>
             </tr>
         </thead>
         <tbody>
             <tr data-role="tableRow">
-                <%--
-                <td class="centered">
-                    <div class="btn-group">
-                        <button type="button" class="btn mini" title="Visualizar Inscrição" onclick="location.href = '${url_view}';"><i class="icon-eye-open"></i></button>
-                        <button  type="button" class="btn mini" title="Editar Inscrição" onclick="location.href = '${url_edit}';"><i class="icon-edit"></i></button>
-                            <c:choose>
-                                <c:when test="@{podeAprovar}">
-                                <button type="button" class="btn mini" title="Confirmar Inscrição " onclick="location.href = '${url_aprova}';"><i class="icon-check"></i></button>
-                                <button type="button" class="btn mini" title="Reabrir para Edição" onclick="location.href = '${url_reabre}';"><i class="icon-share"></i></button>
-                                </c:when>
-                                <c:when test="@{podeEfetivar}">
-                                <button type="button" class="btn mini" title="Efetivar Inscrição" onclick="location.href = '${url_efetiva}';"><i class="icon-thumbs-up"></i></button>
-                                </c:when>
-                            </c:choose>
-                            <c:if test="@{not indeferida}">
-                            <button type="button" class="btn mini" title="Indeferir Inscrição" onclick="location.href = '${url_indefere}';"><i class="icon-thumbs-down"></i></button>
-                            </c:if>
-                    </div>
-                </td>
-                --%>
                 <td class="centered"></td>
                 <td>@{confraternista.pessoa.nome}</td>
                 <td>@{confraternista.tipo.descricao}</td>
@@ -230,6 +210,11 @@
 
                     $td.append($btnGroup);
                 }
+            },
+            'ordering': {
+                enabled: true,
+                orderBy: 'pessoa.nome',
+                orderMode: 'asc'
             }
         });
     });

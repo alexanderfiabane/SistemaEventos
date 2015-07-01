@@ -35,7 +35,12 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         String situacaoInscricao = get(String.class, "inscricao.status.value", params);
         String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
         Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
-        return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, firstResult, maxResults);
+        Order order = getOrder(params);
+        if (order != null) {
+            return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, order.toHibernateOrder(),firstResult, maxResults);
+        } else {
+            return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, null,firstResult, maxResults);
+        }
     }
 
     @Override
@@ -47,6 +52,7 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         String situacaoInscricao = get(String.class, "inscricao.status.value", params);
         String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
         Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
+        Order order = getOrder(params);
         return inscricaoDao.countInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao);
     }
 

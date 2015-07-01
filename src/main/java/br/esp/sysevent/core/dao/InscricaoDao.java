@@ -10,6 +10,7 @@ import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import java.util.Calendar;
 import java.util.Collection;
+import org.hibernate.criterion.Order;
 
 /**
  *
@@ -24,6 +25,7 @@ public interface InscricaoDao extends BaseSistemaDao<Long, Inscricao> {
             final String situacaoInscricao,
             final String numeroDocPagamento,
             final Calendar dataPagamentoInscricao,
+            Order order,
             Integer firstResult,
             Integer maxResults);
     public Long countInscricoes(final Long idEdicao,
