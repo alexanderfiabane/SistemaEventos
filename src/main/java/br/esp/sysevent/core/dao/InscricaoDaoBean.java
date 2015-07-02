@@ -100,10 +100,10 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             r.add(Restrictions.eq("status", statusInsc));
         }
         if (CharSequenceUtils.isNotBlank(numeroDocPagamento)) {
-            r.add(Restrictions.eq("numeroDocPagamento", numeroDocPagamento));
+            r.add(Restrictions.eq("pagamento.codPagamento", numeroDocPagamento));
         }
         if (DateUtils.isDate(dataPagamentoInscricao, false)) {
-            r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
+            r.add(Restrictions.eq("pagamento.dataPagamento", dataPagamentoInscricao));
         }
         criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
                 .setFirstResult(firstResult)
@@ -434,6 +434,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             atualizaGrupoIdade(inscricao, inscricaoAtual);
         }
         atualizaUsuario(inscricao, inscricaoAtual);
+//        Session session = getSessionFactory().getCurrentSession();
+//        session.evict(inscricaoAtual);
+//        session.flush();
         saveOrUpdate(inscricao);
 
         return inscricao.getId();

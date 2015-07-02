@@ -6,16 +6,14 @@ package br.esp.sysevent.core.model;
 import com.javaleks.commons.core.model.AbstractEntity;
 import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Collection;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
@@ -42,9 +40,6 @@ public class Inscricao extends AbstractEntity {
     @Column(name = "DT_INSC_CONFIRM", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataConfirmacao;
-    @Column(name = "DT_INSC_PG", nullable = true)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar dataPagamento;
     @ManyToOne
     @Cascade({CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "ID_CONFRATERNISTA", nullable = false)
@@ -52,8 +47,8 @@ public class Inscricao extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "ID_EDICAO", nullable = false)
     private Edicao edicaoEvento;
-    @OneToMany(mappedBy = "inscricao", fetch = FetchType.EAGER)
-    private Collection<PagamentoInscricao> pagamentos;
+    @OneToOne
+    private PagamentoInscricao pagamento;
 
     public BigDecimal getValor() {
         return valor;
@@ -87,14 +82,6 @@ public class Inscricao extends AbstractEntity {
         this.dataConfirmacao = dataConfirmacao;
     }
 
-    public Calendar getDataPagamento() {
-        return dataPagamento;
-    }
-
-    public void setDataPagamento(Calendar dataPagamento) {
-        this.dataPagamento = dataPagamento;
-    }
-
     public Confraternista getConfraternista() {
         return confraternista;
     }
@@ -111,19 +98,12 @@ public class Inscricao extends AbstractEntity {
         this.edicaoEvento = edicaoEvento;
     }
 
-    public Collection<PagamentoInscricao> getPagamentos() {
-        return pagamentos;
-    }
-
-    public void setPagamentos(Collection<PagamentoInscricao> pagamentos) {
-        this.pagamentos = pagamentos;
-    }
-
     public PagamentoInscricao getPagamento() {
-        if(pagamentos == null || pagamentos.isEmpty()) {
-            return null;
-        }
-        return pagamentos.iterator().next();
+        return pagamento;
+    }
+
+    public void setPagamento(PagamentoInscricao pagamento) {
+        this.pagamento = pagamento;
     }
 
     public boolean isPodeAnalisar() {

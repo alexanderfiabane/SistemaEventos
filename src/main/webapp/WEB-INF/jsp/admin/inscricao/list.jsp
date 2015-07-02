@@ -67,11 +67,11 @@
             <tr>
                 <th class="centered"><fmt:message key="label.options"/></th>
                 <th data-name="pessoa.nome"><fmt:message key="label.name"/></th>
-                <th data-name="confraternista.tipo.descricao"><fmt:message key="label.subscriptiontype"/></th>
-                <th data-name="status.value"><fmt:message key="label.subscriptionstatus"/></th>
+                <th data-name="confraternista.tipo"><fmt:message key="label.subscriptiontype"/></th>
+                <th data-name="status"><fmt:message key="label.subscriptionstatus"/></th>
                 <th data-name="dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
-                <th data-name="pagamento.data"><fmt:message key="label.paymentdate"/></th>
-                <th data-name="pagamento.numeroDocumento"><fmt:message key="label.paymentnumber"/></th>
+                <th><fmt:message key="label.paymentdate"/></th>
+                <th><fmt:message key="label.paymentnumber"/></th>
             </tr>
         </thead>
         <tbody>
@@ -81,8 +81,8 @@
                 <td>@{confraternista.tipo.descricao}</td>
                 <td>@{status.value}</td>
                 <td>@{dataRecebimento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td>@{pagamento.data|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td>@{pagamento.numeroDocumento|ifBlank=Não informado}</td>
+                <td>@{pagamento.dataPagamento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
+                <td>@{pagamento.codPagamento|ifBlank=Não informado}</td>
             </tr>
         </tbody>
     </table>

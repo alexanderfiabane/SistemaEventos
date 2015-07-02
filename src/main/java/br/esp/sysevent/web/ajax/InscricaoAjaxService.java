@@ -33,8 +33,8 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
         String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
         String situacaoInscricao = get(String.class, "inscricao.status.value", params);
-        String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
-        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
+        String numeroDocPagamento = get(String.class, "inscricao.pagamento.codPagamento", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento.time", params);
         Order order = getOrder(params);
         if (order != null) {
             return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, order.toHibernateOrder(),firstResult, maxResults);
@@ -50,9 +50,8 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
         String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
         String situacaoInscricao = get(String.class, "inscricao.status.value", params);
-        String numeroDocPagamento = get(String.class, "inscricao.pagamento.numeroDocumento", params);
-        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.data.time", params);
-        Order order = getOrder(params);
+        String numeroDocPagamento = get(String.class, "inscricao.pagamento.codPagamento", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento.time", params);
         return inscricaoDao.countInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao);
     }
 

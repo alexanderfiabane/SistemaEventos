@@ -6,7 +6,6 @@ package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
-
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
@@ -23,7 +22,7 @@ import org.springframework.validation.Errors;
 @Component
 public class EdicaoValidator extends AbstractValidator<Edicao> {
 
-    private final Pattern TEMA_PATTERN = Pattern.compile("[\\p{L}]+");    
+    private final Pattern TEMA_PATTERN = Pattern.compile("[\\s\\p{L}]+");
 
     @Override
     public void validateCommand(final Edicao edicao, final Errors errors) {
@@ -37,10 +36,10 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
         validateValorCamiseta(edicao.getValorCamiseta(), errors);
     }
-    
+
     private void validateTipo(Edicao.Tipo tipo, Errors errors) {
         if (tipo == null){
-            errors.rejectValue("tipo", "errors.required");        
+            errors.rejectValue("tipo", "errors.required");
         }
     }
 

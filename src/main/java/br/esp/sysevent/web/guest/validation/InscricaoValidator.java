@@ -34,7 +34,7 @@ import org.springframework.validation.Errors;
 @Component
 public class InscricaoValidator extends AbstractValidator<Inscricao> {
 
-    protected final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
+    protected final Pattern NOME_PATTERN = Pattern.compile("[\\s\\p{L}]+");
     protected final Pattern NUMERO_PATTERN = Pattern.compile("[0-9]+");
     protected final Pattern CPF_PATTERN = Pattern.compile("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}");
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
