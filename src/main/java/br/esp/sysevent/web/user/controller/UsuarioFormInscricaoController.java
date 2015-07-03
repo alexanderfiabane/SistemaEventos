@@ -11,6 +11,7 @@ import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/user/formUsuarioInscricao.html")
 public class UsuarioFormInscricaoController extends FormInscricaoController{
-
+   
     protected static final String[] INIT_PROPS = {"confraternista.camisetas"};
+    @Autowired
     private InscricaoDao inscricaoDao;
 
     @Override

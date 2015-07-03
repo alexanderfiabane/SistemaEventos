@@ -82,6 +82,7 @@
             <dwr:include method="podeAprovar"/>            
             <dwr:include method="podeEfetivar"/>            
             <dwr:include method="indeferida"/>            
+            <dwr:include method="pendente"/>            
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Pagamento" type="hibernate3">
             <dwr:include method="id"/>            

@@ -393,7 +393,7 @@
                             <c:forEach var="camiseta" items="${command.confraternista.camisetas}" varStatus="status">
                                 <tr id="camiseta_${status.index}">
                                     <td class="centered">
-                                        <button  type="button" class="btn small delete centered" title="Remover" id="removeCamiseta">Remover camiseta</button>
+                                        <button  type="button" class="btn small delete centered" title="Remover" id="removeCamiseta">Remover</button>
                                     </td>
                                     <td class="centered">
                                         <input type="hidden" name="confraternista.camisetas[${status.index}].tipoCamiseta" value="${camiseta.tipoCamiseta.id}"/>

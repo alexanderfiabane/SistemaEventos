@@ -1,27 +1,34 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="RelatÛrios - Lista de Eventos" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
-
+<mocca:title title="Relat√≥rios - Lista de Eventos"/>
 <c:choose>
     <c:when test="${empty eventos}">
-        <see:notice type="info" closeable="true">N„o h· eventos cadastrados</see:notice>
+        <see:notice type="info" closeable="true">N√£o h√° eventos cadastrados</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="row-fluid">
-            <display:table id="evento" name="eventos" pagesize="10" requestURI="/admin/relatorio/listEvento.html" class="table table-striped table-condensed">                    
-                <display:column media="html" titleKey="label.options" class="twoOption centered" headerClass="centered">
-                    <c:url var="list_edicao_url" value="/admin/relatorio/listEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>   
-                    <button type="button" class="btn btn-mini" title="Ir para ediÁıes deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-plus"></i></button>                     
-                </display:column>
-                <display:column titleKey="label.name" property="nome" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.acronym" property="sigla" class="centered" headerClass="centered"/>
-            </display:table>
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked small-font-size">
+                <thead class="header">
+                    <tr>
+                        <th class="centered" style="width: 8em;"><fmt:message key="label.options"/></th>
+                        <th><fmt:message key="label.name"/></th>
+                        <th style="width: 18em;"><fmt:message key="label.acronym"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${eventos}" var="evento">                        
+                        <tr>
+                            <td>
+                                <c:url var="list_edicao_url" value="/admin/relatorio/listEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>   
+                                <button type="button" class="btn small" title="Ir para edi√ß√µes deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-share-alt"></i></button>                                                     
+                            </td>
+                            <td>${evento.nome}</td>
+                            <td>${evento.sigla}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>           
         </div>
     </c:otherwise>  
 </c:choose>

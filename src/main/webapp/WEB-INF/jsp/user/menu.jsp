@@ -1,15 +1,9 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<%-- este elemento <content> passa o breadcrumbs para o titlebar do layout --%>
-<content tag="titlebarContent">
-    <mocca:title title="label.page.mainMenu" isTitleKey="true"/>    
-</content>
+<mocca:title title="label.page.mainMenu" isTitleKey="true"/>    
 
-<div class="small-font-size">
-    <mocca:menu>
+<mocca:menu>
+    <mocca:menuItem iconClass="icon-check" label="label.menu.usersubscriptions" isLabelKey="true"
+                    url="/user/listUsuarioInscricoes.html" />                    
+</mocca:menu>
 
-        <mocca:menuItem iconClass="icon-check" label="label.menu.usersubscriptions" isLabelKey="true"
-                        url="/user/listUsuarioInscricoes.html" />                    
-
-    </mocca:menu>
-</div>

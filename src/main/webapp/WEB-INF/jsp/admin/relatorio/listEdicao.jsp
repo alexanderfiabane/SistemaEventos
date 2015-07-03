@@ -1,34 +1,45 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Relatórios - Lista de Edições (${evento.nome})" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Relatórios - Lista de Eventos" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEvento.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
+<mocca:title title="RelatÃ³rios - Lista de EdiÃ§Ãµes (${evento.sigla})" isTitleKey="false"/>
 
 <c:choose>
     <c:when test="${empty edicoes}">
-        <see:notice type="info" closeable="true">Não há edições cadastradas para este evento</see:notice>
+        <see:notice type="info" closeable="true">NÃ£o hÃ¡ ediÃ§Ãµes cadastradas para este evento</see:notice>
     </c:when>
     <c:otherwise>
-        <div class="row-fluid">
-            <display:table id="edicao" name="edicoes" pagesize="10" requestURI="/admin/relatorio/listEdicao.html"  class="table table-striped table-condensed">
-                <c:url var="list_url" value="/admin/relatorio/menuRelatorios.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>                
-                <display:column media="html" titleKey="label.options" class="centered" headerClass="twoOption centered">
-                    <button type="button" class="btn btn-mini" title="Ir para inscrições desta edição" onclick="location.href = '${list_url}';"><i class="icon-plus"></i></button>                   
-                </display:column>
-                <display:column titleKey="label.number" property="numero" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.theme" property="tema" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.vacancies" property="vagas" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.subscriptionValue" property="valorInscricao" class="centered" headerClass="centered"/>                
-                <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
-                    de <javalek:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
-                </display:column>
-            </display:table>
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked small-font-size">
+                <thead class="header">
+                    <tr>
+                        <th class="align-center" style="width: 6em;"><fmt:message key="label.options"/></th>
+                        <th class="align-center" style="width: 3em;">#</th>
+                        <th class="align-center"><fmt:message key="label.theme"/></th>
+                        <th class="align-center" style="width: 6em;"><fmt:message key="label.vacancies"/></th>
+                        <th class="align-center" style="width: 8em;"><fmt:message key="label.subscriptionValue"/></th>
+                        <th class="align-center" style="width: 12em;"><fmt:message key="label.subscriptionPeriod"/></th>
+                        <th class="align-center" style="width: 8em;"><fmt:message key="label.subscriptionDate"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${edicoes}" var="edicao">
+                        <tr>
+                            <td class="centered">
+                                <c:url var="list_url" value="/admin/relatorio/menuRelatorios.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                                <button type="button" class="btn small" title="Ir para inscriÃ§Ãµes desta ediÃ§Ã£o - ${edicao.tema}" onclick="location.href = '${list_url}';"><i class="icon-share-alt"></i></button>
+                            </td>
+                            <td class="align-right">${edicao.numero}</td>
+                            <td>${edicao.tema}</td>
+                            <td class="align-right">${edicao.vagas}</td>
+                            <td class="align-right">R$ ${edicao.valorInscricao}</td>
+                            <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
+                            <td class="centered"><fmt:formatDate value="${edicao.data.time}" pattern="dd/MM/yyyy"/></td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </c:otherwise>  
+    </c:otherwise>
 </c:choose>
+<see:formButtonGroup putSubmit="false" backUrl="listEvento.html"/>
 

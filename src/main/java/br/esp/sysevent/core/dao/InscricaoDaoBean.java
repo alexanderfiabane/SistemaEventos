@@ -434,10 +434,8 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             atualizaGrupoIdade(inscricao, inscricaoAtual);
         }
         atualizaUsuario(inscricao, inscricaoAtual);
-//        Session session = getSessionFactory().getCurrentSession();
-//        session.evict(inscricaoAtual);
-//        session.flush();
-        saveOrUpdate(inscricao);
+        flushAndClear();        
+        saveOrUpdate(inscricao);        
 
         return inscricao.getId();
     }

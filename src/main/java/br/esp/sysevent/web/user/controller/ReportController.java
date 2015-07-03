@@ -10,7 +10,6 @@ import br.esp.sysevent.core.service.ReportService;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,6 @@ public class ReportController {
 
     @RequestMapping(value = "/user/fichaInscricao.html", method = RequestMethod.GET)
     public ModelAndView fichaInscricao(@RequestParam(value="idInscricao",required=false) final String idInscricao,
-                                       final HttpServletRequest request,
                                        final HttpServletResponse response) throws Exception {
         final Inscricao inscricao = getInscricao(idInscricao);
         final byte[] pdf = reportService.geraRelatorio(inscricao);

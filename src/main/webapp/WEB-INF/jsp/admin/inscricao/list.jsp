@@ -128,7 +128,7 @@
                     });
                     $visualizar.openUrl({
                         'url': '${url_view}' + item.id,
-                        'target': 'visualizar'
+                        'target': 'visualizar' + item.confraternista.pessoa.nome
                     });
                     var $editar = $.WidgetUtils.createButton({
                         'title': 'Editar Inscrição',
@@ -137,7 +137,7 @@
                     });
                     $editar.openUrl({
                         'url': '${url_edit}' + item.id,
-                        'target': 'editar'
+                        'target': 'editar'+ item.confraternista.pessoa.nome
                     });
                     var $podeAprovar = $.WidgetUtils.createButton({
                         'title': 'Confirmar Inscrição',
@@ -160,18 +160,18 @@
                         'class': 'btn'
                     });
                     if (item.podeAprovar){
-                        $podeAprovar.openUrl({
-                            'url': '${url_aprova}' + item.id,
+                        $podeAprovar.openUrl({                            
+                            'url': '${url_aprova}' + item.id,                            
                             'showConfirmDialog': true,
                             'confirmDialog': {
                                 'content': "Tem certeza que deseja confirmar esta inscrição?"
                             }
                         });
                         $reabreEdicao.openUrl({
-                            'url': '${url_efetiva}' + item.id,
+                            'url': '${url_reabre}' + item.id,
                             'showConfirmDialog': true,
                             'confirmDialog': {
-                                'content': "Tem certeza que deseja efetivar esta inscrição?"
+                                'content': "Tem certeza que deseja reabrir esta inscrição?"
                             }
                         });
                     }else{
@@ -180,21 +180,21 @@
                     }
                     if (item.podeEfetivar){
                         $podeEfetivar.openUrl({
-                            'url': '${url_indefere}' + item.id,
+                            'url': '${url_efetiva}' + item.id,
                             'showConfirmDialog': true,
                             'confirmDialog': {
-                                'content': "Tem certeza que deseja indeferir esta inscrição?"
+                                'content': "Tem certeza que deseja efetivar esta inscrição?"
                             }
                         });
                     }else{
                         $podeEfetivar.disable();
                     }
-                    if(!item.indeferida){
+                    if(!item.indeferida && !item.pendente){
                         $indefere.openUrl({
-                            'url': '${url_reabre}' + item.id,
+                            'url': '${url_indefere}' + item.id,
                             'showConfirmDialog': true,
                             'confirmDialog': {
-                                'content': "Tem certeza que deseja reabrir esta inscrição?"
+                                'content': "Tem certeza que deseja indeferir esta inscrição?"
                             }
                         });
                     }else{

@@ -145,7 +145,7 @@
                     <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9" inputClass="textfield width-100"/>
                 </div>
             </div>
-            <div class="row-fluid">
+            <div class="row">
                 <div class="span3">
                     <see:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100" inputClass="textfield width-100"/>
                 </div>
@@ -393,7 +393,7 @@
                             <c:forEach var="camiseta" items="${command.confraternista.camisetas}" varStatus="status">
                                 <tr id="camiseta_${status.index}">
                                     <td class="centered">
-                                        <button  type="button" class="btn small delete centered" title="Remover" id="removeCamiseta">Remover camiseta</button>
+                                        <button  type="button" class="btn small delete centered" title="Remover" id="removeCamiseta">Remover</button>
                                     </td>
                                     <td class="centered">
                                         <input type="hidden" name="confraternista.camisetas[${status.index}].tipoCamiseta" value="${camiseta.tipoCamiseta.id}"/>

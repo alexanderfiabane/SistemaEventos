@@ -1,85 +1,27 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="Relat髍ios  - (${edicao.tema})" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Relat髍ios - Lista de Eventos" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEvento.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="Relat髍ios - Lista de Edi珲es" isLabelKey="false"><javalek:url><c:url value="/admin/relatorio/listEdicao.html?idEvento=${edicao.evento.id}"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
+<mocca:title title="Relat贸rios - (${edicao.tema})"/>
 
-<!-- Estas duas divs implementam um workaround para centralizar o menu -->
-<div id="outerMenu" class="centered" style="display: table; margin: auto;">
-    <div id="innerMenu" style="display: table-cell;">
-        <javalek:menu id="menu" defaultIconSize="64" itensPerRow="4" >
+<mocca:menu>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio Geral por Tipo de Inscri莽茫o" url="/admin/relatorio/reportConfTipo.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio Geral por Cidades e Estado" url="/admin/relatorio/reportConfCidadeEstado.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio Geral por Sexo" url="/admin/relatorio/reportConfSexo.html?idEdicao=${edicao.id}"/>
+    <c:if test="${(edicao.tipo == 'OFICINA')}">
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de confraternistas por Oficinas" url="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de confraternistas por Oficinas - Oficineiros" url="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/>
+    </c:if>
+    <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de confraternistas por Grupos" url="/admin/relatorio/reportConfGrupo.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de confraternistas por Grupos - Facilitadores" url="/admin/relatorio/reportConfGrupoFacilitador.html?idEdicao=${edicao.id}"/>
+    </c:if>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de Confraternistas por Dormit贸rio" url="/admin/relatorio/reportConfDormitorio.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Lista de presen莽a dos Confraternistas" url="/admin/relatorio/reportConfPresenca.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de Sa煤de e Dieta dos Confraternistas" url="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de camisetas dos Confraternistas" url="/admin/relatorio/reportConfCamiseta.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Relat贸rio de camisetas para encomenda" url="/admin/relatorio/reportEncomendaCamiseta.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Crach谩s (Folha A3)" url="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/>
+    <mocca:menuItem iconClass="icon-file-text-alt" label="Crach谩s (Folha A4)" url="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/>
+</mocca:menu>
+<see:formButtonGroup putSubmit="false" backUrl="listEdicao.html?idEvento=${edicao.id}"/>
 
-            <javalek:menuItem label="Relat髍io Geral por Tipo de Inscri玢o">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfTipo.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io Geral por Cidades e Estado">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfCidadeEstado.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io Geral por Sexo">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfSexo.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <c:if test="${(edicao.tipo == 'OFICINA')}">
-                <javalek:menuItem label="Relat髍io de confraternistas por Oficinas">
-                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                    <javalek:url><c:url value="/admin/relatorio/reportConfOficina.html?idEdicao=${edicao.id}"/></javalek:url>
-                </javalek:menuItem>
-            </c:if>
-            <c:if test="${(edicao.tipo == 'OFICINA')}">
-                <javalek:menuItem label="Relat髍io de confraternistas por Oficinas - Oficineiros">
-                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                    <javalek:url><c:url value="/admin/relatorio/reportConfOficinaOficineiro.html?idEdicao=${edicao.id}"/></javalek:url>
-                </javalek:menuItem>                
-            </c:if>
-            <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
-                <javalek:menuItem label="Relat髍io de confraternistas por Grupos">
-                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                    <javalek:url><c:url value="/admin/relatorio/reportConfGrupo.html?idEdicao=${edicao.id}"/></javalek:url>
-                </javalek:menuItem>
-            </c:if>
-            <c:if test="${(edicao.tipo == 'FAIXA_ETARIA')}">
-                <javalek:menuItem label="Relat髍io de confraternistas por Grupos - Facilitadores">
-                    <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                    <javalek:url><c:url value="/admin/relatorio/reportConfGrupoFacilitador.html?idEdicao=${edicao.id}"/></javalek:url>
-                </javalek:menuItem>                
-            </c:if>
-            <javalek:menuItem label="Relat髍io de Confraternistas por Dormit髍io">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfDormitorio.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io de Presen鏰 dos Confraternistas">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfPresenca.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io de Sa鷇e e Dieta dos Confraternistas">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io de camisetas dos confraternistas">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportConfCamiseta.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Relat髍io de camisetas para encomenda">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportEncomendaCamiseta.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Crach醩 (Folha A3)">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-            <javalek:menuItem label="Crach醩 (Folha A4)">
-                <javalek:icon><c:url value="/assets/application/img/icons/iconRelatorios.png"/></javalek:icon>
-                <javalek:url><c:url value="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/></javalek:url>
-            </javalek:menuItem>
-
-        </javalek:menu>
-    </div>
-</div>

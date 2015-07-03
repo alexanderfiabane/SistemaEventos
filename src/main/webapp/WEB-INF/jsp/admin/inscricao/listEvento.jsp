@@ -2,15 +2,6 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="label.page.managesubscription.event" isTitleKey="true"/>
-<%--
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="label.page.managesubscription.event" isLabelKey="true" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconAnaliseInscricoes.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.adminArea"><javalek:url><c:url value="/admin/menu.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
---%>
 
 <c:choose>
     <c:when test="${empty eventos}">

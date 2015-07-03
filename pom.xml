@@ -132,6 +132,7 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
+        <!--Jasper-->
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -147,6 +148,11 @@
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports-fonts</artifactId>
             <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>2.1.7</version>
         </dependency>
         <dependency>
             <groupId>net.sf.jtidy</groupId>
@@ -180,12 +186,13 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.7</version>                
                 <configuration>
-                    <encoding>${project.build.sourceEncoding}</encoding>                    
-                    <!--                    <useDefaultDelimiters>false</useDefaultDelimiters>
-                    <delimiters>
-                        <delimiter>@</delimiter>
-                    </delimiters>                    -->
+                    <encoding>${project.build.sourceEncoding}</encoding>                                        
                     <nonFilteredFileExtensions>
+                        <!--japer files-->
+                        <nonFilteredFileExtension>xls</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jrxml</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>jasper</nonFilteredFileExtension>
                         <!-- these ones can be filtered, but must be on the same encoding defined by the project, or it will fuck it up! -->
                         <nonFilteredFileExtension>css</nonFilteredFileExtension>
                         <nonFilteredFileExtension>js</nonFilteredFileExtension>

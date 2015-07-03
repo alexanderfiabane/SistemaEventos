@@ -1,58 +1,67 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="label.menu.usersubscriptions" isLabelKey="true" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconMinhasInscricoes.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/user/menu.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
-
+<mocca:title title="label.menu.usersubscriptions" isTitleKey="true"/>
+                
 <c:choose>
     <c:when test="${empty inscricoes}">
-        <see:notice type="info" closeable="true">Você não possui inscrições</see:notice>
+        <see:notice type="info" closeable="true">VocÃª nÃ£o possui inscriÃ§Ãµes</see:notice>
     </c:when>
-    <c:otherwise>
-        <div class="row-fluid">
-            <display:table id="inscricao" name="inscricoes" pagesize="10" requestURI="/user/listUsuarioInscricoes.html" class="table table-striped table-condensed">                        
-                <c:url var="inscricao_pendente_url" value="/user/formUsuarioInscricao.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
-                <c:url var="inscricao_confirmacao_url" value="/user/inscricaoUsuarioSuccess.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
-                <c:url var="inscricao_imprimir_url" value="/user/fichaInscricao.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
-                <c:url var="inscricao_pagamento_url" value="/user/formPagamento.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
-                <display:column media="html" titleKey="label.options" class="centered" headerClass="centered">
-                    <c:choose>
-                        <c:when test="${inscricao.podeAnalisar}">
-                            <button type="button" class="btn btn-mini" title="Editar inscrição" onclick="location.href = '${inscricao_pendente_url}';"><i class="icon-edit"></i></button>
-                            <button type="button" class="btn btn-mini" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
-                        </c:when>
-                        <c:when test="${inscricao.podeAprovar}">                                
-                            <button type="button" class="btn btn-mini" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
-                            <button type="button" class="btn btn-mini" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>                            
-                        </c:when>
-                        <c:when test="${inscricao.podeEfetivar}">
-                            <button type="button" class="btn btn-mini" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
-                            <button type="button" class="btn btn-mini" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                            <button type="button" class="btn btn-mini" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-barcode"></i></button>                            
-                        </c:when>
-                        <c:when test="${inscricao.efetivada}">
-                            <button type="button" class="btn btn-mini" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
-                            <button type="button" class="btn btn-mini" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                        </c:when>
-                        <c:when test="${inscricao.indeferida}">
-                            <button type="button" class="btn btn-mini" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
-                            <button type="button" class="btn btn-mini" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                        </c:when>
-                    </c:choose>
-                </display:column>
-                <display:column titleKey="label.event" value="${inscricao.edicaoEvento.evento.nome}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.number" value="${inscricao.edicaoEvento.numero}" class="centered" headerClass="centered"/>
-                <display:column titleKey="label.theme" value="${inscricao.edicaoEvento.tema}" class="centered" headerClass="centered"/>                        
-                <display:column titleKey="label.subscriptionstatus" value="${inscricao.status.value}" class="centered" headerClass="centered"/>                        
-                <display:column titleKey="label.subscriptionPeriod" media="html" class="centered" headerClass="centered">
-                    de <javalek:formatPeriod value="${inscricao.edicaoEvento.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
-                </display:column>
-            </display:table>
-        </div>
-    </c:otherwise>  
+    <c:otherwise>        
+        <div class="table-wrapper scrollable bordered rounded shadowed">
+            <table class="table striped hovered stroked small-font-size">
+                <thead class="header">
+                    <tr>
+                        <th class="centered"><fmt:message key="label.options"/></th>
+                        <th><fmt:message key="label.event"/></th>
+                        <th style="width: 2em;"><fmt:message key="label.number"/></th>
+                        <th><fmt:message key="label.theme"/></th>
+                        <th><fmt:message key="label.subscriptionstatus"/></th>
+                        <th class="centered"><fmt:message key="label.subscriptionPeriod"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${inscricoes}" var="inscricao">                        
+                    <tr>
+                        <td class="centered">
+                            <c:url var="inscricao_pendente_url" value="/user/formUsuarioInscricao.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
+                            <c:url var="inscricao_confirmacao_url" value="/user/inscricaoUsuarioSuccess.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
+                            <c:url var="inscricao_imprimir_url" value="/user/fichaInscricao.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
+                            <c:url var="inscricao_pagamento_url" value="/user/formPagamento.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
+                            <div class="btn-group small">
+                                <c:if test="${inscricao.podeAnalisar}">
+                                    <button type="button" class="btn" title="Visualizar inscriÃ§Ã£o" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
+                                    <button type="button" class="btn" title="Editar inscriÃ§Ã£o" onclick="location.href = '${inscricao_pendente_url}';"><i class="icon-edit"></i></button>
+                                </c:if>
+                                <c:if test="${inscricao.podeAprovar}">                                
+                                    <button type="button" class="btn" title="Visualizar inscriÃ§Ã£o" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
+                                    <button type="button" class="btn" title="Imprimir inscriÃ§Ã£o" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>                            
+                                </c:if>
+                                <c:if test="${inscricao.podeEfetivar}">
+                                    <button type="button" class="btn" title="Visualizar inscriÃ§Ã£o" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>                            
+                                    <button type="button" class="btn" title="Imprimir inscriÃ§Ã£o" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                    <button type="button" class="btn" title="Pagar inscriÃ§Ã£o" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-barcode"></i></button>                            
+                                </c:if>
+                                <c:if test="${inscricao.efetivada}">
+                                    <button type="button" class="btn" title="Visualizar inscriÃ§Ã£o" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
+                                    <button type="button" class="btn" title="Imprimir inscriÃ§Ã£o" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                </c:if>
+                                <c:if test="${inscricao.indeferida}">
+                                    <button type="button" class="btn" title="Visualizar inscriÃ§Ã£o" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
+                                    <button type="button" class="btn" title="Imprimir inscriÃ§Ã£o" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                </c:if>                                                            
+                            </div>
+                        </td>
+                        <td>${inscricao.edicaoEvento.evento.nome}</td>
+                        <td class="align-right">${inscricao.edicaoEvento.numero}</td>
+                        <td>${inscricao.edicaoEvento.tema}</td>
+                        <td>${inscricao.status.value}</td>
+                        <td class="centered"><fmt:formatDate value="${inscricao.edicaoEvento.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${inscricao.edicaoEvento.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
+                    </tr>
+                    </c:forEach>
+                </tbody>
+            </table>              
+        </div>    
+    </c:otherwise>
 </c:choose>      
 
