@@ -8,3 +8,4 @@
     <mocca:menuItem iconClass="icon-resize-full" label="Cadastrar Tamanho de camiseta" url="formTamanhoCamiseta.html"/>
     <mocca:menuItem iconClass="icon-tint" label="Cadastrar Cor de camiseta" url="formCorCamiseta.html"/>
 </mocca:menu>
+<see:formButtonGroup putSubmit="false" backUrl="menuCadastrosBasicos.html"/>

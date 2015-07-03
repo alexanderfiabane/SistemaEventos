@@ -18,7 +18,7 @@
     <see:formButtonGroup putSubmit="true" clearUrl="formEstado.html"/>
 </form:form>
 
-<div class="row">
+<div class="table-wrapper scrollable">
     <display:table id="state" name="listEstados" pagesize="10" requestURI="/admin/formEstado.html" class="table stroked striped hovered small-font-size">
         <c:url var="edit_url" value="formEstado.html"><c:param name="idEstado" value="${state.id}"/></c:url>
         <c:url var="delete_url" value="deleteEstado.html"><c:param name="idEstado" value="${state.id}"/></c:url>

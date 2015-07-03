@@ -434,8 +434,8 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             atualizaGrupoIdade(inscricao, inscricaoAtual);
         }
         atualizaUsuario(inscricao, inscricaoAtual);
-        flushAndClear();        
-        saveOrUpdate(inscricao);        
+        flushAndClear();
+        saveOrUpdate(inscricao);
 
         return inscricao.getId();
     }

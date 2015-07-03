@@ -7,3 +7,4 @@
     <mocca:menuItem iconClass="icon-edit" label="Cadastro de Camisetas" url="menuCamisetas.html"/>
     <mocca:menuItem iconClass="icon-map-marker" label="Cadastro de Estados e Cidades" url="formEstado.html"/>
 </mocca:menu>
+<see:formButtonGroup putSubmit="false" backUrl="menu.html"/>

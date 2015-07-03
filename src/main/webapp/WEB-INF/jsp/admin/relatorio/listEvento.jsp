@@ -17,19 +17,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${eventos}" var="evento">                        
+                    <c:forEach items="${eventos}" var="evento">
                         <tr>
                             <td>
-                                <c:url var="list_edicao_url" value="/admin/relatorio/listEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>   
-                                <button type="button" class="btn small" title="Ir para edições deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-share-alt"></i></button>                                                     
+                                <c:url var="list_edicao_url" value="/admin/relatorio/listEdicao.html"><c:param name="idEvento" value="${evento.id}"/></c:url>
+                                <button type="button" class="btn small" title="Ir para edições deste evento" onclick="location.href = '${list_edicao_url}';"><i class="icon-share-alt"></i></button>
                             </td>
                             <td>${evento.nome}</td>
                             <td>${evento.sigla}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
-            </table>           
+            </table>
         </div>
-    </c:otherwise>  
+    </c:otherwise>
 </c:choose>
-
+<see:formButtonGroup putSubmit="false" backUrl="../menu.html"/>
