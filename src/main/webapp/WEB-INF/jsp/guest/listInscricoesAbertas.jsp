@@ -10,13 +10,13 @@
     </c:when>
     <c:otherwise>
         <div class="table-wrapper scrollable bordered rounded shadowed">
-            <table class="table striped hovered stroked">
+            <table class="table striped hovered stroked small-font-size">
                 <thead class="header">
                     <tr>
                         <th class="centered" style="width: 10em;"><fmt:message key="label.options"/></th>
-                        <th class="centered"><fmt:message key="label.event"/></th>
+                        <th><fmt:message key="label.event"/></th>
                         <th class="centered"><fmt:message key="label.number"/></th>
-                        <th class="centered" style="width: 20em;"><fmt:message key="label.theme"/></th>
+                        <th style="width: 20em;"><fmt:message key="label.theme"/></th>
                         <th class="centered"><fmt:message key="label.subscriptionPeriod"/></th>
                     </tr>
                 </thead>
@@ -27,13 +27,11 @@
                                 <c:url var="inscricao_url" value="/guest/formInscricao.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                                 <button type="button" class="btn small" title="Fazer inscrição" onclick="location.href = '${inscricao_url}';"><i class="icon-ok"></i> Inscrever-se</button>
                             </td>
-                            <td class="centered">${edicao.evento.nome}</td>
+                            <td>${edicao.evento.nome}</td>
                             <td class="centered">${edicao.numero}</td>
-                            <td class="centered">${edicao.tema}</td>
+                            <td>${edicao.tema}</td>
                             <td class="centered">
-                                <%--
-                                de <see:formatPeriod value="${edicao.periodoInscricao}" pattern="i18n.dateFormat.java" isPatternKey="true"/>
-                                --%>
+                                <fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/>
                             </td>
                         </tr>
                     </c:forEach>

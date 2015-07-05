@@ -85,6 +85,15 @@
     </c:if>
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
+            <h4><fmt:message key="label.userdetails"/></h4>
+        </legend>
+        <div class="row">
+            <div class="span4">
+                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100"/>                
+            </div>
+        </div>
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
             <h4><fmt:message key="label.personaldetails"/></h4>
         </legend>
         <div class="row">

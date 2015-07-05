@@ -16,6 +16,7 @@ import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.PeriodUtils;
 import java.text.DateFormat;
@@ -32,7 +33,7 @@ import org.springframework.validation.Errors;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Component
-public class InscricaoValidator extends AbstractValidator<Inscricao> {
+public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected final Pattern NOME_PATTERN = Pattern.compile("[\\s\\p{L}]+");
     protected final Pattern NUMERO_PATTERN = Pattern.compile("[0-9]+");
@@ -46,9 +47,12 @@ public class InscricaoValidator extends AbstractValidator<Inscricao> {
 
     /**
      * Valida o command inteiro.
+     * @param inscricaoCmd
+     * @param errors
      */
     @Override
-    public void validateCommand(final Inscricao inscricao, final Errors errors) {
+    public void validateCommand(final InscricaoCommand inscricaoCmd, final Errors errors) {
+        final Inscricao inscricao = inscricaoCmd.getInscricao();
         validateEdicao(inscricao, errors);
         validateConfraternista(inscricao, errors);
         validateInscricao(inscricao, errors);

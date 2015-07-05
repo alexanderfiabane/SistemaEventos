@@ -34,6 +34,7 @@ import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomC
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import br.esp.sysevent.web.guest.validation.InscricaoValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
@@ -87,6 +88,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     @Autowired
     protected InscricaoValidator validator;
 
+    
     @Override
     protected InscricaoValidator getValidator() {
         return validator;
@@ -98,8 +100,8 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     }
 
     @ModelAttribute(COMMAND_NAME)
-    public Inscricao getCommand(@RequestParam(value = "idEdicao", required = false) final String idEdicao) {
-        final Inscricao command;
+    public InscricaoCommand getCommand(@RequestParam(value = "idEdicao", required = false) final String idEdicao) {
+        final InscricaoCommand command;
         if (CharSequenceUtils.isNumber(idEdicao)) {
             final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             if (edicao == null) {
@@ -112,9 +114,9 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
             final Confraternista confraternista = new Confraternista();
             confraternista.setPessoa(pessoa);
             confraternista.setCamisetas(new ArrayList<CamisetaConfraternista>());
-            command = new Inscricao();
-            command.setEdicaoEvento(edicao);
-            command.setConfraternista(confraternista);
+            command = new InscricaoCommand();
+            command.getInscricao().setEdicaoEvento(edicao);
+            command.getInscricao().setConfraternista(confraternista);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
@@ -188,7 +190,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String onPost(@ModelAttribute(COMMAND_NAME) final Inscricao command,
+    public String onPost(@ModelAttribute(COMMAND_NAME) final InscricaoCommand command,
                          final BindingResult result,
                          final ModelMap model,
                          final RedirectAttributes attributes,
@@ -196,13 +198,13 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
                          final Locale locale) {
 
         // remove da lista caso o usuario remova no form
-        final Iterator<CamisetaConfraternista> iterator = command.getConfraternista().getCamisetas().iterator();
+        final Iterator<CamisetaConfraternista> iterator = command.getInscricao().getConfraternista().getCamisetas().iterator();
         while(iterator.hasNext()) {
             final CamisetaConfraternista camiseta = iterator.next();
             if(camiseta.getTipoCamiseta() == null) {
                 iterator.remove();
             } else {
-                camiseta.setConfraternista(command.getConfraternista());
+                camiseta.setConfraternista(command.getInscricao().getConfraternista());
             }
         }
 

@@ -31,8 +31,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  * NOTA!!! Mudei o nome de uns atributos para esta classe ser compatível com o UserDetails do spring-security!
  */
 public class Usuario extends AbstractEntity implements UserDetails {
-
-    private static final long serialVersionUID = 7466084620699902860L;
+    private static final long serialVersionUID = -1802046741271174378L;
+    
     @Column(name = "LOGIN", length = 80, unique = true, nullable = false)
     private String username;
     @Column(name = "SENHA", length = 512, nullable = false) // password sera encriptado
@@ -42,6 +42,8 @@ public class Usuario extends AbstractEntity implements UserDetails {
     private Role role;
     @Column(name = "IND_ATIVO", nullable = false)
     private boolean enabled;
+    @Column(name = "IND_LOGOU", nullable = false)
+    private boolean logou;
     @ManyToOne
     @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_PESSOA", nullable = false)
@@ -77,6 +79,14 @@ public class Usuario extends AbstractEntity implements UserDetails {
 
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isLogou() {
+        return logou;
+    }
+
+    public void setLogou(boolean logou) {
+        this.logou = logou;
     }
 
     public Role getRole() {
