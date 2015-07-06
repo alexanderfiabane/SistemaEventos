@@ -23,7 +23,6 @@ import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.InformacoesSaude;
-import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
@@ -32,7 +31,7 @@ import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
-import br.esp.sysevent.web.controller.AbstractFormController;
+import br.esp.sysevent.web.controller.I18nController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import br.esp.sysevent.web.guest.validation.InscricaoValidator;
@@ -63,7 +62,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping(value = "/guest/formInscricao.html")
-public class FormInscricaoController extends AbstractFormController<Long, Inscricao> {
+public class FormInscricaoController extends I18nController {
+
+    protected static final String COMMAND_NAME = "command";
 
     @Autowired
     protected ResponsavelDao responsavelDao;
@@ -87,17 +88,6 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
     protected TipoCamisetaDao tipoCamisetaDao;
     @Autowired
     protected InscricaoValidator validator;
-
-    
-    @Override
-    protected InscricaoValidator getValidator() {
-        return validator;
-    }
-
-    @Override
-    protected InscricaoDao getCommandService() {
-        return inscricaoDao;
-    }
 
     @ModelAttribute(COMMAND_NAME)
     public InscricaoCommand getCommand(@RequestParam(value = "idEdicao", required = false) final String idEdicao) {
@@ -174,7 +164,7 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String onGet(@ModelAttribute(COMMAND_NAME) final Inscricao command, final ModelMap model) {
+    public String onGet(@ModelAttribute(COMMAND_NAME) final InscricaoCommand command, final ModelMap model) {
         //return form view
         return getFormView();
     }
@@ -208,14 +198,14 @@ public class FormInscricaoController extends AbstractFormController<Long, Inscri
             }
         }
 
-        // validate data
-        if (runValidator(command, result).hasErrors()) {
+        validator.validate(command, result);
+        if (result.hasErrors()) {
             if(result.hasFieldErrors("id")) {
                 model.addAttribute("erro", getMessage("errors.subscription.duplicated", locale));
             }
             return onGet(command, model);
         }
-        boolean isNova = command.getId() == null;
+        boolean isNova = command.getInscricao().getId() == null;
         inscricaoDao.gravaInscricao(command);
         model.addAttribute("message", getMessage("message.success.save", locale));
 
