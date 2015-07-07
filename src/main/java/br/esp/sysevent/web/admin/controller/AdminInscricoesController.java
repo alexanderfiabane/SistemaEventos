@@ -5,6 +5,7 @@ import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.GrupoIdadeDao;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.OficinaDao;
+import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Edicao.Tipo;
@@ -12,7 +13,9 @@ import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
+import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
@@ -38,6 +41,8 @@ public class AdminInscricoesController {
     private GrupoIdadeDao grupoIdadeDao;
     @Autowired
     private InscricaoDao inscricaoDao;
+    @Autowired
+    private UsuarioDao usuarioDao;
     @Autowired
     private EventoDao eventoDao;
 
@@ -86,57 +91,61 @@ public class AdminInscricoesController {
 
     @RequestMapping(value = "/admin/inscricao/view.html", method = RequestMethod.GET)
     public String view(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao);
-        model.addAttribute("command", inscricao);
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        model.addAttribute("command", inscricaoCmd);
         return "admin/inscricao/view";
     }
 
     @RequestMapping(value = "/admin/inscricao/aprova.html", method = RequestMethod.GET)
     public String aprova(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao);
-        inscricao.setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
-        inscricaoDao.saveOrUpdate(inscricao);
-        ControllerUtils.sendMail(inscricao, "Inscrição Aceita", "pagamentoInscricao.html");
-        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricao.getEdicaoEvento().getId();
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
+        inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricao.html");
+        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/efetiva.html", method = RequestMethod.GET)
     public String efetiva(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao);
-        inscricao.setStatus(Inscricao.Status.EFETIVADA);
-        inscricaoDao.saveOrUpdate(inscricao);
-        ControllerUtils.sendMail(inscricao, "Inscrição Efetivada", "efetivadaInscricao.html");
-        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricao.getEdicaoEvento().getId();
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        inscricaoCmd.getInscricao().setStatus(Inscricao.Status.EFETIVADA);
+        inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Efetivada", "efetivadaInscricao.html");
+        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/indefere.html", method = RequestMethod.GET)
     public String indefere(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao);
-        inscricao.setStatus(Inscricao.Status.INDEFERIDA);
-        liberaVaga(inscricao);
-        inscricaoDao.saveOrUpdate(inscricao);
-        ControllerUtils.sendMail(inscricao, "Inscrição Indeferida", "indeferidaInscricao.html");
-        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricao.getEdicaoEvento().getId();
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        inscricaoCmd.getInscricao().setStatus(Inscricao.Status.INDEFERIDA);
+        liberaVaga(inscricaoCmd.getInscricao());
+        inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Indeferida", "indeferidaInscricao.html");
+        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/reabre.html", method = RequestMethod.GET)
     public String reabre(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao);
-        inscricao.setStatus(Inscricao.Status.PENDENTE);
-        inscricaoDao.saveOrUpdate(inscricao);
-        ControllerUtils.sendMail(inscricao, "Inscrição Aberta para Edição", "reabertaInscricao.html");
-        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricao.getEdicaoEvento().getId();
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        inscricaoCmd.getInscricao().setStatus(Inscricao.Status.PENDENTE);
+        inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aberta para Edição", "reabertaInscricao.html");
+        return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
-    private Inscricao getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
+    private InscricaoCommand getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
+        InscricaoCommand inscricaoCmd = new InscricaoCommand();
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao), initProps);
+        final Usuario usuario = usuarioDao.findByPessoaTipo(inscricao.getConfraternista().getPessoa(), Usuario.Role.ROLE_USER);
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }
-        return inscricao;
+        inscricaoCmd.setInscricao(inscricao);
+        inscricaoCmd.setUsuario(usuario);
+        return inscricaoCmd;
     }
 
     private void liberaVaga(Inscricao inscricao) {

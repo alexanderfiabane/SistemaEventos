@@ -5,9 +5,11 @@
 package br.esp.sysevent.web.user.controller;
 
 import br.esp.sysevent.core.dao.InscricaoDao;
+import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
@@ -25,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class UsuarioInscricoesController {
 
-    protected static final String[] INIT_PROPS = {"confraternista.camisetas"};
-
     @Autowired
     private InscricaoDao inscricaoDao;
+    @Autowired
+    private UsuarioDao usuarioDao;
 
     @RequestMapping(value = "/user/listUsuarioInscricoes.html", method = RequestMethod.GET)
     public String listUsuarioInscricoes(final ModelMap model) {
@@ -44,16 +46,18 @@ public class UsuarioInscricoesController {
 
     @RequestMapping(value = "/user/inscricaoUsuarioSuccess.html", method = RequestMethod.GET)
     public String inscricaoUsuarioSuccess(@RequestParam(value="idInscricao",required=false) final String idInscricao, final ModelMap model) {
-        final Inscricao inscricao = getInscricao(idInscricao, INIT_PROPS);
-        model.addAttribute("command", inscricao);
+        final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
+        model.addAttribute("command", inscricaoCmd);
         return "user/inscricaoUsuarioSuccess";
     }
 
-    protected Inscricao getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
+    protected InscricaoCommand getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
+        InscricaoCommand inscricaoCmd = new InscricaoCommand();
         if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }
         final Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao), initProps);
+        final Usuario usuario = usuarioDao.findByPessoaTipo(inscricao.getConfraternista().getPessoa(), Usuario.Role.ROLE_USER);
         if (inscricao == null) {
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }
@@ -61,7 +65,9 @@ public class UsuarioInscricoesController {
         if(!loggedUser.getPessoa().getId().equals(inscricao.getConfraternista().getPessoa().getId())) {
             throw new IllegalArgumentException("Acesso negado a informações de outra pessoa");
         }
-        return inscricao;
+        inscricaoCmd.setInscricao(inscricao);
+        inscricaoCmd.setUsuario(usuario);
+        return inscricaoCmd;
     }
 
 }

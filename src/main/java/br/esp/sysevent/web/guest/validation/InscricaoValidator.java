@@ -5,6 +5,7 @@ package br.esp.sysevent.web.guest.validation;
 
 import br.esp.sysevent.core.dao.EnderecoDao;
 import br.esp.sysevent.core.dao.InscricaoDao;
+import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.CasaEspirita;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Documento;
@@ -14,10 +15,12 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
+import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.EntityUtils;
 import com.javaleks.commons.util.PeriodUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -36,12 +39,15 @@ import org.springframework.validation.Errors;
 public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected final Pattern NOME_PATTERN = Pattern.compile("[\\s\\p{L}]+");
+    protected final Pattern LOGIN_PATTERN = Pattern.compile("^[a-zA-Z0-9_-]{3,15}$");
     protected final Pattern NUMERO_PATTERN = Pattern.compile("[0-9]+");
     protected final Pattern CPF_PATTERN = Pattern.compile("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}");
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     @Autowired
     protected InscricaoDao inscricaoDao;
+    @Autowired
+    protected UsuarioDao usuarioDao;
     @Autowired
     protected EnderecoDao enderecoDao;
 
@@ -53,20 +59,22 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
     @Override
     public void validateCommand(final InscricaoCommand inscricaoCmd, final Errors errors) {
         final Inscricao inscricao = inscricaoCmd.getInscricao();
+        final Usuario usuario = inscricaoCmd.getUsuario();
         validateEdicao(inscricao, errors);
         validateConfraternista(inscricao, errors);
         validateInscricao(inscricao, errors);
+        validateUsuario(usuario, errors);
     }
 
     protected void validateEdicao(Inscricao inscricao, Errors errors) {
         final Edicao edicaoEvento = inscricao.getEdicaoEvento();
         if (edicaoEvento == null) {
-            errors.rejectValue("edicaoEvento", "errors.required");
+            errors.rejectValue("inscricao.edicaoEvento", "errors.required");
         } else {
             if (!PeriodUtils.isCurrent(edicaoEvento.getPeriodoInscricao()) && !ControllerUtils.isLoggedInAsAdmin()) {
-                errors.rejectValue("edicaoEvento", "errors.subscriptionPeriod.invalid");
+                errors.rejectValue("inscricao.edicaoEvento", "errors.subscriptionPeriod.invalid");
             } else if (inscricao.getId() == null && !edicaoEvento.temVaga()) {
-                errors.rejectValue("edicaoEvento", "errors.subscription.full");
+                errors.rejectValue("inscricao.edicaoEvento", "errors.subscription.full");
             }
         }
     }
@@ -75,13 +83,13 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         final Confraternista confraternista = inscricao.getConfraternista();
         final Integer maiorIdade = 18;
         if (confraternista.getTipo() == null) {
-            errors.rejectValue("confraternista.tipo", "errors.required");
+            errors.rejectValue("inscricao.confraternista.tipo", "errors.required");
         }
         if (CharSequenceUtils.isBlank(confraternista.getAtividadeCasaEspirita())) {
-            errors.rejectValue("confraternista.atividadeCasaEspirita", "errors.required");
+            errors.rejectValue("inscricao.confraternista.atividadeCasaEspirita", "errors.required");
         }
         if (CharSequenceUtils.isBlank(confraternista.getNomeCracha())) {
-            errors.rejectValue("confraternista.nomeCracha", "errors.required");
+            errors.rejectValue("inscricao.confraternista.nomeCracha", "errors.required");
         }
         validatePessoa(confraternista.getPessoa(), errors);
         if (confraternista.getPessoa().getDataNascimento() != null) {
@@ -98,29 +106,29 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected void validateResponsavelEvento(Responsavel responsavelEvento, Errors errors) {
         if (CharSequenceUtils.isBlank(responsavelEvento.getNome())) {
-            errors.rejectValue("confraternista.responsavelEvento.nome", "errors.required");
+            errors.rejectValue("inscricao.confraternista.responsavelEvento.nome", "errors.required");
         } else if (!NOME_PATTERN.matcher(responsavelEvento.getNome()).matches()) {
-            errors.rejectValue("confraternista.responsavelEvento.nome", "errors.invalid");
+            errors.rejectValue("inscricao.confraternista.responsavelEvento.nome", "errors.invalid");
         }
         if (CharSequenceUtils.isBlank(responsavelEvento.getTelefone())) {
-            errors.rejectValue("confraternista.responsavelEvento.telefone", "errors.required");
+            errors.rejectValue("inscricao.confraternista.responsavelEvento.telefone", "errors.required");
         }
     }
 
     protected void validatePessoa(Pessoa pessoa, Errors errors) {
         if (CharSequenceUtils.isBlank(pessoa.getNome())) {
-            errors.rejectValue("confraternista.pessoa.nome", "errors.required");
+            errors.rejectValue("inscricao.confraternista.pessoa.nome", "errors.required");
         } else if (!NOME_PATTERN.matcher(pessoa.getNome()).matches()) {
-            errors.rejectValue("confraternista.pessoa.nome", "errors.invalid");
+            errors.rejectValue("inscricao.confraternista.pessoa.nome", "errors.invalid");
         }
         if (pessoa.getSexo() == null) {
-            errors.rejectValue("confraternista.pessoa.sexo", "errors.required");
+            errors.rejectValue("inscricao.confraternista.pessoa.sexo", "errors.required");
         }
         if (pessoa.getDataNascimento() == null) {
-            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.required");
+            errors.rejectValue("inscricao.confraternista.pessoa.dataNascimento", "errors.required");
         }
         validateDocumentos(pessoa.getDocumentos(), errors);
-        validateEndereco(pessoa.getEndereco(), errors, "confraternista.pessoa.endereco", true);
+        validateEndereco(pessoa.getEndereco(), errors, "inscricao.confraternista.pessoa.endereco", true);
     }
 
     protected void validateOficina(Inscricao inscricao, Errors errors) {
@@ -130,13 +138,13 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         }
         final Oficina oficina = inscricao.getConfraternista().getOficina();
         if (oficina == null) {
-            errors.rejectValue("confraternista.oficina", "errors.required");
+            errors.rejectValue("inscricao.confraternista.oficina", "errors.required");
             return;
         }
 
         if (inscricao.getId() == null) { //nova inscricao
             if (!oficina.temVaga()) {
-                errors.rejectValue("confraternista.oficina", "errors.workshop.full");
+                errors.rejectValue("inscricao.confraternista.oficina", "errors.workshop.full");
             }
         } else {
             final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
@@ -144,7 +152,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
             if (!oficina.getId().equals(oficinaAtual.getId())) {
                 //trocou de oficina
                 if (!oficina.temVaga()) {
-                    errors.rejectValue("confraternista.oficina", "errors.workshop.full");
+                    errors.rejectValue("inscricao.confraternista.oficina", "errors.workshop.full");
                 }
             }
         }
@@ -152,31 +160,31 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected void validateCasaEspirita(CasaEspirita casaEspirita, Errors errors) {
         if (CharSequenceUtils.isBlank(casaEspirita.getNome())) {
-            errors.rejectValue("confraternista.casaEspirita.nome", "errors.required");
+            errors.rejectValue("inscricao.confraternista.casaEspirita.nome", "errors.required");
         }
-        validateEndereco(casaEspirita.getEndereco(), errors, "confraternista.casaEspirita.endereco", false);
+        validateEndereco(casaEspirita.getEndereco(), errors, "inscricao.confraternista.casaEspirita.endereco", false);
     }
 
     protected void validateDocumentos(Documento documentos, Errors errors) {
         if (CharSequenceUtils.isBlankOrNull(documentos.getCpf())
                 && CharSequenceUtils.isBlankOrNull(documentos.getRg())
                 && CharSequenceUtils.isBlankOrNull(documentos.getCertidaoNascimento())) {
-            errors.rejectValue("confraternista.pessoa.documentos.cpf", "errors.required.doc");
-            errors.rejectValue("confraternista.pessoa.documentos.rg", "errors.required.doc");
-            errors.rejectValue("confraternista.pessoa.documentos.certidaoNascimento", "errors.required.doc");
+            errors.rejectValue("inscricao.confraternista.pessoa.documentos.cpf", "errors.required.doc");
+            errors.rejectValue("inscricao.confraternista.pessoa.documentos.rg", "errors.required.doc");
+            errors.rejectValue("inscricao.confraternista.pessoa.documentos.certidaoNascimento", "errors.required.doc");
         } else if (!CharSequenceUtils.isBlank(documentos.getCpf())) {
             if (!isValidCPF(documentos.getCpf())) {
-                errors.rejectValue("confraternista.pessoa.documentos.cpf", "errors.invalid");
+                errors.rejectValue("inscricao.confraternista.pessoa.documentos.cpf", "errors.invalid");
             }
         }
         if (!CharSequenceUtils.isBlank(documentos.getRg())) {
             if (!NUMERO_PATTERN.matcher(documentos.getRg()).matches()) {
-                errors.rejectValue("confraternista.pessoa.documentos.rg", "errors.invalid");
+                errors.rejectValue("inscricao.confraternista.pessoa.documentos.rg", "errors.invalid");
             }
         }
         if (!CharSequenceUtils.isBlank(documentos.getCertidaoNascimento())) {
             if (!NUMERO_PATTERN.matcher(documentos.getCertidaoNascimento()).matches()) {
-                errors.rejectValue("confraternista.pessoa.documentos.certidaoNascimento", "errors.invalid");
+                errors.rejectValue("inscricao.confraternista.pessoa.documentos.certidaoNascimento", "errors.invalid");
             }
         }
     }
@@ -216,28 +224,41 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         final boolean isNova = inscricao.getId() == null;
         final Edicao edicao = inscricao.getEdicaoEvento();
         final Documento documentos = inscricao.getConfraternista().getPessoa().getDocumentos();
-        final String email = inscricao.getConfraternista().getPessoa().getEndereco().getEmail();
-        final String emailPath = "confraternista.pessoa.endereco.email";
+//        final String email = inscricao.getConfraternista().getPessoa().getEndereco().getEmail();
+//        final String emailPath = "inscricao.confraternista.pessoa.endereco.email";
         final Inscricao inscricaoDocumentos = inscricaoDao.findByEdicaoDocumentos(edicao.getId(), documentos);
 
         if (isNova) {
             if (inscricaoDocumentos != null) {
-                errors.rejectValue("id", "errors.alreadyExists");
+                errors.rejectValue("inscricao.id", "errors.alreadyExists");
             }
-            if (!errors.hasFieldErrors(emailPath) && !enderecoDao.findByProperty("email", email).isEmpty()) {
-                errors.rejectValue(emailPath, "errors.alreadyExists");
-            }
+//            if (!errors.hasFieldErrors(emailPath) && !enderecoDao.findByProperty("email", email).isEmpty()) {
+//                errors.rejectValue(emailPath, "errors.alreadyExists");
+//            }
         } else {
-            final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
+//            final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
             if (inscricaoDocumentos != null && !inscricaoDocumentos.getId().equals(inscricao.getId())) {
-                errors.rejectValue("id", "errors.alreadyExists");
+                errors.rejectValue("inscricao.id", "errors.alreadyExists");
             }
-            final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
-            if (!errors.hasFieldErrors(emailPath)) {
-                if (!email.equals(emailAtual) && !enderecoDao.findByProperty("email", email).isEmpty()) {
-                    errors.rejectValue(emailPath, "errors.alreadyExists");
-                }
+//            final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
+//            if (!errors.hasFieldErrors(emailPath)) {
+//                if (!email.equals(emailAtual) && !enderecoDao.findByProperty("email", email).isEmpty()) {
+//                    errors.rejectValue(emailPath, "errors.alreadyExists");
+//                }
+//            }
+        }
+    }
+
+    protected void validateUsuario(Usuario usuario, Errors errors) {
+        final Usuario outroUsuario = usuarioDao.findByLogin(usuario.getUsername());
+        if(outroUsuario != null){
+            if(EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()){
+                errors.rejectValue("usuario.username", "errors.alreadyExists");
+                return;
             }
+        }
+        if(!LOGIN_PATTERN.matcher(usuario.getUsername()).matches()){
+                errors.rejectValue("usuario.username", "errors.userInvalid");
         }
     }
 
@@ -281,7 +302,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         Integer idadeMinima = inscricao.getEdicaoEvento().getIdadeMinima();
         int idade = getIdade(dataEvento, dataNascimento);
         if (idade < idadeMinima) {
-            errors.rejectValue("confraternista.pessoa.dataNascimento", "errors.data.restriction");
+            errors.rejectValue("inscricao.confraternista.pessoa.dataNascimento", "errors.data.restriction");
         }
     }
 

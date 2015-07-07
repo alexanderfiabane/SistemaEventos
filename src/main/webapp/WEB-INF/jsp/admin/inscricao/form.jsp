@@ -1,7 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<mocca:title title="Detalhes da Inscrição"/>
+<mocca:title title="label.page.subscription" isTitleKey="true"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
@@ -19,21 +19,21 @@
                 <ul class="no-bullet no-padding">
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
-                            <c:when test="${command.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
+                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
                                 <%--<c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">--%>
                                 <c:if test="${item != 'OFICINEIRO'}">
                                     <li class="mini-padding">
                                         <label>
-                                            <form:radiobutton path="confraternista.tipo" value="${item.name}"/> ${item.descricao}
+                                            <form:radiobutton path="inscricao.confraternista.tipo" value="${item.name}"/> ${item.descricao}
                                         </label>
                                     </li>
                                 </c:if>
                             </c:when>
-                            <c:when test="${command.edicaoEvento.tipo == 'OFICINA'}">
+                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'OFICINA'}">
                                 <c:if test="${(item != 'FACILITADOR') and (item != 'EVANGELIZADOR')}">
                                     <li class="mini-padding">
                                         <label>
-                                            <form:radiobutton path="confraternista.tipo" value="${item.name}"/> ${item.descricao}
+                                            <form:radiobutton path="inscricao.confraternista.tipo" value="${item.name}"/> ${item.descricao}
                                         </label>
                                     </li>
                                 </c:if>
@@ -42,7 +42,7 @@
                                 <c:if test="${(item != 'FACILITADOR') and (item != 'EVANGELIZADOR') and (item != 'OFICINEIRO')}">
                                     <li class="mini-padding">
                                         <label>
-                                            <form:radiobutton path="confraternista.tipo" value="${item.name}"/> ${item.descricao}
+                                            <form:radiobutton path="inscricao.confraternista.tipo" value="${item.name}"/> ${item.descricao}
                                         </label>
                                     </li>
                                 </c:if>
@@ -51,12 +51,12 @@
                     </c:forEach>
                 </ul>
                 <div class="control">
-                    <form:errors path="confraternista.tipo" cssClass="pill error"/>
+                    <form:errors path="inscricao.confraternista.tipo" cssClass="pill error"/>
                 </div>
             </div>
         </div>
     </fieldset>
-    <c:if test="${(not empty command.edicaoEvento.gruposIdade) && (command.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
+    <c:if test="${(not empty command.inscricao.edicaoEvento.gruposIdade) && (command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
         <div id="grupoFacilitador" style="display: none;">
             <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
                 <legend class="label">
@@ -69,15 +69,15 @@
                             <fmt:message key="label.groupname"/>
                         </label>
                         <ul class="no-bullet no-padding">
-                            <c:forEach var="grupo" items="${command.edicaoEvento.gruposIdade}">
+                            <c:forEach var="grupo" items="${command.inscricao.edicaoEvento.gruposIdade}">
                                 <li class="mini-padding">
                                     <label class="radio">
-                                        <form:radiobutton path="confraternista.grupoIdade" value="${grupo.id}"/> ${grupo.nome}
+                                        <form:radiobutton path="inscricao.confraternista.grupoIdade" value="${grupo.id}"/> ${grupo.nome}
                                     </label>
                                 </li>
                             </c:forEach>
                         </ul>
-                        <form:errors path="confraternista.grupoIdade" cssClass="fieldError"/>
+                        <form:errors path="inscricao.confraternista.grupoIdade" cssClass="fieldError"/>
                     </div>
                 </div>
             </fieldset>
@@ -85,45 +85,55 @@
     </c:if>
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
+            <h4><fmt:message key="label.userdetails"/></h4>
+        </legend>
+        <div class="row">
+            <div class="span4">
+                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+        <legend class="label">
             <h4><fmt:message key="label.personaldetails"/></h4>
         </legend>
         <div class="row">
             <div class="span3">
-                <see:formField label="label.fullname" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.nome" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="label.fullname" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.nome" maxlength="100" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.badge" isLabelKey="true" isMandatory="true" path="confraternista.nomeCracha" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="label.badge" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.nomeCracha" maxlength="100" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField id="dataNascimento" label="label.birthday" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.dataNascimento" maxlength="10" inputClass="textfield width-100"/>
+                <see:formField id="dataNascimento" label="label.birthday" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.dataNascimento" maxlength="10" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.gender" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="Selecione" inputClass="selectfield width-100"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="span3">
-                <see:formField label="label.cpf" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.cpf" maxlength="14" inputClass="textfield width-100"/>
-            </div>
-            <div class="span3">
-                <see:formField label="label.id" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.rg" maxlength="10" inputClass="textfield width-100"/>
-            </div>
-            <div class="span3">
-                <see:formField label="label.birthcertificate" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.documentos.certidaoNascimento" maxlength="20" inputClass="textfield width-100"/>
+                <see:formField label="label.gender" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.sexo" type="select" itens="${sexos}" itemLabel="descricao" selectNullItemLabel="Selecione" inputClass="selectfield width-100"/>
             </div>
         </div>
         <div class="row">
             <div class="span3">
-                <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.logradouro" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="label.cpf" isLabelKey="true" isMandatory="false" path="inscricao.confraternista.pessoa.documentos.cpf" maxlength="14" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.numero" maxlength="6" inputClass="textfield width-100"/>
+                <see:formField label="label.id" isLabelKey="true" isMandatory="false" path="inscricao.confraternista.pessoa.documentos.rg" maxlength="10" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.pessoa.endereco.complemento" maxlength="60" inputClass="textfield width-100"/>
+                <see:formField label="label.birthcertificate" isLabelKey="true" isMandatory="false" path="inscricao.confraternista.pessoa.documentos.certidaoNascimento" maxlength="20" inputClass="textfield width-100"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span3">
+                <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.logradouro" maxlength="100" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
+                <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.numero" maxlength="6" inputClass="textfield width-100"/>
+            </div>
+            <div class="span3">
+                <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="inscricao.confraternista.pessoa.endereco.complemento" maxlength="60" inputClass="textfield width-100"/>
+            </div>
+            <div class="span3">
+                <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
             </div>
             <div class="row">
                 <div class="span3">
@@ -134,34 +144,34 @@
                     <select id="estado" class="selectfield width-100">
                         <option value="">Selecione um estado</option>
                         <c:forEach var="estado" items="${estados}">
-                            <option value="${estado.id}" <c:if test="${command.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
+                            <option value="${estado.id}" <c:if test="${command.inscricao.confraternista.pessoa.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="span3">
-                    <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado" inputClass="selectfield width-100"/>
+                    <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.cidade" id="cidade" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado" inputClass="selectfield width-100"/>
                 </div>
                 <div class="span3">
-                    <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.cep" maxlength="9" inputClass="textfield width-100"/>
+                    <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.cep" maxlength="9" inputClass="textfield width-100"/>
                 </div>
             </div>
-            <div class="row-fluid">
+            <div class="row">
                 <div class="span3">
-                    <see:formField label="label.email" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.email" maxlength="100" inputClass="textfield width-100"/>
+                    <see:formField label="label.email" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.email" maxlength="100" inputClass="textfield width-100"/>
                 </div>
                 <div class="span3">
-                    <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefone" maxlength="16" inputClass="textfield width-100"/>
+                    <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.telefone" maxlength="16" inputClass="textfield width-100"/>
                 </div>
                 <div class="span3">
-                    <see:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.endereco.telefoneEvento" maxlength="16" inputClass="textfield width-100"/>
+                    <see:formField label="label.phoneatevent" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.telefoneEvento" maxlength="16" inputClass="textfield width-100"/>
                 </div>
             </div>
             <div id="responsavel" class="row" style="display:none;">
                 <div class="span6">
-                    <see:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="textfield width-100"/>
+                    <see:formField label="label.responsible" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.responsavel.nome" maxlength="100" inputClass="textfield width-100"/>
                 </div>
                 <div class="span3">
-                    <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.pessoa.responsavel.telefone" maxlength="16" inputClass="textfield width-100"/>
+                    <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.responsavel.telefone" maxlength="16" inputClass="textfield width-100"/>
                 </div>
             </div>
     </fieldset>
@@ -181,7 +191,7 @@
                 </label>
             </div>
             <div class="span8">
-                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="confraternista.pessoa.informacoesSaude.medicacao" maxlength="255" inputClass="textfield width-100"/>
+                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="medicacao" path="inscricao.confraternista.pessoa.informacoesSaude.medicacao" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
@@ -195,10 +205,10 @@
                 </label>
             </div>
             <div class="span5">
-                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="confraternista.pessoa.informacoesSaude.convenio" maxlength="255" inputClass="textfield width-100"/>
+                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="convenio" path="inscricao.confraternista.pessoa.informacoesSaude.convenio" maxlength="255" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="Telefone" isLabelKey="false" isMandatory="false" id="foneConvenio" path="confraternista.pessoa.informacoesSaude.convenioTelefone" maxlength="255" inputClass="textfield width-100"/>
+                <see:formField label="Telefone" isLabelKey="false" isMandatory="false" id="foneConvenio" path="inscricao.confraternista.pessoa.informacoesSaude.convenioTelefone" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
@@ -212,7 +222,7 @@
                 </label>
             </div>
             <div class="span8">
-                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="confraternista.pessoa.informacoesSaude.alergia" maxlength="255" inputClass="textfield width-100"/>
+                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="alergia" path="inscricao.confraternista.pessoa.informacoesSaude.alergia" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
@@ -226,7 +236,7 @@
                 </label>
             </div>
             <div class="span8">
-                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="confraternista.pessoa.informacoesSaude.dieta" maxlength="255" inputClass="textfield width-100"/>
+                <see:formField label="Qual(is)" isLabelKey="false" isMandatory="false" id="dieta" path="inscricao.confraternista.pessoa.informacoesSaude.dieta" maxlength="255" inputClass="textfield width-100"/>
             </div>
         </div>
     </fieldset>
@@ -237,21 +247,21 @@
         </legend>
         <div class="row">
             <div class="span12">
-                <see:formField label="Nome" isLabelKey="false" isMandatory="true" path="confraternista.casaEspirita.nome" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="Nome" isLabelKey="false" isMandatory="true" path="inscricao.confraternista.casaEspirita.nome" maxlength="100" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
             <div class="span3">
-                <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.logradouro" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="label.street" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.casaEspirita.endereco.logradouro" maxlength="100" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.numero" maxlength="6" inputClass="textfield width-100"/>
+                <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.casaEspirita.endereco.numero" maxlength="6" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="confraternista.casaEspirita.endereco.complemento" maxlength="60" inputClass="textfield width-100"/>
+                <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="inscricao.confraternista.casaEspirita.endereco.complemento" maxlength="60" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
+                <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.casaEspirita.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
@@ -263,34 +273,34 @@
                 <select id="estadoCasa" class="selectfield width-100">
                     <option value="">Selecione um estado</option>
                     <c:forEach var="estado" items="${estados}">
-                        <option value="${estado.id}" <c:if test="${command.confraternista.casaEspirita.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
+                        <option value="${estado.id}" <c:if test="${command.inscricao.confraternista.casaEspirita.endereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="span3">
-                <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado" inputClass="selectfield width-100"/>
+                <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.casaEspirita.endereco.cidade" id="cidadeCasa" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado" inputClass="selectfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="confraternista.casaEspirita.endereco.cep" maxlength="9" inputClass="textfield width-100"/>
+                <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.casaEspirita.endereco.cep" maxlength="9" inputClass="textfield width-100"/>
             </div>
         </div>
         <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
         <div id="evangelizadorResponsavel" class="row" style="display:none;">
             <div class="span6">
-                <see:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.nome" maxlength="100" inputClass="textfield width-100"/>
+                <see:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.nome" maxlength="100" inputClass="textfield width-100"/>
             </div>
             <div class="span3">
-                <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="confraternista.responsavelEvento.telefone" maxlength="16" inputClass="textfield width-100"/>
+                <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.telefone" maxlength="16" inputClass="textfield width-100"/>
             </div>
         </div>
         <div class="row">
             <div class="span12">
-                <see:formField id="atividadeIE" label="label.activityatie" isLabelKey="true" isMandatory="true" path="confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="textarea width-100"/>
+                <see:formField id="atividadeIE" label="label.activityatie" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="textarea width-100"/>
             </div>
         </div>
     </fieldset>
 
-    <c:if test="${(not empty command.edicaoEvento.oficinas) && (command.edicaoEvento.tipo == 'OFICINA')}">
+    <c:if test="${(not empty command.inscricao.edicaoEvento.oficinas) && (command.inscricao.edicaoEvento.tipo == 'OFICINA')}">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
                 <h4><fmt:message key="label.workshopdetails"/></h4>
@@ -302,21 +312,21 @@
                         <fmt:message key="label.workshopname"/>
                     </label>
                     <ul class="no-bullet no-padding">
-                        <c:forEach var="oficina" items="${command.edicaoEvento.oficinas}">
+                        <c:forEach var="oficina" items="${command.inscricao.edicaoEvento.oficinas}">
                             <li class="mini-padding">
                                 <label>
-                                    <form:radiobutton path="confraternista.oficina" value="${oficina.id}" disabled="${oficina.saldoVagas <= 0}"/> ${oficina.nome} (${oficina.saldoVagas} vagas)
+                                    <form:radiobutton path="inscricao.confraternista.oficina" value="${oficina.id}" disabled="${oficina.saldoVagas <= 0}"/> ${oficina.nome} (${oficina.saldoVagas} vagas)
                                 </label>
                             </li>
                         </c:forEach>
                     </ul>
-                    <form:errors path="confraternista.oficina" cssClass="pill error"/>
+                    <form:errors path="inscricao.confraternista.oficina" cssClass="pill error"/>
                 </div>
             </div>
         </fieldset>
     </c:if>
 
-    <c:if test="${not empty command.edicaoEvento.tiposCamiseta}">
+    <c:if test="${not empty command.inscricao.edicaoEvento.tiposCamiseta}">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
                 <h4><fmt:message key="label.shirtdetails"/></h4>
@@ -329,7 +339,7 @@
                     </label>
                     <select id="tipoCamiseta" class="selectfield width-100">
                         <option value="">Tipo</option>
-                        <c:forEach var="tipo" items="${command.edicaoEvento.tiposCamiseta}">
+                        <c:forEach var="tipo" items="${command.inscricao.edicaoEvento.tiposCamiseta}">
                             <option value="${tipo.id}">${tipo.descricao}</option>
                         </c:forEach>
                     </select>
@@ -341,7 +351,7 @@
                     </label>
                     <select id="corCamiseta" class="selectfield width-100">
                         <option value="">Cor</option>
-                        <c:forEach var="cor" items="${command.edicaoEvento.coresCamiseta}">
+                        <c:forEach var="cor" items="${command.inscricao.edicaoEvento.coresCamiseta}">
                             <option value="${cor.id}">${cor.descricao}</option>
                         </c:forEach>
                     </select>
@@ -353,7 +363,7 @@
                     </label>
                     <select id="tamanhoCamiseta" class="selectfield width-100">
                         <option value="">Tamanho</option>
-                        <c:forEach var="tamanho" items="${command.edicaoEvento.tamanhosCamiseta}">
+                        <c:forEach var="tamanho" items="${command.inscricao.edicaoEvento.tamanhosCamiseta}">
                             <option value="${tamanho.id}">${tamanho.descricao}</option>
                         </c:forEach>
                     </select>
@@ -390,25 +400,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="camiseta" items="${command.confraternista.camisetas}" varStatus="status">
+                            <c:forEach var="camiseta" items="${command.inscricao.confraternista.camisetas}" varStatus="status">
                                 <tr id="camiseta_${status.index}">
                                     <td class="centered">
                                         <button  type="button" class="btn small delete centered" title="Remover" id="removeCamiseta">Remover</button>
                                     </td>
                                     <td class="centered">
-                                        <input type="hidden" name="confraternista.camisetas[${status.index}].tipoCamiseta" value="${camiseta.tipoCamiseta.id}"/>
+                                        <input type="hidden" name="inscricao.confraternista.camisetas[${status.index}].tipoCamiseta" value="${camiseta.tipoCamiseta.id}"/>
                                         ${camiseta.tipoCamiseta.descricao}
                                     </td>
                                     <td class="centered">
-                                        <input type="hidden" name="confraternista.camisetas[${status.index}].corCamiseta" value="${camiseta.corCamiseta.id}"/>
+                                        <input type="hidden" name="inscricao.confraternista.camisetas[${status.index}].corCamiseta" value="${camiseta.corCamiseta.id}"/>
                                         ${camiseta.corCamiseta.descricao}
                                     </td>
                                     <td class="centered">
-                                        <input type="hidden" name="confraternista.camisetas[${status.index}].tamanhoCamiseta" value="${camiseta.tamanhoCamiseta.id}"/>
+                                        <input type="hidden" name="inscricao.confraternista.camisetas[${status.index}].tamanhoCamiseta" value="${camiseta.tamanhoCamiseta.id}"/>
                                         ${camiseta.tamanhoCamiseta.descricao}
                                     </td>
                                     <td class="align-right">
-                                        <input type="hidden" name="confraternista.camisetas[${status.index}].quantidadeCamiseta" value="${camiseta.quantidadeCamiseta}"/>
+                                        <input type="hidden" name="inscricao.confraternista.camisetas[${status.index}].quantidadeCamiseta" value="${camiseta.quantidadeCamiseta}"/>
                                         ${camiseta.quantidadeCamiseta}
                                     </td>
                                 </tr>
@@ -420,7 +430,7 @@
                                     <p class="small-padding  mini-font-size">
                                         * Caso deseje adquirir camiseta escolha a combinação de tipo, tamanho e cor e então clique em ' Adicionar '.<br/>
                                         * Caso não deseje adquirir a camiseta agora, basta clicar em ' Remover camiseta ' ou não alterar os campos referentes à camiseta!<br/>
-                                        * <b>Valor:</b> Camiseta - <fmt:formatNumber value="${command.edicaoEvento.valorCamiseta}" type="currency" currencySymbol="R$" minFractionDigits="2"/>.
+                                        * <b>Valor:</b> Camiseta - <fmt:formatNumber value="${command.inscricao.edicaoEvento.valorCamiseta}" type="currency" currencySymbol="R$" minFractionDigits="2"/>.
                                     </p>
                                 </td>
                             </tr>
@@ -430,12 +440,12 @@
             </div>
         </fieldset>
     </c:if>
-    <see:formButtonGroup clearUrl="form.html?idEdicao=${command.edicaoEvento.id}" putSubmit="true"/>
+    <see:formButtonGroup clearUrl="form.html?idEdicao=${command.inscricao.edicaoEvento.id}" putSubmit="true"/>
 </form:form>
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
-    var camisetaIndex = ${fn:length(command.confraternista.camisetas)};
+    var camisetaIndex = ${fn:length(command.inscricao.confraternista.camisetas)};
     function calculaMaiorIdade(nasc) {
         var hoje = new Date(), idade;
         idade = (
@@ -537,7 +547,7 @@
     }
 
     function getName(key, index) {
-        var path = 'confraternista.camisetas';
+        var path = 'inscricao.confraternista.camisetas';
         var field;
         switch (key) {
             case 't':
@@ -571,25 +581,25 @@
             maxChars: 500
         });
 
-        $('[name="confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
-        $('[name="confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
-        $('[name="confraternista.pessoa.endereco.cep"]').mask('99999-999');
-        $('[name="confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
-        $('[name="confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
-        $('[name="confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
-        $('[name="confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
-        $('[name="confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
-        $('[name="confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
+        $('[name="inscricao.confraternista.pessoa.documentos.cpf"]').mask('999.999.999-99');
+        $('[name="inscricao.confraternista.pessoa.dataNascimento"]').mask('99/99/9999');
+        $('[name="inscricao.confraternista.pessoa.endereco.cep"]').mask('99999-999');
+        $('[name="inscricao.confraternista.casaEspirita.endereco.cep"]').mask('99999-999');
+        $('[name="inscricao.confraternista.pessoa.endereco.telefone"]').mask('(99)9999-9999');
+        $('[name="inscricao.confraternista.pessoa.endereco.telefoneEvento"]').mask('(99)9999-9999');
+        $('[name="inscricao.confraternista.pessoa.informacoesSaude.convenioTelefone"]').mask('(99)9999-9999');
+        $('[name="inscricao.confraternista.pessoa.responsavel.telefone"]').mask('(99)9999-9999');
+        $('[name="inscricao.confraternista.responsavelEvento.telefone"]').mask('(99)9999-9999');
 
         $('#addCamiseta').click(addCamiseta);
         $('.delete').click(removeCamiseta);
         $('#removeCamiseta').hide();
 
-        $('[name="confraternista.oficina"]').each(function() {
-            $(this).attr('checked', $(this).val() == '${command.confraternista.oficina.id}');
+        $('[name="inscricao.confraternista.oficina"]').each(function() {
+            $(this).attr('checked', $(this).val() == '${command.inscricao.confraternista.oficina.id}');
         });
 
-        $('[name="confraternista.tipo"]').change(function() {
+        $('[name="inscricao.confraternista.tipo"]').change(function() {
             if ($(this).val() == 'FACILITADOR') {
                 $('#grupoFacilitador').show();
             } else {
@@ -655,8 +665,8 @@
         $('#estadoCasa').change(function() {
             loadCidades($(this), $('#cidadeCasa'));
         });
-        $('[name=confraternista\\.tipo]').change(function() {
-            var tipoEvento = '${command.edicaoEvento.tipo}';
+        $('[name=inscricao\\.confraternista\\.tipo]').change(function() {
+            var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
             if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
                 $('#evangelizadorResponsavel').show();
             } else {
@@ -677,7 +687,7 @@
             }
         });
 
-        loadCidades($('#estado'), $('#cidade'), '${command.confraternista.pessoa.endereco.cidade.id}');
-        loadCidades($('#estadoCasa'), $('#cidadeCasa'), '${command.confraternista.casaEspirita.endereco.cidade.id}');
+        loadCidades($('#estado'), $('#cidade'), '${command.inscricao.confraternista.pessoa.endereco.cidade.id}');
+        loadCidades($('#estadoCasa'), $('#cidadeCasa'), '${command.inscricao.confraternista.casaEspirita.endereco.cidade.id}');
     });
 </script>

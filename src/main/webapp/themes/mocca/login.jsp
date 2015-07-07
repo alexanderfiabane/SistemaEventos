@@ -16,8 +16,8 @@
         <%-- vars necessarias --%>
         <c:url var="home_url" value="/index.html"/>
         <c:url var="login_url"  value='/login.html'/>
-        <c:url var="updateinfo_url" value="/user/atualizarCadastro.html" context="/user"/>
-        <c:url var="changepass_url" value="/user/alterarSenha.html" context="/user"/>
+        <%--<c:url var="updateinfo_url" value="user/atualizarCadastro.html" context="/user"/>--%>
+        <c:url var="changepass_url" value="user/alterarSenha.html" context="/user"/>
         <c:url var="help_url"       value="/ajuda.html"/>
         <c:url var="logout_url"  value='/logout'/>
         <security:authorize var="is_logged" access="isAuthenticated()"/>
@@ -49,7 +49,7 @@
                                             <i class="icon-user"></i> ${user_name} <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li role="menuitem"><a tabindex="-1" href="${updateinfo_url}"><i class="icon-pencil"></i> Atualizar cadastro</a></li>
+                                            <%--<li role="menuitem"><a tabindex="-1" href="${updateinfo_url}"><i class="icon-pencil"></i> Atualizar cadastro</a></li>--%>
                                             <li role="menuitem"><a tabindex="-1" href="${changepass_url}"><i class="icon-pencil"></i> Alterar senha</a></li>
                                             <li role="menuitem"><a tabindex="-1" href="${help_url}"><i class="icon-question-sign"></i> Ajuda</a></li>
                                             <li role="menuitem" class="divider"></li>

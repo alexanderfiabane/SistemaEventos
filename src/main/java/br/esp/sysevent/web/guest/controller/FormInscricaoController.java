@@ -23,6 +23,7 @@ import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.InformacoesSaude;
+import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Responsavel;
@@ -105,8 +106,10 @@ public class FormInscricaoController extends I18nController {
             confraternista.setPessoa(pessoa);
             confraternista.setCamisetas(new ArrayList<CamisetaConfraternista>());
             command = new InscricaoCommand();
-            command.getInscricao().setEdicaoEvento(edicao);
-            command.getInscricao().setConfraternista(confraternista);
+            Inscricao inscricao = new Inscricao();
+            inscricao.setEdicaoEvento(edicao);
+            inscricao.setConfraternista(confraternista);
+            command.setInscricao(inscricao);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
@@ -210,9 +213,9 @@ public class FormInscricaoController extends I18nController {
         model.addAttribute("message", getMessage("message.success.save", locale));
 
         if(isNova) {
-            ControllerUtils.sendMail(command, getMessage("mail.subscription.receive", locale), "recebimentoInscricao.html");
+            ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.receive", locale), "recebimentoInscricao.html");
         }else{
-            ControllerUtils.sendMail(command, getMessage("mail.subscription.update", locale), "alteracaoInscricao.html");
+            ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.update", locale), "alteracaoInscricao.html");
         }
 
         // clear the command object from the session and return form success view
