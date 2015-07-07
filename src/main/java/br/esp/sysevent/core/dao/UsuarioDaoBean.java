@@ -6,6 +6,7 @@ package br.esp.sysevent.core.dao;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
+import br.esp.sysevent.core.model.Usuario.Role;
 import com.javaleks.commons.util.CalendarUtils;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
@@ -37,6 +38,14 @@ public class UsuarioDaoBean extends AbstractBaseSistemaDaoBean<Long, Usuario> im
         if (onlyAtivos) {
             criteria.add(Restrictions.eq("enabled", Boolean.TRUE));
         }
+        return DataAccessUtils.uniqueResult(findByCriteria(criteria));
+    }
+    
+    @Override
+    public Usuario findByPessoaTipo(Pessoa pessoa, Role tipo){
+        final Criteria criteria = createCriteria()
+                .add(Restrictions.eq("pessoa", pessoa))
+                .add(Restrictions.eq("role", tipo));
         return DataAccessUtils.uniqueResult(findByCriteria(criteria));
     }
 

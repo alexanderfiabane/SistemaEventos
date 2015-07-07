@@ -13,6 +13,7 @@ import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.DateUtils;
@@ -399,45 +400,45 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
     @Override
     @Transactional(readOnly = false)
-    public Long gravaInscricao(final Inscricao inscricao) {
-        if (inscricao.getId() == null) {
-            return gravaNovaInscricao(inscricao);
+    public Long gravaInscricao(final InscricaoCommand inscricaoCmd) {
+        if (inscricaoCmd.getInscricao().getId() == null) {
+            return gravaNovaInscricao(inscricaoCmd);
         } else {
-            return atualizaInscricao(inscricao);
+            return atualizaInscricao(inscricaoCmd);
         }
     }
 
     @Transactional(readOnly = false)
-    protected Long gravaNovaInscricao(final Inscricao inscricao) {
-        atualizaStatus(inscricao);
-        calculaValorCamisetas(inscricao);
-        atualizaDocumentos(inscricao);
-        atualizaInfoSaude(inscricao);
-        saveOrUpdate(inscricao);
-        ocupaVaga(inscricao);
-        criaUsuario(inscricao);
-        return inscricao.getId();
+    protected Long gravaNovaInscricao(final InscricaoCommand inscricaoCmd) {
+        atualizaStatus(inscricaoCmd.getInscricao());
+        calculaValorCamisetas(inscricaoCmd.getInscricao());
+        atualizaDocumentos(inscricaoCmd.getInscricao());
+        atualizaInfoSaude(inscricaoCmd.getInscricao());
+        saveOrUpdate(inscricaoCmd.getInscricao());
+        ocupaVaga(inscricaoCmd.getInscricao());
+        criaUsuario(inscricaoCmd);
+        return inscricaoCmd.getInscricao().getId();
     }
 
     @Transactional(readOnly = false)
-    protected Long atualizaInscricao(final Inscricao inscricao) {
-        if (inscricao.isPendente()) {
-            atualizaStatus(inscricao);
+    protected Long atualizaInscricao(final InscricaoCommand inscricaoCmd) {
+        if (inscricaoCmd.getInscricao().isPendente()) {
+            atualizaStatus(inscricaoCmd.getInscricao());
         }
-        calculaValorCamisetas(inscricao);
-        atualizaDocumentos(inscricao);
-        atualizaInfoSaude(inscricao);
-        final Inscricao inscricaoAtual = findById(inscricao.getId());
-        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
-            atualizaVagaOficina(inscricao, inscricaoAtual);
-        } else if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA)) {
-            atualizaGrupoIdade(inscricao, inscricaoAtual);
+        calculaValorCamisetas(inscricaoCmd.getInscricao());
+        atualizaDocumentos(inscricaoCmd.getInscricao());
+        atualizaInfoSaude(inscricaoCmd.getInscricao());
+        final Inscricao inscricaoAtual = findById(inscricaoCmd.getInscricao().getId());
+        if (inscricaoCmd.getInscricao().getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
+            atualizaVagaOficina(inscricaoCmd.getInscricao(), inscricaoAtual);
+        } else if (inscricaoCmd.getInscricao().getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA)) {
+            atualizaGrupoIdade(inscricaoCmd.getInscricao(), inscricaoAtual);
         }
-        atualizaUsuario(inscricao, inscricaoAtual);
+        atualizaUsuario(inscricaoCmd);
         flushAndClear();
-        saveOrUpdate(inscricao);
+        saveOrUpdate(inscricaoCmd.getInscricao());
 
-        return inscricao.getId();
+        return inscricaoCmd.getInscricao().getId();
     }
 
     protected void calculaValorCamisetas(final Inscricao inscricao) {
@@ -491,12 +492,12 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         }
     }
 
-    protected void criaUsuario(final Inscricao inscricao) {
-        final Pessoa pessoa = inscricao.getConfraternista().getPessoa();
+    protected void criaUsuario(final InscricaoCommand inscricaoCmd) {
+        final Pessoa pessoa = inscricaoCmd.getInscricao().getConfraternista().getPessoa();
         final Usuario usuario = new Usuario();
         usuario.setPessoa(pessoa);
         usuario.setRole(Usuario.Role.ROLE_USER);
-        usuario.setUsername(pessoa.getEndereco().getEmail());
+        usuario.setUsername(inscricaoCmd.getUsuario().getUsername());
         usuario.setPassword(DigestUtils.sha256Hex(CalendarUtils.format(pessoa.getDataNascimento(), "ddMMyyyy")));
         usuario.setEnabled(true);
         usuarioDao.save(usuario);
@@ -531,35 +532,14 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         insereGrupoIdade(inscricao, true);
     }
 
-    protected void atualizaUsuario(final Inscricao inscricao, final Inscricao inscricaoAtual) {
-        final String email = inscricao.getConfraternista().getPessoa().getEndereco().getEmail();
-        final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
-        final Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
-        final Calendar dataNascimentoAtual = inscricaoAtual.getConfraternista().getPessoa().getDataNascimento();
-        if (!email.equals(emailAtual)) {
-            Pessoa pessoa = inscricaoAtual.getConfraternista().getPessoa();
-            Usuario usuario = usuarioDao.findByLogin(pessoa.getEndereco().getEmail());
-            usuario.setUsername(email);
-            usuarioDao.saveOrUpdate(usuario);
-//            removeUsuario(emailAtual);
-//            flush();
-//            criaUsuario(inscricao);
-        } else if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)) {
-            //alterou dt nascimento
-            atualizaSenha(inscricao);
-        }
-    }
-
-    protected void atualizaSenha(Inscricao inscricao) {
-        final Pessoa pessoa = inscricao.getConfraternista().getPessoa();
-        final Usuario usuario = usuarioDao.findByLogin(pessoa.getEndereco().getEmail());
-        usuario.setPassword(DigestUtils.sha256Hex(CalendarUtils.format(pessoa.getDataNascimento(), "ddMMyyyy")));
-        usuarioDao.saveOrUpdate(usuario);
-    }
-
-    protected void removeUsuario(String emailAtual) {
-        final Usuario usuario = usuarioDao.findByLogin(emailAtual);
-        usuarioDao.delete(usuario);
+    protected void atualizaUsuario(final InscricaoCommand inscricaoCmd) {
+        final String username = inscricaoCmd.getUsuario().getUsername();
+        Usuario usuarioAtual = usuarioDao.findByPessoaTipo(inscricaoCmd.getInscricao().getConfraternista().getPessoa(), 
+                    Usuario.Role.ROLE_USER);
+        if (!usuarioAtual.getUsername().equals(username)) {
+            usuarioAtual.setUsername(username);
+            usuarioDao.saveOrUpdate(usuarioAtual);
+        } 
     }
 
     protected void insereGrupoIdade(Inscricao inscricao, Boolean atualiza) {

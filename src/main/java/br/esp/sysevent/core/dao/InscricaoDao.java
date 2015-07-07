@@ -8,6 +8,7 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import java.util.Calendar;
 import java.util.Collection;
 import org.hibernate.criterion.Order;
@@ -48,5 +49,5 @@ public interface InscricaoDao extends BaseSistemaDao<Long, Inscricao> {
     public Collection<Inscricao> findByEdicaoDeferidas(Long idEdicao);
     public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade);
     public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao);
-    public Long gravaInscricao(final Inscricao inscricao);
+    public Long gravaInscricao(final InscricaoCommand inscricaoCmd);
 }

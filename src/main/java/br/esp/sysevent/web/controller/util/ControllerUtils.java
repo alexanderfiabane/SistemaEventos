@@ -7,6 +7,7 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.util.ConfigurableVelocityProcessor;
 import br.esp.sysevent.util.VelocityProcessor;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import com.javaleks.commons.mail.SimpleEmail;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -116,7 +117,7 @@ public abstract class ControllerUtils {
         return velocityProcessor;
     }
 
-    public static void sendMail(Inscricao inscricao, String subject, String modelName) {
+    public static void sendMail(InscricaoCommand inscricaoCmd, String subject, String modelName) {
         final Properties mailProperties = new Properties();
         try {
             ClassPathResource resource = new ClassPathResource("br/esp/sysevent/web/mail/mail.properties");
@@ -126,11 +127,11 @@ public abstract class ControllerUtils {
         }
 
         final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
-        final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricao", (Object) inscricao));
+        final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricao", (Object) inscricaoCmd));
 
         final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricao.getEdicaoEvento().getEvento().getSigla() + ">");
-        email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() + ">");
+        email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);
 
