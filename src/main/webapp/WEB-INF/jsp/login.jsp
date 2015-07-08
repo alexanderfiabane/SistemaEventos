@@ -40,7 +40,7 @@
                                     <button type="submit" name="enter" class="btn primary pull-left">
                                         <i class="icon-key"></i> Entrar
                                     </button>
-                                    <c:url var="changepass_url" value="/esqueciSenha.html" context="/usuario"/>
+                                    <c:url var="changepass_url" value="guest/esqueciSenha.html"/>
                                     <a href="${changepass_url}" class="btn link pull-left">
                                         Esqueci minha senha
                                     </a>
