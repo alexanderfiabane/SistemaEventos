@@ -67,6 +67,7 @@ public class AlterarSenhaController extends I18nController{
         command.getUsuario().setPassword(DigestUtils.sha256Hex(command.getNovaSenha()));
         usuarioDao.saveOrUpdate(command.getUsuario());
         model.addAttribute("message", getMessage("message.success.save", locale));
+        ControllerUtils.sendMailUsuario(command.getUsuario(), getMessage("mail.password.update", locale), "alterouSenha.html");
         return "user/alterarSenha";
     }
 

@@ -142,4 +142,31 @@ public abstract class ControllerUtils {
             Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
         }
     }
+    
+    public static void sendMailUsuario(Usuario usuario, String subject, String modelName) {
+        final Properties mailProperties = new Properties();
+        try {
+            ClassPathResource resource = new ClassPathResource("br/esp/sysevent/web/mail/mail.properties");
+            mailProperties.load(resource.getInputStream());
+        } catch (IOException ex) {
+            throw new IllegalStateException("Could not read <mail.properties>.", ex);
+        }
+
+        final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
+        final String content = getVelocityProcessor().process(model, Collections.singletonMap("usuario", (Object) usuario));
+
+        final SimpleEmail email = new SimpleEmail();
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<noreplay@see.org>");
+        email.setTo(new String[]{usuario.getPessoa().getEndereco().getEmail()});
+        email.setSubject(subject);
+        email.setRawContent(content);
+
+        final EmailSender emailSender = new EmailSender();
+        emailSender.setJavamailProperties(mailProperties);
+        try {
+            emailSender.send(email, null);
+        } catch (Exception ex) {
+            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+        }
+    }
 }
