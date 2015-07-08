@@ -8,23 +8,20 @@
 
 <form:form commandName="command">
     <div class="row">
-        <div class="span4">
-            <see:formField label="Login" path="username" readonly="true"/>
+        <div class="span6">
+            <see:formField label="Login" path="usuario.username" readonly="true"/>
+        </div>
+        <div class="span6">
+            <see:formField type="password" maxlength="10" label="Digite a senha atual" path="senhaAtual" inputClass="textfield"/>
         </div>
     </div>
     <div class="row">
-        <div class="span4">
-            <see:formField type="password" label="Digite a senha atual" path="username" readonly="true"/>
+        <div class="span6">
+            <see:formField type="password" maxlength="10" label="Digite a nova senha" path="novaSenha" inputClass="textfield"/>
+        </div>    
+        <div class="span6">
+            <see:formField type="password" maxlength="10" label="Confirme a nova senha" path="confirmaNovaSenha" inputClass="textfield"/>
         </div>
     </div>
-    <div class="row">
-        <div class="span4">
-            <see:formField type="password" label="Digite a nova senha" path="password" readonly="true"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span4">
-            <see:formField type="password" label="Confirme a nova senha" path="username" readonly="true"/>
-        </div>
-    </div>
+    <see:formButtonGroup putSubmit="true" backUrl="listUsuarioInscricoes.html" clearUrl="alterarSenha.html"/>
 </form:form>

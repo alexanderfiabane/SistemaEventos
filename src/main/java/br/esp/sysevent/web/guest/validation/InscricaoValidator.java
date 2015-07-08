@@ -224,28 +224,15 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         final boolean isNova = inscricao.getId() == null;
         final Edicao edicao = inscricao.getEdicaoEvento();
         final Documento documentos = inscricao.getConfraternista().getPessoa().getDocumentos();
-//        final String email = inscricao.getConfraternista().getPessoa().getEndereco().getEmail();
-//        final String emailPath = "inscricao.confraternista.pessoa.endereco.email";
         final Inscricao inscricaoDocumentos = inscricaoDao.findByEdicaoDocumentos(edicao.getId(), documentos);
-
         if (isNova) {
             if (inscricaoDocumentos != null) {
                 errors.rejectValue("inscricao.id", "errors.alreadyExists");
             }
-//            if (!errors.hasFieldErrors(emailPath) && !enderecoDao.findByProperty("email", email).isEmpty()) {
-//                errors.rejectValue(emailPath, "errors.alreadyExists");
-//            }
         } else {
-//            final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
             if (inscricaoDocumentos != null && !inscricaoDocumentos.getId().equals(inscricao.getId())) {
                 errors.rejectValue("inscricao.id", "errors.alreadyExists");
             }
-//            final String emailAtual = inscricaoAtual.getConfraternista().getPessoa().getEndereco().getEmail();
-//            if (!errors.hasFieldErrors(emailPath)) {
-//                if (!email.equals(emailAtual) && !enderecoDao.findByProperty("email", email).isEmpty()) {
-//                    errors.rejectValue(emailPath, "errors.alreadyExists");
-//                }
-//            }
         }
     }
 

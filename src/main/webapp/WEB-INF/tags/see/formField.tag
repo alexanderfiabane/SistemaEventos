@@ -90,6 +90,9 @@
         <form:hidden path="${path}" maxlength="${maxlength}" readonly="${readonly}" id="${id}"/>
         <input id="${path}Descr" type="text" readonly="${readonly}" class="${inputClass}"/>
     </c:when>
+    <c:when test="${type == 'password'}">
+        <input type="password" name="${path}" maxlength="${maxlength}" id="${id}" class="${inputClass}"/>
+    </c:when>
     <c:otherwise>
         <form:input path="${path}" maxlength="${maxlength}" readonly="${readonly}" id="${id}" cssClass="${inputClass}"/>
     </c:otherwise>
