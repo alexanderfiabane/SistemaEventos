@@ -7,6 +7,7 @@ package br.esp.sysevent.web.guest.controller;
 
 import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.web.guest.command.RecuperaSenhaCommand;
+import br.esp.sysevent.web.guest.validation.RecuperaSenhaValidator;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
