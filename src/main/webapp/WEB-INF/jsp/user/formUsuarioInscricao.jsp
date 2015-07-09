@@ -89,7 +89,7 @@
         </legend>
         <div class="row">
             <div class="span4">
-                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100"/>
+                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100" readonly="true"/>
             </div>
         </div>
     </fieldset>

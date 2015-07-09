@@ -18,6 +18,7 @@ public interface UsuarioDao extends BaseSistemaDao<Long, Usuario>, UserDetailsSe
     public Usuario findByLogin(final String login, final Boolean onlyAtivos);
     public Usuario findByLogin(final String login);
     public Usuario findByPessoaTipo(Pessoa pessoa, Usuario.Role tipo);
+    public Usuario findByCpf(String cpf);
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException;
     public void insertDefaultData();

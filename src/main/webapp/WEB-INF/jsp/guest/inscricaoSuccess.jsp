@@ -22,7 +22,17 @@
         </div>
     </div>
 </fieldset>
-
+<!--DADOS USUÁRIO-->
+ <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+    <legend class="label">
+        <h4><fmt:message key="label.userdetails"/></h4>
+    </legend>
+    <div class="row">
+        <div class="span4">
+            <see:formFieldView label="label.username" isLabelKey="true" value="${command.usuario.username}"/>
+        </div>
+    </div>
+</fieldset>
 <!--DADOS PESSOAIS-->
 <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">

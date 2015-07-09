@@ -40,12 +40,22 @@ public class UsuarioDaoBean extends AbstractBaseSistemaDaoBean<Long, Usuario> im
         }
         return DataAccessUtils.uniqueResult(findByCriteria(criteria));
     }
-    
+
     @Override
     public Usuario findByPessoaTipo(Pessoa pessoa, Role tipo){
         final Criteria criteria = createCriteria()
                 .add(Restrictions.eq("pessoa", pessoa))
                 .add(Restrictions.eq("role", tipo));
+        return DataAccessUtils.uniqueResult(findByCriteria(criteria));
+    }
+
+    @Override
+    public Usuario findByCpf(String cpf){
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .createAlias("pessoa.documentos", "documentos")
+                .add(Restrictions.eq("documentos.cpf", cpf))
+                .add(Restrictions.eq("role", Usuario.Role.ROLE_USER));
         return DataAccessUtils.uniqueResult(findByCriteria(criteria));
     }
 

@@ -142,7 +142,7 @@ public abstract class ControllerUtils {
             Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
         }
     }
-    
+
     public static void sendMailUsuario(Usuario usuario, String subject, String modelName) {
         final Properties mailProperties = new Properties();
         try {
