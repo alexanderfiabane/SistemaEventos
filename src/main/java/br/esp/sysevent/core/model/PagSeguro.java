@@ -20,10 +20,10 @@ import javax.persistence.Table;
 @Table(name = "PAGSEGURO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGSEGURO_CONTA"))
 public class PagSeguro extends AbstractEntity{
-    private static final long serialVersionUID = 1398857782655474277L;
+    private static final long serialVersionUID = -2130020118476171546L;    
 
     @Column(name = "EMAIL", nullable = true)
-    private String email;
+    private String emailPagSeguro;
     @Column(name = "TOKEN_SEGURANCA_PROD", nullable = true)
     private String tokenSegurancaProducao;
     @Column(name = "TOKEN_SEGURANCA_DEV", nullable = true)
@@ -37,12 +37,12 @@ public class PagSeguro extends AbstractEntity{
     @Column(name = "TOKEN_APLICACAO_DEV", nullable = true)
     private String tokenAplicacaoSandBox;
 
-    public String getEmail() {
-        return email;
+    public String getEmailPagSeguro() {
+        return emailPagSeguro;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailPagSeguro(String emailPagSeguro) {
+        this.emailPagSeguro = emailPagSeguro;
     }
 
     public String getTokenSegurancaProducao() {
@@ -96,7 +96,7 @@ public class PagSeguro extends AbstractEntity{
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.email);
+        hash = 47 * hash + Objects.hashCode(this.emailPagSeguro);
         hash = 47 * hash + Objects.hashCode(this.tokenSegurancaProducao);
         hash = 47 * hash + Objects.hashCode(this.idAplicacaoProducao);
         hash = 47 * hash + Objects.hashCode(this.tokenAplicacaoProducao);
@@ -112,7 +112,7 @@ public class PagSeguro extends AbstractEntity{
             return false;
         }
         final PagSeguro other = (PagSeguro) obj;
-        if (!Objects.equals(this.email, other.email)) {
+        if (!Objects.equals(this.emailPagSeguro, other.emailPagSeguro)) {
             return false;
         }
         if (!Objects.equals(this.tokenSegurancaProducao, other.tokenSegurancaProducao)) {

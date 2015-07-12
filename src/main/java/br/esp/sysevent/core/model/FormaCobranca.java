@@ -52,14 +52,30 @@ public class FormaCobranca extends AbstractEntity{
         return TipoCobranca.DEPOSITO_CONTA.equals(getTipoCobranca());
     }
 
-    public boolean isPagSeguro(){
+    public boolean isPagSeguroConta(){
         return TipoCobranca.PAGSEGURO.equals(getTipoCobranca());
     }
 
+    public DepositoConta getDeposito() {
+        return deposito;
+    }
+
+    public void setDeposito(DepositoConta deposito) {
+        this.deposito = deposito;
+    }
+
+    public PagSeguro getPagSeguro() {
+        return pagSeguro;
+    }
+
+    public void setPagSeguro(PagSeguro pagSeguro) {
+        this.pagSeguro = pagSeguro;
+    }
+
     public enum TipoCobranca {
-        NENHUM("SEM COBRANCA"),
-        DEPOSITO_CONTA("DEPOSITO EM CONTA"),
-        PAGSEGURO("PAGSEGURO");
+        NENHUM("Sem Cobrança"),
+        DEPOSITO_CONTA("Depósito em Conta"),
+        PAGSEGURO("PagSeguro");
         private final String descricao;
 
         private TipoCobranca(final String descricao) {

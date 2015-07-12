@@ -12,6 +12,7 @@ import br.esp.sysevent.core.dao.TipoCamisetaDao;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
+import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
@@ -92,6 +93,11 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @ModelAttribute("tiposEdicao")
     public Collection<Edicao.Tipo> getTiposEdicao() {
         return Edicao.Tipo.getValues();
+    }
+    
+    @ModelAttribute("tiposFormaCobranca")
+    public Collection<FormaCobranca.TipoCobranca> getTiposFormaCobranca() {
+        return FormaCobranca.TipoCobranca.getTipos();
     }
 
     @ModelAttribute("tiposCamiseta")

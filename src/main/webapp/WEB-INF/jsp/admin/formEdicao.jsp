@@ -63,6 +63,70 @@
                             <see:formField label="label.subscriptionminage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3" inputClass="textfield"/>
                         </div>
                     </div>
+                    <div class="row">
+                        <label class="label control">
+                            <fmt:message key="label.subscriptionPaymentMethod"/>
+                        </label>
+                        <ul class="no-bullet no-padding">
+                            <c:forEach var="item" items="${tiposFormaCobranca}">
+                                <li class="mini-padding">
+                                    <label>
+                                        <form:radiobutton path="formaCobranca" value="${item.name}"/> ${item.descricao}
+                                    </label>
+                                </li>
+                            </c:forEach>
+                        </ul>                                                   
+                    </div>
+                    <div id="deposito" class="row hidden">
+                        <div class="row">
+                            <div class="span4">                                
+                                <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.banco"/>
+                            </div>
+                            <div class="span8">                                
+                                <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecido"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span4">                                
+                                <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agencia"/>
+                            </div>
+                            <div class="span5">                                
+                                <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroConta"/>
+                            </div>
+                            <div class="span3">                                
+                                <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
+                            </div>
+                        </div>    
+                    </div>                       
+                    <div id="pagseguro" class="row hidden">
+                        <div class="row">
+                            <div class="span4">                                
+                                <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguro"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span4">                                
+                                <see:formField type="text" label="ID da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoProducao"/>
+                            </div>
+                            <div class="span4">                               
+                                <see:formField type="text" label="Token da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoProducao"/>
+                            </div>
+                            <div class="span4">                                
+                                <see:formField type="text" label="Token de Seguraça (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span4">                                
+                                <see:formField type="text" label="ID da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoSandBox"/>
+                            </div>
+                            <div class="span4">                                
+                                <see:formField type="text" label="Token da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoSandBox"/>
+                            </div>
+                            <div class="span4">                                
+                                <see:formField type="text" label="Token de Segurança (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
+                            </div>
+                        </div>    
+                    </div>
                 </fieldset>
             </div>
             <!--Camisetas-->
@@ -140,13 +204,13 @@
                         <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <tr>
-                            <td>
-                                <div class="btn-group small">
-                                    <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                    <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
+                            <tr>
+                                <td>
+                                    <div class="btn-group small">
+                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
+                                        <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
                                     <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>
-                                    <c:if test="${edicao.faixaEtaria}">
+                                        <c:if test="${edicao.faixaEtaria}">
                                         <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
                                         </c:if>
                                         <c:if test="${edicao.oficina}">
@@ -232,17 +296,29 @@
                 label: "Fechar"
             }
         });
-        $(".deletaEdicao").each(function() {
+        $(".deletaEdicao").each(function () {
             var $this = $(this);
             var id = $this.data("id"); // cata o id
             var thisUrl = '${delete_url}' + id; // concatena na url
             $this.openUrl({
-                    'url': thisUrl,
-                    'showConfirmDialog': true,
-                    'confirmDialog': {
-                        'content': "Tem certeza que deseja deletar essa edição?"
-                    }
+                'url': thisUrl,
+                'showConfirmDialog': true,
+                'confirmDialog': {
+                    'content': "Tem certeza que deseja deletar essa edição?"
+                }
             });
+        });
+        $("[name=formaCobranca]").change(function () {
+            if ($(this).val() == 'DEPOSITO_CONTA') {
+                $('#deposito').show();
+                $('#pagseguro').hide();
+            } else if ($(this).val() == 'PAGSEGURO') {
+                $('#deposito').hide();
+                $('#pagseguro').show();
+            } else {
+                $('#deposito').hide();
+                $('#pagseguro').hide();
+            }
         });
     });
 </script>
