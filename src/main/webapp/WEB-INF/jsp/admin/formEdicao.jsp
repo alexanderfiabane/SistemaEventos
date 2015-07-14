@@ -35,7 +35,7 @@
                     </div>
                     <div class="row">
                         <div class="span3">
-                            <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="numero" maxlength="3" inputClass="textfield"/>
+                            <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="numero" maxlength="4" inputClass="textfield"/>
                         </div>
                         <div class="span3">
                             <see:formField label="label.theme" isLabelKey="true" isMandatory="true" path="tema" maxlength="100" inputClass="textfield"/>
@@ -71,58 +71,58 @@
                                     <form:radiobutton path="formaCobranca.tipoCobranca" value="${item.name}"/> ${item.descricao}
                                 </li>
                             </c:forEach>
-                            <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>    
-                        </ul>                                                   
+                            <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>
+                        </ul>
                     </div>
                     <div id="deposito" class="row hidden">
                         <div class="row">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.banco"/>
                             </div>
-                            <div class="span8">                                
+                            <div class="span8">
                                 <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecido"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agencia"/>
                             </div>
-                            <div class="span5">                                
+                            <div class="span5">
                                 <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroConta"/>
                             </div>
-                            <div class="span3">                                
+                            <div class="span3">
                                 <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
                             </div>
-                        </div>    
-                    </div>                       
+                        </div>
+                    </div>
                     <div id="pagseguro" class="row hidden">
                         <div class="row">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguro"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="ID da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoProducao"/>
                             </div>
-                            <div class="span4">                               
+                            <div class="span4">
                                 <see:formField type="text" label="Token da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoProducao"/>
                             </div>
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="Token de Seguraça (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="ID da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoSandBox"/>
                             </div>
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="Token da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoSandBox"/>
                             </div>
-                            <div class="span4">                                
+                            <div class="span4">
                                 <see:formField type="text" label="Token de Segurança (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
                             </div>
-                        </div>    
+                        </div>
                     </div>
                 </fieldset>
             </div>
