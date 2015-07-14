@@ -6,6 +6,7 @@ package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Evento;
+import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
@@ -23,6 +24,8 @@ import org.springframework.validation.Errors;
 public class EdicaoValidator extends AbstractValidator<Edicao> {
 
     private final Pattern TEMA_PATTERN = Pattern.compile("[\\s\\p{L}]+");
+    protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
     @Override
     public void validateCommand(final Edicao edicao, final Errors errors) {
@@ -35,6 +38,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validatePeriodoInscricao(edicao.getPeriodoInscricao(), errors); // valida o perído de inscrição
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
         validateValorCamiseta(edicao.getValorCamiseta(), errors);
+        validateFormaCobranca(edicao.getFormaCobranca(), errors);
     }
 
     private void validateTipo(Edicao.Tipo tipo, Errors errors) {
@@ -111,6 +115,55 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             if (NumberUtils.isBigDecimal(valorCamiseta)) {
             } else {
                 errors.rejectValue("valorCamiseta", "errors.invalid");
+            }
+        }
+    }
+
+    private void validateFormaCobranca(FormaCobranca formaCobranca, Errors errors) {
+        if(formaCobranca.getTipoCobranca() == null){
+            errors.rejectValue("formaCobranca.tipoCobranca", "errors.required");
+        }
+        if(!formaCobranca.isSemCobranca()){
+            if(formaCobranca.isDepositoConta()){
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getBanco())){
+                    errors.rejectValue("formaCobranca.deposito.banco", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getAgencia())){
+                    errors.rejectValue("formaCobranca.deposito.agencia", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getFavorecido())){
+                    errors.rejectValue("formaCobranca.deposito.favorecido", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getNumeroConta())){
+                    errors.rejectValue("formaCobranca.deposito.numeroConta", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
+                    errors.rejectValue("formaCobranca.deposito.operacao", "errors.required");
+                }
+            }else{
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getEmailPagSeguro())){
+                    errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguro", "errors.required");
+                }else if(!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguro()).matches()){
+                    errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguro", "errors.invalid");
+                }
+                if(formaCobranca.getPagSeguro().getIdAplicacaoProducao() == null){
+                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoProducao", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getFavorecido())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoProducao", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getNumeroConta())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required");
+                }
+                if(formaCobranca.getPagSeguro().getIdAplicacaoSandBox() == null){
+                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoSandBox", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoSandBox", "errors.required");
+                }
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaSandBox", "errors.required");
+                }
             }
         }
     }

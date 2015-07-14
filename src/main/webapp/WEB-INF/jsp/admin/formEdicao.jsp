@@ -26,9 +26,7 @@
                             <ul class="no-bullet no-padding">
                                 <c:forEach var="item" items="${tiposEdicao}">
                                     <li class="mini-padding">
-                                        <label>
-                                            <form:radiobutton path="tipo" value="${item.name}"/> ${item.descricao}
-                                        </label>
+                                        <form:radiobutton path="tipo" value="${item.name}"/> ${item.descricao}
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -70,11 +68,10 @@
                         <ul class="no-bullet no-padding">
                             <c:forEach var="item" items="${tiposFormaCobranca}">
                                 <li class="mini-padding">
-                                    <label>
-                                        <form:radiobutton path="formaCobranca" value="${item.name}"/> ${item.descricao}
-                                    </label>
+                                    <form:radiobutton path="formaCobranca.tipoCobranca" value="${item.name}"/> ${item.descricao}
                                 </li>
                             </c:forEach>
+                            <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>    
                         </ul>                                                   
                     </div>
                     <div id="deposito" class="row hidden">
@@ -308,11 +305,17 @@
                 }
             });
         });
-        $("[name=formaCobranca]").change(function () {
-            if ($(this).val() == 'DEPOSITO_CONTA') {
+        var formaCobrancaTipo = "${command.formaCobranca.tipoCobranca.name}";
+        if(formaCobrancaTipo === 'DEPOSITO_CONTA'){
+            $('#deposito').show();
+        }else if(formaCobrancaTipo === 'PAGSEGURO'){
+            $('#pagseguro').show();
+        }
+        $("[name=formaCobranca\\.tipoCobranca]").change(function () {
+            if ($(this).val() === 'DEPOSITO_CONTA') {
                 $('#deposito').show();
                 $('#pagseguro').hide();
-            } else if ($(this).val() == 'PAGSEGURO') {
+            } else if ($(this).val() === 'PAGSEGURO') {
                 $('#deposito').hide();
                 $('#pagseguro').show();
             } else {

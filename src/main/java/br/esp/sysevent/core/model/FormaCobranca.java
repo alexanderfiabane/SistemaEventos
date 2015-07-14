@@ -12,6 +12,7 @@ import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
@@ -29,9 +30,11 @@ public class FormaCobranca extends AbstractEntity{
 
     @ManyToOne
     @Cascade({CascadeType.ALL})
+    @JoinColumn(name = "ID_DEPOSITO", nullable = true)
     private DepositoConta deposito;
     @ManyToOne
     @Cascade({CascadeType.ALL})
+    @JoinColumn(name = "ID_PAGSEGURO", nullable = true)
     private PagSeguro pagSeguro;
     @Column(name = "TIPO_COBRANCA", nullable = true)
     private TipoCobranca tipoCobranca;
