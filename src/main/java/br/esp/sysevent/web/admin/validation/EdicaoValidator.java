@@ -146,23 +146,20 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 }else if(!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguro()).matches()){
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguro", "errors.invalid");
                 }
-                if(formaCobranca.getPagSeguro().getIdAplicacaoProducao() == null){
-                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoProducao", "errors.required");
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getIdAplicacaoProducao()) 
+                        || CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getIdAplicacaoSandBox())){
+                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoProducao", "errors.required.at.least.one");
+                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoSandBox", "errors.required.at.least.one");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getFavorecido())){
-                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoProducao", "errors.required");
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenAplicacaoProducao()) 
+                        || CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenAplicacaoSandBox())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoProducao", "errors.required.at.least.one");
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoSandBox", "errors.required.at.least.one");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getNumeroConta())){
-                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required");
-                }
-                if(formaCobranca.getPagSeguro().getIdAplicacaoSandBox() == null){
-                    errors.rejectValue("formaCobranca.pagSeguro.idAplicacaoSandBox", "errors.required");
-                }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
-                    errors.rejectValue("formaCobranca.pagSeguro.tokenAplicacaoSandBox", "errors.required");
-                }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
-                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaSandBox", "errors.required");
+                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
+                        || CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())){
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required.at.least.one");
+                    errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaSandBox", "errors.required.at.least.one");
                 }
             }
         }

@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "PAGSEGURO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGSEGURO_CONTA"))
 public class PagSeguro extends AbstractEntity{
-    private static final long serialVersionUID = -2130020118476171546L;    
+    private static final long serialVersionUID = -5808050576961518299L;    
 
     @Column(name = "EMAIL", nullable = true)
     private String emailPagSeguro;
@@ -29,11 +29,11 @@ public class PagSeguro extends AbstractEntity{
     @Column(name = "TOKEN_SEGURANCA_DEV", nullable = true)
     private String tokenSegurancaSandBox;
     @Column(name = "ID_APLICACAO_PROD", nullable = true)
-    private Integer idAplicacaoProducao;
+    private String idAplicacaoProducao;
     @Column(name = "TOKEN_APLICACAO_PROD", nullable = true)
     private String tokenAplicacaoProducao;
     @Column(name = "ID_APLICACAO_DEV", nullable = true)
-    private Integer idAplicacaoSandBox;
+    private String idAplicacaoSandBox;
     @Column(name = "TOKEN_APLICACAO_DEV", nullable = true)
     private String tokenAplicacaoSandBox;
 
@@ -61,11 +61,11 @@ public class PagSeguro extends AbstractEntity{
         this.tokenSegurancaSandBox = tokenSegurancaSandBox;
     }
 
-    public Integer getIdAplicacaoProducao() {
+    public String getIdAplicacaoProducao() {
         return idAplicacaoProducao;
     }
 
-    public void setIdAplicacaoProducao(Integer idAplicacaoProducao) {
+    public void setIdAplicacaoProducao(String idAplicacaoProducao) {
         this.idAplicacaoProducao = idAplicacaoProducao;
     }
 
@@ -77,11 +77,11 @@ public class PagSeguro extends AbstractEntity{
         this.tokenAplicacaoProducao = tokenAplicacaoProducao;
     }
 
-    public Integer getIdAplicacaoSandBox() {
+    public String getIdAplicacaoSandBox() {
         return idAplicacaoSandBox;
     }
 
-    public void setIdAplicacaoSandBox(Integer idAplicacaoSandBox) {
+    public void setIdAplicacaoSandBox(String idAplicacaoSandBox) {
         this.idAplicacaoSandBox = idAplicacaoSandBox;
     }
 

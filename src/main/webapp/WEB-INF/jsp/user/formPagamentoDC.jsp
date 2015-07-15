@@ -1,20 +1,14 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
-<!-- este elemento <content> passa o breadcrumbs para o titlebar do layout -->
-<content tag="titlebarContent">
-    <javalek:pagetitle label="label.page.payment" isLabelKey="true" defaultIsLabelKey="true">
-        <javalek:icon><c:url value="/assets/application/img/icons/iconFormInsc.png"/></javalek:icon>
-        <javalek:breadcrumb label="label.page.mainMenu"><javalek:url><c:url value="/user/menu.html"/></javalek:url></javalek:breadcrumb>
-        <javalek:breadcrumb label="label.menu.usersubscriptions"><javalek:url><c:url value="/user/listUsuarioInscricoes.html"/></javalek:url></javalek:breadcrumb>
-    </javalek:pagetitle>
-</content>
+<mocca:title title="label.page.payment" isTitleKey="true"/>
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
 <fieldset>
-    <legend><javalek:message key="label.eventdetails"/></legend>
-    <div class="row-fluid">
+        <legend><fmt:message key="label.eventdetails"/></legend>
+    <div class="row">
         <div class="span3">
             <see:formFieldView label="label.subscriptiontype" isLabelKey="true" value="${command.inscricao.confraternista.tipo.descricao}"/>
         </div>
@@ -28,20 +22,25 @@
 </fieldset>
 
 <form:form commandName="command">
+    <!--IF: DEPOSITO_CONTA-->
     <fieldset>
-        <legend><javalek:message key="label.paymentdetails"/></legend>
-        <div class="row-fluid">
+        <legend><fmt:message key="label.paymentdetails"/></legend>
+        <div class="row">
             <div class="span3">
-                <see:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="numeroDocumento"/>
+                <see:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="codPagamento"/>
             </div>
             <div class="span3">
-                <see:formField label="label.paymentdate" isLabelKey="true" isMandatory="true" type="date" path="data"/>
+                <see:formField label="label.paymentdate" isLabelKey="true" isMandatory="true" type="date" path="dataPagamento"/>
             </div>
             <div class="span3">
                 <see:formField label="label.paymentvalue" isLabelKey="true" isMandatory="true" path="valor"/>
             </div>
         </div>
+        <div class="row">
+            <div class="span12">
+                <see:formFieldView label="Descrição da compra" value="${command.descricaoPagamento}"/>
+            </div>
+        </div>
     </fieldset>
-
-    <see:formButtonGroup formUrl="/user/formPagamento.html"/>
+    <see:formButtonGroup putSubmit="true" clearUrl="formPagamento.html" backUrl="listaInscricoes.html"/>
 </form:form>

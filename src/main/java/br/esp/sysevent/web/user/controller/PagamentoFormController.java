@@ -3,8 +3,15 @@
  */
 package br.esp.sysevent.web.user.controller;
 
+import br.com.uol.pagseguro.domain.AccountCredentials;
+import br.com.uol.pagseguro.domain.checkout.Checkout;
+import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
+import br.esp.sysevent.core.model.Confraternista;
+import br.esp.sysevent.core.model.FormaCobranca;
+import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.core.model.Usuario;
@@ -16,6 +23,7 @@ import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
@@ -60,6 +68,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
 
     @ModelAttribute(COMMAND_NAME)
     public PagamentoInscricao getCommand(@RequestParam(value = "idInscricao", required = false) final String idInscricao) throws Exception {
+        //Refazer pegando o pagamento...deve ser salvo no ato da inscricao..modificar metodo de atualização da inscricao.
         final Inscricao inscricao = getInscricao(idInscricao);
         if(inscricao.getStatus() != Inscricao.Status.AGUARDANDO_PAGAMENTO) {
             throw new IllegalStateException("Pagamento não está liberado para esta inscrição");
@@ -81,9 +90,34 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model) {
-        //return form view
-        return "user/formPagamento";
+    public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model) throws PagSeguroServiceException {
+        FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();        
+        if(tipoCobranca.equals(TipoCobranca.PAGSEGURO)){
+            //Criar objeto pagseguro com os dados de 'compra' dessa inscrição
+            Checkout pagseguro = new Checkout();
+            pagseguro.setCurrency(Currency.BRL);
+            pagseguro.addItem(String.valueOf(command.getId()), 
+                    command.getDescricaoPagamento(), 
+                    01,
+                    command.getValor(), 
+                    new Long(0), 
+                    new BigDecimal(BigInteger.ZERO));
+            
+            final Confraternista confraternista = command.getInscricao().getConfraternista();            
+            pagseguro.setSender(confraternista.getPessoa().getNome(), 
+                    confraternista.getPessoa().getEndereco().getEmail());
+            
+            //Gerar número para o botão lightbox e colocar no model            
+            AccountCredentials pagseguroAccount = new AccountCredentials("alexanderfiabane@yahoo.com.br", "B90FB04B3CD34B2CAFE0894221F0AC55");
+            //ApplicationCredentials pagseguroApp = new ApplicationCredentials("app1705266435", "58121C87C7C70CF444B3FF9642E32800");
+            String response = pagseguro.register(pagseguroAccount, true);
+            model.addAttribute("pagseguroCod", response);            
+            //fazer view apresentando o que está sendo cobrado...montar o botão via JQUERY não expondo os dados
+            return "user/formPagamentoPS";        
+        }else{
+            //retorna view de pagamento por depósito em conta
+            return "user/formPagamentoDC";        
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -92,7 +126,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
                          final ModelMap model,
                          final RedirectAttributes attributes,
                          final SessionStatus status,
-                         final Locale locale) {
+                         final Locale locale) throws PagSeguroServiceException{
 
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);

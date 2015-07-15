@@ -25,7 +25,7 @@ import javax.persistence.Temporal;
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
 public class PagamentoInscricao extends AbstractEntity {
-    private static final long serialVersionUID = -5680008393064758718L;
+    private static final long serialVersionUID = -5680008393064758718L;    
 
     @OneToOne
     @JoinColumn(name = "ID_INSCRICAO", nullable = false)
@@ -90,7 +90,7 @@ public class PagamentoInscricao extends AbstractEntity {
         this.valor = valor;
     }
 
-    private enum StatusPagamento {
+    public enum StatusPagamento {
         AGUARDANDO("Aguardando Pagamento"),
         CANCELADO("Pagamento Cancelado"),
         RECUSADO("Pagamento Recusado");
