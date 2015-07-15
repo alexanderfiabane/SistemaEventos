@@ -5,6 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="msf" uri="http://code.google.com/msf/commons-tags" %>
 
+<%@attribute name="escapeXml"   type="java.lang.String" required="false" %>
 <%@attribute name="label"       type="java.lang.String" required="true" %>
 <%@attribute name="value"       type="java.lang.Object" required="true"%>
 <%@attribute name="isLabelKey"  type="java.lang.Boolean" %>
@@ -14,6 +15,7 @@
 <%@attribute name="datePattern" type="java.lang.String" %>
 
 <%-- defaults --%>
+<c:if test="${empty escapeXml}"><c:set var="escapeXml" value="${true}"/></c:if>
 <c:if test="${empty isLabelKey}"><c:set var="isLabelKey" value="${false}"/></c:if>
 <c:if test="${empty isBreak}"><c:set var="isBreak" value="${false}"/></c:if>
 <c:if test="${empty isDate}"><c:set var="isDate" value="${false}"/></c:if>
@@ -43,7 +45,7 @@
             <span style="font-weight: normal;"><fmt:formatNumber value="${value}" currencySymbol="R$" minFractionDigits="2"/></span>
         </c:when>
         <c:otherwise>
-            <span style="font-weight: normal;"><c:out value="${value}"/></span>
+            <span style="font-weight: normal;"><c:out value="${value}" escapeXml="${escapeXml}"/></span>
         </c:otherwise>
     </c:choose>
 </div>

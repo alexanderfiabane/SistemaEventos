@@ -7,6 +7,7 @@ import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.util.ConfigurableVelocityProcessor;
 import br.esp.sysevent.util.VelocityProcessor;
+import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import br.esp.sysevent.web.guest.controller.FormInscricaoController;
 import com.javaleks.commons.mail.SimpleEmail;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -131,6 +132,33 @@ public abstract class ControllerUtils {
         final SimpleEmail email = new SimpleEmail();
         email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricao.getEdicaoEvento().getEvento().getSigla() + ">");
         email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
+        email.setSubject(subject);
+        email.setRawContent(content);
+
+        final EmailSender emailSender = new EmailSender();
+        emailSender.setJavamailProperties(mailProperties);
+        try {
+            emailSender.send(email, null);
+        } catch (Exception ex) {
+            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+        }
+    }
+
+    public static void sendMailInscricaoUsuario(InscricaoCommand inscricaoCmd, String subject, String modelName) {
+        final Properties mailProperties = new Properties();
+        try {
+            ClassPathResource resource = new ClassPathResource("br/esp/sysevent/web/mail/mail.properties");
+            mailProperties.load(resource.getInputStream());
+        } catch (IOException ex) {
+            throw new IllegalStateException("Could not read <mail.properties>.", ex);
+        }
+
+        final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
+        final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricaoCmd", (Object) inscricaoCmd));
+
+        final SimpleEmail email = new SimpleEmail();
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() + ">");
+        email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);
 

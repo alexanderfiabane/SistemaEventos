@@ -3,8 +3,11 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +21,12 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
     @Autowired
     public PagamentoInscricaoDaoBean(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    public PagamentoInscricao findByInscricao(Inscricao inscricao){
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("inscricao", inscricao));
+        return findUniqueByCriteria(criteria);
     }
 }

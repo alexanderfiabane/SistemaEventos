@@ -25,21 +25,21 @@ import javax.persistence.Temporal;
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
 public class PagamentoInscricao extends AbstractEntity {
-    private static final long serialVersionUID = -5680008393064758718L;    
+    private static final long serialVersionUID = -5680008393064758718L;
 
     @OneToOne
     @JoinColumn(name = "ID_INSCRICAO", nullable = false)
     private Inscricao inscricao;
-    @Column(name = "CODIGO", nullable = false)
+    @Column(name = "CODIGO", nullable = true)
     private String codPagamento;
     @Column(name = "STATUS", nullable = false)
     private StatusPagamento status;
     @Column(name = "DESCRICAO_PG", nullable = false)
     private String descricaoPagamento;
-    @Column(name = "DATA_PAGAMENTO", nullable = false)
+    @Column(name = "DATA_PAGAMENTO", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataPagamento;
-    @Column(name = "VALOR", nullable = false)
+    @Column(name = "VALOR", nullable = true)
     private BigDecimal valor;
 
     public Inscricao getInscricao() {

@@ -6,9 +6,11 @@ package br.esp.sysevent.web.user.controller;
 import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.checkout.Checkout;
 import br.com.uol.pagseguro.enums.Currency;
+import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
+import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
@@ -20,10 +22,11 @@ import br.esp.sysevent.persistence.springframework.validation.Validator;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
+import com.javaleks.commons.text.EnhancedStringBuilder;
+import com.javaleks.commons.text.EnhancedStringBuilder.LineBreakMode;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
@@ -47,7 +50,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 @RequestMapping(value = "/user/formPagamento.html")
-public class PagamentoFormController  extends AbstractFormController<Long, PagamentoInscricao> {
+public class PagamentoFormController extends AbstractFormController<Long, PagamentoInscricao> {
 
     @Autowired
     private InscricaoDao inscricaoDao;
@@ -70,16 +73,32 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
     public PagamentoInscricao getCommand(@RequestParam(value = "idInscricao", required = false) final String idInscricao) throws Exception {
         //Refazer pegando o pagamento...deve ser salvo no ato da inscricao..modificar metodo de atualização da inscricao.
         final Inscricao inscricao = getInscricao(idInscricao);
-        if(inscricao.getStatus() != Inscricao.Status.AGUARDANDO_PAGAMENTO) {
+        if (inscricao.getStatus() != Inscricao.Status.AGUARDANDO_PAGAMENTO) {
             throw new IllegalStateException("Pagamento não está liberado para esta inscrição");
         }
-        final Collection<PagamentoInscricao> pagamentos = pagamentoInscricaoDao.findByProperty("inscricao", inscricao);
-        if(pagamentos.isEmpty()) {
-            final PagamentoInscricao pagamento = new PagamentoInscricao();
-            pagamento.setInscricao(inscricao);
-            return pagamento;
+        PagamentoInscricao pagamento = pagamentoInscricaoDao.findByInscricao(inscricao);
+        if (pagamento != null) {
+            final PagamentoInscricao novoPagamento = new PagamentoInscricao();
+            novoPagamento.setInscricao(inscricao);
+            novoPagamento.setStatus(PagamentoInscricao.StatusPagamento.AGUARDANDO);
+            EnhancedStringBuilder descricaoCompra = new EnhancedStringBuilder().setLineBreakMode(LineBreakMode.HTML);
+            descricaoCompra.appendln("Inscrição: R$ ", inscricao.getEdicaoEvento().getValorInscricao());
+            Collection<CamisetaConfraternista> camisetas = inscricao.getConfraternista().getCamisetas();
+
+            if (!camisetas.isEmpty()) {
+                descricaoCompra.appendln("Camiseta(s): ");
+                for (CamisetaConfraternista camiseta : camisetas) {
+                    descricaoCompra.appendln("- Tipo: ", camiseta.getTipoCamiseta(), "-", camiseta.getTamanhoCamiseta(), " Cor: ", camiseta.getCorCamiseta(),
+                            "Qnt: ", camiseta.getQuantidadeCamiseta(),
+                            "Valor: R$ ", (inscricao.getEdicaoEvento().getValorCamiseta().multiply(new BigDecimal(camiseta.getQuantidadeCamiseta()))));
+
+                }
+            }
+            descricaoCompra.append("Total à pagar: R$ ", inscricao.getValor());
+            novoPagamento.setDescricaoPagamento(descricaoCompra.toString());
+            return novoPagamento;
         } else {
-            return pagamentos.iterator().next();
+            return pagamento;
         }
     }
 
@@ -91,42 +110,63 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
 
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model) throws PagSeguroServiceException {
-        FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();        
-        if(tipoCobranca.equals(TipoCobranca.PAGSEGURO)){
+        FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();
+        if (tipoCobranca.equals(TipoCobranca.PAGSEGURO)) {
             //Criar objeto pagseguro com os dados de 'compra' dessa inscrição
             Checkout pagseguro = new Checkout();
             pagseguro.setCurrency(Currency.BRL);
-            pagseguro.addItem(String.valueOf(command.getId()), 
-                    command.getDescricaoPagamento(), 
-                    01,
-                    command.getValor(), 
-                    new Long(0), 
-                    new BigDecimal(BigInteger.ZERO));
-            
-            final Confraternista confraternista = command.getInscricao().getConfraternista();            
-            pagseguro.setSender(confraternista.getPessoa().getNome(), 
-                    confraternista.getPessoa().getEndereco().getEmail());
-            
-            //Gerar número para o botão lightbox e colocar no model            
-            AccountCredentials pagseguroAccount = new AccountCredentials("alexanderfiabane@yahoo.com.br", "B90FB04B3CD34B2CAFE0894221F0AC55");
+//            pagseguro.addItem(String.valueOf(command.getId()),
+//                    command.getDescricaoPagamento(),
+//                    01,
+//                    command.getInscricao().getValor(),
+//                    new Long(0),
+//                    new BigDecimal(BigInteger.ZERO));
+            pagseguro.addItem(
+                    "002",
+                    "Teste de produto",
+                    Integer.valueOf(1),
+                    new BigDecimal("12.00"),
+                    new Long(1),
+                    new BigDecimal("0.00")
+            );
+            pagseguro.setShippingAddress(
+                    "BRA", // País
+                    "SP", // UF
+                    "Sao Paulo", // Cidade
+                    "Jardim Paulistano", // Bairro
+                    "01452002", // CEP
+                    "Av. Brig. Faria Lima", // Logradouro
+                    "1384", // Número
+                    "1o andar" // Complemento
+                    );
+            pagseguro.setShippingType(ShippingType.NOT_SPECIFIED);
+            pagseguro.setReference(command.getCodPagamento());
+            final Confraternista confraternista = command.getInscricao().getConfraternista();
+            pagseguro.setSender(
+                    "Teste da Silva",
+                    "comprador@uol.com.br"
+            );
+
+            //Gerar número para o botão lightbox e colocar no model
+            AccountCredentials pagseguroAccount = new AccountCredentials("alexanderfiabane@yahoo.com.br", "B90FB04B3CD34B2CAFE0894221F0AC55", "B90FB04B3CD34B2CAFE0894221F0AC55");
             //ApplicationCredentials pagseguroApp = new ApplicationCredentials("app1705266435", "58121C87C7C70CF444B3FF9642E32800");
             String response = pagseguro.register(pagseguroAccount, true);
-            model.addAttribute("pagseguroCod", response);            
+            model.addAttribute("pagseguroCod", response);
             //fazer view apresentando o que está sendo cobrado...montar o botão via JQUERY não expondo os dados
-            return "user/formPagamentoPS";        
-        }else{
+            return "user/formPagamentoPS";
+        } else {
             //retorna view de pagamento por depósito em conta
-            return "user/formPagamentoDC";        
+            return "user/formPagamentoDC";
         }
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command,
-                         final BindingResult result,
-                         final ModelMap model,
-                         final RedirectAttributes attributes,
-                         final SessionStatus status,
-                         final Locale locale) throws PagSeguroServiceException{
+            final BindingResult result,
+            final ModelMap model,
+            final RedirectAttributes attributes,
+            final SessionStatus status,
+            final Locale locale) throws PagSeguroServiceException {
 
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
@@ -148,7 +188,7 @@ public class PagamentoFormController  extends AbstractFormController<Long, Pagam
             throw new IllegalArgumentException("Inscrição não encontrada.");
         }
         final Usuario loggedUser = ControllerUtils.getLoggedUser();
-        if(!loggedUser.getPessoa().getId().equals(inscricao.getConfraternista().getPessoa().getId())) {
+        if (!loggedUser.getPessoa().getId().equals(inscricao.getConfraternista().getPessoa().getId())) {
             throw new IllegalAccessException("Acesso negado a informações de outra pessoa");
         }
         return inscricao;

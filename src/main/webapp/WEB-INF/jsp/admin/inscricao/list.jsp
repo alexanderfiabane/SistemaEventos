@@ -82,7 +82,7 @@
                 <td>@{status.value}</td>
                 <td>@{dataRecebimento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
                 <td>@{pagamento.dataPagamento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td>@{pagamento.codPagamento|ifBlank=Não informado}</td>
+                <td><i class="hint icon-info-sign"></i>@{pagamento.codPagamento|ifBlank=Não informado}</td>
             </tr>
         </tbody>
     </table>
@@ -120,6 +120,14 @@
             'table':{
                 'postAddLine': function($tr, item){
                     var $td = $tr.find("td").eq(0);
+                    var $icoDoc = $tr.find("td").eq(6).find('.hint');
+                    if ($.ObjectUtils.isUnvalued(item.pagamento)) {
+                        $icoDoc.remove();
+                    }else{
+                        $icoDoc.qtip({
+                       'content': {text: item.pagamento == null ? "Não há informações" : item.pagamento.descricaoPagamento}
+                    });
+                    }
                     var $btnGroup = $('<div>', {'class': 'btn-group mini'});
                     var $visualizar = $.WidgetUtils.createButton({
                         'title': 'Visualizar Inscrição',
@@ -160,8 +168,8 @@
                         'class': 'btn'
                     });
                     if (item.podeAprovar){
-                        $podeAprovar.openUrl({                            
-                            'url': '${url_aprova}' + item.id,                            
+                        $podeAprovar.openUrl({
+                            'url': '${url_aprova}' + item.id,
                             'showConfirmDialog': true,
                             'confirmDialog': {
                                 'content': "Tem certeza que deseja confirmar esta inscrição?"

@@ -213,7 +213,7 @@ public class FormInscricaoController extends I18nController {
         model.addAttribute("message", getMessage("message.success.save", locale));
 
         if(isNova) {
-            ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.receive", locale), "recebimentoInscricao.html");
+            ControllerUtils.sendMailInscricaoUsuario(command, getMessage("mail.subscription.receive", locale), "recebimentoInscricao.html");
         }else{
             ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.update", locale), "alteracaoInscricao.html");
         }

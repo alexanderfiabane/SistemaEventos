@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Table(name = "PAGSEGURO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGSEGURO_CONTA"))
 public class PagSeguro extends AbstractEntity{
-    private static final long serialVersionUID = -5808050576961518299L;    
+     private static final long serialVersionUID = -5305530290753732847L;
 
     @Column(name = "EMAIL", nullable = true)
     private String emailPagSeguro;
@@ -30,12 +30,12 @@ public class PagSeguro extends AbstractEntity{
     private String tokenSegurancaSandBox;
     @Column(name = "ID_APLICACAO_PROD", nullable = true)
     private String idAplicacaoProducao;
-    @Column(name = "TOKEN_APLICACAO_PROD", nullable = true)
-    private String tokenAplicacaoProducao;
+    @Column(name = "KEY_APLICACAO_PROD", nullable = true)
+    private String keyAplicacaoProducao;
     @Column(name = "ID_APLICACAO_DEV", nullable = true)
     private String idAplicacaoSandBox;
-    @Column(name = "TOKEN_APLICACAO_DEV", nullable = true)
-    private String tokenAplicacaoSandBox;
+    @Column(name = "KEY_APLICACAO_DEV", nullable = true)
+    private String keyAplicacaoSandBox;
 
     public String getEmailPagSeguro() {
         return emailPagSeguro;
@@ -69,12 +69,12 @@ public class PagSeguro extends AbstractEntity{
         this.idAplicacaoProducao = idAplicacaoProducao;
     }
 
-    public String getTokenAplicacaoProducao() {
-        return tokenAplicacaoProducao;
+    public String getKeyAplicacaoProducao() {
+        return keyAplicacaoProducao;
     }
 
-    public void setTokenAplicacaoProducao(String tokenAplicacaoProducao) {
-        this.tokenAplicacaoProducao = tokenAplicacaoProducao;
+    public void setKeyAplicacaoProducao(String keyAplicacaoProducao) {
+        this.keyAplicacaoProducao = keyAplicacaoProducao;
     }
 
     public String getIdAplicacaoSandBox() {
@@ -85,12 +85,12 @@ public class PagSeguro extends AbstractEntity{
         this.idAplicacaoSandBox = idAplicacaoSandBox;
     }
 
-    public String getTokenAplicacaoSandBox() {
-        return tokenAplicacaoSandBox;
+    public String getKeyAplicacaoSandBox() {
+        return keyAplicacaoSandBox;
     }
 
-    public void setTokenAplicacaoSandBox(String tokenAplicacaoSandBox) {
-        this.tokenAplicacaoSandBox = tokenAplicacaoSandBox;
+    public void setKeyAplicacaoSandBox(String keyAplicacaoSandBox) {
+        this.keyAplicacaoSandBox = keyAplicacaoSandBox;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PagSeguro extends AbstractEntity{
         hash = 47 * hash + Objects.hashCode(this.emailPagSeguro);
         hash = 47 * hash + Objects.hashCode(this.tokenSegurancaProducao);
         hash = 47 * hash + Objects.hashCode(this.idAplicacaoProducao);
-        hash = 47 * hash + Objects.hashCode(this.tokenAplicacaoProducao);
+        hash = 47 * hash + Objects.hashCode(this.keyAplicacaoProducao);
         return hash;
     }
 
@@ -121,7 +121,7 @@ public class PagSeguro extends AbstractEntity{
         if (!Objects.equals(this.idAplicacaoProducao, other.idAplicacaoProducao)) {
             return false;
         }
-        if (!Objects.equals(this.tokenAplicacaoProducao, other.tokenAplicacaoProducao)) {
+        if (!Objects.equals(this.keyAplicacaoProducao, other.keyAplicacaoProducao)) {
             return false;
         }
         return true;

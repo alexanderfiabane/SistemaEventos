@@ -10,6 +10,7 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Edicao.Tipo;
 import br.esp.sysevent.core.model.Evento;
+import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
@@ -101,7 +102,11 @@ public class AdminInscricoesController {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
         inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
-        ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricao.html");
+        if(inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.DEPOSITO_CONTA)){
+            ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoDC.html");
+        }else if (inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.PAGSEGURO)){
+            ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoPS.html");
+        }
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 

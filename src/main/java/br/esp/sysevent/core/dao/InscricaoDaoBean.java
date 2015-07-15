@@ -10,10 +10,12 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
+import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
+import com.javaleks.commons.text.EnhancedStringBuilder;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.DateUtils;
@@ -50,6 +52,8 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     private EdicaoDao edicaoDao;
     @Autowired
     private ConfraternistaDao confraternistaDao;
+    @Autowired
+    private PagamentoInscricaoDao pagamentoInscricaoDao;
 
     @Autowired
     public InscricaoDaoBean(SessionFactory sessionFactory) {
@@ -414,6 +418,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         calculaValorCamisetas(inscricaoCmd.getInscricao());
         atualizaDocumentos(inscricaoCmd.getInscricao());
         atualizaInfoSaude(inscricaoCmd.getInscricao());
+        atualizaPagamentoInscricao(inscricaoCmd.getInscricao());
         saveOrUpdate(inscricaoCmd.getInscricao());
         ocupaVaga(inscricaoCmd.getInscricao());
         criaUsuario(inscricaoCmd);
@@ -428,6 +433,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         calculaValorCamisetas(inscricaoCmd.getInscricao());
         atualizaDocumentos(inscricaoCmd.getInscricao());
         atualizaInfoSaude(inscricaoCmd.getInscricao());
+        atualizaPagamentoInscricao(inscricaoCmd.getInscricao());
         final Inscricao inscricaoAtual = findById(inscricaoCmd.getInscricao().getId());
         if (inscricaoCmd.getInscricao().getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
             atualizaVagaOficina(inscricaoCmd.getInscricao(), inscricaoAtual);
@@ -534,12 +540,12 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
     protected void atualizaUsuario(final InscricaoCommand inscricaoCmd) {
         final String username = inscricaoCmd.getUsuario().getUsername();
-        Usuario usuarioAtual = usuarioDao.findByPessoaTipo(inscricaoCmd.getInscricao().getConfraternista().getPessoa(), 
+        Usuario usuarioAtual = usuarioDao.findByPessoaTipo(inscricaoCmd.getInscricao().getConfraternista().getPessoa(),
                     Usuario.Role.ROLE_USER);
         if (!usuarioAtual.getUsername().equals(username)) {
             usuarioAtual.setUsername(username);
             usuarioDao.saveOrUpdate(usuarioAtual);
-        } 
+        }
     }
 
     protected void insereGrupoIdade(Inscricao inscricao, Boolean atualiza) {
@@ -580,5 +586,29 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
             idade -= 1;
         }
         return idade;
+    }
+
+    private void atualizaPagamentoInscricao(Inscricao inscricao) {
+        PagamentoInscricao pagamento = new PagamentoInscricao();
+        if(inscricao.getId() == null){
+            pagamento.setInscricao(inscricao);
+        }else{
+            pagamento = pagamentoInscricaoDao.findByInscricao(inscricao);
+        }
+        pagamento.setStatus(PagamentoInscricao.StatusPagamento.AGUARDANDO);
+        EnhancedStringBuilder descricaoCompra = new EnhancedStringBuilder().setLineBreakMode(EnhancedStringBuilder.LineBreakMode.HTML);
+        descricaoCompra.appendln("Inscrição: R$ ", inscricao.getEdicaoEvento().getValorInscricao());
+        Collection<CamisetaConfraternista> camisetas = inscricao.getConfraternista().getCamisetas();
+        if (!camisetas.isEmpty()){
+            descricaoCompra.appendln("Camiseta(s): ");
+            for (CamisetaConfraternista camiseta : camisetas) {
+                descricaoCompra.appendln("- Tipo: ",camiseta.getTipoCamiseta().getDescricao(), " - ", camiseta.getTamanhoCamiseta().getDescricao() , " Cor: ", camiseta.getCorCamiseta().getDescricao(),
+                        "Qnt: ",camiseta.getQuantidadeCamiseta(),
+                        "Valor: R$ ", (inscricao.getEdicaoEvento().getValorCamiseta().multiply(new BigDecimal(camiseta.getQuantidadeCamiseta()))));
+
+            }
+        }
+        descricaoCompra.append("Total à pagar: R$ ", inscricao.getValor());
+        pagamento.setDescricaoPagamento(descricaoCompra.toString());
     }
 }

@@ -3,6 +3,7 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 
 /**
@@ -10,4 +11,6 @@ import br.esp.sysevent.core.model.PagamentoInscricao;
  * @author Giuliano Ferreira <giuliano@ufsm.br>
  */
 public interface PagamentoInscricaoDao extends BaseSistemaDao<Long, PagamentoInscricao> {
+
+    public PagamentoInscricao findByInscricao(Inscricao inscricao);
 }

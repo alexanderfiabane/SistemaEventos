@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -48,6 +50,8 @@ public class Inscricao extends AbstractEntity {
     @JoinColumn(name = "ID_EDICAO", nullable = false)
     private Edicao edicaoEvento;
     @OneToOne
+    @Cascade({CascadeType.SAVE_UPDATE})
+    @Fetch(value = FetchMode.JOIN)
     private PagamentoInscricao pagamento;
 
     public BigDecimal getValor() {

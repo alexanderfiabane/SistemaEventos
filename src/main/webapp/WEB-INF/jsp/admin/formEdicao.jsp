@@ -106,10 +106,10 @@
                                 <see:formField type="text" label="ID da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoProducao"/>
                             </div>
                             <div class="span4">
-                                <see:formField type="text" label="Token da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoProducao"/>
+                                <see:formField type="text" label="Key da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.keyAplicacaoProducao"/>
                             </div>
                             <div class="span4">
-                                <see:formField type="text" label="Token de Seguraça (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
+                                <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
                             </div>
                         </div>
                         <div class="row">
@@ -117,10 +117,10 @@
                                 <see:formField type="text" label="ID da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoSandBox"/>
                             </div>
                             <div class="span4">
-                                <see:formField type="text" label="Token da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenAplicacaoSandBox"/>
+                                <see:formField type="text" label="Key da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.keyAplicacaoSandBox"/>
                             </div>
                             <div class="span4">
-                                <see:formField type="text" label="Token de Segurança (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
+                                <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
                             </div>
                         </div>
                     </div>
