@@ -23,15 +23,17 @@ import javax.persistence.Temporal;
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
 public class PagamentoInscricao extends AbstractEntity {
-     private static final long serialVersionUID = 4995003556456753846L;
+    private static final long serialVersionUID = 5368918725264648235L;
 
     @OneToOne
     @JoinColumn(name = "ID_INSCRICAO", nullable = false)
     private Inscricao inscricao;
     @Column(name = "CODIGO", nullable = true)
     private String codPagamento;
-    @Column(name = "DESCRICAO_PG", nullable = true)
+    @Column(name = "DESCRICAO_PG", columnDefinition = "TEXT", nullable = true)
     private String descricaoPagamento;
+    @Column(name = "DESCRICAO_PG_QTIP", columnDefinition = "TEXT", nullable = true)
+    private String descricaoPagamentoQtip;
     @Column(name = "DATA_PAGAMENTO", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataPagamento;
@@ -60,6 +62,14 @@ public class PagamentoInscricao extends AbstractEntity {
 
     public void setDescricaoPagamento(String descricaoPagamento) {
         this.descricaoPagamento = descricaoPagamento;
+    }
+
+    public String getDescricaoPagamentoQtip() {
+        return descricaoPagamentoQtip;
+    }
+
+    public void setDescricaoPagamentoQtip(String descricaoPagamentoQtip) {
+        this.descricaoPagamentoQtip = descricaoPagamentoQtip;
     }
 
     public Calendar getDataPagamento() {

@@ -29,19 +29,25 @@
                             <c:url var="inscricao_imprimir_url" value="/user/fichaInscricao.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
                             <c:url var="inscricao_pagamento_url" value="/user/formPagamento.html"><c:param name="idInscricao" value="${inscricao.id}"/></c:url>
                             <div class="btn-group small">
-                                <c:if test="${inscricao.podeAnalisar}">
+                            <c:choose>
+                                <c:when test="${inscricao.podeAnalisar}">
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Editar inscrição" onclick="location.href = '${inscricao_pendente_url}';"><i class="icon-edit"></i></button>
-                                </c:if>
-                                <c:if test="${inscricao.podeAprovar}">
+                                </c:when>
+                                <c:when test="${inscricao.podeEfetivar && not inscricao.edicaoEvento.formaCobranca.semCobranca}">
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                                </c:if>
-                                <c:if test="${inscricao.podeEfetivar}">
+                                    <button type="button" class="btn" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-dollar"></i></button>
+                                </c:when>
+                                <c:otherwise>
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                                    <button type="button" class="btn" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-barcode"></i></button>
-                                </c:if>
+                                </c:otherwise>
+                                    <%--
+                                <c:when test="${inscricao.podeAprovar}">
+                                    <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
+                                    <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                </c:when>
                                 <c:if test="${inscricao.efetivada}">
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
@@ -50,6 +56,8 @@
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
                                 </c:if>
+                                    --%>
+                            </c:choose>
                             </div>
                         </td>
                         <td>${inscricao.edicaoEvento.evento.nome}</td>

@@ -114,7 +114,8 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         if (order != null){
             criteria.addOrder(order);
         }
-        return findByCriteria(criteria);
+        Collection<Inscricao> teste = findByCriteria(criteria);
+        return teste;
     }
 
     @Override

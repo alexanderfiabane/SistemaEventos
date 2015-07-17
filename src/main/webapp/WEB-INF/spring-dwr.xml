@@ -84,10 +84,12 @@
             <dwr:include method="indeferida"/>            
             <dwr:include method="pendente"/>            
         </dwr:convert>
-        <dwr:convert class="br.esp.sysevent.core.model.Pagamento" type="hibernate3">
+        <dwr:convert class="br.esp.sysevent.core.model.PagamentoInscricao" type="hibernate3">
             <dwr:include method="id"/>            
-            <dwr:include method="numeroDocumento"/>            
-            <dwr:include method="data"/>            
+            <dwr:include method="codPagamento"/>            
+            <dwr:include method="descricaoPagamento"/>            
+            <dwr:include method="descricaoPagamentoQtip"/>            
+            <dwr:include method="dataPagamento"/>            
             <dwr:include method="valor"/>                        
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Inscricao$Status" type="bean">

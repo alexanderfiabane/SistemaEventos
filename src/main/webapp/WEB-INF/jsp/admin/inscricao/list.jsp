@@ -3,8 +3,10 @@
 
 <mocca:title title="Gerenciamento de Inscrições (${edicao.tema})" isTitleKey="false"/>
 
+<see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
+
 <div id="searchParams" class="box bordered rounded control">
-    <input name="edicao.id" type="hidden" value="${edicao.id}"/>
+        <input name="edicao.id" type="hidden" value="${edicao.id}"/>
     <div class="row">
         <div class="span9">
             <label class="label">
@@ -82,12 +84,15 @@
                 <td>@{status.value}</td>
                 <td>@{dataRecebimento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
                 <td>@{pagamento.dataPagamento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td><i class="hint icon-info-sign"></i>@{pagamento.codPagamento|ifBlank=Não informado}</td>
+                <td><i class="hint icon-info-sign"></i> @{pagamento.codPagamento|ifBlank=Não informado}</td>
             </tr>
         </tbody>
     </table>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="listEdicao.html?idEvento=${edicao.evento.id}"/>
+<c:url value="/admin/inscricao/listEdicao.html" var="backUrl">
+    <c:param name="idEvento" value="${edicao.evento.id}"/>
+</c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 
 <c:url var="url_view" value="view.html">
     <c:param name="idInscricao" value=""/>
@@ -117,16 +122,22 @@
             externalParams: {
                 containerId: 'searchParams'
             },
-            'table':{
-                'postAddLine': function($tr, item){
+            'table': {
+                'postAddLine': function ($tr, item) {
                     var $td = $tr.find("td").eq(0);
                     var $icoDoc = $tr.find("td").eq(6).find('.hint');
                     if ($.ObjectUtils.isUnvalued(item.pagamento)) {
                         $icoDoc.remove();
-                    }else{
+                    } else {
                         $icoDoc.qtip({
-                       'content': {text: item.pagamento == null ? "Não há informações" : item.pagamento.descricaoPagamento}
-                    });
+                            'content': {
+                                text: item.pagamento == null ? "Não há informações" : item.pagamento.descricaoPagamentoQtip,
+                                title: "Detalhes do Pagamento"
+                            },
+                            style: {
+                                classes: 'qtip-bootstrap'
+                            }
+                        });
                     }
                     var $btnGroup = $('<div>', {'class': 'btn-group mini'});
                     var $visualizar = $.WidgetUtils.createButton({
@@ -145,7 +156,7 @@
                     });
                     $editar.openUrl({
                         'url': '${url_edit}' + item.id,
-                        'target': 'editar'+ item.confraternista.pessoa.nome
+                        'target': 'editar' + item.confraternista.pessoa.nome
                     });
                     var $podeAprovar = $.WidgetUtils.createButton({
                         'title': 'Confirmar Inscrição',
@@ -167,7 +178,7 @@
                         'icon': 'icon-thumbs-down',
                         'class': 'btn'
                     });
-                    if (item.podeAprovar){
+                    if (item.podeAprovar) {
                         $podeAprovar.openUrl({
                             'url': '${url_aprova}' + item.id,
                             'showConfirmDialog': true,
@@ -182,11 +193,11 @@
                                 'content': "Tem certeza que deseja reabrir esta inscrição?"
                             }
                         });
-                    }else{
+                    } else {
                         $podeAprovar.disable();
                         $reabreEdicao.disable();
                     }
-                    if (item.podeEfetivar){
+                    if (item.podeEfetivar) {
                         $podeEfetivar.openUrl({
                             'url': '${url_efetiva}' + item.id,
                             'showConfirmDialog': true,
@@ -194,10 +205,10 @@
                                 'content': "Tem certeza que deseja efetivar esta inscrição?"
                             }
                         });
-                    }else{
+                    } else {
                         $podeEfetivar.disable();
                     }
-                    if(!item.indeferida && !item.pendente){
+                    if (!item.indeferida && !item.pendente) {
                         $indefere.openUrl({
                             'url': '${url_indefere}' + item.id,
                             'showConfirmDialog': true,
@@ -205,16 +216,16 @@
                                 'content': "Tem certeza que deseja indeferir esta inscrição?"
                             }
                         });
-                    }else{
+                    } else {
                         $indefere.disable();
                     }
                     $btnGroup.
-                        append($visualizar).
-                        append($editar).
-                        append($podeAprovar).
-                        append($reabreEdicao).
-                        append($podeEfetivar).
-                        append($indefere);
+                            append($visualizar).
+                            append($editar).
+                            append($podeAprovar).
+                            append($reabreEdicao).
+                            append($podeEfetivar).
+                            append($indefere);
 
                     $td.append($btnGroup);
                 }

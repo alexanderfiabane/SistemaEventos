@@ -15,24 +15,27 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Usuario;
+import br.esp.sysevent.web.controller.I18nController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
  * @author Giuliano
  */
 @Controller
-public class AdminInscricoesController {
+public class AdminInscricoesController extends I18nController{
 
     @Autowired
     private EdicaoDao edicaoDao;
@@ -98,7 +101,7 @@ public class AdminInscricoesController {
     }
 
     @RequestMapping(value = "/admin/inscricao/aprova.html", method = RequestMethod.GET)
-    public String aprova(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
+    public String aprova(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
         inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
@@ -107,33 +110,37 @@ public class AdminInscricoesController {
         }else if (inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.PAGSEGURO)){
             ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoPS.html");
         }
+        attributes.addFlashAttribute("message", getMessage("subscription.success.aproved", locale));
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/efetiva.html", method = RequestMethod.GET)
-    public String efetiva(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
+    public String efetiva(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
         inscricaoCmd.getInscricao().setStatus(Inscricao.Status.EFETIVADA);
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        attributes.addFlashAttribute("message", getMessage("subscription.success.effective", locale));
         ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Efetivada", "efetivadaInscricao.html");
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/indefere.html", method = RequestMethod.GET)
-    public String indefere(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
+    public String indefere(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
         inscricaoCmd.getInscricao().setStatus(Inscricao.Status.INDEFERIDA);
         liberaVaga(inscricaoCmd.getInscricao());
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        attributes.addFlashAttribute("message", getMessage("subscription.success.rejected", locale));
         ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Indeferida", "indeferidaInscricao.html");
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
     @RequestMapping(value = "/admin/inscricao/reabre.html", method = RequestMethod.GET)
-    public String reabre(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model) {
+    public String reabre(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
         inscricaoCmd.getInscricao().setStatus(Inscricao.Status.PENDENTE);
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+        attributes.addFlashAttribute("message", getMessage("subscription.success.reopened", locale));
         ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aberta para Edição", "reabertaInscricao.html");
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }

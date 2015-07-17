@@ -29,4 +29,11 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
                 .add(Restrictions.eq("inscricao", inscricao));
         return findUniqueByCriteria(criteria);
     }
+    @Override
+    public PagamentoInscricao findByCodPagamento(String codPagamento){
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("codPagamento", codPagamento));
+        return findUniqueByCriteria(criteria);
+    }
 }
