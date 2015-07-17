@@ -16,7 +16,7 @@ import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Inscricao;
-import br.esp.sysevent.core.model.PagSeguro;
+import br.esp.sysevent.core.model.PagSeguroConta;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import com.javaleks.commons.text.EnhancedStringBuilder;
@@ -56,10 +56,10 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
             throw new IllegalStateException("Inscrição inválida");
         }
         Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
-        PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByInscricao(inscricao);
-        String codTransPS = CharSequenceUtils.deletePattern("[\\s-]+", codTransactionPagSeguro);
-        pagamentoInscricao.setCodPagamento(codTransPS);
-        PagSeguro pagSeguroAccount = inscricao.getEdicaoEvento().getFormaCobranca().getPagSeguro();
+        PagamentoInscricao pagamentoInscricao = new PagamentoInscricao();
+        pagamentoInscricao.setInscricao(inscricao);
+        pagamentoInscricao.setCodPagamento(codTransactionPagSeguro);
+        PagSeguroConta pagSeguroAccount = inscricao.getEdicaoEvento().getFormaCobranca().getPagSeguro();
         AccountCredentials pagSeguroCredentials = new AccountCredentials(
                 pagSeguroAccount.getEmailPagSeguro(),
                 pagSeguroAccount.getTokenSegurancaSandBox(),
@@ -97,7 +97,7 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
     protected String montaDescricaoPagamento(Transaction transaction){
         EnhancedStringBuilder descricaoPagamento = new EnhancedStringBuilder();
         descricaoPagamento.setLineBreakMode(EnhancedStringBuilder.LineBreakMode.HTML);
-        descricaoPagamento.append("<strong class='control'>Meio de pagmento</strong>: ")
+        descricaoPagamento.append("<label class='label'>Meio de pagmento</label>: ")
                 .append(transaction.getPaymentMethod().getType().getType())
                 .append("( ").append(transaction.getPaymentMethod().getCode().getDescription());
         if (transaction.getPaymentMethod().getType().equals(PaymentMethodType.CREDIT_CARD)){
@@ -105,9 +105,9 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
         }else{
             descricaoPagamento.appendln(" )");
         }
-        descricaoPagamento.append("<strong class='control'>Valor pago em taxas</strong>: ")
+        descricaoPagamento.append("<label class='label'>Valor pago em taxas</label>: ")
                 .append(" R$ ").appendln(transaction.getFeeAmount().toString());
-        descricaoPagamento.append("<strong class='control'>Valor pago</strong>: ")
+        descricaoPagamento.append("<label class='label'>Valor pago</label>: ")
                 .append(" R$ ").append(transaction.getGrossAmount().toString());
         return descricaoPagamento.toString();
     }

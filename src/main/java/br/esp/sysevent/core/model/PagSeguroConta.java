@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PAGSEGURO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGSEGURO_CONTA"))
-public class PagSeguro extends AbstractEntity{
+public class PagSeguroConta extends AbstractEntity{
      private static final long serialVersionUID = -5305530290753732847L;
 
     @Column(name = "EMAIL", nullable = true)
@@ -111,7 +111,7 @@ public class PagSeguro extends AbstractEntity{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PagSeguro other = (PagSeguro) obj;
+        final PagSeguroConta other = (PagSeguroConta) obj;
         if (!Objects.equals(this.emailPagSeguro, other.emailPagSeguro)) {
             return false;
         }

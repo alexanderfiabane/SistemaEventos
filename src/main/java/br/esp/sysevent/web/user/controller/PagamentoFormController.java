@@ -19,7 +19,7 @@ import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
 import br.esp.sysevent.core.model.Inscricao;
-import br.esp.sysevent.core.model.PagSeguro;
+import br.esp.sysevent.core.model.PagSeguroConta;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
@@ -117,7 +117,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             pagseguro.setSender(confraternista.getPessoa().getNome(), confraternista.getPessoa().getEndereco().getEmail());
 
             //Gerar número para o botão lightbox e colocar no model
-            PagSeguro pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
+            PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguro(),
                     pagSeguroAccount.getTokenSegurancaSandBox(),

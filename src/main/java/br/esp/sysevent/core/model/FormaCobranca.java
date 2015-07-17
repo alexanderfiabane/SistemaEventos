@@ -35,7 +35,7 @@ public class FormaCobranca extends AbstractEntity{
     @ManyToOne
     @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_PAGSEGURO", nullable = true)
-    private PagSeguro pagSeguro;
+    private PagSeguroConta pagSeguro;
     @Column(name = "TIPO_COBRANCA", nullable = true)
     private TipoCobranca tipoCobranca;
 
@@ -67,11 +67,11 @@ public class FormaCobranca extends AbstractEntity{
         this.deposito = deposito;
     }
 
-    public PagSeguro getPagSeguro() {
+    public PagSeguroConta getPagSeguro() {
         return pagSeguro;
     }
 
-    public void setPagSeguro(PagSeguro pagSeguro) {
+    public void setPagSeguro(PagSeguroConta pagSeguro) {
         this.pagSeguro = pagSeguro;
     }
 
