@@ -5,9 +5,7 @@ package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -25,16 +23,14 @@ import javax.persistence.Temporal;
 @Table(name = "PAGAMENTOS")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGAMENTO"))
 public class PagamentoInscricao extends AbstractEntity {
-    private static final long serialVersionUID = -5680008393064758718L;
+     private static final long serialVersionUID = 4995003556456753846L;
 
     @OneToOne
     @JoinColumn(name = "ID_INSCRICAO", nullable = false)
     private Inscricao inscricao;
     @Column(name = "CODIGO", nullable = true)
     private String codPagamento;
-    @Column(name = "STATUS", nullable = false)
-    private StatusPagamento status;
-    @Column(name = "DESCRICAO_PG", nullable = false)
+    @Column(name = "DESCRICAO_PG", nullable = true)
     private String descricaoPagamento;
     @Column(name = "DATA_PAGAMENTO", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -56,14 +52,6 @@ public class PagamentoInscricao extends AbstractEntity {
 
     public void setCodPagamento(String codPagamento) {
         this.codPagamento = codPagamento;
-    }
-
-    public StatusPagamento getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusPagamento status) {
-        this.status = status;
     }
 
     public String getDescricaoPagamento() {
@@ -88,30 +76,6 @@ public class PagamentoInscricao extends AbstractEntity {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
-    }
-
-    public enum StatusPagamento {
-        AGUARDANDO("Aguardando Pagamento"),
-        CANCELADO("Pagamento Cancelado"),
-        RECUSADO("Pagamento Recusado");
-
-        private final String descricao;
-
-        private StatusPagamento(final String descricao) {
-            this.descricao = descricao;
-        }
-
-        public String getDescricao() {
-            return descricao;
-        }
-
-        public String getName() {
-            return name();
-        }
-
-        public static Collection<PagamentoInscricao.StatusPagamento> getTipos() {
-            return Arrays.asList(PagamentoInscricao.StatusPagamento.values());
-        }
     }
 
     @Override

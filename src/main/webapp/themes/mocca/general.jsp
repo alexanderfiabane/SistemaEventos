@@ -31,7 +31,7 @@
         <c:url var="home_url" value="/index.html"/>
         <c:url var="login_url"  value='/login.html'/>
         <%--<c:url var="updateinfo_url" value="user/atualizarCadastro.html" context="/user"/>--%>
-        <c:url var="changepass_url" value="/alterarSenha.html" context="/see/user"/>
+        <c:url var="changepass_url" value="/user/alterarSenha.html"/>
         <c:url var="help_url"       value="/ajuda.html"/>
         <c:url var="logout_url"  value='/logout'/>
         <security:authorize var="is_logged" access="isAuthenticated()"/>

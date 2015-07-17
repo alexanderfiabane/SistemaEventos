@@ -44,6 +44,9 @@
     <filter-mapping>
         <filter-name>sitemesh</filter-name>
         <url-pattern>/*</url-pattern>        
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
     <!-- Define quais as urls devem ser tratadas pelo dispatcher do Spring -->

@@ -29,8 +29,8 @@ import org.hibernate.annotations.FetchMode;
 @Table(name = "INSCRICOES")
 @AttributeOverride(name = "id", column = @Column(name = "ID_INSCRICAO"))
 public class Inscricao extends AbstractEntity {
+    private static final long serialVersionUID = 1353499149964773457L;
 
-    private static final long serialVersionUID = -6397566035964502563L;
     @Column(name = "VALOR", nullable = false)
     private BigDecimal valor;
     @Column(name = "STATUS", length = 80, nullable = false)
@@ -50,7 +50,6 @@ public class Inscricao extends AbstractEntity {
     @JoinColumn(name = "ID_EDICAO", nullable = false)
     private Edicao edicaoEvento;
     @OneToOne
-    @Cascade({CascadeType.SAVE_UPDATE})
     @Fetch(value = FetchMode.JOIN)
     private PagamentoInscricao pagamento;
 
@@ -165,6 +164,7 @@ public class Inscricao extends AbstractEntity {
         PENDENTE("Pendente"),
         AGUARDANDO_AVALIACAO("Aguardando Avaliação"),
         AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
+        PAGA("Paga"),
         EFETIVADA("Efetivada"),
         INDEFERIDA("Indeferida");
         private final String value;
