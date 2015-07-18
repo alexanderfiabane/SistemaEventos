@@ -68,10 +68,11 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
         pagamentoInscricao.setDescricaoPagamentoQtip(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, true));
         pagamentoInscricao.setValor(transaction.getGrossAmount());
         pagamentoInscricaoDao.saveOrUpdate(pagamentoInscricao);
+        inscricao.setPagamento(pagamentoInscricao);
         if (PagamentoInscricaoUtils.transacaoStatusPaga(transaction)){
             inscricao.setStatus(Inscricao.Status.PAGA);
-            inscricaoDao.saveOrUpdate(inscricao);
         }
+        inscricaoDao.saveOrUpdate(inscricao);
         return pagamentoInscricao;
     }
 

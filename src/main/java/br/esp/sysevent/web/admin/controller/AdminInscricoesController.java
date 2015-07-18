@@ -58,10 +58,8 @@ public class AdminInscricoesController extends I18nController{
         final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         if (edicao == null) {
             throw new IllegalArgumentException("Edição não encontrada.");
-        }
-        final Collection<Inscricao> inscricoes = inscricaoDao.findByProperty("edicaoEvento", edicao);
-        model.addAttribute("edicao", edicao);
-        model.addAttribute("inscricoes", inscricoes);
+        }        
+        model.addAttribute("edicao", edicao);        
         model.addAttribute("tipoInscricoes", Confraternista.Tipo.getValues());
         model.addAttribute("inscricaoStatus", Inscricao.Status.values());
         return "admin/inscricao/list";
