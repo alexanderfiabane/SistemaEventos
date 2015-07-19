@@ -5,7 +5,7 @@
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 
-<div id="searchParams" class="box bordered rounded control">
+    <div id="searchParams" class="box bordered rounded control">
         <input name="edicao.id" type="hidden" value="${edicao.id}"/>
     <div class="row">
         <div class="span9">

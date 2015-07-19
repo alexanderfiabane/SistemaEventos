@@ -264,7 +264,7 @@
     $(document).ready(function () {
         var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
         var tipoConfraternista = '${command.inscricao.confraternista.tipo}';
-        var dataNascimento = parseDate('${command.inscricao.confraternista.pessoa.dataNascimento.time}');
+        var dataNascimento = $.DateUtils.parseDate(${command.inscricao.confraternista.pessoa.dataNascimento.time});
         if ((tipoEvento == 'FAIXA_ETARIA') && (tipoConfraternista == 'CONFRATERNISTA')) {
             $('#evangelizadorResponsavel').show();
         } else {

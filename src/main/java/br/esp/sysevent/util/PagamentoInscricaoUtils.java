@@ -53,9 +53,7 @@ public abstract class PagamentoInscricaoUtils {
                 descricaoPagamento.append(" ").append(Integer.toString(transaction.getInstallmentCount())).appendln("x )");
             }else{
                 descricaoPagamento.appendln(" )");
-            }
-            descricaoPagamento.append("<label class='label'>Valor pago em taxas</label>: ")
-                    .append(" R$ ").appendln(transaction.getFeeAmount().toString());
+            }            
             descricaoPagamento.append("<label class='label'>Valor pago</label>: ")
                     .append(" R$ ").append(transaction.getGrossAmount().toString());
         }

@@ -100,29 +100,13 @@
                             <div class="span4">
                                 <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguro"/>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="span4">
-                                <see:formField type="text" label="ID da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoProducao"/>
-                            </div>
-                            <div class="span4">
-                                <see:formField type="text" label="Key da Aplicação (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.keyAplicacaoProducao"/>
-                            </div>
                             <div class="span4">
                                 <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="span4">
-                                <see:formField type="text" label="ID da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.idAplicacaoSandBox"/>
-                            </div>
-                            <div class="span4">
-                                <see:formField type="text" label="Key da Aplicação (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.keyAplicacaoSandBox"/>
                             </div>
                             <div class="span4">
                                 <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                 </fieldset>
             </div>
