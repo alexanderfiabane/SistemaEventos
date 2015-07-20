@@ -4,6 +4,7 @@
 package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import javax.persistence.AttributeOverride;
@@ -183,6 +184,13 @@ public class Confraternista extends AbstractEntity {
 
         public static Collection<Tipo> getValues() {
             return Arrays.asList(Tipo.values());
+        }
+
+        public static Tipo parse(String name) {
+            if(CharSequenceUtils.isNotBlank(name)){
+                return valueOf(name);
+            }
+            return null;
         }
     }
 

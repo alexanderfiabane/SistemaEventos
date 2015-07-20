@@ -566,15 +566,6 @@
         return path + '[' + index + '].' + field;
     }
 
-    function parseDate(str) {
-        var array = str.split('/');
-        for (var i = 0; i < array.length; i++) {
-            array[i] = Number(array[i]);
-        }
-        array[1] = array[1] - 1;
-        return new Date(array[2], array[1], array[0]);
-    }
-
     $(document).ready(function() {
 
         $("#atividadeIE").textCounter({
@@ -676,7 +667,7 @@
         $('#dataNascimento').blur(function() {
             var texto = $(this).val();
             if (typeof texto !== 'undefined' && texto !== '') {
-                var dataNascimento = parseDate(texto);
+                var dataNascimento = $.DateUtils.toDate(texto);
                 if (!calculaMaiorIdade(dataNascimento)) {
                     $('#responsavel').show();
                 } else {

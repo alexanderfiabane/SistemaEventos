@@ -1,5 +1,5 @@
 
-    mocca-framework 1.0.0-SNAPSHOT - build 93
+    mocca-framework 1.0.0-SNAPSHOT - build 101
 --------------------------------------------------------------------------------
 
     A Responsive CSS framework
@@ -13,6 +13,125 @@
   [=] Feature enhancement.
   [v] Visual enhancement.
   [b] Bugfix.
+
+  Version 1.0.0-SNAPSHOT - build 98
+  ------------------------------------------------------------------------------
+  [+] Added $(element).getTheme() function.
+  [+] Added new way to create modals (dialogs) that can be triggered
+      programatticaly:
+        - AbstractModalJS : Base class that you can extend to create your own
+          modals. Example:
+                /* How to extend */
+                function MyNewModalJS(opts) {
+                    AbstractModalJS.call(this);
+                    /* override methods and _DEFAULTS here */
+                    this._create(opts);
+                }
+                /* How to use */
+                var mymodal = new MyNewModalJS({opts...});
+                mymodal.open();
+
+        - AlertJS : Class that creates a modal ressembling the javascripts
+          alert() function. Has ok button. More buttons and its actions can be
+          customized.
+                /* How to use */
+                var modal = new AlertJS({opts...});
+                modal.open();
+        - ConfirmJS : Class that creates a modal to ask confirmations. Has the
+          [cancel | no | yes] butons. These buttons can be customized.
+                /* How to use */
+                var modal = new AlertJS({opts...});
+                modal.open();
+
+        To know the full range of options you can pass to the constructors,
+        please reffer to AbstractModalJS' _DEFAULTS object on the source-code.
+
+        Public methods you can call (not meant to be overriden):
+            - getTheme()            : returns String
+            - getOverlay()          : returns $(div)
+            - getScrollOverlay()    : returns $(div)
+            - getModal()            : returns $(div)
+            - getHeader()           : returns $(div)
+            - getContent()          : returns $(div)
+            - isOpen()              : returns boolean
+            - isClosed()            : returns boolean
+            - open([func])          : returns this
+            - close([func])         : returns this
+            - resolveText(text)     : returns String
+
+        Private methods you can override while extending AbstractModalJS:
+        (the ones with * are more likely to be overriden)
+            - _create(opts)*            : returns this
+            - _initOverlayDiv()         : returns $(div)
+            - _initScrollOverlayDiv()   : returns $(div)
+            - _initModalDiv()           : returns $(div)
+            - _initHeaderDiv()          : returns $(div)
+            - _initContentDiv()*        : returns $(div)
+            - _initButtons()            : returns $(buttons)
+            - _resetAnimations()        : returns this
+            - _unwrapOpts()             : returns Object
+            - _invokeHook(func)         : returns undefined || func return
+
+
+  Version 1.0.0-SNAPSHOT - build 97
+  ------------------------------------------------------------------------------
+  [=] added sizing classes support for toggle-flips (it was supporting width-110
+      only, in previous builds). Now it supports:
+        width-[100|90|80|75|70|66|60g|60|50|40g|40|33|30|25|20|10]
+        width-[4|5|6|7|8|9|10|15|20|25]em
+  [=] Now it is possible to control if the toggle-flips will have one single
+      label or a label per status (on and off):
+
+        /* label per status */
+        <div class="toggle-flip [theme-class] [size-class] [responsive]">
+            <input id="myid" type="[checkbox|radio]">
+            <label for="myid" data-on="ON Text" data-off="OFF Text"></label>
+        </div>
+
+        /* single labeled */
+        <div class="toggle-flip [theme-class] [size-class] [responsive]">
+            <input id="myid" type="[checkbox|radio]">
+            <label for="myid" data-label="Label Text"></label>
+        </div>
+
+  Version 1.0.0-SNAPSHOT - build 96
+  ------------------------------------------------------------------------------
+  [=] toggle-slide and toggle-flip now works with <form:checkbox>.
+
+  Version 1.0.0-SNAPSHOT - build 95
+  ------------------------------------------------------------------------------
+  [+] New components: toggle-slide and toggle-flip.
+        <div class="toggle-slide [theme-class] [size-class]">
+            <input id="myid" type="[checkbox|radio]">
+            <label for="myid"></label>
+        </div>
+        <div class="toggle-flip [theme-class] [size-class] [responsive]">
+            <input id="myid" type="[checkbox|radio]">
+            <label for="myid" data-on="ON Text" data-off="OFF Text"></label>
+        </div>
+  [b] Fixed @{index} value on dynamicList plugin, when there is rows
+      preallocated on the table.
+
+  Version 1.0.0-SNAPSHOT - build 94
+  ------------------------------------------------------------------------------
+  [b] Fixed @{expression} "value" now is trimmed.
+
+  Version 1.0.0-SNAPSHOT - build 93
+  ------------------------------------------------------------------------------
+  [b] Fixed @{expression} "switch", where the "otherwise" option didn't work.
+
+  Version 1.0.0-SNAPSHOT - build 92
+  ------------------------------------------------------------------------------
+  [=] The @{expression} "format" option now won't accept functions anymore.
+      This functionality was moved to the new "transform" option, that works
+      exactly as the prior "format=myfunc" option.
+
+  Version 1.0.0-SNAPSHOT - build 91
+  ------------------------------------------------------------------------------
+  [+] @{expression} now accepts a function name as format option. The function
+      implementation must be global and must not clash with default javascript
+      functions. Additionally, it must expect a single argument that is the
+      unformated value of the expression.
 
   Version 1.0.0-SNAPSHOT - build 90
   ------------------------------------------------------------------------------

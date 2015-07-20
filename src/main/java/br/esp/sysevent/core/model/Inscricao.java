@@ -4,6 +4,7 @@
 package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import javax.persistence.AttributeOverride;
@@ -173,6 +174,10 @@ public class Inscricao extends AbstractEntity {
             this.value = value;
         }
 
+        public String getName() {
+            return name();
+        }
+
         public String getValue() {
             return value;
         }
@@ -180,6 +185,12 @@ public class Inscricao extends AbstractEntity {
         @Override
         public String toString() {
             return getValue();
+        }
+        public static Status parse(String name) {
+            if(CharSequenceUtils.isNotBlank(name)){
+                return valueOf(name);
+            }
+            return null;
         }
     }
 }

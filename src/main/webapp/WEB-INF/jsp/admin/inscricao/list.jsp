@@ -29,7 +29,7 @@
             <select name="inscricao.confraternista.tipo" title="Tipo de inscrição" class="selectfield">
                 <option value="">Selecione um tipo de inscrição</option>
                 <c:forEach items="${tipoInscricoes}" var="tipoInscricao">
-                    <option value="${tipoInscricao.descricao}">${tipoInscricao.descricao}</option>
+                    <option value="${tipoInscricao.name}">${tipoInscricao.descricao}</option>
                 </c:forEach>
             </select>
         </div>
@@ -40,7 +40,7 @@
             <select name="inscricao.status.value" title="Situação da inscrição" class="selectfield">
                 <option value="">Selecione a situação da inscrição</option>
                 <c:forEach items="${inscricaoStatus}" var="status">
-                    <option value="${status.value}">${status.value}</option>
+                    <option value="${status.name}">${status.value}</option>
                 </c:forEach>
             </select>
         </div>
@@ -48,13 +48,13 @@
             <label class="label">
                 <fmt:message key="label.paymentnumber"/> (pagamento)
             </label>
-            <input name="inscricao.pagamento.numeroDocumento" type="text" class="textfield" title="Número do documento"/>
+            <input name="inscricao.pagamento.codPagamento" type="text" class="textfield" title="Número do documento"/>
         </div>
         <div class="span3">
             <label class="label">
                 <fmt:message key="label.paymentdate"/>
             </label>
-            <input name="inscricao.pagamento.data.time" type="text" class="textfield date" title="Data do pagamento da inscrição"/>
+            <input name="inscricao.pagamento.dataPagamento" type="text" class="textfield date" title="Data do pagamento da inscrição"/>
         </div>
     </div>
     <div class="form-actions stroked-top mini-padding no-margin-bottom">
@@ -70,8 +70,8 @@
                 <th class="centered"><fmt:message key="label.options"/></th>
                 <th data-name="pessoa.nome"><fmt:message key="label.name"/></th>
                 <th data-name="confraternista.tipo"><fmt:message key="label.subscriptiontype"/></th>
-                <th data-name="status"><fmt:message key="label.subscriptionstatus"/></th>
-                <th data-name="dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
+                <th data-name="this.status"><fmt:message key="label.subscriptionstatus"/></th>
+                <th data-name="this.dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
                 <th><fmt:message key="label.paymentdate"/></th>
                 <th><fmt:message key="label.paymentnumber"/></th>
             </tr>
@@ -179,42 +179,86 @@
                         'class': 'btn'
                     });
                     if (item.podeAprovar) {
-                        $podeAprovar.openUrl({
-                            'url': '${url_aprova}' + item.id,
-                            'showConfirmDialog': true,
-                            'confirmDialog': {
-                                'content': "Tem certeza que deseja confirmar esta inscrição?"
-                            }
+                        $podeAprovar.click(function () {
+                            var confirmAproove = new ConfirmJS({
+                                'theme': "primary",
+                                'content': "Tem certeza que deseja confirmar esta inscrição?",
+                                'buttons': {
+                                    'yes': {
+                                        'clickFunction': function (event, modal) {
+                                            location.href = '${url_aprova}' + item.id;
+                                        }
+                                    },
+                                    'cancel': false
+                                },
+                                'postAppendContent': function(modal) {
+                                    modal.find('.main-action').lockOnClick();
+                                }
+                            });
+                            confirmAproove.open();
                         });
-                        $reabreEdicao.openUrl({
-                            'url': '${url_reabre}' + item.id,
-                            'showConfirmDialog': true,
-                            'confirmDialog': {
-                                'content': "Tem certeza que deseja reabrir esta inscrição?"
-                            }
+                        $reabreEdicao.click(function () {
+                            var confirmReOpen = new ConfirmJS({
+                                'theme': "primary",
+                                'content': "Tem certeza que deseja reabrir esta inscrição?",
+                                'buttons': {
+                                    'yes': {
+                                        'clickFunction': function (event, modal) {
+                                            location.href = '${url_reabre}' + item.id;
+                                        }
+                                    },
+                                    'cancel': false
+                                },
+                                'postAppendContent': function(modal) {
+                                    modal.find('.main-action').lockOnClick();
+                                }
+                            });
+                            confirmReOpen.open();
                         });
                     } else {
                         $podeAprovar.disable();
                         $reabreEdicao.disable();
                     }
                     if (item.podeEfetivar) {
-                        $podeEfetivar.openUrl({
-                            'url': '${url_efetiva}' + item.id,
-                            'showConfirmDialog': true,
-                            'confirmDialog': {
-                                'content': "Tem certeza que deseja efetivar esta inscrição?"
-                            }
+                        $podeEfetivar.click(function () {
+                            var confirmAllow = new ConfirmJS({
+                                'theme': "primary",
+                                'content': "Tem certeza que deseja efetivar esta inscrição?",
+                                'buttons': {
+                                    'yes': {
+                                        'clickFunction': function (event, modal) {
+                                            location.href = '${url_efetiva}' + item.id;
+                                        }
+                                    },
+                                    'cancel': false
+                                },
+                                'postAppendContent': function(modal) {
+                                    modal.find('.main-action').lockOnClick();
+                                }
+                            });
+                            confirmAllow.open();
                         });
                     } else {
                         $podeEfetivar.disable();
                     }
                     if (!item.indeferida && !item.pendente) {
-                        $indefere.openUrl({
-                            'url': '${url_indefere}' + item.id,
-                            'showConfirmDialog': true,
-                            'confirmDialog': {
-                                'content': "Tem certeza que deseja indeferir esta inscrição?"
-                            }
+                        $indefere.click(function () {
+                            var confirmNotAllow = new ConfirmJS({
+                                'theme': "warning",
+                                'content': "Tem certeza que deseja indeferir esta inscrição?",
+                                'buttons': {
+                                    'yes': {
+                                        'clickFunction': function (event, modal) {
+                                            location.href = '${url_indefere}' + item.id;
+                                        }
+                                    },
+                                    'cancel': false
+                                },
+                                'postAppendContent': function(modal) {
+                                    modal.find('.main-action').lockOnClick();
+                                }
+                            });
+                            confirmNotAllow.open();
                         });
                     } else {
                         $indefere.disable();

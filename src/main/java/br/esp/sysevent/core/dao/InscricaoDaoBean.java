@@ -5,27 +5,30 @@ package br.esp.sysevent.core.dao;
 
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Confraternista;
+import br.esp.sysevent.core.model.Confraternista.Tipo;
 import br.esp.sysevent.core.model.Documento;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Inscricao.Status;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
+import com.javaleks.commons.text.EnhancedStringBuilder;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
-import com.javaleks.commons.util.DateUtils;
+import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +53,6 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     private EdicaoDao edicaoDao;
     @Autowired
     private ConfraternistaDao confraternistaDao;
-    @Autowired
-    private PagamentoInscricaoDao pagamentoInscricaoDao;
 
     @Autowired
     public InscricaoDaoBean(SessionFactory sessionFactory) {
@@ -59,114 +60,106 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
 
     @Override
-    public Collection<Inscricao> searchInscricoes(final Long idEdicao,
-            final String nomePessoa,
-            final Calendar dataSendInscricao,
-            final String tipoConfraternista,
-            final String situacaoInscricao,
-            final String numeroDocPagamento,
-            final Calendar dataPagamentoInscricao,
-            Order order,
-            Integer firstResult,
-            Integer maxResults) {
-
-        final Criteria criteria = createCriteria()
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .createAlias("confraternista.pessoa", "pessoa")
-                .createAlias("confraternista", "confraternista")
-                .add(Restrictions.eq("edicaoEvento.id", idEdicao));
-        Collection<Criterion> r = new ArrayList<>();
-        if (CharSequenceUtils.isNotBlank(nomePessoa)) {
-            r.add(Restrictions.ilike("pessoa.nome", nomePessoa, MatchMode.ANYWHERE));
-        }
-        if (DateUtils.isDate(dataSendInscricao, false)) {
-            r.add(Restrictions.eq("dataRecebimento", dataSendInscricao));
-        }
-       if (CharSequenceUtils.isNotBlank(tipoConfraternista)) {
-            Confraternista.Tipo tipoConf = null;
-            Collection<Confraternista.Tipo> tipos = Confraternista.Tipo.getValues();
-            for (Confraternista.Tipo tipo : tipos) {
-                if (tipo.getDescricao().equals(tipoConfraternista)){
-                    tipoConf = tipo;
-                }
-            }
-            r.add(Restrictions.eq("confraternista.tipo", tipoConf));
-        }
-        if (CharSequenceUtils.isNotBlank(situacaoInscricao)) {
-            Inscricao.Status statusInsc = null;
-            Inscricao.Status[] statusInscricoes = Inscricao.Status.values();
-            for (Inscricao.Status status : statusInscricoes) {
-                if (status.getValue().equals(situacaoInscricao)){
-                    statusInsc = status;
-                }
-            }
-            r.add(Restrictions.eq("status", statusInsc));
-        }
-        if (CharSequenceUtils.isNotBlank(numeroDocPagamento)) {
-            r.add(Restrictions.eq("pagamento.codPagamento", numeroDocPagamento));
-        }
-        if (DateUtils.isDate(dataPagamentoInscricao, false)) {
-            r.add(Restrictions.eq("pagamento.dataPagamento", dataPagamentoInscricao));
-        }
-        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})))
-                .setFirstResult(firstResult)
-                .setMaxResults(maxResults);
-        if (order != null){
-            criteria.addOrder(order);
-        }
-        Collection<Inscricao> teste = findByCriteria(criteria);
-        return teste;
-    }
-
-    @Override
     public Long countInscricoes(final Long idEdicao,
             final String nomePessoa,
-            final Calendar dataSendInscricao,
-            final String tipoConfraternista,
-            final String situacaoInscricao,
-            final String numeroDocPagamento,
-            final Calendar dataPagamentoInscricao) {
-
-        final Criteria criteria = createCriteria()
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .createAlias("confraternista.pessoa", "pessoa")
-                .createAlias("confraternista", "confraternista")
-                .add(Restrictions.eq("edicaoEvento.id", idEdicao));
-        Collection<Criterion> r = new ArrayList<>();
+            final Calendar dataRecebimento,
+            final Tipo tipoConfraternista,
+            final Status situacaoInscricao,
+            final String codPagamento,
+            final Calendar dataPagamento) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("idEdicao", idEdicao);
+        EnhancedStringBuilder builder = new EnhancedStringBuilder();
+        builder.appendln("select count(this.id) from ", getPersistentClass().getName(), " this").
+                appendln("inner join this.edicaoEvento ed").
+                appendln("inner join this.confraternista confraternista").
+                appendln("inner join confraternista.pessoa pessoa").
+                appendln("left join this.pagamento pag").
+                appendln("where ed.id = :idEdicao");
         if (CharSequenceUtils.isNotBlank(nomePessoa)) {
-            r.add(Restrictions.ilike("pessoa.nome", nomePessoa, MatchMode.ANYWHERE));
+            builder.appendln("  and pessoa.nome like :nomePessoa");
+            params.put("nomePessoa", nomePessoa);
         }
-        if (DateUtils.isDate(dataSendInscricao, false)) {
-            r.add(Restrictions.eq("dataRecebimento", dataSendInscricao));
+        if (CharSequenceUtils.isNotBlank(codPagamento)) {
+            builder.appendln("  and pag.codPagamento = :codPagamento");
+            params.put("codPagamento", codPagamento);
         }
-        if (CharSequenceUtils.isNotBlank(tipoConfraternista)) {
-            Confraternista.Tipo tipoConf = null;
-            Collection<Confraternista.Tipo> tipos = Confraternista.Tipo.getValues();
-            for (Confraternista.Tipo tipo : tipos) {
-                if (tipo.getDescricao().equals(tipoConfraternista)){
-                    tipoConf = tipo;
-                }
-            }
-            r.add(Restrictions.eq("confraternista.tipo", tipoConf));
+        if (tipoConfraternista != null) {
+            builder.appendln("  and confraternista.tipo = :tipoConfraternista");
+            params.put("tipoConfraternista", tipoConfraternista);
         }
-        if (CharSequenceUtils.isNotBlank(situacaoInscricao)) {
-            Inscricao.Status statusInsc = null;
-            Inscricao.Status[] statusInscricoes = Inscricao.Status.values();
-            for (Inscricao.Status status : statusInscricoes) {
-                if (status.getValue().equals(situacaoInscricao)){
-                    statusInsc = status;
-                }
-            }
-            r.add(Restrictions.eq("status", statusInsc));
+        if (situacaoInscricao != null) {
+            builder.appendln("  and this.status = :situacaoInscricao");
+            params.put("situacaoInscricao", situacaoInscricao);
         }
-        if (CharSequenceUtils.isNotBlank(numeroDocPagamento)) {
-            r.add(Restrictions.eq("numeroDocPagamento", numeroDocPagamento));
+        if (dataRecebimento != null) {
+            builder.appendln("  and this.dataRecebimento = :dataRecebimento");
+            params.put("dataRecebimento", dataRecebimento);
         }
-        if (DateUtils.isDate(dataPagamentoInscricao, false)) {
-            r.add(Restrictions.eq("dataPagamento", dataPagamentoInscricao));
+        if (dataPagamento != null) {
+            builder.appendln("  and pag.dataPagamento = :dataPagamento");
+            params.put("dataPagamento", dataPagamento);
         }
-        criteria.add(Restrictions.or(r.toArray(new Criterion[]{})));
-        return (long) findByCriteria(criteria).size();
+        Query q = createQuery(builder);
+        for (Map.Entry<String, Object> tmp : params.entrySet()) {
+            q.setParameter(tmp.getKey(), tmp.getValue());
+        }
+        // setar params
+        return NumberUtils.toLong((Number) q.uniqueResult());
+    }
+    @Override
+    public Collection<Inscricao> searchInscricoes(final Long idEdicao,
+            final String nomePessoa,
+            final Calendar dataRecebimento,
+            final Tipo tipoConfraternista,
+            final Status situacaoInscricao,
+            final String codPagamento,
+            final Calendar dataPagamento,
+            final Order order,
+            final Integer firstResult,
+            final Integer maxResults) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("idEdicao", idEdicao);
+        EnhancedStringBuilder builder = new EnhancedStringBuilder();
+        builder.appendln("select this from ", getPersistentClass().getName(), " this").
+                appendln("inner join this.edicaoEvento ed").
+                appendln("inner join this.confraternista confraternista").
+                appendln("inner join confraternista.pessoa pessoa").
+                appendln("left join this.pagamento pag").
+                appendln("where ed.id = :idEdicao");
+        if (CharSequenceUtils.isNotBlank(nomePessoa)) {
+            builder.appendln("  and pessoa.nome like :nomePessoa");
+            params.put("nomePessoa", nomePessoa);
+        }
+        if (CharSequenceUtils.isNotBlank(codPagamento)) {
+            builder.appendln("  and pag.codPagamento = :codPagamento");
+            params.put("codPagamento", codPagamento);
+        }
+        if (tipoConfraternista != null) {
+            builder.appendln("  and confraternista.tipo = :tipoConfraternista");
+            params.put("tipoConfraternista", tipoConfraternista);
+        }
+        if (situacaoInscricao != null) {
+            builder.appendln("  and this.status = :situacaoInscricao");
+            params.put("situacaoInscricao", situacaoInscricao);
+        }
+        if (dataRecebimento != null) {
+            builder.appendln("  and this.dataRecebimento = :dataRecebimento");
+            params.put("dataRecebimento", dataRecebimento);
+        }
+        if (dataPagamento != null) {
+            builder.appendln("  and pag.dataPagamento = :dataPagamento");
+            params.put("dataPagamento", dataPagamento);
+        }
+        if (order != null) {
+            builder.appendln("order by ", order.toString());
+        }
+        Query q = createQuery(builder);
+        for (Map.Entry<String, Object> tmp : params.entrySet()) {
+            q.setParameter(tmp.getKey(), tmp.getValue());
+        }
+        // setar params
+        return q.setFirstResult(firstResult).setMaxResults(maxResults).list();
     }
 
     @Override
@@ -538,7 +531,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     protected void atualizaUsuario(final InscricaoCommand inscricaoCmd) {
         final String username = inscricaoCmd.getUsuario().getUsername();
         Usuario usuarioAtual = usuarioDao.findByPessoaTipo(inscricaoCmd.getInscricao().getConfraternista().getPessoa(),
-                    Usuario.Role.ROLE_USER);
+                Usuario.Role.ROLE_USER);
         if (!usuarioAtual.getUsername().equals(username)) {
             usuarioAtual.setUsername(username);
             usuarioDao.saveOrUpdate(usuarioAtual);

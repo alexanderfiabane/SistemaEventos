@@ -6,7 +6,9 @@
 package br.esp.sysevent.web.ajax;
 
 import br.esp.sysevent.core.dao.InscricaoDao;
+import br.esp.sysevent.core.model.Confraternista.Tipo;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.Inscricao.Status;
 import br.esp.sysevent.core.model.Sexo;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
@@ -31,10 +33,10 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         Long idEdicao = get(Long.class, "edicao.id", params);
         String nomePessoa = get(String.class, "inscricao.confraternista.pessoa.nome", params);
         Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
-        String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
-        String situacaoInscricao = get(String.class, "inscricao.status.value", params);
+        Tipo tipoConfraternista = Tipo.parse(get(String.class, "inscricao.confraternista.tipo", params));
+        Status situacaoInscricao = Status.parse(get(String.class, "inscricao.status.value", params));
         String numeroDocPagamento = get(String.class, "inscricao.pagamento.codPagamento", params);
-        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento.time", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento", params);
         Order order = getOrder(params);
         if (order != null) {
             return inscricaoDao.searchInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao, order.toHibernateOrder(),firstResult, maxResults);
@@ -48,10 +50,10 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         Long idEdicao = get(Long.class, "edicao.id", params);
         String nomePessoa = get(String.class, "inscricao.confraternista.pessoa.nome", params);
         Calendar dataSendInscricao = get(Calendar.class, "inscricao.dataInscricao", params);
-        String tipoConfraternista = get(String.class, "inscricao.confraternista.tipo", params);
-        String situacaoInscricao = get(String.class, "inscricao.status.value", params);
+        Tipo tipoConfraternista = Tipo.parse(get(String.class, "inscricao.confraternista.tipo", params));
+        Status situacaoInscricao = Status.parse(get(String.class, "inscricao.status.value", params));
         String numeroDocPagamento = get(String.class, "inscricao.pagamento.codPagamento", params);
-        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento.time", params);
+        Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento", params);
         return inscricaoDao.countInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao);
     }
 

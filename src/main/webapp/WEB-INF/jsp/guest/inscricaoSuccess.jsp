@@ -23,7 +23,7 @@
     </div>
 </fieldset>
 <!--DADOS USUÁRIO-->
- <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+<fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
     <legend class="label">
         <h4><fmt:message key="label.userdetails"/></h4>
     </legend>
@@ -248,7 +248,7 @@
 <see:formButtonGroup putSubmit="false" backUrl="../index.html">
     <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" data-url="${url_print}"><i class="icon-print"></i> Imprimir Inscrição</button>
 </see:formButtonGroup>
-
+<fmt:formatDate var="dtNasc" value="${command.inscricao.confraternista.pessoa.dataNascimento.time}" pattern="dd/MM/yyyy"/>
 <script>
     function calculaMaiorIdade(nasc) {
         var hoje = new Date(), idade;
@@ -264,7 +264,7 @@
     $(document).ready(function () {
         var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
         var tipoConfraternista = '${command.inscricao.confraternista.tipo}';
-        var dataNascimento = $.DateUtils.parseDate(${command.inscricao.confraternista.pessoa.dataNascimento.time});
+        var dataNascimento = $.DateUtils.toDate('${dtNasc}');
         if ((tipoEvento == 'FAIXA_ETARIA') && (tipoConfraternista == 'CONFRATERNISTA')) {
             $('#evangelizadorResponsavel').show();
         } else {
@@ -275,17 +275,21 @@
         } else {
             $('#responsavel').hide();
         }
-
-        $("#imprimirInscricao").confirmDialog({
-            'title': "Atenção",
-            'content': "Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.",
-            'yesBtn': false,
-            'noBtn': {
-                label: "Fechar",
-                clickFunction: function (event, $content, $caller) {
-                    window.location = $caller.attr("data-url");
+        $("#imprimirInscricao").click(function () {
+            var _this = $(this);
+            var imprimir = new AlertJS({
+                'title': "Atenção",
+                'content': "Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar",
+                        clickFunction: function (event, dialog) {
+                            window.location = _this.attr("data-url");
+                        }
+                    }
                 }
-            }
+            });
+            imprimir.open();
         });
     });
 </script>

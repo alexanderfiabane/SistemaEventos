@@ -21,7 +21,6 @@ import br.esp.sysevent.util.PagamentoInscricaoUtils;
 import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.NumberUtils;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +43,7 @@ public class PagSeguroNotification {
     private InscricaoDao inscricaoDao;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void onPost(@RequestParam(value = "idEdicao", required = false) final String idEdicao, HttpServletRequest request, HttpServletResponse response) throws PagSeguroServiceException {
-        //response.addHeader("Access-Control-Allow-Origin", "https://sandbox.pagseguro.uol.com.br");
+    public void onPost(@RequestParam(value = "idEdicao", required = false) final String idEdicao, HttpServletRequest request) throws PagSeguroServiceException {
         String notificationCod = (String) request.getParameter("notificationCode");
         String notificationType = (String) request.getParameter("notificationType");
         if (notificationType.equals("transaction")){
