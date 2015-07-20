@@ -45,7 +45,7 @@ public class PagSeguroNotification {
 
     @RequestMapping(method = RequestMethod.POST)
     public void onPost(@RequestParam(value = "idEdicao", required = false) final String idEdicao, HttpServletRequest request, HttpServletResponse response) throws PagSeguroServiceException {
-        response.addHeader("Access-Control-Allow-Origin", "https://sandbox.pagseguro.uol.com.br");
+        //response.addHeader("Access-Control-Allow-Origin", "https://sandbox.pagseguro.uol.com.br");
         String notificationCod = (String) request.getParameter("notificationCode");
         String notificationType = (String) request.getParameter("notificationType");
         if (notificationType.equals("transaction")){
