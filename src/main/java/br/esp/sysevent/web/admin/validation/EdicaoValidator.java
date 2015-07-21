@@ -23,7 +23,6 @@ import org.springframework.validation.Errors;
 @Component
 public class EdicaoValidator extends AbstractValidator<Edicao> {
 
-    private final Pattern TEMA_PATTERN = Pattern.compile("[\\s\\p{L}]+");
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
@@ -58,9 +57,6 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         if (CharSequenceUtils.isBlankOrNull(tema)) {
             // tema obrigatório
             errors.rejectValue("tema", "errors.required");
-        } else if (!TEMA_PATTERN.matcher(tema).matches()) {
-            // tema inválido
-            errors.rejectValue("tema", "errors.invalid");
         }
     }
 
@@ -145,7 +141,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguro", "errors.required");
                 }else if(!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguro()).matches()){
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguro", "errors.invalid");
-                }                                
+                }
                 if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
                         || CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())){
                     errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required.at.least.one");

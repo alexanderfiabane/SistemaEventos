@@ -94,7 +94,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     public Collection<Edicao.Tipo> getTiposEdicao() {
         return Edicao.Tipo.getValues();
     }
-    
+
     @ModelAttribute("tiposFormaCobranca")
     public Collection<FormaCobranca.TipoCobranca> getTiposFormaCobranca() {
         return FormaCobranca.TipoCobranca.getTipos();
@@ -118,8 +118,6 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
-        // TODO : Não ta fazendo o bind do Calendar.
-        //binder.registerCustomEditor(Period.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaDao));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaDao));

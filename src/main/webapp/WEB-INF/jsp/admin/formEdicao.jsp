@@ -80,15 +80,15 @@
                                 <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.banco"/>
                             </div>
                             <div class="span8">
-                                <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecido"/>
+                                <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain"/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="span4">
-                                <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agencia"/>
+                                <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agenciaPlain"/>
                             </div>
                             <div class="span5">
-                                <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroConta"/>
+                                <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroContaPlain"/>
                             </div>
                             <div class="span3">
                                 <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
@@ -98,7 +98,7 @@
                     <div id="pagseguro" class="row hidden">
                         <div class="row">
                             <div class="span4">
-                                <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguro"/>
+                                <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguroPlain"/>
                             </div>
                             <div class="span4">
                                 <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
@@ -106,7 +106,7 @@
                             <div class="span4">
                                 <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </fieldset>
             </div>

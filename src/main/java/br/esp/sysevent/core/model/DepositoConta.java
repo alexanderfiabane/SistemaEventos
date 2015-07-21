@@ -5,7 +5,9 @@
  */
 package br.esp.sysevent.core.model;
 
+import br.esp.sysevent.util.SimpleCipher;
 import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -20,7 +22,7 @@ import javax.persistence.Table;
 @Table(name = "DEPOSITO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_DEPOSITO_CONTA"))
 public class DepositoConta extends AbstractEntity{
-    private static final long serialVersionUID = 4952142593765962855L;
+    private static final long serialVersionUID = -1799581732756799688L;
 
     @Column(name = "NOME_BANCO", nullable = true)
     private String banco;
@@ -49,6 +51,24 @@ public class DepositoConta extends AbstractEntity{
         this.agencia = agencia;
     }
 
+    public String getAgenciaPlain() {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            return CharSequenceUtils.isNotEmpty(getAgencia())? crypto.decryptFromHexString(getAgencia()): "";
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void setAgenciaPlain(String agencia) {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            setAgencia(crypto.encryptToHexString(agencia));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public String getFavorecido() {
         return favorecido;
     }
@@ -57,12 +77,48 @@ public class DepositoConta extends AbstractEntity{
         this.favorecido = favorecido;
     }
 
+    public String getFavorecidoPlain() {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            return CharSequenceUtils.isNotEmpty(getFavorecido())? crypto.decryptFromHexString(getFavorecido()) : "";
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void setFavorecidoPlain(String favorecido) {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            setFavorecido(crypto.encryptToHexString(favorecido));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public String getNumeroConta() {
         return numeroConta;
     }
 
     public void setNumeroConta(String numeroConta) {
         this.numeroConta = numeroConta;
+    }
+
+    public String getNumeroContaPlain() {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            return CharSequenceUtils.isNotEmpty(getNumeroConta())? crypto.decryptFromHexString(getNumeroConta()): "";
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void setNumeroContaPlain(String numeroConta) {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            setNumeroConta(crypto.encryptToHexString(numeroConta));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public String getOperacao() {

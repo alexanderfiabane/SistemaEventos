@@ -5,7 +5,9 @@
  */
 package br.esp.sysevent.core.model;
 
+import br.esp.sysevent.util.SimpleCipher;
 import com.javaleks.commons.core.model.AbstractEntity;
+import com.javaleks.commons.util.CharSequenceUtils;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -20,14 +22,14 @@ import javax.persistence.Table;
 @Table(name = "PAGSEGURO_CONTA")
 @AttributeOverride(name = "id", column = @Column(name = "ID_PAGSEGURO_CONTA"))
 public class PagSeguroConta extends AbstractEntity{
-    private static final long serialVersionUID = -7267704569517316781L;    
+    private static final long serialVersionUID = 1731550365218691466L;
 
     @Column(name = "EMAIL", nullable = true)
     private String emailPagSeguro;
     @Column(name = "TOKEN_SEGURANCA_PROD", nullable = true)
     private String tokenSegurancaProducao;
     @Column(name = "TOKEN_SEGURANCA_DEV", nullable = true)
-    private String tokenSegurancaSandBox;    
+    private String tokenSegurancaSandBox;
 
     public String getEmailPagSeguro() {
         return emailPagSeguro;
@@ -35,6 +37,24 @@ public class PagSeguroConta extends AbstractEntity{
 
     public void setEmailPagSeguro(String emailPagSeguro) {
         this.emailPagSeguro = emailPagSeguro;
+    }
+
+    public String getEmailPagSeguroPlain() {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            return CharSequenceUtils.isNotEmpty(getEmailPagSeguro())? crypto.decryptFromHexString(getEmailPagSeguro()) : "";
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void setEmailPagSeguroPlain(String emailPagSeguro) {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            setEmailPagSeguro(crypto.encryptToHexString(emailPagSeguro));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public String getTokenSegurancaProducao() {
