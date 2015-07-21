@@ -119,7 +119,7 @@ public class Inscricao extends AbstractEntity {
     }
 
     public boolean isPodeEfetivar() {
-        return status == Status.AGUARDANDO_PAGAMENTO;
+        return (status == Status.AGUARDANDO_PAGAMENTO) || (status == Status.PAGA);
     }
 
     public boolean isEfetivada() {

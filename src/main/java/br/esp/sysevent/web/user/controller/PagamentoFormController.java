@@ -86,7 +86,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     public PagamentoInscricao getCommand(@RequestParam(value = "idInscricao", required = false) final String idInscricao) throws Exception {
         //Refazer pegando o pagamento...deve ser salvo no ato da inscricao..modificar metodo de atualização da inscricao.
         final Inscricao inscricao = getInscricao(idInscricao);
-        if (inscricao.getStatus() != Inscricao.Status.AGUARDANDO_PAGAMENTO) {
+        if (inscricao.getStatus().equals(Inscricao.Status.PENDENTE)) {
             throw new IllegalStateException("Pagamento não está liberado para esta inscrição");
         }
         PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByInscricao(inscricao);
