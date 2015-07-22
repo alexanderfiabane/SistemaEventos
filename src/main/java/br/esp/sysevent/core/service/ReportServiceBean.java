@@ -46,7 +46,7 @@ public class ReportServiceBean implements ReportService {
 //        return JasperRunManager.runReportToPdf(getJasper(FICHA_INSCRICAO).getInputStream(), getParameters(null), dataSource);
 //        final InputStream htmlModel = getClass().getClassLoader().getResourceAsStream(HTML);
 //        final String htmlContent = getVelocityProcessor().process(htmlModel, Collections.singletonMap("inscricao", (Object) inscricao));
-//        return parseHtmlContent(new ByteArrayInputStream(htmlContent.getBytes(Charset.forName("ISO-8859-1"))));
+//        return parseHtmlContent(new ByteArrayInputStream(htmlContent.getBytes(Charset.forName("UTF-8"))));
     }
 
     @Override
@@ -75,8 +75,8 @@ public class ReportServiceBean implements ReportService {
 
     private VelocityProcessor<Object> getVelocityProcessor() {
         final Properties velocityProperties = new Properties();
-        velocityProperties.setProperty("input.encoding", "utf-8");
-        velocityProperties.setProperty("output.encoding", "ISO-8859-1");
+        velocityProperties.setProperty("input.encoding", "UTF-8");
+        velocityProperties.setProperty("output.encoding", "UTF-8");
         velocityProperties.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         final ConfigurableVelocityProcessor<Object> velocityProcessor = new ConfigurableVelocityProcessor<Object>(velocityProperties);
         velocityProcessor.addTool("dateUtils", DateUtils.class);

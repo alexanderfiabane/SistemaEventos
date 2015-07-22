@@ -59,7 +59,7 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
         pagamentoInscricao.setCodPagamento(codTransactionPagSeguro);
         PagSeguroConta pagSeguroAccount = inscricao.getEdicaoEvento().getFormaCobranca().getPagSeguro();
         AccountCredentials pagSeguroCredentials = new AccountCredentials(
-                pagSeguroAccount.getEmailPagSeguro(),
+                pagSeguroAccount.getEmailPagSeguroPlain(),
                 pagSeguroAccount.getTokenSegurancaSandBox(),
                 pagSeguroAccount.getTokenSegurancaSandBox());
         Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials,codTransactionPagSeguro);

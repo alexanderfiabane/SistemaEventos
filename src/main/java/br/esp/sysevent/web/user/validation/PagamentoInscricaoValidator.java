@@ -18,7 +18,7 @@ public class PagamentoInscricaoValidator extends AbstractValidator<PagamentoInsc
 
     @Override
     public void validateCommand(PagamentoInscricao target, Errors errors) {
-        if(CharSequenceUtils.isBlank(target.getCodPagamento())) {
+        if(CharSequenceUtils.isBlankOrNull(target.getCodPagamento())) {
             errors.rejectValue("codPagamento", "errors.required");
         }
         if(target.getDataPagamento()== null) {
@@ -26,6 +26,9 @@ public class PagamentoInscricaoValidator extends AbstractValidator<PagamentoInsc
         }
         if(target.getValor() == null) {
             errors.rejectValue("valor", "errors.required");
+        }
+        if(CharSequenceUtils.isBlankOrNull(target.getDescricaoPagamento())) {
+            errors.rejectValue("descricaoPagamento", "errors.required");
         }
     }
 }

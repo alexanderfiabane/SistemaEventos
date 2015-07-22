@@ -23,6 +23,21 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring-context.xml, /WEB-INF/spring-security.xml</param-value>
     </context-param>
+    
+    <filter>
+        <filter-name>encoding-filter</filter-name>
+        <filter-class>
+            org.springframework.web.filter.CharacterEncodingFilter
+        </filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+        <param-name>forceEncoding</param-name>
+        <param-value>true</param-value>
+        </init-param>
+    </filter>
 
     <!-- Define o filtro do Spring-Security -->
     <filter>
@@ -33,9 +48,13 @@
     <filter>
         <filter-name>sitemesh</filter-name>
         <filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
-    </filter>
+    </filter>    
 
     <!-- Define quais as urls devem ser testadas pelo filtro do Spring-Security -->
+    <filter-mapping>
+        <filter-name>encoding-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern> <!-- todas devem passar pelo filtro -->

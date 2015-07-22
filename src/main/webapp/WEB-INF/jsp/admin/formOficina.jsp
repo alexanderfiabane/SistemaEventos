@@ -28,6 +28,7 @@
                 <th class="align-center" style="width: 2em;"><fmt:message key="label.options"/></th>
                 <th><fmt:message key="label.name"/></th>
                 <th class="align-center" style="width: 3em;"><fmt:message key="label.vacancies"/></th>
+                <th class="align-center" style="width: 3em;"><fmt:message key="label.occupied.vacancies"/></th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +44,7 @@
                     </td>
                     <td>${oficina.nome}</td>
                     <td class="align-right">${oficina.vagas}</td>
+                    <td class="align-right">${oficina.vagasOcupadas}</td>
                 </tr>
             </c:forEach>
         </tbody>

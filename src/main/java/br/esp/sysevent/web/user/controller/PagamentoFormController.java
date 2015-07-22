@@ -119,7 +119,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             if (tipoCobranca.equals(TipoCobranca.PAGSEGURO)) {
                 return "user/pagamentoSuccessPS";
             }else{
-                return "user/pagamentoSuccess";
+                return "user/pagamentoSuccessDC";
             }
         }
         if (tipoCobranca.equals(TipoCobranca.PAGSEGURO)) {
@@ -136,7 +136,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             //Gerar número para o botão lightbox e colocar no model
             PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
-                    pagSeguroAccount.getEmailPagSeguro(),
+                    pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaSandBox(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
 
@@ -162,12 +162,13 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model, request);
         }
-        pagamentoInscricaoDao.save(command);
-        model.addAttribute("message", getMessage("message.success.save", locale));
+        pagamentoInscricaoDao.saveOrUpdate(command);
+        model.addAttribute("message", getMessage("payment.success.save", locale));
+        ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.payment.receive", locale), "recebimentoPagamentoDC.html");
 
         // clear the command object from the session and return form success view
         status.setComplete();
-        return "user/pagamentoSuccess";
+        return "user/pagamentoSuccessDC";
     }
 
     protected Inscricao getInscricao(final String idInscricao) throws IllegalArgumentException, IllegalAccessException {

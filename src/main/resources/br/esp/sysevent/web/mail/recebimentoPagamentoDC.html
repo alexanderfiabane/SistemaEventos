@@ -9,29 +9,13 @@
             <h1>Caro(a) ${inscricao.confraternista.tipo.descricao}(a) ${inscricao.confraternista.pessoa.nome}</h1>            
         </div>
         <div style="padding-top:15px;font-family:Arial; font-size:12pt">
-            Sua inscrição foi aprovada e podes proceder com o pagamento.<br/>
-<!--            Para realizar o pagamento o(a) Sr(a) pode efetuar o depósito, preferencialmente, na boca do caixa (depósito identificado).<br/>
-            Após realizar o pagamento acesse a área do usuário - http://seespirita.org 'Minhas Inscrições', com os dados de acesso enviados em e-mail anterior - clique no botão
-            pagamento, que estará ao lado dos botões de visualização e impressão da inscrição, e preencha o formulário de pagamento. 
-            A nossa equipe irá verificar o seu pagamento e, verificando que tudo está certo, irá efetivar a sua inscrição (através de e-mail).-->
-            <br/>
-            <br/>
-            <b>Dados para depósito:</b> 
-            <br/>
-            <br/>
-            <b>Banco: </b>${inscricao.edicaoEvento.formaCobranca.deposito.bancoPlain}
-            <br/>
-            <b>Agencia: </b>${inscricao.edicaoEvento.formaCobranca.deposito.agenciaPlain}
-            <br/>
-            <b>Conta: </b>${inscricao.edicaoEvento.formaCobranca.deposito.numeroContaPlain}
-            <br/>
-            <b>Operação: </b>${inscricao.edicaoEvento.formaCobranca.deposito.operacao}
-            <br/>
-            <b>Favorecido(a): </b>${inscricao.edicaoEvento.formaCobranca.deposito.favorecidoPlain}
-            <br/>
-            <br/>
-            <b>Valor: </b>${inscricao.valor}
+            Seu pagamento foi registrado com sucesso.<br/><br/>            
+            Confira os dados e aguarde a confirmação do pagamento.            
             <br/>    
+            <br/>
+            Descrição do pagamento:<br/><br/>
+            ${inscricao.pagamento.descricaoPagamento}
+            <br/>
             <br/>
             Lembrando.
             <br/>
@@ -42,7 +26,7 @@
                 <li>Assine a ficha de inscrição;</li>
                 <li>Para menores de 18 anos, a assinatura do responsável é obrigatória (campo: autorização para menores);</li>
                 <li>Você deve providenciar as assinaturas necessárias;</li>
-                <li>Digitalize a ficha de inscrição e envie-a para o evento através do meio indicado no site do evento;</li>
+                <li>Digitalize a ficha de inscrição e envie-a para o evento através do meio indicado no site do evento;</li>                
             </ul>            
             <br/>
             <br/>

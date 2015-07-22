@@ -70,7 +70,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         Map<String, Object> params = new HashMap<>();
         params.put("idEdicao", idEdicao);
         EnhancedStringBuilder builder = new EnhancedStringBuilder();
-        builder.appendln("select count(id) from ", getPersistentClass().getName()).
+        builder.appendln("select count(this.id) from ", getPersistentClass().getName(), " this").
                 appendln("inner join this.edicaoEvento ed").
                 appendln("inner join this.confraternista confraternista").
                 appendln("inner join confraternista.pessoa pessoa").
@@ -121,7 +121,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         Map<String, Object> params = new HashMap<>();
         params.put("idEdicao", idEdicao);
         EnhancedStringBuilder builder = new EnhancedStringBuilder();
-        builder.appendln("from ", getPersistentClass().getName()).
+        builder.appendln("select this from ", getPersistentClass().getName(), " this").
                 appendln("inner join this.edicaoEvento ed").
                 appendln("inner join this.confraternista confraternista").
                 appendln("inner join confraternista.pessoa pessoa").

@@ -77,7 +77,7 @@
                     <div id="deposito" class="row hidden">
                         <div class="row">
                             <div class="span4">
-                                <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.banco"/>
+                                <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.bancoPlain"/>
                             </div>
                             <div class="span8">
                                 <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain"/>
@@ -309,3 +309,4 @@
         });
     });
 </script>
+

@@ -43,6 +43,24 @@ public class DepositoConta extends AbstractEntity{
         this.banco = banco;
     }
 
+    public String getBancoPlain() {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            return CharSequenceUtils.isNotEmpty(getBanco())? crypto.decryptFromHexString(getBanco()): "";
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void setBancoPlain(String banco) {
+        try {
+            SimpleCipher crypto = new SimpleCipher();
+            setBanco(crypto.encryptToHexString(banco));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public String getAgencia() {
         return agencia;
     }

@@ -70,8 +70,8 @@
                 <th class="centered"><fmt:message key="label.options"/></th>
                 <th data-name="pessoa.nome"><fmt:message key="label.name"/></th>
                 <th style="min-width: 12em;" data-name="confraternista.tipo"><fmt:message key="label.subscriptiontype"/></th>
-                <th data-name="status"><fmt:message key="label.subscriptionstatus"/></th>
-                <th style="min-width: 12em;" data-name="dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
+                <th data-name="this.status"><fmt:message key="label.subscriptionstatus"/></th>
+                <th style="min-width: 12em;" data-name="this.dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
                 <th><fmt:message key="label.paymentdate"/></th>
                 <th><fmt:message key="label.paymentnumber"/></th>
             </tr>

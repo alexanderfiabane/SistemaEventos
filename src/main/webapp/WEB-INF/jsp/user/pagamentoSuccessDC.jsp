@@ -5,17 +5,29 @@
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
+
 <form:form commandName="command">
     <div class="row">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label"><h4><fmt:message key="label.paymentdetails"/></h4></legend>
             <div class="row">
-                <div class="span6">
-                    <c:out value="${command.descricaoPagamento}" escapeXml="false"/>
+                <div class="span4">
+                    <label class="label">Número do pagamento:</label>
+                    <c:out value="${command.codPagamento}"/>
                 </div>
-                <div class="span6 align-right">
+                <div class="span4">
                     <label class="label">Data do pagamento:</label>
                     <fmt:formatDate value="${command.dataPagamento.time}" pattern="dd/MM/yyyy"/>
+                </div>
+                <div class="span4">
+                    <label class="label">Valor pago:</label>
+                    <fmt:formatNumber value="${command.valor}" type="currency" currencySymbol="R$" minFractionDigits="2"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span12">
+                    <label class="label">Descrição do pagamento:</label><br/>
+                    <c:out value="${command.descricaoPagamento}"/>
                 </div>
             </div>
             <div class="table-wrapper scrollable">
