@@ -232,7 +232,11 @@
             loadConfraternistas(grupoA, $('#confraternistasGrupoA'), true);
             grupoIdadeAjaxService.findSimilares(grupoASelecionado, function callback(grupo) {
                 if (grupo.length === 0) {
-                    bootbox.alert("Não existem grupos similares ao selecionado.");
+                    var alert = new AlertJS({
+                        'theme': "info",
+                        'content': "Não existem grupos similares ao selecionado."
+                    });
+                    alert.open();
                     grupoB.append($('<option value="">').append('Para trocar selecione outro grupo'));
                 } else {
                     grupoB.append($('<option value="">').append('Selecione um grupo'));
