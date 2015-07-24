@@ -116,6 +116,7 @@
             <dwr:include method="count" />
             <dwr:include method="findByIdGrupoIdade" />
             <dwr:include method="findSemDormitorioBySexo" />
+            <dwr:include method="findByNomeEdicao" />
         </dwr:remote>
     </bean>
     <bean id="confraternistaAjaxService" class="br.esp.sysevent.web.ajax.ConfraternistaAjaxService">        

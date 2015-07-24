@@ -278,6 +278,7 @@
         $("#imprimirInscricao").click(function () {
             var _this = $(this);
             var imprimir = new AlertJS({
+                'theme': "info",
                 'title': "Atenção",
                 'content': "Por favor, acesse o e-mail cadastrado no formulário de inscrição para obter os dados de login no sistema e imprimir sua ficha de inscrição.",
                 'buttons': {

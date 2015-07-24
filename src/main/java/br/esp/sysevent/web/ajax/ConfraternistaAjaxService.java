@@ -36,7 +36,7 @@ public class ConfraternistaAjaxService {
         }
         return confraternistaDao.findByNome(nome);
     }
-    
+
     public Collection<Confraternista> findByIdDormitorio(final String idDormitorio) {
         if (CharSequenceUtils.isBlank(idDormitorio)) {
             return Collections.emptyList();

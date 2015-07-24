@@ -51,4 +51,5 @@ public interface InscricaoDao extends BaseSistemaDao<Long, Inscricao> {
     public Collection<Inscricao> findByIdGrupoIdade(Long idGrupoIdade);
     public Collection<Inscricao> findSemDormitorioBySexo(Sexo sexo, Long idEdicao);
     public Long gravaInscricao(final InscricaoCommand inscricaoCmd);
+    public Collection<Inscricao> findByNomeEdicao(String nome, Sexo genero, Long idEdicao);
 }

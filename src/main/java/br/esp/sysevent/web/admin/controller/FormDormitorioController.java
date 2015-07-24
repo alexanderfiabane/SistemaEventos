@@ -10,10 +10,10 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Dormitorio;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
-import br.esp.sysevent.web.admin.validation.DormitorioValidator;
-import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
 import br.esp.sysevent.persistence.springframework.validation.Validator;
+import br.esp.sysevent.web.admin.validation.DormitorioValidator;
+import br.esp.sysevent.web.controller.AbstractFormController;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
@@ -97,6 +97,7 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
 
     /**
      * Processa a submissão do form.
+     *
      * @param command
      * @param locale
      * @param result
@@ -118,38 +119,29 @@ public class FormDormitorioController extends AbstractFormController<Long, Dormi
         }
         Confraternista coordenadorNovo = command.getCoordenador();
         Confraternista viceCoordenadorNovo = command.getViceCoordenador();
+        Integer vagasOcupadas = 0;
 
-        if (!coordenadorNovo.equals(viceCoordenadorNovo)) {
-            if (command.getId() == null) {
-                command.setVagasOcupadas(2);
+        if (command.getId() != null) {
+            Dormitorio dormitorioAtual = dormitorioDao.findById(command.getId());
+            Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
+            Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
+            if (coordenadorAtual.equals(viceCoordenadorAtual)) {
+                command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() - 1);
             } else {
-                Dormitorio dormitorioAtual = dormitorioDao.findById(command.getId());
-                Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
-                Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
-                if (coordenadorAtual.equals(viceCoordenadorAtual)) {
-                    command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() + 1);
-                }
-                coordenadorAtual.setDormitorio(null);
-                confraternistaDao.saveOrUpdate(coordenadorAtual);
-                viceCoordenadorAtual.setDormitorio(null);
-                confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
+                command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() - 2);
             }
-        } else {
-            if (command.getId() == null) {
-                command.setVagasOcupadas(1);
-            } else {
-                Dormitorio dormitorioAtual = dormitorioDao.findById(command.getId());
-                Confraternista coordenadorAtual = dormitorioAtual.getCoordenador();
-                Confraternista viceCoordenadorAtual = dormitorioAtual.getViceCoordenador();
-                if (!coordenadorAtual.equals(viceCoordenadorAtual)) {
-                    command.setVagasOcupadas(dormitorioAtual.getVagasOcupadas() - 1);
-                }
-                coordenadorAtual.setDormitorio(null);
-                confraternistaDao.saveOrUpdate(coordenadorAtual);
-                viceCoordenadorAtual.setDormitorio(null);
-                confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
-            }
+            coordenadorAtual.setDormitorio(null);
+            confraternistaDao.saveOrUpdate(coordenadorAtual);
+            viceCoordenadorAtual.setDormitorio(null);
+            confraternistaDao.saveOrUpdate(viceCoordenadorAtual);
+            vagasOcupadas = command.getVagasOcupadas();
         }
+        if (coordenadorNovo.equals(viceCoordenadorNovo)) {
+            command.setVagasOcupadas(vagasOcupadas + 1);
+        } else {
+            command.setVagasOcupadas(vagasOcupadas + 2);
+        }
+        
         dormitorioDao.saveOrUpdate(command);
         Dormitorio domitorio = dormitorioDao.findById(command.getId());
         coordenadorNovo.setDormitorio(domitorio);

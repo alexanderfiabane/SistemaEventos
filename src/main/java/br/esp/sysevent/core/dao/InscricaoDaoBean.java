@@ -29,6 +29,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +108,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         // setar params
         return NumberUtils.toLong((Number) q.uniqueResult());
     }
+
     @Override
     public Collection<Inscricao> searchInscricoes(final Long idEdicao,
             final String nomePessoa,
@@ -181,10 +183,11 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("endereco.cidade", "cidade")
                 .createAlias("cidade.estado", "estado")
                 .add(Restrictions.eq("edicaoEvento.id", idEdicao))
-                .add(Restrictions.or(
-                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
-                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
-                        ))
+                .add(Restrictions.eq("status", Inscricao.Status.EFETIVADA))
+//                .add(Restrictions.or(
+//                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+//                                Restrictions.eq("status", Inscricao.Status.EFETIVADA)
+//                        ))
                 .addOrder(Order.asc("pessoa.nome"));
         return findByCriteria(criteria);
     }
@@ -383,6 +386,18 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                         ));
 
         return DataAccessUtils.uniqueResult(findByCriteria(criteria));
+    }
+
+    @Override
+    public Collection<Inscricao> findByNomeEdicao(String nome, Sexo genero, Long idEdicao) {
+        final Criteria criteria = createCriteria().
+                setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).
+                createAlias("confraternista", "confraternista")
+                .createAlias("confraternista.pessoa", "pessoa")
+                .add(Restrictions.ilike("pessoa.nome", nome, MatchMode.ANYWHERE))
+                .add(Restrictions.eq("pessoa.sexo", genero))
+                .add(Restrictions.eq("edicaoEvento.id", idEdicao));
+        return findByCriteria(criteria);
     }
 
     @Override

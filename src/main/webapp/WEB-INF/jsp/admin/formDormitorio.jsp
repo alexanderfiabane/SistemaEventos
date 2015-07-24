@@ -98,7 +98,7 @@
         </table>
     </div>
 </div>
-<script type="text/javascript" src="<c:url value="/dwr/interface/confraternistaAjaxService.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript">
         function localizar() {
             $('#localizar #field').val($(this).attr('id').replace('Descr', ''));
@@ -115,17 +115,17 @@
                             $('#msgSelecionar').hide();
                             $('#resultadosLocalizar').hide();
                             $('#resultadosLocalizar tbody').empty();
-                            confraternistaAjaxService.findByNome($('#nomeLocalizar').val(), function callback(confraternistas) {
-                                if (confraternistas.length == 0) {
+                            inscricaoAjaxService.findByNomeEdicao($('#nomeLocalizar').val(), $("#sexo").val(), ${command.edicaoEvento.id}, function callback(inscricoes) {
+                                if (inscricoes.length == 0) {
                                     $('#msgLocalizar').show();
                                 } else {
-                                    for (var i = 0; i < confraternistas.length; i++) {
-                                        var confraternista = confraternistas[i];
+                                    for (var i = 0; i < inscricoes.length; i++) {
+                                        var inscricao = inscricoes[i];
                                         $('#resultadosLocalizar tbody').append(
                                                 $('<tr>')
-                                                .append($('<td class="centered" style="width: 2em;">').append($('<input>').attr('type', 'radio').attr('name', 'rdSelect').attr('value', confraternista.id)))
-                                                .append($('<td>').attr('id', 'tdNome' + confraternista.id).append(confraternista.pessoa.nome))
-                                                .append($('<td>').append(confraternista.pessoa.sexo.descricao)));
+                                                .append($('<td class="centered" style="width: 2em;">').append($('<input>').attr('type', 'radio').attr('name', 'rdSelect').attr('value', inscricao.confraternista.id)))
+                                                .append($('<td>').attr('id', 'tdNome' + inscricao.confraternista.id).append(inscricao.confraternista.pessoa.nome))
+                                                .append($('<td>').append(inscricao.confraternista.pessoa.sexo.descricao)));
                                     }
                                     $('#resultadosLocalizar').show();
                                 }

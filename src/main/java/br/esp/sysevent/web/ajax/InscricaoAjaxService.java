@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Fiabane
  */
-
 public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
 
     @Autowired
@@ -55,6 +54,20 @@ public class InscricaoAjaxService extends AbstractAjaxTable<Inscricao>{
         String numeroDocPagamento = get(String.class, "inscricao.pagamento.codPagamento", params);
         Calendar dataPagamentoInscricao = get(Calendar.class, "inscricao.pagamento.dataPagamento", params);
         return inscricaoDao.countInscricoes(idEdicao, nomePessoa, dataSendInscricao, tipoConfraternista, situacaoInscricao, numeroDocPagamento, dataPagamentoInscricao);
+    }
+
+    public Collection<Inscricao> findByNomeEdicao(String nome, String genero, Long idEdicao){
+        if (CharSequenceUtils.isBlank(nome)) {
+            return Collections.emptyList();
+        }
+        if (CharSequenceUtils.isBlank(genero)) {
+            return Collections.emptyList();
+        }
+        if (idEdicao == null){
+            return Collections.emptyList();
+        }
+        Sexo sexo = Sexo.valueOf(genero);
+        return inscricaoDao.findByNomeEdicao(nome, sexo, idEdicao);
     }
 
     public Collection<Inscricao> findByIdGrupoIdade(final String idGrupoIdade) {

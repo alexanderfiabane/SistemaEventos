@@ -4,25 +4,19 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Inscricao;
-import br.esp.sysevent.util.ConfigurableVelocityProcessor;
-import br.esp.sysevent.util.VelocityProcessor;
-import com.javaleks.commons.util.DateUtils;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.tidy.Tidy;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 /**
  *
@@ -33,20 +27,14 @@ public class ReportServiceBean implements ReportService {
 
     private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaInscricaoReport.jasper";
     private static final String CABECALHO_FICHA_INSCRICAO = "br/esp/sysevent/core/report/cabecalhoFichaInscricao.jpg";
-//    private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaArteLuzReport.jasper";
-    private static final String HTML = "br/esp/sysevent/core/report/FichaInscricaoReport.html";
 
     @Override
     public byte[] geraRelatorio(Inscricao inscricao) throws Exception {
         final InputStream imagem = getClass().getClassLoader().getResourceAsStream(CABECALHO_FICHA_INSCRICAO);
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
         parametros.put("fichaInscricaoCabecalho", imagem);
+        parametros.put("menorIdade", isMenorIdade(inscricao.getEdicaoEvento().getData(), inscricao.getConfraternista().getPessoa().getDataNascimento()));
         return geraRelatorio(Collections.singleton(inscricao), FICHA_INSCRICAO, parametros);
-//        final JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singleton(inscricao));
-//        return JasperRunManager.runReportToPdf(getJasper(FICHA_INSCRICAO).getInputStream(), getParameters(null), dataSource);
-//        final InputStream htmlModel = getClass().getClassLoader().getResourceAsStream(HTML);
-//        final String htmlContent = getVelocityProcessor().process(htmlModel, Collections.singletonMap("inscricao", (Object) inscricao));
-//        return parseHtmlContent(new ByteArrayInputStream(htmlContent.getBytes(Charset.forName("UTF-8"))));
     }
 
     @Override
@@ -73,39 +61,26 @@ public class ReportServiceBean implements ReportService {
         return new ClassPathResource(jasper);
     }
 
-    private VelocityProcessor<Object> getVelocityProcessor() {
-        final Properties velocityProperties = new Properties();
-        velocityProperties.setProperty("input.encoding", "UTF-8");
-        velocityProperties.setProperty("output.encoding", "UTF-8");
-        velocityProperties.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
-        final ConfigurableVelocityProcessor<Object> velocityProcessor = new ConfigurableVelocityProcessor<Object>(velocityProperties);
-        velocityProcessor.addTool("dateUtils", DateUtils.class);
-        return velocityProcessor;
+    private boolean isMenorIdade(Calendar dataEvento, Calendar dataNascimento){
+        int idade = getIdade(dataEvento, dataNascimento);
+        return (idade < 18);
     }
 
-    private byte[] parseHtmlContent(final InputStream htmlContent) throws Exception {
-        ByteArrayOutputStream baos = null;
-        BufferedOutputStream buffer;
-        try {
-            baos = new ByteArrayOutputStream();
-            buffer = new BufferedOutputStream(baos);
-            Tidy tidy = new Tidy();
-            tidy.setShowWarnings(false);
-            Document doc = tidy.parseDOM(htmlContent, null);
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocument(doc, null);
-//            renderer.getFontResolver().addFont("fonts/ZHUM601N.TTF", true);
-//            renderer.getFontResolver().addFont("fonts/ZHUM601B.TTF", true);
-//            renderer.getFontResolver().addFont("fonts/ZHUM601I.TTF", true);
-//            renderer.getFontResolver().addFont("fonts/ZHU601BI.TTF", true);
-            renderer.layout();
-            renderer.createPDF(buffer);
-            return baos.toByteArray();
-        } finally {
-            if(baos != null) {
-                baos.flush();
-                baos.close();
-            }
+    private int getIdade(Calendar dataMaior, Calendar dataMenor) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        int year1 = dataMenor.get(Calendar.YEAR);
+        int year2 = dataMaior.get(Calendar.YEAR);
+        int month1 = dataMenor.get(Calendar.MONTH);
+        int month2 = dataMaior.get(Calendar.MONTH);
+        int day1 = dataMenor.get(Calendar.DAY_OF_MONTH);
+        int day2 = dataMaior.get(Calendar.DAY_OF_MONTH);
+        int idade = year2 - year1;
+        if ((month2 < month1)
+                || ((month2 == month1) && (day2 < day1))) {
+            idade -= 1;
         }
+        return idade;
     }
 }

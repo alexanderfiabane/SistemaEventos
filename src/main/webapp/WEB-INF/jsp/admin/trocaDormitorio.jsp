@@ -40,7 +40,7 @@
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas do dormitório -->
                                 <div class="table-wrapper scrollable bordered rounded">
-                                    <table id="confraternistasComDormitorio" class="table small-font-size stroked striped narrow connectedSortable">
+                                    <table id="confraternistasComDormitorio" class="table small-font-size stroked diced striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -63,7 +63,7 @@
                             <div class="centeredDivInner">
                                 <!-- Lista de confraternistas sem dormitório -->
                                 <div class="table-wrapper scrollable bordered rounded">
-                                    <table id="confraternistasSemDormitorio" class="table small-font-size stroked striped narrow connectedSortable">
+                                    <table id="confraternistasSemDormitorio" class="table small-font-size stroked diced striped narrow connectedSortable">
                                         <thead class="header">
                                             <tr>
                                                 <th style="text-align: center;" colspan="3">
@@ -129,7 +129,7 @@
                                             .append('<fmt:message key="label.name"/>'))));
                     confraternistaAjaxService.findByIdDormitorio(dormitorioSelecionado, function callback(confraternistas) {
                         $(inputConfraternista).append('<tbody id="dormitorioSelec">');
-                        $.each(confraternistas, function(index, value) {
+                        $.each(confraternistas, function (index, value) {
                             $('#dormitorioSelec').append($('<tr id="' + value.id + '">')
                                     .append($('<td>')
                                             .append(value.pessoa.endereco.cidade.estado.sigla))
@@ -161,7 +161,7 @@
                                         .append('<fmt:message key="label.name"/>'))));
                 $(inputConfraternista).append('<tbody id="semDormitorio">');
                 if (confraternistas !== null) {
-                    $.each(confraternistas, function(index, value) {
+                    $.each(confraternistas, function (index, value) {
                         $('#semDormitorio').append($('<tr id="' + value.id + '">')
                                 .append($('<td>')
                                         .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
@@ -191,23 +191,22 @@
                     //placeholder: "ui-state-highlight",
                     cursor: "move",
                     items: '> tbody > *',
-                    receive: function(ev, ui) {
+                    receive: function (ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca
                         var idConfraternista = ui.item.context.id;
                         var idDormitorio = ev.target.tHead.rows[0].getAttribute("id");
-                        dormitorioAjaxService.troca(idDormitorio, idConfraternista, function(retorno) {
-//                            $.openUrl({
-//                                'url': thisUrl,
-//                                'showConfirmDialog': true,
-//                                'confirmDialog': {
-//                                    'content': "Tem certeza que deseja deletar essa edição?"
-//                                }
-//                            });
-                            bootbox.alert(retorno, function() {
-                                loadConfraternistas($('#dormitorios'), $('#confraternistasComDormitorio'), true);
-                                loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);
+                        dormitorioAjaxService.troca(idDormitorio, idConfraternista, function (retorno) {
+                            var trocaAlert = new AlertJS({
+                                'theme': "info",
+                                'title': "Troca de Dormitório",
+                                'content': retorno,
+                                'postClose': function (modal) {
+                                    loadConfraternistas($('#dormitorios'), $('#confraternistasComDormitorio'), true);
+                                    loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);
+                                }
                             });
+                            trocaAlert.open();
                         });
                     },
                     cursorAt: {left: 20},
@@ -232,7 +231,7 @@
             loadConfraternistas(sexoSelecionado, '#confraternistasSemDormitorio', false);
             dormitorioAjaxService.findByGenero(sexoSelecionado, ${edicao.id}, function callback(dormitorio) {
                 inputDormitorio.append($('<option value="">').append('Selecione um dormitório'));
-                $.each(dormitorio, function(index, value) {
+                $.each(dormitorio, function (index, value) {
                     inputDormitorio.append($('<option>').val(value.id).append(value.nome));
                 });
             });
@@ -243,15 +242,15 @@
      * Inicializa os métodos javascript
      * @returns {undefined}     */
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         loadDormitorios($('#sexo'), $('#dormitorios'));
         trocaDormitorios();
         //Carrega o painel com os confraternistas do dormitorio selecionado
-        $('#dormitorios').change(function() {
+        $('#dormitorios').change(function () {
             loadConfraternistas($(this), $('#confraternistasComDormitorio'), true);
             loadConfraternistas($('#sexo').val(), '#confraternistasSemDormitorio', false);
         });
-        $('#sexo').change(function() {
+        $('#sexo').change(function () {
             loadDormitorios($(this), $('#dormitorios'));
         });
     });

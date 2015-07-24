@@ -120,7 +120,7 @@
                                             .append('<fmt:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         $(inputConfraternista).append('<tbody id="grupoA">');
-                        $.each(confraternistas, function(index, value) {
+                        $.each(confraternistas, function (index, value) {
                             $('#grupoA').append($('<tr id="' + value.id + '">')
                                     .append($('<td>')
                                             .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
@@ -160,7 +160,7 @@
                                             .append('<fmt:message key="label.name"/>'))));
                     inscricaoAjaxService.findByIdGrupoIdade(grupoIdadeSelecionado, function callback(confraternistas) {
                         $(inputConfraternista).append('<tbody id="grupoB">');
-                        $.each(confraternistas, function(index, value) {
+                        $.each(confraternistas, function (index, value) {
                             $('#grupoB').append($('<tr id="' + value.id + '">')
                                     .append($('<td>')
                                             .append(value.confraternista.pessoa.endereco.cidade.estado.sigla))
@@ -190,16 +190,22 @@
                     connectWith: ".connectedSortable",
                     cursor: "move",
                     items: '> tbody > *',
-                    receive: function(ev, ui) {
+                    receive: function (ev, ui) {
                         ui.item.parent().find('> tbody').append(ui.item);
                         //método que valida e salva troca
                         var idConfraternista = ui.item.context.id;
                         var idGrupoIdade = ev.target.tHead.rows[0].getAttribute("id");
-                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function(retorno) {
-                            bootbox.alert(retorno, function() {
-                                loadConfraternistas($('#selectGrupoA'), $('#confraternistasGrupoA'), true);
-                                loadConfraternistas($('#selectGrupoB').val(), '#confraternistasGrupoB', false);
+                        grupoIdadeAjaxService.troca(idGrupoIdade, idConfraternista, function (retorno) {
+                            var trocaAlert = new AlertJS({
+                                'theme': "info",
+                                'title': "Troca de Grupo",
+                                'content': retorno,
+                                'postClose': function (modal) {
+                                    loadConfraternistas($('#selectGrupoA'), $('#confraternistasGrupoA'), true);
+                                    loadConfraternistas($('#selectGrupoB').val(), '#confraternistasGrupoB', false);
+                                }
                             });
+                            trocaAlert.open();
                         });
                     },
                     cursorAt: {left: 20},
@@ -230,7 +236,7 @@
                     grupoB.append($('<option value="">').append('Para trocar selecione outro grupo'));
                 } else {
                     grupoB.append($('<option value="">').append('Selecione um grupo'));
-                    $.each(grupo, function(index, value) {
+                    $.each(grupo, function (index, value) {
                         grupoB.append($('<option>').val(value.id).append(value.nome));
                     });
                 }
@@ -241,15 +247,15 @@
     /**
      * Inicializa os métodos javascript
      * @returns {undefined}     */
-    $(function() {
-        $(document).ready(function() {
+    $(function () {
+        $(document).ready(function () {
             loadGrupos($('#selectGrupoA'), $('#selectGrupoB'));
             trocaConfraternistaGrupo();
             //Carrega o painel com os confraternistas do dormitorio selecionado
-            $('#selectGrupoB').change(function() {
+            $('#selectGrupoB').change(function () {
                 loadConfraternistas($(this).val(), '#confraternistasGrupoB', false);
             });
-            $('#selectGrupoA').change(function() {
+            $('#selectGrupoA').change(function () {
                 loadGrupos($(this), $('#selectGrupoB'));
             });
         });
