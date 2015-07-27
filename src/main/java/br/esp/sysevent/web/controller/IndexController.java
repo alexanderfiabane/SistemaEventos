@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author Marcius da Silva da Fonseca (sf.marcius@gmail.com)
  */
 @Controller
-@RequestMapping("/index.html")
 public class IndexController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
     public String onGet(final ModelMap model) {
         if (ControllerUtils.isLoggedInAsAdmin()) {
             /**
@@ -31,5 +30,10 @@ public class IndexController {
             return "redirect:/admin/menu.html";
         }
         return "mainMenu";
+    }
+
+    @RequestMapping(value = "/error/exception.html")
+    protected String exception() throws Exception {
+        return "error/error";
     }
 }

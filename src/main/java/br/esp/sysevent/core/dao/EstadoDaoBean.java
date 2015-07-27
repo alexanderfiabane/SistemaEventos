@@ -60,7 +60,7 @@ public class EstadoDaoBean extends AbstractBaseSistemaDaoBean<Long, Estado> impl
     private Collection<Estado> createEstados() {
         try {
             final Collection<Estado> estados = new ArrayList<Estado>();
-            Resource res = new ClassPathResource("/br/ojimarcius/commons/persistence/data/States_BR.txt");
+            Resource res = new ClassPathResource("/com/javaleks/core/data/States_BR.txt");
             final Collection<String> lines = IOUtils.readLines(res.getInputStream(), IOUtils.UTF_8);
             for (String currLine : lines) {
                 if (CharSequenceUtils.isBlankOrNull(currLine) || CharSequenceUtils.startsWith("#", currLine) || !CharSequenceUtils.contains("|", currLine)) {

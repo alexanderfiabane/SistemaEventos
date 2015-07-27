@@ -96,15 +96,15 @@
 
     <error-page>
         <error-code>403</error-code>
-        <location>/WEB-INF/jsp/error/error.jsp</location>
+        <location>/error/exception.html</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/jsp/error/error.jsp</location>
+        <location>/error/exception.html</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/jsp/error/error.jsp</location>
+        <location>/error/exception.html</location>
     </error-page>
 
 </web-app>

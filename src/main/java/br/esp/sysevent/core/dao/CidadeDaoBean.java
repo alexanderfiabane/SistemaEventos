@@ -93,13 +93,13 @@ public class CidadeDaoBean extends AbstractBaseSistemaDaoBean<Long, Cidade> impl
             }
         }
     }
-            
+
     private Collection<Cidade> createCidades() {
         try {
             final Collection<Cidade> cidades = new ArrayList<Cidade>();
             Collection<Estado> estados = estadoDao.findAll();
             for (Estado estado : estados) {
-                Resource res = new ClassPathResource("/br/ojimarcius/commons/persistence/data/Cities_BR_" + estado.getSigla() + ".txt");
+                Resource res = new ClassPathResource("/com/javaleks/core/data/Cities_BR_" + estado.getSigla() + ".txt");
                 if (!res.exists()) {
                     continue; // se nao existir arquivo para este estado, passamos para o prox
                 }
@@ -113,12 +113,10 @@ public class CidadeDaoBean extends AbstractBaseSistemaDaoBean<Long, Cidade> impl
                         if (parts.length == 1) {
                             cidades.add(new Cidade(parts[0], estado));
                         } else if (parts.length == 2) {
-                            cidades.add(new Cidade(parts[1], estado));
-                        } else if (parts.length == 3) {
-                            if ("capital".equalsIgnoreCase(parts[2])) {
-                                cidades.add(new Cidade(parts[1], estado, Boolean.TRUE));
+                            if ("capital".equalsIgnoreCase(parts[1])) {
+                                cidades.add(new Cidade(parts[0], estado, Boolean.TRUE));
                             } else {
-                                cidades.add(new Cidade(parts[1], estado));
+                                cidades.add(new Cidade(parts[0], estado));
                             }
                         }
                     }

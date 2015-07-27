@@ -50,7 +50,7 @@ public class PagSeguroNotification {
             Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
-                    pagSeguroAccount.getEmailPagSeguro(),
+                    pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaSandBox(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
             Transaction transaction = NotificationService.checkTransaction(pagSeguroCredentials, notificationCod);

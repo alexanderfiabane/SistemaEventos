@@ -1,10 +1,10 @@
-<%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" isErrorPage="true"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 
 <mocca:title title="Oooops"/>
 
 <c:set var="exception" value="${requestScope['javax.servlet.error.exception'].cause}"/>
-<c:set var="exceptionName" value="${exception.class.simpleName}"/>
+<c:set var="exceptionName" value="${exception}"/>
 <div class="row">
     <p>Ocorreu um erro ao tentar realizar a operação solicitada.</p>
     <c:if test="${not empty exception.message}">
