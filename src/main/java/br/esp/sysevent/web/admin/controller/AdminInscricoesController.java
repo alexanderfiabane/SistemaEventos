@@ -1,5 +1,6 @@
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.GrupoIdadeDao;
@@ -49,6 +50,8 @@ public class AdminInscricoesController extends I18nController{
     private UsuarioDao usuarioDao;
     @Autowired
     private EventoDao eventoDao;
+    @Autowired
+    private ConfraternistaDao confraternistaDao;
 
     @RequestMapping(value = "/admin/inscricao/list.html", method = RequestMethod.GET)
     public String list(@RequestParam(value = "idEdicao", required = false) final String idEdicao, final ModelMap model) {
@@ -166,17 +169,22 @@ public class AdminInscricoesController extends I18nController{
         final GrupoIdade grupoIdade = confraternista.getGrupoIdade();
         //verificar tipo da inscricao
         if (tipoEvento.equals(Tipo.OFICINA) && oficina != null) {
-            oficina.setVagasOcupadas(
-                    oficina.getVagasOcupadas() - 1);
-            oficinaDao.saveOrUpdate(oficina);
+            if(!confraternista.getTipo().equals(Confraternista.Tipo.OFICINEIRO)){
+                oficina.setVagasOcupadas(oficina.getVagasOcupadas() - 1);
+                oficinaDao.saveOrUpdate(oficina);
+            }
+            confraternista.setOficina(null);
+            confraternistaDao.saveOrUpdate(confraternista);
         } else if (tipoEvento.equals(Tipo.FAIXA_ETARIA) && grupoIdade != null) {
-            grupoIdade.setVagasOcupadas(
-                    grupoIdade.getVagasOcupadas() - 1);
-            grupoIdadeDao.saveOrUpdate(grupoIdade);
+            if(!confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){
+                grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() - 1);
+                grupoIdadeDao.saveOrUpdate(grupoIdade);
+            }
+            confraternista.setGrupoIdade(null);
+            confraternistaDao.saveOrUpdate(confraternista);
         }
         if (confraternista.isOcupaVaga(edicaoEvento)) {
-            edicaoEvento.setVagasOcupadas(
-                    edicaoEvento.getVagasOcupadas() - 1);
+            edicaoEvento.setVagasOcupadas(edicaoEvento.getVagasOcupadas() - 1);
             edicaoDao.saveOrUpdate(edicaoEvento);
         }
     }
