@@ -53,7 +53,7 @@ public abstract class PagamentoInscricaoUtils {
                 descricaoPagamento.append(" ").append(Integer.toString(transaction.getInstallmentCount())).appendln("x )");
             }else{
                 descricaoPagamento.appendln(" )");
-            }            
+            }
             descricaoPagamento.append("<label class='label'>Valor pago</label>: ")
                     .append(" R$ ").append(transaction.getGrossAmount().toString());
         }
@@ -69,7 +69,7 @@ public abstract class PagamentoInscricaoUtils {
                 Long.toString(inscricao.getId()),
                 "Inscrição" + " - " + inscricao.getEdicaoEvento().getEvento().getNome(),
                 1,
-                inscricao.getEdicaoEvento().getValorInscricao(),
+                inscricao.getConfraternista().isIsento(inscricao.getEdicaoEvento())? new BigDecimal("0.01") : inscricao.getEdicaoEvento().getValorInscricao(),
                 new Long(1),
                 new BigDecimal("0.00"));
         return item;

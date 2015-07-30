@@ -7,6 +7,7 @@ import com.javaleks.commons.core.model.AbstractEntity;
 import com.javaleks.commons.util.CollectionUtils;
 import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -17,6 +18,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -26,6 +28,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -38,7 +42,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @AttributeOverride(name = "id", column =
         @Column(name = "ID_EDICAO"))
 public class Edicao extends AbstractEntity {
-    private static final long serialVersionUID = 4133257161895949871L;
+    private static final long serialVersionUID = -1935823858499808116L;
 
     @ManyToOne
     @JoinColumn(name = "ID_EVENTO", nullable = false)
@@ -102,6 +106,10 @@ public class Edicao extends AbstractEntity {
     @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_FORMA_COBRANCA", nullable = true)
     private FormaCobranca formaCobranca;
+    @OneToMany(mappedBy = "edicao", orphanRemoval = true, fetch = FetchType.EAGER)
+    @Cascade({CascadeType.ALL})
+    @Fetch(value = FetchMode.SUBSELECT)
+    private Collection<EdicaoConfigParticipante> edicaoConfigParticipantes;
 
     public String getTema() {
         return tema;
@@ -248,6 +256,34 @@ public class Edicao extends AbstractEntity {
 
     public void setFormaCobranca(FormaCobranca formaCobranca) {
         this.formaCobranca = formaCobranca;
+    }
+
+    public Collection<EdicaoConfigParticipante> getEdicaoConfigParticipantes() {
+        return edicaoConfigParticipantes;
+    }
+
+    public void setEdicaoConfigParticipantes(Collection<EdicaoConfigParticipante> edicaoConfigParticipantes) {
+        this.edicaoConfigParticipantes = edicaoConfigParticipantes;
+    }
+
+    public Collection<Confraternista.Tipo> getIsentos(){
+        Collection<Confraternista.Tipo> isentos = new ArrayList<>();
+        for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
+            if (edicaoConfigParticipante.isIsento()){
+                isentos.add(edicaoConfigParticipante.getTipoParticipante());
+            }
+        }
+        return isentos;
+    }
+
+    public Collection<Confraternista.Tipo> getOcupamVaga(){
+        Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
+        for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
+            if (edicaoConfigParticipante.isOcupaVaga()){
+                ocupamVaga.add(edicaoConfigParticipante.getTipoParticipante());
+            }
+        }
+        return ocupamVaga;
     }
 
     public boolean temVaga() {

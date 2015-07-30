@@ -147,17 +147,11 @@ public class Confraternista extends AbstractEntity {
         this.camisetas = camisetas;
     }
 
-    public boolean isOcupaVaga() {
-        switch (tipo) {
-            case CONFRATERNISTA:
-            case EVANGELIZADOR:
-            case COORDENADOR:
-            case FACILITADOR:
-            case OFICINEIRO:
-                return true;
-            default:
-                return false;
-        }
+    public boolean isOcupaVaga(Edicao edicao) {
+        return edicao.getOcupamVaga().contains(tipo);
+    }
+    public boolean isIsento(Edicao edicao) {
+        return edicao.getIsentos().contains(tipo);
     }
 
     public enum Tipo {

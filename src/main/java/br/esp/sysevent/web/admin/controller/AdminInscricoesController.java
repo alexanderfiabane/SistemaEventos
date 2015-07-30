@@ -58,8 +58,8 @@ public class AdminInscricoesController extends I18nController{
         final Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         if (edicao == null) {
             throw new IllegalArgumentException("Edição não encontrada.");
-        }        
-        model.addAttribute("edicao", edicao);        
+        }
+        model.addAttribute("edicao", edicao);
         model.addAttribute("tipoInscricoes", Confraternista.Tipo.getValues());
         model.addAttribute("inscricaoStatus", Inscricao.Status.values());
         return "admin/inscricao/list";
@@ -174,7 +174,7 @@ public class AdminInscricoesController extends I18nController{
                     grupoIdade.getVagasOcupadas() - 1);
             grupoIdadeDao.saveOrUpdate(grupoIdade);
         }
-        if (confraternista.isOcupaVaga()) {
+        if (confraternista.isOcupaVaga(edicaoEvento)) {
             edicaoEvento.setVagasOcupadas(
                     edicaoEvento.getVagasOcupadas() - 1);
             edicaoDao.saveOrUpdate(edicaoEvento);

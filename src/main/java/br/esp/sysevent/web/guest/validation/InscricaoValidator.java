@@ -84,6 +84,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         final Integer maiorIdade = 18;
         if (confraternista.getTipo() == null) {
             errors.rejectValue("inscricao.confraternista.tipo", "errors.required");
+            return;
         }
         if (CharSequenceUtils.isBlank(confraternista.getAtividadeCasaEspirita())) {
             errors.rejectValue("inscricao.confraternista.atividadeCasaEspirita", "errors.required");
@@ -100,6 +101,11 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         }
         if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
             validateOficina(inscricao, errors);
+        }
+        if (confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){
+            if(confraternista.getGrupoIdade() == null){
+                errors.rejectValue("inscricao.confraternista.grupoIdade", "errors.required");
+            }
         }
         validateCasaEspirita(confraternista.getCasaEspirita(), errors);
     }

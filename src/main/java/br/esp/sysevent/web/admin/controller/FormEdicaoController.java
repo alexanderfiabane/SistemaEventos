@@ -5,12 +5,15 @@
 package br.esp.sysevent.web.admin.controller;
 
 import br.esp.sysevent.core.dao.CorCamisetaDao;
+import br.esp.sysevent.core.dao.EdicaoConfigParticipanteDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
 import br.esp.sysevent.core.dao.TipoCamisetaDao;
+import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.EdicaoConfigParticipante;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
@@ -22,6 +25,7 @@ import br.esp.sysevent.web.controller.AbstractFormController;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.CollectionUtils;
 import com.javaleks.commons.util.NumberUtils;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
@@ -57,6 +61,8 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @Autowired
     private TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
+    private EdicaoConfigParticipanteDao edicaoConfigParticipanteDao;
+    @Autowired
     private EdicaoValidator validator;
 
     @Override
@@ -71,7 +77,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
 
     @ModelAttribute(COMMAND_NAME)
     public Edicao getCommand(@RequestParam(value = "idEvento", required = false) final String idEvento,
-                             @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
+            @RequestParam(value = "idEdicao", required = false) final String idEdicao) {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
@@ -84,6 +90,17 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             }
             edicao.setVagasOcupadas(0);
             edicao.setEvento(evento);
+            Collection<EdicaoConfigParticipante> edicaoConfigParticipantes = new ArrayList<>();
+            Collection<Confraternista.Tipo> tiposConfraternistas = Confraternista.Tipo.getValues();
+            for (Confraternista.Tipo tiposConfraternista : tiposConfraternistas) {
+                EdicaoConfigParticipante edicaoConfigParticipante = new EdicaoConfigParticipante();
+                edicaoConfigParticipante.setTipoParticipante(tiposConfraternista);
+                edicaoConfigParticipante.setIsento(false);
+                edicaoConfigParticipante.setOcupaVaga(true);
+                edicaoConfigParticipante.setEdicao(edicao);
+                edicaoConfigParticipantes.add(edicaoConfigParticipante);
+            }
+            edicao.setEdicaoConfigParticipantes(edicaoConfigParticipantes);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
@@ -119,13 +136,15 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
-        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<TipoCamiseta>(tipoCamisetaDao));
-        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<CorCamiseta>(corCamisetaDao));
-        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<TamanhoCamiseta>(tamanhoCamisetaDao));
+        //binder.registerCustomEditor(EdicaoConfigParticipante.class, new CustomEntityEditor<>(edicaoConfigParticipanteDao));
+        binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<>(tipoCamisetaDao));
+        binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
+        binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));
     }
 
     /**
      * Cria um novo objeto 'command', que será populado pelo form.
+     *
      * @param command
      * @param model
      * @return
@@ -139,6 +158,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
 
     /**
      * Processa a submissão do form.
+     *
      * @param command
      * @param result
      * @param model
@@ -149,11 +169,11 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
      */
     @RequestMapping(method = RequestMethod.POST)
     public String onPost(@ModelAttribute(COMMAND_NAME) final Edicao command,
-                         final BindingResult result,
-                         final ModelMap model,
-                         final RedirectAttributes attributes,
-                         final SessionStatus status,
-                         final Locale locale) {
+            final BindingResult result,
+            final ModelMap model,
+            final RedirectAttributes attributes,
+            final SessionStatus status,
+            final Locale locale) {
 
         // validate data
         if (runValidator(command, result).hasErrors()) {

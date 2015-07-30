@@ -77,7 +77,7 @@
                                 </li>
                             </c:forEach>
                         </ul>
-                        <form:errors path="inscricao.confraternista.grupoIdade" cssClass="fieldError"/>
+                        <form:errors path="inscricao.confraternista.grupoIdade" cssClass="pill error"/>
                     </div>
                 </div>
             </fieldset>
@@ -89,7 +89,7 @@
         </legend>
         <div class="row">
             <div class="span4">
-                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100"/>
+                <see:formField id="loginConfraternista" label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" hint="Caracteres aceitos: letras, números, hifén e underscore (mín: 3 e máx: 15 caracteres)" inputClass="textfield width-100"/>
             </div>
         </div>
     </fieldset>
@@ -673,6 +673,7 @@
                 $('#evangelizadorResponsavel').hide();
             }
         });
+        $('[name=inscricao\\.confraternista\\.tipo]:checked').change();
         $('#dataNascimento').blur(function() {
             var texto = $(this).val();
             if (typeof texto !== 'undefined' && texto !== '') {

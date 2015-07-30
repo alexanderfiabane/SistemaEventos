@@ -20,17 +20,58 @@
                 <fieldset>
                     <div class="row">
                         <div class="span6">
-                            <label class="label control">
-                                <fmt:message key="label.editiontype"/>
-                            </label>
-                            <ul class="no-bullet no-padding">
-                                <c:forEach var="item" items="${tiposEdicao}">
-                                    <li class="mini-padding">
-                                        <form:radiobutton path="tipo" value="${item.name}"/> ${item.descricao}
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                            <form:errors path="tipo" cssClass="pill error"/>
+                            <div class="span6">
+                                <label class="label control">
+                                    <fmt:message key="label.editiontype"/>
+                                </label>
+                                <ul class="no-bullet no-padding">
+                                    <c:forEach var="item" items="${tiposEdicao}">
+                                        <li class="mini-padding">
+                                            <form:radiobutton path="tipo" value="${item.name}"/> ${item.descricao}
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                                <form:errors path="tipo" cssClass="pill error"/>
+                            </div>
+                            <div class="span6">
+                                <label class="label control">
+                                    <fmt:message key="label.subscriptionPaymentMethod"/>
+                                </label>
+                                <ul class="no-bullet no-padding">
+                                    <c:forEach var="item" items="${tiposFormaCobranca}">
+                                        <li class="mini-padding">
+                                            <form:radiobutton path="formaCobranca.tipoCobranca" value="${item.name}"/> ${item.descricao}
+                                        </li>
+                                    </c:forEach>
+                                    <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="table-wrapper">
+                                <table class="table hovered stroked narrow small-font-size">
+                                    <caption class="label control">Configuração de participantes da edição</caption>
+                                    <thead class="header">
+                                        <tr>
+                                            <th style="width: 12em;">Tipo participante</th>
+                                            <th style="width: 10em;" class="centered">Ocupa vaga?</th>
+                                            <th class="centered">Isenção de taxa de inscrição</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="selTipoEdicao">
+                                            <td colspan="3" class="centered bold control">Selecione um tipo de Edição</td>
+                                        </tr>
+                                        <c:forEach items="${command.edicaoConfigParticipantes}" var="confraternista" varStatus="status">
+                                            <tr id="id${confraternista.tipoParticipante.name}" class="hidden">
+                                                <td>${confraternista.tipoParticipante.descricao}</td>
+                                                <td class="centered"><form:checkbox path="edicaoConfigParticipantes[${status.index}].ocupaVaga" value="true"/></td>
+                                                <td class="centered"><form:checkbox path="edicaoConfigParticipantes[${status.index}].isento" value="true"/></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -60,19 +101,6 @@
                         <div class="span3">
                             <see:formField label="label.subscriptionminage" isLabelKey="true" isMandatory="true" path="idadeMinima" maxlength="3" inputClass="textfield"/>
                         </div>
-                    </div>
-                    <div class="row">
-                        <label class="label control">
-                            <fmt:message key="label.subscriptionPaymentMethod"/>
-                        </label>
-                        <ul class="no-bullet no-padding">
-                            <c:forEach var="item" items="${tiposFormaCobranca}">
-                                <li class="mini-padding">
-                                    <form:radiobutton path="formaCobranca.tipoCobranca" value="${item.name}"/> ${item.descricao}
-                                </li>
-                            </c:forEach>
-                            <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>
-                        </ul>
                     </div>
                     <div id="deposito" class="row hidden">
                         <div class="row">
@@ -289,12 +317,6 @@
                 }
             });
         });
-        var formaCobrancaTipo = "${command.formaCobranca.tipoCobranca.name}";
-        if(formaCobrancaTipo === 'DEPOSITO_CONTA'){
-            $('#deposito').show();
-        }else if(formaCobrancaTipo === 'PAGSEGURO'){
-            $('#pagseguro').show();
-        }
         $("[name=formaCobranca\\.tipoCobranca]").change(function () {
             if ($(this).val() === 'DEPOSITO_CONTA') {
                 $('#deposito').show();
@@ -307,6 +329,33 @@
                 $('#pagseguro').hide();
             }
         });
+        $("[name=formaCobranca\\.tipoCobranca]:checked").change();
+        $("[name=tipo]").change(function() {
+            $("#selTipoEdicao").hide();
+            if ($(this).val() === 'CONGRESSO') {
+                $('#idAUXILIAR').show();
+                $('#idCOORDENADOR').show();
+                $('#idCONFRATERNISTA').show();
+                $('#idEVANGELIZADOR').hide();
+                $('#idFACILITADOR').hide();
+                $('#idOFICINEIRO').hide();
+            } else if ($(this).val() === 'FAIXA_ETARIA') {
+                $('#idAUXILIAR').show();
+                $('#idCOORDENADOR').show();
+                $('#idCONFRATERNISTA').show();
+                $('#idEVANGELIZADOR').show();
+                $('#idFACILITADOR').show();
+                $('#idOFICINEIRO').hide();
+            } else {
+                $('#idAUXILIAR').show();
+                $('#idCOORDENADOR').show();
+                $('#idCONFRATERNISTA').show();
+                $('#idEVANGELIZADOR').hide();
+                $('#idFACILITADOR').hide();
+                $('#idOFICINEIRO').show();
+            }
+        });
+        $("[name=tipo]:checked").change();
     });
 </script>
 

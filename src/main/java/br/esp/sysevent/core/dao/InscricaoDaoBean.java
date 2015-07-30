@@ -455,6 +455,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     protected void calculaValorCamisetas(final Inscricao inscricao) {
         final Edicao edicao = inscricao.getEdicaoEvento();
         BigDecimal valorInscricao = edicao.getValorInscricao();
+        if (inscricao.getConfraternista().isIsento(edicao)){
+            valorInscricao = new BigDecimal(0);
+        }
         for (CamisetaConfraternista camiseta : inscricao.getConfraternista().getCamisetas()) {
             valorInscricao = valorInscricao.add(edicao.getValorCamiseta().multiply(new BigDecimal(camiseta.getQuantidadeCamiseta())));
         }
@@ -487,12 +490,14 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         final Edicao edicao = edicaoDao.findById(inscricao.getEdicaoEvento().getId());
         final Edicao.Tipo tipoEdicao = edicao.getTipo();
         final Confraternista confraternista = inscricao.getConfraternista();
-        if (confraternista.isOcupaVaga()) {
+        if (confraternista.isOcupaVaga(edicao)) {
             if (tipoEdicao.equals(Edicao.Tipo.OFICINA)) {
                 Oficina oficina = confraternista.getOficina();
                 if (oficina != null) {
                     oficina = oficinaDao.findById(oficina.getId());
-                    oficina.ocupaVaga();
+                    if (!confraternista.getTipo().equals(Tipo.OFICINEIRO)){
+                        oficina.ocupaVaga();
+                    }
                     oficinaDao.saveOrUpdate(oficina);
                 }
             } else if (tipoEdicao.equals(Edicao.Tipo.FAIXA_ETARIA)) {
@@ -562,8 +567,10 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 if (grupoIdade.getSaldoVagas() == 0) {
                     continue;
                 } else {
-                    grupoIdade.ocupaVaga();
-                    grupoIdadeDao.saveOrUpdate(grupoIdade);
+                    if(!confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){
+                        grupoIdade.ocupaVaga();
+                        grupoIdadeDao.saveOrUpdate(grupoIdade);
+                    }
                     confraternista.setGrupoIdade(grupoIdade);
                     break;
                 }

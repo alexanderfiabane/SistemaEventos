@@ -8,6 +8,7 @@
 
 <%@attribute name="label"       type="java.lang.String" required="true" %>
 <%@attribute name="path"        type="java.lang.String" required="true"%>
+<%@attribute name="hint"       type="java.lang.String" %>
 <%@attribute name="id"          type="java.lang.String"%>
 <%@attribute name="inputClass"  type="java.lang.String"%>
 <%@attribute name="isLabelKey"  type="java.lang.Boolean" %>
@@ -31,14 +32,14 @@
 <%-- source --%>
 <c:if test="${type != 'check'}">
     <c:choose>        
-        <c:when test="${!isLabelKey}">
+        <c:when test="${!isLabelKey}">            
             <label class="label control">
-                ${label}
+                ${label} <c:if test="${not empty hint}"><i id="${id}hint" class="icon-info-sign"></i></c:if>
             </label>        
         </c:when>
         <c:otherwise>
             <label class="label control">
-                <fmt:message key="${label}"/>
+                <fmt:message key="${label}"/> <c:if test="${not empty hint}"><i id="${id}hint" class="icon-info-sign"></i></c:if>
             </label> 
         </c:otherwise>
     </c:choose>
@@ -64,21 +65,17 @@
         <c:choose>            
             <c:when test="${!isLabelKey}">
                 <label class="label checkbox">
-                    ${label}
+                    ${label} <c:if test="${not empty hint}"><i id="${id}hint" class="icon-info-sign"></i></c:if>
                 </label>        
                 <form:checkbox path="${path}" id="${id}" />
             </c:when>
             <c:otherwise>
                 <label class="label checkbox">
-                    <fmt:message key="${label}"/>
+                    <fmt:message key="${label}"/> <c:if test="${not empty hint}"><i id="${id}hint" class="icon-info-sign"></i></c:if>
                     <form:checkbox path="${path}" id="${id}" />
                 </label> 
             </c:otherwise>
-        </c:choose>
-<%--        
-        <javalek:label label="${label}" isLabelKey="${isLabelKey}" colonAfter="false" cssClass="checkbox" breakAfter="false">
-        </javalek:label>
---%>
+        </c:choose>        
     </c:when>
     <c:when test="${type == 'date'}">
         <see:dateField id="${id}" path="${path}" isShowFormat="false" cssClass="${inputClass}"/>
@@ -99,5 +96,13 @@
 </c:choose>
 
 <form:errors path="${path}" cssClass="pill error"/>
-
+<c:if test="${not empty hint}">    
+<script>
+    $(document).ready(function(){
+        $("#${id}hint").qtip({
+            'content': "${hint}"                            
+        });        
+    });
+</script>
+</c:if>
 
