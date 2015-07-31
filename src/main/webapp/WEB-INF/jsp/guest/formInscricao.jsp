@@ -19,8 +19,7 @@
                 <ul class="no-bullet no-padding">
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
-                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
-                                <%--<c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">--%>
+                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">                                
                                 <c:if test="${item != 'OFICINEIRO'}">
                                     <li class="mini-padding">
                                         <label>
@@ -63,8 +62,7 @@
                     <h4><fmt:message key="label.eventcoordgroupdetails"/></h4>
                 </legend>
                 <div class="row">
-                    <div class="span12">
-                        <!--<javalek:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
+                    <div class="span12">                        
                         <label class="label">
                             <fmt:message key="label.groupname"/>
                         </label>
@@ -306,8 +304,7 @@
                 <h4><fmt:message key="label.workshopdetails"/></h4>
             </legend>
             <div class="row">
-                <div class="span3">
-                    <!--<javalek:label label="label.workshopname" isMandatory="true" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
+                <div class="span3">                    
                     <label class="label">
                         <fmt:message key="label.workshopname"/>
                     </label>
@@ -332,8 +329,7 @@
                 <h4><fmt:message key="label.shirtdetails"/></h4>
             </legend>
             <div class="row">
-                <div class="span3">
-                    <!--<javalek:label label="label.shirttype" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
+                <div class="span3">                    
                     <label class="label">
                         <fmt:message key="label.shirttype"/>
                     </label>
@@ -344,8 +340,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="span3">
-                    <!--<javalek:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
+                <div class="span3">                    
                     <label class="label">
                         <fmt:message key="label.shirtcolor"/>
                     </label>
@@ -356,8 +351,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="span3">
-                    <!--<javalek:label label="label.shirtsize" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
+                <div class="span3">                    
                     <label class="label">
                         <fmt:message key="label.shirtsize"/>
                     </label>
@@ -369,14 +363,12 @@
                     </select>
                 </div>
                 <div class="span2">
-                    <!--<javalek:label label="label.shirtquant" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.shirtquant"/>
                     </label>
                     <input type="text" id="quantCamiseta" maxlength="2" class="textfield width-100" placeholder="Quantidade"/>
                 </div>
                 <div class="span1">
-                    <!--<javalek:label label="label.options" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.options"/>
                     </label>
