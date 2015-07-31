@@ -6,12 +6,10 @@ package br.esp.sysevent.web.controller;
 import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.dao.EstadoDao;
-import br.esp.sysevent.core.dao.NoticiaDao;
 import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Estado;
-import br.esp.sysevent.core.model.Noticia;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Sexo;
@@ -23,7 +21,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -36,25 +33,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
     @Autowired
-    private UsuarioDao usuarioDao;
-    @Autowired
-    private NoticiaDao noticiaDao;
+    private UsuarioDao usuarioDao;    
     @Autowired
     private ConfraternistaDao confraternistaDao;
     @Autowired
     private EstadoDao estadoDao;
     @Autowired
     private CidadeDao cidadeDao;
-
-
-    /**
-     * Adiciona a lista de Estados ao referenceData, para popular a tabela.
-     * @return
-     */
-    @ModelAttribute("noticias")
-    public Collection<Noticia> getNoticias() {
-        return noticiaDao.findAll();
-    }
 
     @RequestMapping(value = "/login.html", method = RequestMethod.GET)
     public String onGet(final ModelMap model) {
