@@ -107,7 +107,9 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model, HttpServletRequest request) throws PagSeguroServiceException, MalformedURLException {
         FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();
         List<Item> produtos = new ArrayList<>();
-        produtos.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
+        if(!command.getInscricao().isIsento()){
+            produtos.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
+        }
         Collection<CamisetaConfraternista> camisetas = command.getInscricao().getConfraternista().getCamisetas();
         if (!CollectionUtils.isEmptyOrNull(camisetas)) {
             for (CamisetaConfraternista camiseta : camisetas) {

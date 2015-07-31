@@ -33,7 +33,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/error/exception.html")
-    public String exception() throws Exception {            
+    public String httpException(){
         return "error/error";
     }
 }

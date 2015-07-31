@@ -69,7 +69,7 @@ public abstract class PagamentoInscricaoUtils {
                 Long.toString(inscricao.getId()),
                 "Inscrição" + " - " + inscricao.getEdicaoEvento().getEvento().getNome(),
                 1,
-                inscricao.getConfraternista().isIsento(inscricao.getEdicaoEvento())? new BigDecimal("0.01") : inscricao.getEdicaoEvento().getValorInscricao(),
+                inscricao.getEdicaoEvento().getValorInscricao(),
                 new Long(1),
                 new BigDecimal("0.00"));
         return item;

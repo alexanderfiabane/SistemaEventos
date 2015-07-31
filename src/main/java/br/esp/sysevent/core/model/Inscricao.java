@@ -134,6 +134,14 @@ public class Inscricao extends AbstractEntity {
         return status == Status.PENDENTE;
     }
 
+    public boolean isOcupaVaga() {
+        return this.edicaoEvento.getOcupamVaga().contains(this.confraternista.getTipo());
+    }
+
+    public boolean isIsento() {
+        return this.edicaoEvento.getIsentos().contains(this.confraternista.getTipo());
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

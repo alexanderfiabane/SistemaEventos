@@ -39,10 +39,15 @@
             <dwr:include method="sexo"/>
             <dwr:include method="endereco"/>
         </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.CamisetaConfraternista" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="confraternista"/>            
+        </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Confraternista" type="hibernate3">
             <dwr:include method="id"/>
             <dwr:include method="pessoa"/>
             <dwr:include method="tipo"/>
+            <dwr:include method="camisetas"/>
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Confraternista$Tipo" type="bean">
             <dwr:include method="descricao"/>            
@@ -78,10 +83,13 @@
             <dwr:include method="dataRecebimento"/>            
             <dwr:include method="status"/>            
             <dwr:include method="valor"/>            
+            <dwr:include method="confraternista"/>            
             <dwr:include method="pagamento"/>            
             <dwr:include method="podeAprovar"/>            
             <dwr:include method="podeEfetivar"/>            
             <dwr:include method="indeferida"/>            
+            <dwr:include method="isento"/>            
+            <dwr:include method="ocupaVaga"/>            
             <dwr:include method="pendente"/>            
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.PagamentoInscricao" type="hibernate3">

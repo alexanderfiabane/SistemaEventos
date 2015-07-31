@@ -37,7 +37,9 @@
                                 <c:when test="${inscricao.podeEfetivar && not inscricao.edicaoEvento.formaCobranca.semCobranca}">
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
                                     <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
-                                    <button type="button" class="btn" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-dollar"></i></button>
+                                    <c:if test="${not inscricao.isento || not empty inscricao.confraternista.camisetas}">
+                                        <button type="button" class="btn" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-dollar"></i></button>
+                                    </c:if>
                                 </c:when>
                                 <c:otherwise>
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>

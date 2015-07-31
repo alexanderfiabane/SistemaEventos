@@ -104,7 +104,11 @@ public class AdminInscricoesController extends I18nController{
     @RequestMapping(value = "/admin/inscricao/aprova.html", method = RequestMethod.GET)
     public String aprova(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
-        inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
+        if (inscricaoCmd.getInscricao().isIsento() && inscricaoCmd.getInscricao().getConfraternista().getCamisetas().isEmpty()){
+            inscricaoCmd.getInscricao().setStatus(Inscricao.Status.PAGA);
+        }else{
+            inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
+        }
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
         if(inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.DEPOSITO_CONTA)){
             ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoDC.html");
@@ -183,7 +187,7 @@ public class AdminInscricoesController extends I18nController{
             confraternista.setGrupoIdade(null);
             confraternistaDao.saveOrUpdate(confraternista);
         }
-        if (confraternista.isOcupaVaga(edicaoEvento)) {
+        if (inscricao.isOcupaVaga()) {
             edicaoEvento.setVagasOcupadas(edicaoEvento.getVagasOcupadas() - 1);
             edicaoDao.saveOrUpdate(edicaoEvento);
         }

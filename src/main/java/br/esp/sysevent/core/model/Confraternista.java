@@ -147,13 +147,6 @@ public class Confraternista extends AbstractEntity {
         this.camisetas = camisetas;
     }
 
-    public boolean isOcupaVaga(Edicao edicao) {
-        return edicao.getOcupamVaga().contains(tipo);
-    }
-    public boolean isIsento(Edicao edicao) {
-        return edicao.getIsentos().contains(tipo);
-    }
-
     public enum Tipo {
 
         AUXILIAR("Auxiliar"),

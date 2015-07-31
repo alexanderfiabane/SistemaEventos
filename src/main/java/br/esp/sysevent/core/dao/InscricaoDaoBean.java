@@ -455,7 +455,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     protected void calculaValorCamisetas(final Inscricao inscricao) {
         final Edicao edicao = inscricao.getEdicaoEvento();
         BigDecimal valorInscricao = edicao.getValorInscricao();
-        if (inscricao.getConfraternista().isIsento(edicao)){
+        if (inscricao.isIsento()){
             valorInscricao = new BigDecimal(0);
         }
         for (CamisetaConfraternista camiseta : inscricao.getConfraternista().getCamisetas()) {
@@ -490,7 +490,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         final Edicao edicao = edicaoDao.findById(inscricao.getEdicaoEvento().getId());
         final Edicao.Tipo tipoEdicao = edicao.getTipo();
         final Confraternista confraternista = inscricao.getConfraternista();
-        if (confraternista.isOcupaVaga(edicao)) {
+        if (inscricao.isOcupaVaga()) {
             if (tipoEdicao.equals(Edicao.Tipo.OFICINA)) {
                 Oficina oficina = confraternista.getOficina();
                 if (oficina != null) {
