@@ -31,6 +31,6 @@
     <span class="error">${texto}</span>
 </div>
 <c:if test="${not empty showLogoutButton && showLogoutButton}">
-    <c:url var="url_logout" value='/logout.html'/>
+    <c:url var="url_logout" value='/logout'/>
     <button type="button" class="btn control" onclick="location.href = '${url_logout}'">Efetuar login com outro usuário</button>
 </c:if>
