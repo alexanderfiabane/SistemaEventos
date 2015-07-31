@@ -36,4 +36,5 @@ public class IndexController {
     public String httpException(){
         return "error/error";
     }
+
 }
