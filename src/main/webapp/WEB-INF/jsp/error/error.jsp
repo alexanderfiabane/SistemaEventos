@@ -7,11 +7,11 @@
 <mocca:title title="Ocorreu um erro ao tentar realizar a operação solicitada."/>
 <c:choose>
     <c:when test="${!empty exceptionCode && exceptionCode == 403}">
-        <c:set var="texto"> Acesso negado: Você não possui acesso a esta página.</c:set>
+        <c:set var="texto">${exceptionCode} Acesso negado: Você não possui acesso a esta página.</c:set>
         <c:set var="showLogoutButton"   value="${true}"/>
     </c:when>
     <c:when test="${!empty exceptionCode && exceptionCode == 404}">
-        <c:set var="texto">${motivo} Página não encontada.</c:set>
+        <c:set var="texto">${exceptionCode} Página não encontada.</c:set>
     </c:when>
     <c:otherwise>
         <c:set var="texto">
