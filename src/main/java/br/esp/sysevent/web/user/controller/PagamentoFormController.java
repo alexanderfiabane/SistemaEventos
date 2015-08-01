@@ -139,7 +139,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
-                    pagSeguroAccount.getTokenSegurancaSandBox(),
+                    pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
 
             String lightBoxCode = pagseguro.register(pagSeguroCredentials, true);

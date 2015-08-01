@@ -51,7 +51,7 @@ public class PagSeguroNotification {
             PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
-                    pagSeguroAccount.getTokenSegurancaSandBox(),
+                    pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
             Transaction transaction = NotificationService.checkTransaction(pagSeguroCredentials, notificationCod);
             PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByCodPagamento(transaction.getCode());
