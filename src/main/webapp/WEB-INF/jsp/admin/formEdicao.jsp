@@ -19,7 +19,7 @@
             <div class="pane active" id="cadastroBasico">
                 <fieldset>
                     <div class="row">
-                        <div class="span6">
+                        <div class="span4">
                             <div class="span6">
                                 <label class="label control">
                                     <fmt:message key="label.editiontype"/>
@@ -47,25 +47,27 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="span6">
+                        <div class="span8">
                             <div class="table-wrapper">
                                 <table class="table hovered stroked narrow small-font-size">
                                     <caption class="label control">Configuração de participantes da edição</caption>
                                     <thead class="header">
                                         <tr>
                                             <th style="width: 12em;">Tipo participante</th>
-                                            <th style="width: 10em;" class="centered">Ocupa vaga?</th>
-                                            <th class="centered">Isenção de taxa de inscrição</th>
+                                            <th style="width: 10em;" class="centered">Ocupa vaga no evento?</th>
+                                            <th style="width: 10em;" class="centered">Ocupa vaga no Grupo/Oficina?</th>
+                                            <th style="width: 10em;" class="centered">Isenção de taxa de inscrição</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr id="selTipoEdicao">
-                                            <td colspan="3" class="centered bold control">Selecione um tipo de Edição</td>
+                                            <td colspan="4" class="centered bold control">Selecione um tipo de Edição</td>
                                         </tr>
                                         <c:forEach items="${command.edicaoConfigParticipantes}" var="confraternista" varStatus="status">
                                             <tr id="id${confraternista.tipoParticipante.name}" class="hidden">
                                                 <td>${confraternista.tipoParticipante.descricao}</td>
                                                 <td class="centered"><form:checkbox path="edicaoConfigParticipantes[${status.index}].ocupaVaga" value="true"/></td>
+                                                <td class="centered"><form:checkbox path="edicaoConfigParticipantes[${status.index}].ocupaVagaGp" value="true"/></td>
                                                 <td class="centered"><form:checkbox path="edicaoConfigParticipantes[${status.index}].isento" value="true"/></td>
                                             </tr>
                                         </c:forEach>
@@ -211,13 +213,11 @@
                         <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value=""/></c:url>
                         <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="cobranca_url" value="menuFormaCobranca.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
+                        <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>                        
                             <tr>
                                 <td>
                                     <div class="btn-group small">
-                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
-                                        <!--<button  type="button" class="btn small" title="Deletar" onclick="confirmRedir('${delete_url}', '${confirmDeleteMsg}');"><i class="icon-remove"></i></button>-->
+                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>                                        
                                     <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>
                                         <c:if test="${edicao.faixaEtaria}">
                                         <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
@@ -225,8 +225,7 @@
                                         <c:if test="${edicao.oficina}">
                                         <button  type="button" class="btn" title="Oficinas" onclick="location.href = '${oficina_url}';"><i class="icon-wrench"></i></button>
                                         </c:if>
-                                    <button  type="button" class="btn" title="Dormitórios" onclick="location.href = '${dormitorio_url}';"><i class="icon-building"></i></button>
-                                    <button  type="button" class="btn" title="Cobrança" onclick="location.href = '${cobranca_url}';"><i class="icon-money"></i></button>
+                                    <button  type="button" class="btn" title="Dormitórios" onclick="location.href = '${dormitorio_url}';"><i class="icon-building"></i></button>                                    
                                 </div>
                             </td>
                             <td class="centered">${edicao.numero}</td>

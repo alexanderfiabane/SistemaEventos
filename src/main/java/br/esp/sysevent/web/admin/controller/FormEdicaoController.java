@@ -97,6 +97,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
                 edicaoConfigParticipante.setTipoParticipante(tiposConfraternista);
                 edicaoConfigParticipante.setIsento(false);
                 edicaoConfigParticipante.setOcupaVaga(true);
+                edicaoConfigParticipante.setOcupaVagaGp(true);
                 edicaoConfigParticipante.setEdicao(edicao);
                 edicaoConfigParticipantes.add(edicaoConfigParticipante);
             }

@@ -276,10 +276,20 @@ public class Edicao extends AbstractEntity {
         return isentos;
     }
 
-    public Collection<Confraternista.Tipo> getOcupamVaga(){
+    public Collection<Confraternista.Tipo> getOcupamVagaEvento(){
         Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
             if (edicaoConfigParticipante.isOcupaVaga()){
+                ocupamVaga.add(edicaoConfigParticipante.getTipoParticipante());
+            }
+        }
+        return ocupamVaga;
+    }
+    
+    public Collection<Confraternista.Tipo> getOcupamVagaGrupoOficina(){
+        Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
+        for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
+            if (edicaoConfigParticipante.isOcupaVagaGp()){
                 ocupamVaga.add(edicaoConfigParticipante.getTipoParticipante());
             }
         }

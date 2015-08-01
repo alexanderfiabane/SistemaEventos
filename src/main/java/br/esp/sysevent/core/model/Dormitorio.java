@@ -98,6 +98,14 @@ public class Dormitorio extends AbstractEntity {
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
+    
+    public void ocupaVaga() {
+        vagasOcupadas++;
+    }
+    
+    public void desocupaVaga() {
+        vagasOcupadas--;
+    }
 
     @Override
     public int hashCode() {

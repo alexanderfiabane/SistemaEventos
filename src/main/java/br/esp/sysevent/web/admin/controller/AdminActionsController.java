@@ -232,7 +232,6 @@ public class AdminActionsController {
 
     @RequestMapping(value = "/admin/alocaDormitorio.html", method = RequestMethod.GET)
     public String alocaConfraternistasDomitorios(@RequestParam("idEdicao") final String idEdicao, final RedirectAttributes attributes) {
-
         if (!CharSequenceUtils.isNumber(idEdicao)) {
             throw new IllegalArgumentException("Parametro não encontrado.");
         }

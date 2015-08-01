@@ -33,8 +33,10 @@ public class EdicaoConfigParticipante extends AbstractEntity{
     @Column(name = "TIPO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Tipo tipoParticipante;
-    @Column(name = "OCUPA_VAGA", nullable = false)
+    @Column(name = "OCUPA_VAGA_EV", nullable = false)
     private boolean ocupaVaga;
+    @Column(name = "OCUPA_VAGA_GP", nullable = false)
+    private boolean ocupaVagaGp;
     @Column(name = "ISENTO", nullable = false)
     private boolean isento;
 
@@ -60,6 +62,14 @@ public class EdicaoConfigParticipante extends AbstractEntity{
 
     public void setOcupaVaga(boolean ocupaVaga) {
         this.ocupaVaga = ocupaVaga;
+    }
+
+    public boolean isOcupaVagaGp() {
+        return ocupaVagaGp;
+    }
+
+    public void setOcupaVagaGp(boolean ocupaVagaGp) {
+        this.ocupaVagaGp = ocupaVagaGp;
     }
 
     public boolean isIsento() {

@@ -52,9 +52,9 @@
                                     <button type="button" class="btn small" title="Criar edição deste evento" onclick="location.href = '${edicao_url}';"><i class="icon-share-alt"></i></button>
                                 </div>
                             </td>
-                            <td class="centered">${evento.nome}</td>
-                            <td class="centered">${evento.sigla}</td>
-                            <td class="centered">${evento.site}</td>
+                            <td>${evento.nome}</td>
+                            <td>${evento.sigla}</td>
+                            <td>${evento.site}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

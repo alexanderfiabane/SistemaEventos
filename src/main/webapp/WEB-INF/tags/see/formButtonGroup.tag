@@ -22,7 +22,12 @@
             <button type="button" class="btn" onclick="location.href = '${clearUrl}';"><fmt:message key="label.clear"/></button>
         </c:if>
         <c:if test="${putSubmit}">        
-            <button type="submit" class="btn primary"><fmt:message key="label.save"/></button>
+            <button id="saveBtn" type="submit" class="btn primary"><fmt:message key="label.save"/></button>
         </c:if>        
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#saveBtn").lockOnClick();
+    });
+</script>

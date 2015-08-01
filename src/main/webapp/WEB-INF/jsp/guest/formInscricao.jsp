@@ -87,7 +87,7 @@
         </legend>
         <div class="row">
             <div class="span4">
-                <see:formField id="loginConfraternista" label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" hint="Caracteres aceitos: letras, números, hifén e underscore (mín: 3 e máx: 15 caracteres)" inputClass="textfield width-100"/>
+                <see:formField id="loginConfraternista" label="label.user" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" hint="Digite aqui o login desejado para futuro acesso ao sistema. Caracteres aceitos: letras, números, hifén e underscore (mín: 3 e máx: 15 caracteres)" inputClass="textfield width-100"/>
             </div>
         </div>
     </fieldset>
@@ -263,8 +263,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span3">
-                <!--<javalek:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>-->
+            <div class="span3">                
                 <label class="label">
                     <fmt:message key="label.state"/>
                 </label>
@@ -299,6 +298,7 @@
     </fieldset>
 
     <c:if test="${(not empty command.inscricao.edicaoEvento.oficinas) && (command.inscricao.edicaoEvento.tipo == 'OFICINA')}">
+    <div id="ocupaVaga">            
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
                 <h4><fmt:message key="label.workshopdetails"/></h4>
@@ -321,6 +321,7 @@
                 </div>
             </div>
         </fieldset>
+    </div>    
     </c:if>
 
     <c:if test="${not empty command.inscricao.edicaoEvento.tiposCamiseta}">
@@ -658,12 +659,19 @@
             loadCidades($(this), $('#cidadeCasa'));
         });
         $('[name=inscricao\\.confraternista\\.tipo]').change(function() {
+            var tipoConfSeleciondao = $('[name=inscricao\\.confraternista\\.tipo]').val();
             var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
+            //var ocupaVagaGrupoOficina = ${command.inscricao.ocupaVagaGrupoOficina};
             if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
                 $('#evangelizadorResponsavel').show();
             } else {
                 $('#evangelizadorResponsavel').hide();
             }
+//            if(ocupaVagaGrupoOficina){
+//                $('#ocupaVaga').show();
+//            }else{
+//                $('#ocupaVaga').hide();                
+//            }
         });
         $('[name=inscricao\\.confraternista\\.tipo]:checked').change();
         $('#dataNascimento').blur(function() {

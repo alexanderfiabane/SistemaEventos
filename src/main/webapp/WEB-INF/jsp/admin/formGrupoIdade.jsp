@@ -44,7 +44,7 @@
                         <th><fmt:message key="label.name"/></th>
                         <th style="width: 2em;"><fmt:message key="label.type"/></th>
                         <th style="width: 2em;"><fmt:message key="label.vacancies"/></th>
-                        <th style="width: 4em;"><fmt:message key="label.label.occupied.vacancies"/></th>
+                        <th style="width: 4em;"><fmt:message key="label.occupied.vacancies"/></th>
                         <th style="width: 2em;"><fmt:message key="label.minage"/></th>
                         <th style="width: 2em;"><fmt:message key="label.maxage"/></th>
                     </tr>

@@ -172,22 +172,20 @@ public class AdminInscricoesController extends I18nController{
         final Oficina oficina = confraternista.getOficina();
         final GrupoIdade grupoIdade = confraternista.getGrupoIdade();
         //verificar tipo da inscricao
-        if (tipoEvento.equals(Tipo.OFICINA) && oficina != null) {
-            if(!confraternista.getTipo().equals(Confraternista.Tipo.OFICINEIRO)){
+        if(inscricao.isOcupaVagaGrupoOficina() && !tipoEvento.equals(Tipo.CONGRESSO)){
+            if (tipoEvento.equals(Tipo.OFICINA) && oficina != null) {
                 oficina.setVagasOcupadas(oficina.getVagasOcupadas() - 1);
                 oficinaDao.saveOrUpdate(oficina);
-            }
-            confraternista.setOficina(null);
-            confraternistaDao.saveOrUpdate(confraternista);
-        } else if (tipoEvento.equals(Tipo.FAIXA_ETARIA) && grupoIdade != null) {
-            if(!confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){
+                confraternista.setOficina(null);
+                confraternistaDao.saveOrUpdate(confraternista);
+            } else if (tipoEvento.equals(Tipo.FAIXA_ETARIA) && grupoIdade != null) {
                 grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() - 1);
-                grupoIdadeDao.saveOrUpdate(grupoIdade);
+                grupoIdadeDao.saveOrUpdate(grupoIdade);             
+                confraternista.setGrupoIdade(null);
+                confraternistaDao.saveOrUpdate(confraternista);
             }
-            confraternista.setGrupoIdade(null);
-            confraternistaDao.saveOrUpdate(confraternista);
         }
-        if (inscricao.isOcupaVaga()) {
+        if (inscricao.isOcupaVagaEvento()) {
             edicaoEvento.setVagasOcupadas(edicaoEvento.getVagasOcupadas() - 1);
             edicaoDao.saveOrUpdate(edicaoEvento);
         }

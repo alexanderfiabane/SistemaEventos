@@ -99,7 +99,8 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
                 validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
             }
         }
-        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)) {
+        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA) 
+                && (inscricao.isOcupaVagaGrupoOficina() || confraternista.getTipo().equals(Confraternista.Tipo.OFICINEIRO))) {
             validateOficina(inscricao, errors);
         }
         if (confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){

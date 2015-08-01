@@ -82,18 +82,22 @@ public class DormitorioDaoBean extends AbstractBaseSistemaDaoBean<Long, Dormitor
 
         final Collection<Dormitorio> dormitorios = findByProperty("edicaoEvento", edicao);
         if (dormitorios == null) {
-            throw new IllegalArgumentException("Não há dormitórios cadastrados.");
+            throw new IllegalArgumentException("Não há dormitórios cadastrados");
         }
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoDeferidas(edicao.getId());
         if(inscricoes.isEmpty()){
-            throw new IllegalArgumentException("Não há confraternistas com inscrição deferida para alocar.");
+            throw new IllegalArgumentException("Não há confraternistas com inscrição efetivada para alocar");
         }
         //Insere o confraternista em um dormitório 'aleatoriamente'.
         for (Inscricao inscricao : inscricoes) {
             for (Dormitorio dormitorio : dormitorios) {
                 if (validaDormitorio(dormitorio, inscricao.getConfraternista())) {
-                    inscricao.getConfraternista().setDormitorio(dormitorio);
-                    confraternistaDao.saveOrUpdate(inscricao.getConfraternista());
+                    if(inscricao.getConfraternista().getDormitorio()!=null){
+                        inscricao.getConfraternista().setDormitorio(dormitorio);
+                        confraternistaDao.saveOrUpdate(inscricao.getConfraternista());
+                        dormitorio.ocupaVaga();
+                        saveOrUpdate(dormitorio);
+                    }                    
                 }
             }
         }

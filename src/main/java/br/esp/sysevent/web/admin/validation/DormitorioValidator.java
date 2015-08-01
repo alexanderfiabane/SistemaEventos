@@ -9,7 +9,6 @@ import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.Sexo;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
-import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -19,8 +18,6 @@ import org.springframework.validation.Errors;
  */
 @Component
 public class DormitorioValidator extends AbstractValidator<Dormitorio> {
-
-    private final Pattern NOME_PATTERN = Pattern.compile("[\\p{L} ]+");
 
     @Override
     public void validateCommand(Dormitorio target, Errors errors) {
@@ -42,10 +39,7 @@ public class DormitorioValidator extends AbstractValidator<Dormitorio> {
         if (CharSequenceUtils.isBlankOrNull(nome)) {
             // nome obrigatório
             errors.rejectValue("nome", "errors.required");
-        } else if (!NOME_PATTERN.matcher(nome).matches()) {
-            // nome inválido
-            errors.rejectValue("nome", "errors.invalid");
-        }
+        }    
     }
 
     private void validateVagas(Integer vagas, Errors errors) {

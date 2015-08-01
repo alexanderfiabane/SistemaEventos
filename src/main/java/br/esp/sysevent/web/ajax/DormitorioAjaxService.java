@@ -73,7 +73,8 @@ public class DormitorioAjaxService {
         if (idDorm == null && idConf != null) {
             //setar idDormitorio em confraternista pra null, descontar vaga e salvar
             dormitorio = confraternista.getDormitorio();
-            dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() - 1);
+            dormitorio.desocupaVaga();
+//            dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() - 1);
             dormitorioDao.saveOrUpdate(dormitorio);
             confraternista.setDormitorio(null);
             confraternistaDao.saveOrUpdate(confraternista);
@@ -84,7 +85,8 @@ public class DormitorioAjaxService {
             dormitorio = dormitorioDao.findById(idDorm);
             if (dormitorio.getSexo().equals(confraternista.getPessoa().getSexo())) {
                 if (dormitorio.getVagasOcupadas() != dormitorio.getVagas()) {
-                    dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() + 1);
+                    dormitorio.ocupaVaga();
+//                    dormitorio.setVagasOcupadas(dormitorio.getVagasOcupadas() + 1);
                     dormitorioDao.saveOrUpdate(dormitorio);
                     confraternista.setDormitorio(dormitorio);
                     confraternistaDao.saveOrUpdate(confraternista);
