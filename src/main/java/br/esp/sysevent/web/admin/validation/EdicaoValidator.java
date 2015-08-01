@@ -121,29 +121,29 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         }
         if(!formaCobranca.isSemCobranca()){
             if(formaCobranca.isDepositoConta()){
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getBancoPlain())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getBancoPlain())){
                     errors.rejectValue("formaCobranca.deposito.bancoPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getAgenciaPlain())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getAgenciaPlain())){
                     errors.rejectValue("formaCobranca.deposito.agenciaPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getFavorecidoPlain())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getFavorecidoPlain())){
                     errors.rejectValue("formaCobranca.deposito.favorecidoPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getNumeroContaPlain())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getNumeroContaPlain())){
                     errors.rejectValue("formaCobranca.deposito.numeroContaPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getDeposito().getOperacao())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getOperacao())){
                     errors.rejectValue("formaCobranca.deposito.operacao", "errors.required");
                 }
             }else{
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getEmailPagSeguroPlain())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getEmailPagSeguroPlain())){
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguroPlain", "errors.required");
                 }else if(!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguroPlain()).matches()){
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguroPlain", "errors.invalid");
                 }
-                if(CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
-                        || CharSequenceUtils.isAllBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())){
+                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
+                        && CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())){
                     errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required.at.least.one");
                     errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaSandBox", "errors.required.at.least.one");
                 }

@@ -130,7 +130,9 @@ public abstract class ControllerUtils {
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricao", (Object) inscricao));
 
         final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricao.getEdicaoEvento().getEvento().getSigla() + ">");
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
+                + " - " + inscricao.getEdicaoEvento().getEvento().getSigla() 
+                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");
         email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);
@@ -157,7 +159,9 @@ public abstract class ControllerUtils {
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricaoCmd", (Object) inscricaoCmd));
 
         final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() + ">");
+         email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
+                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
+                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");        
         email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);
@@ -184,7 +188,7 @@ public abstract class ControllerUtils {
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("usuario", (Object) usuario));
 
         final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<noreplay@see.org>");
+        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + mailProperties.getProperty("mail.smtp.from") +">");
         email.setTo(new String[]{usuario.getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
         email.setRawContent(content);
