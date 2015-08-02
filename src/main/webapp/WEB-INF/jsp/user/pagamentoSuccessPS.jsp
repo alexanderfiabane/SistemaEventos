@@ -10,10 +10,10 @@
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label"><h4><fmt:message key="label.paymentdetails"/></h4></legend>
             <div class="row">
-                <div class="span6">
+                <div class="span8">
                     <c:out value="${command.descricaoPagamento}" escapeXml="false"/>
                 </div>
-                <div class="span6 align-right">
+                <div class="span4 align-right">
                     <label class="label">Data do pagamento:</label>
                     <fmt:formatDate value="${command.dataPagamento.time}" pattern="dd/MM/yyyy"/>
                 </div>

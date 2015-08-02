@@ -13,6 +13,7 @@ import br.com.uol.pagseguro.enums.Currency;
 import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.enums.ShippingType;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
@@ -136,15 +137,14 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             pagseguro.setSender(montaSenderPagSeguro(confraternista));
             pagseguro.setNotificationURL(montaUrlPagSeguroNotification(command.getInscricao().getEdicaoEvento(), request));
             //Gerar número para o botão lightbox e colocar no model
-            PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
+            PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();            
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
-
+            PagSeguroConfig.setProductionEnvironment();
             String lightBoxCode = pagseguro.register(pagSeguroCredentials, true);
             model.addAttribute("pagseguroCod", lightBoxCode);
-
             return "user/formPagamentoPS";
         } else {
             //retorna view de pagamento por depósito em conta

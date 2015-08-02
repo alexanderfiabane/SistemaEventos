@@ -131,7 +131,7 @@ public abstract class ControllerUtils {
 
         final SimpleEmail email = new SimpleEmail();
         email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
-                + " - " + inscricao.getEdicaoEvento().getEvento().getSigla() 
+//                + " - " + inscricao.getEdicaoEvento().getEvento().getSigla() 
                 + "<" + mailProperties.getProperty("mail.smtp.from") + ">");
         email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);
@@ -160,7 +160,7 @@ public abstract class ControllerUtils {
 
         final SimpleEmail email = new SimpleEmail();
          email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
-                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
+//                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
                 + "<" + mailProperties.getProperty("mail.smtp.from") + ">");        
         email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
         email.setSubject(subject);

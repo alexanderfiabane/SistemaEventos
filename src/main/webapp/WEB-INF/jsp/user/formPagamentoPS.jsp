@@ -17,10 +17,10 @@
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
-<div class="row">
-    <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
-        <legend class="label">
-            <h4><fmt:message key="label.paymentdetails"/></h4>
+    <div class="row">
+        <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+            <legend class="label">
+                <h4><fmt:message key="label.paymentdetails"/></h4>
         </legend>
         <div class="table-wrapper scrollable">
             <table class="table stroked striped">
@@ -65,11 +65,12 @@
 <script type="text/javascript">
     function pagar(code) {
         var isOpened;
-        isOpened = PagSeguroLightbox(code, {
-            success: function (transactionCode) {
+        isOpened = PagSeguroLightbox(
+            {code: code}, 
+            {success: function (transactionCode) {
                 location.href = '${pagamentoSuccessURL}' + transactionCode;
             }
-        });
+        });        
         if (!isOpened) {
             location.href = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + code;
         }

@@ -9,6 +9,7 @@ import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.enums.TransactionStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.NotificationService;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.dao.InscricaoDao;
@@ -48,11 +49,12 @@ public class PagSeguroNotification {
         String notificationType = (String) request.getParameter("notificationType");
         if (notificationType.equals("transaction")){
             Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
-            PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
+            PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();                        
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
+            PagSeguroConfig.setProductionEnvironment();
             Transaction transaction = NotificationService.checkTransaction(pagSeguroCredentials, notificationCod);
             PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByCodPagamento(transaction.getCode());
             TransactionStatus status = transaction.getStatus();

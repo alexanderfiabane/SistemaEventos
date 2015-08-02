@@ -9,6 +9,7 @@ import br.com.uol.pagseguro.domain.AccountCredentials;
 import br.com.uol.pagseguro.domain.Item;
 import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
 import br.com.uol.pagseguro.service.TransactionSearchService;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
@@ -60,8 +61,9 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
         PagSeguroConta pagSeguroAccount = inscricao.getEdicaoEvento().getFormaCobranca().getPagSeguro();
         AccountCredentials pagSeguroCredentials = new AccountCredentials(
                 pagSeguroAccount.getEmailPagSeguroPlain(),
-                pagSeguroAccount.getTokenSegurancaSandBox(),
+                pagSeguroAccount.getTokenSegurancaProducao(),
                 pagSeguroAccount.getTokenSegurancaSandBox());
+        PagSeguroConfig.setProductionEnvironment();
         Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials,codTransactionPagSeguro);
         pagamentoInscricao.setDataPagamento(CalendarUtils.castToCalendar(transaction.getDate()));
         pagamentoInscricao.setDescricaoPagamento(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, false));
