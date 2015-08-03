@@ -4,55 +4,55 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Untitled Document</title>
     </head>
-    <body>
-        <div style="color: #60605e; background-color: #D9E8F2; line-height: 40px; padding: 10px;">
-            <h1>Caro(a) ${inscricao.confraternista.tipo.descricao}(a) ${inscricao.confraternista.pessoa.nome}</h1>            
-        </div>
-        <div style="padding-top:15px;font-family:Arial; font-size:12pt">
-            Sua inscrição foi aceita e podes proceder com o pagamento.<br/>
-            Para realizar o pagamento o(a) Sr(a) pode efetuar o depósito, preferencialmente, na boca do caixa (depósito identificado).<br/>
-            Após realizar o pagamento acesse a área do usuário - Sistema de Inscrições - 'Minhas Inscrições', com os dados de acesso enviados em e-mail anterior - clique no botão
-            pagamento, que estará ao lado dos botões de visualização e impressão da inscrição, e preencha o formulário de pagamento. 
-            A nossa equipe irá verificar o seu pagamento e, verificando que tudo está certo, irá efetivar a sua inscrição (através de e-mail).
-            <br/>
-            <br/>
-            <b>Dados para depósito:</b> 
-            <br/>
-            <br/>
-            <b>Banco: </b>${inscricao.edicaoEvento.formaCobranca.deposito.bancoPlain}
-            <br/>
-            <b>Agencia: </b>${inscricao.edicaoEvento.formaCobranca.deposito.agenciaPlain}
-            <br/>
-            <b>Conta: </b>${inscricao.edicaoEvento.formaCobranca.deposito.numeroContaPlain}
-            <br/>
-            <b>Operação: </b>${inscricao.edicaoEvento.formaCobranca.deposito.operacao}
-            <br/>
-            <b>Favorecido(a): </b>${inscricao.edicaoEvento.formaCobranca.deposito.favorecidoPlain}
-            <br/>
-            <br/>
-            <b>Valor: </b>${inscricao.valor}
-            <br/>    
-            <br/>
-            Lembrando.
-            <br/>
-            <br/>
-            Para que sua inscrição seja efetivada, você precisa:
-            <ul>
-                <li>Imprima a Ficha de Inscrição digitada no site;</li>
-                <li>Assine a ficha de inscrição;</li>
-                <li>Para menores de 18 anos, a assinatura do responsável é obrigatória (campo: autorização para menores);</li>
-                <li>Você deve providenciar as assinaturas necessárias;</li>
-                <li>Digitalize a ficha de inscrição e envie-a para o evento através do meio indicado no site do evento;</li>
-            </ul>            
-            <br/>
-            <br/>
-            Em caso de dúvida ou para maiores informações acesse ${inscricao.edicaoEvento.evento.site}
-            <br/>
-            <br/>
-        </div>
-        <div style="color: #000000; background-color:#F4F4F4; font-weight: bold; padding: 10px;">                
-            Atenciosamente,<br/>
-            Coordenação do(a) ${inscricao.edicaoEvento.evento.sigla}.
-        </div>
+    <body style="background-color: #F4F4F4;">
+        <center>            
+            <div style="border-radius: 8px; border: 1px solid #135775; width: 60%;">             
+                <div style="color: #1e89b6; background-color: #D9E8F2; line-height: 1.5em; padding: 10px; border-radius: 8px 8px 0px 0px; text-align: left; text-shadow: 0 0 1px #012944;">
+                    <h2>Caro(a) ${inscricao.confraternista.tipo.descricao} ${inscricao.confraternista.pessoa.nome}</h2>            
+                </div>
+                <div style="padding:15px; font-family:Arial; line-height: 1.5em; font-size:10pt; text-align: justify; background-color: white;">
+                    Sua inscrição foi <strong>aceita</strong> e podes proceder com o pagamento.<br/>
+                    Para realizar o pagamento o(a) Sr(a) pode efetuar o depósito, preferencialmente, na boca do caixa (depósito identificado).<br/>
+                    Após realizar o pagamento acesse a área do usuário - Sistema de Inscrições - 'Minhas Inscrições', com os dados de acesso enviados em e-mail anterior - clique no botão
+                    pagamento, que estará ao lado dos botões de visualização e impressão da inscrição, e preencha o formulário de pagamento. 
+                    A nossa equipe irá verificar o seu pagamento e, verificando que tudo está certo, irá efetivar a sua inscrição (através de e-mail).
+                    <br/>
+                    <br/>
+                    <b>Dados para depósito:</b> 
+                    <br/>
+                    <br/>
+                    <b>Banco: </b>${inscricao.edicaoEvento.formaCobranca.deposito.bancoPlain}
+                    <br/>
+                    <b>Agencia: </b>${inscricao.edicaoEvento.formaCobranca.deposito.agenciaPlain}
+                    <br/>
+                    <b>Conta: </b>${inscricao.edicaoEvento.formaCobranca.deposito.numeroContaPlain}
+                    <br/>
+                    <b>Operação: </b>${inscricao.edicaoEvento.formaCobranca.deposito.operacao}
+                    <br/>
+                    <b>Favorecido(a): </b>${inscricao.edicaoEvento.formaCobranca.deposito.favorecidoPlain}
+                    <br/>
+                    <br/>
+                    <b>Valor: </b>${inscricao.valor}
+                    <br/>    
+                    <br/>
+                    <strong>Lembrando...</strong>
+                    <br/>
+                    <br/>
+                    Para que sua inscrição seja efetivada, você precisa:
+                    <ul>
+                        <li>Imprimir a Ficha de Inscrição digitada no site;</li>
+                        <li>Assinar a ficha de inscrição;</li>
+                        <li>Para menores de 18 anos, a assinatura do responsável é obrigatória (campo: autorização para menores);</li>
+                        <li>Providenciar as assinaturas necessárias;</li>
+                        <li>Digitalizar a ficha de inscrição e envi&aacute-la para o evento através do meio indicado no site do evento;</li>
+                    </ul>                               
+                    Em caso de dúvida ou para maiores informações acesse ${inscricao.edicaoEvento.evento.site}                   
+                </div>
+                <div style="color: #000000;background-color:#F4F4F4; font-weight: bold; padding: 10px; border-radius: 0px 0px 8px 8px;; text-align: left;">
+                    Atenciosamente,<br/>
+                    Coordenação do(a) ${inscricao.edicaoEvento.evento.sigla}.
+                </div>
+            </div>
+        </center>
     </body>
 </html>

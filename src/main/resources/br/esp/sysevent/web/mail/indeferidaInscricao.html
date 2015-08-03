@@ -4,26 +4,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Untitled Document</title>
     </head>
-    <body>
-        <div style="color: #60605e; background-color: #D9E8F2; line-height: 40px; padding: 10px;">
-            <h1>Caro(a) ${inscricao.confraternista.tipo.descricao} ${inscricao.confraternista.pessoa.nome}</h1>
-        </div>
-        <div style="padding-top:15px;font-family:Arial; font-size:12pt">
-            Sua inscrição foi indeferida.
-            <br/>
-            Devido a problemas na sua inscrição, infelizmente, tivemos que indeferí-la.
-            <br/>
-            Caso você não saiba o motivo e ou não consinta com o indeferimetno da sua inscrição, pedimos que entre em contato o mais breve possível para sanarmos esse problema.
-            <br/>
-            Em caso de dúvida ou para maiores informações acesse ${inscricao.edicaoEvento.evento.site}
-            <br/>    
-            <br/>    
-        </div>
-        <div style="color: #000000; background-color:#F4F4F4; font-weight: bold; padding: 10px;">
-            Atenciosamente,
-            <br/>
-            Coordenação do(a) ${inscricao.edicaoEvento.evento.sigla}.
-            <br/>    
-        </div>
+    <body style="background-color: #F4F4F4;">
+        <center>            
+            <div style="border-radius: 8px; border: 1px solid #135775; width: 60%;">             
+                <div style="color: #1e89b6; background-color: #D9E8F2; line-height: 1.5em; padding: 10px; border-radius: 8px 8px 0px 0px; text-align: left; text-shadow: 0 0 1px #012944;">
+                    <h2>Caro(a) ${inscricao.confraternista.tipo.descricao} ${inscricao.confraternista.pessoa.nome}</h2>
+                </div>
+                <div style="padding:15px; font-family:Arial; line-height: 1.5em; font-size:10pt; text-align: justify; background-color: white;">
+                    Sua inscrição foi <strong>indeferida</strong>.<br/>
+                    Devido a problemas na sua inscrição, infelizmente, tivemos que indeferí-la.<br/>
+                    Caso você não saiba o motivo e ou não consinta com o indeferimetno da sua inscrição, pedimos que entre em contato o mais breve possível para sanarmos esse problema.<br/>
+                    Em caso de dúvida ou para maiores informações acesse ${inscricao.edicaoEvento.evento.site}                    
+                </div>
+                <div style="color: #000000;background-color:#F4F4F4; font-weight: bold; padding: 10px; border-radius: 0px 0px 8px 8px;; text-align: left;">
+                    Atenciosamente,<br/>
+                    Coordenação do(a) ${inscricao.edicaoEvento.evento.sigla}.                    
+                </div>
+            </div>
+        </center>
     </body>
 </html>
