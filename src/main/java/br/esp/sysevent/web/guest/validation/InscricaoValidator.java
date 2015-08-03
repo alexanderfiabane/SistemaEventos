@@ -53,6 +53,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     /**
      * Valida o command inteiro.
+     *
      * @param inscricaoCmd
      * @param errors
      */
@@ -64,6 +65,11 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         validateConfraternista(inscricao, errors);
         validateInscricao(inscricao, errors);
         validateUsuario(usuario, errors);
+        if (inscricao.getId() == null) {
+            if (!inscricao.getConfraternista().getPessoa().getEndereco().getEmail().equals(inscricaoCmd.getEmailConfirm())) {
+                errors.rejectValue("emailConfirm", "errors.invalid");
+            }
+        }
     }
 
     protected void validateEdicao(Inscricao inscricao, Errors errors) {
@@ -99,12 +105,12 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
                 validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
             }
         }
-        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA) 
+        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)
                 && (inscricao.isOcupaVagaGrupoOficina() || confraternista.getTipo().equals(Confraternista.Tipo.OFICINEIRO))) {
             validateOficina(inscricao, errors);
         }
-        if (confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)){
-            if(confraternista.getGrupoIdade() == null){
+        if (confraternista.getTipo().equals(Confraternista.Tipo.FACILITADOR)) {
+            if (confraternista.getGrupoIdade() == null) {
                 errors.rejectValue("inscricao.confraternista.grupoIdade", "errors.required");
             }
         }
@@ -245,14 +251,14 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected void validateUsuario(Usuario usuario, Errors errors) {
         final Usuario outroUsuario = usuarioDao.findByLogin(usuario.getUsername());
-        if(outroUsuario != null){
-            if(EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()){
+        if (outroUsuario != null) {
+            if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
                 errors.rejectValue("usuario.username", "errors.alreadyExists");
                 return;
             }
         }
-        if(!LOGIN_PATTERN.matcher(usuario.getUsername()).matches()){
-                errors.rejectValue("usuario.username", "errors.userInvalid");
+        if (!LOGIN_PATTERN.matcher(usuario.getUsername()).matches()) {
+            errors.rejectValue("usuario.username", "errors.userInvalid");
         }
     }
 

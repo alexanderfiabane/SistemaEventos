@@ -20,7 +20,6 @@
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
                             <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
-                                <%--<c:if test="${(item == 'EVANGELIZADOR') || (item == 'CONFRATERNISTA')}">--%>
                                 <c:if test="${item != 'OFICINEIRO'}">
                                     <li class="mini-padding">
                                         <label>
@@ -64,7 +63,6 @@
                 </legend>
                 <div class="row">
                     <div class="span12">
-                        <!--<javalek:label label="label.groupname" isMandatory="true" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                         <label class="label">
                             <fmt:message key="label.groupname"/>
                         </label>
@@ -77,7 +75,7 @@
                                 </li>
                             </c:forEach>
                         </ul>
-                        <form:errors path="inscricao.confraternista.grupoIdade" cssClass="fieldError"/>
+                        <form:errors path="inscricao.confraternista.grupoIdade" cssClass="pill error"/>
                     </div>
                 </div>
             </fieldset>
@@ -89,7 +87,7 @@
         </legend>
         <div class="row">
             <div class="span4">
-                <see:formField label="label.username" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" inputClass="textfield width-100" readonly="true"/>
+                <see:formField id="loginConfraternista" label="label.user" isLabelKey="true" isMandatory="true" path="usuario.username" maxlength="80" hint="Digite aqui o login desejado para futuro acesso ao sistema. Caracteres aceitos: letras, números, hifén e underscore (mín: 3 e máx: 15 caracteres)" inputClass="textfield width-100"/>
             </div>
         </div>
     </fieldset>
@@ -266,7 +264,6 @@
         </div>
         <div class="row">
             <div class="span3">
-                <!--<javalek:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>-->
                 <label class="label">
                     <fmt:message key="label.state"/>
                 </label>
@@ -301,13 +298,13 @@
     </fieldset>
 
     <c:if test="${(not empty command.inscricao.edicaoEvento.oficinas) && (command.inscricao.edicaoEvento.tipo == 'OFICINA')}">
+    <div id="ocupaVaga">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
                 <h4><fmt:message key="label.workshopdetails"/></h4>
             </legend>
             <div class="row">
                 <div class="span3">
-                    <!--<javalek:label label="label.workshopname" isMandatory="true" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.workshopname"/>
                     </label>
@@ -324,6 +321,7 @@
                 </div>
             </div>
         </fieldset>
+    </div>
     </c:if>
 
     <c:if test="${not empty command.inscricao.edicaoEvento.tiposCamiseta}">
@@ -333,7 +331,6 @@
             </legend>
             <div class="row">
                 <div class="span3">
-                    <!--<javalek:label label="label.shirttype" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.shirttype"/>
                     </label>
@@ -345,7 +342,6 @@
                     </select>
                 </div>
                 <div class="span3">
-                    <!--<javalek:label label="label.shirtcolor" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.shirtcolor"/>
                     </label>
@@ -357,7 +353,6 @@
                     </select>
                 </div>
                 <div class="span3">
-                    <!--<javalek:label label="label.shirtsize" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.shirtsize"/>
                     </label>
@@ -369,14 +364,12 @@
                     </select>
                 </div>
                 <div class="span2">
-                    <!--<javalek:label label="label.shirtquant" isMandatory="false" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.shirtquant"/>
                     </label>
                     <input type="text" id="quantCamiseta" maxlength="2" class="textfield width-100" placeholder="Quantidade"/>
                 </div>
                 <div class="span1">
-                    <!--<javalek:label label="label.options" isLabelKey="true" breakAfter="true" cssClass="control-label"/>-->
                     <label class="label">
                         <fmt:message key="label.options"/>
                     </label>
@@ -440,7 +433,8 @@
             </div>
         </fieldset>
     </c:if>
-    <see:formButtonGroup backUrl="listUsuarioInscricoes.html" putSubmit="true"/>
+    <c:url value="/user/listUsuarioInscricoes.html" var="backUrl"/>
+    <see:formButtonGroup backUrl="${backUrl}" putSubmit="true"/>
 </form:form>
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
@@ -506,19 +500,59 @@
         var quantDescr = $('#quantCamiseta').val();
 
         if (tipo == '') {
-            alert('Escolha um tipo de camiseta!');
+            var tipoAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha um tipo de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            tipoAlert.open();
             return;
         }
         if (cor == '') {
-            alert('Escolha uma cor de camiseta!');
+            var corAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha uma cor de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            corAlert.open();
             return;
         }
         if (tam == '') {
-            alert('Escolha um tamanho de camiseta!');
+            var tamAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha um tamanho de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            tamAlert.open();
             return;
         }
         if (quant == '') {
-            alert('Defina a quantidade de camisetas!');
+            var quantAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Defina a quantidade de camisetas!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            quantAlert.open();
             return;
         }
 
@@ -673,6 +707,7 @@
                 $('#evangelizadorResponsavel').hide();
             }
         });
+        $('[name=inscricao\\.confraternista\\.tipo]:checked').change();
         $('#dataNascimento').blur(function() {
             var texto = $(this).val();
             if (typeof texto !== 'undefined' && texto !== '') {

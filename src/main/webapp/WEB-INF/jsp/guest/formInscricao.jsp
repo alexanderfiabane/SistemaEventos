@@ -19,7 +19,7 @@
                 <ul class="no-bullet no-padding">
                     <c:forEach var="item" items="${tiposConfraternista}">
                         <c:choose>
-                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">                                
+                            <c:when test="${command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA'}">
                                 <c:if test="${item != 'OFICINEIRO'}">
                                     <li class="mini-padding">
                                         <label>
@@ -62,7 +62,7 @@
                     <h4><fmt:message key="label.eventcoordgroupdetails"/></h4>
                 </legend>
                 <div class="row">
-                    <div class="span12">                        
+                    <div class="span12">
                         <label class="label">
                             <fmt:message key="label.groupname"/>
                         </label>
@@ -156,6 +156,9 @@
             <div class="row">
                 <div class="span3">
                     <see:formField label="label.email" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.email" maxlength="100" inputClass="textfield width-100"/>
+                </div>
+                <div class="span3">
+                    <see:formField label="label.email.confirm" isLabelKey="true" isMandatory="true" path="emailConfirm" maxlength="100" inputClass="textfield width-100"/>
                 </div>
                 <div class="span3">
                     <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.telefone" maxlength="16" inputClass="textfield width-100"/>
@@ -263,7 +266,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="span3">                
+            <div class="span3">
                 <label class="label">
                     <fmt:message key="label.state"/>
                 </label>
@@ -298,13 +301,13 @@
     </fieldset>
 
     <c:if test="${(not empty command.inscricao.edicaoEvento.oficinas) && (command.inscricao.edicaoEvento.tipo == 'OFICINA')}">
-    <div id="ocupaVaga">            
+    <div id="ocupaVaga">
         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
             <legend class="label">
                 <h4><fmt:message key="label.workshopdetails"/></h4>
             </legend>
             <div class="row">
-                <div class="span3">                    
+                <div class="span3">
                     <label class="label">
                         <fmt:message key="label.workshopname"/>
                     </label>
@@ -321,7 +324,7 @@
                 </div>
             </div>
         </fieldset>
-    </div>    
+    </div>
     </c:if>
 
     <c:if test="${not empty command.inscricao.edicaoEvento.tiposCamiseta}">
@@ -330,7 +333,7 @@
                 <h4><fmt:message key="label.shirtdetails"/></h4>
             </legend>
             <div class="row">
-                <div class="span3">                    
+                <div class="span3">
                     <label class="label">
                         <fmt:message key="label.shirttype"/>
                     </label>
@@ -341,7 +344,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="span3">                    
+                <div class="span3">
                     <label class="label">
                         <fmt:message key="label.shirtcolor"/>
                     </label>
@@ -352,7 +355,7 @@
                         </c:forEach>
                     </select>
                 </div>
-                <div class="span3">                    
+                <div class="span3">
                     <label class="label">
                         <fmt:message key="label.shirtsize"/>
                     </label>
@@ -433,7 +436,11 @@
             </div>
         </fieldset>
     </c:if>
-    <see:formButtonGroup clearUrl="formInscricao.html?idEdicao=${command.inscricao.edicaoEvento.id}" backUrl="listInscricoesAbertas.html" putSubmit="true"/>
+    <c:url var="cleanUrl" value="/guest/formInscricao.html">
+        <c:param name="idEdicao" value="${command.inscricao.edicaoEvento.id}"/>
+    </c:url>
+    <c:url var="backUrl" value="/guest/listInscricoesAbertas.html"/>
+    <see:formButtonGroup clearUrl="${cleanUrl}" backUrl="${backUrl}" putSubmit="true"/>
 </form:form>
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
@@ -499,19 +506,59 @@
         var quantDescr = $('#quantCamiseta').val();
 
         if (tipo == '') {
-            alert('Escolha um tipo de camiseta!');
+            var tipoAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha um tipo de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            tipoAlert.open();
             return;
         }
         if (cor == '') {
-            alert('Escolha uma cor de camiseta!');
+            var corAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha uma cor de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            corAlert.open();
             return;
         }
         if (tam == '') {
-            alert('Escolha um tamanho de camiseta!');
+            var tamAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Escolha um tamanho de camiseta!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            tamAlert.open();
             return;
         }
         if (quant == '') {
-            alert('Defina a quantidade de camisetas!');
+            var quantAlert = new AlertJS({
+                'theme': "warning",
+                'title': "Atenção",
+                'content': "Defina a quantidade de camisetas!",
+                'buttons': {
+                    'ok': {
+                        label: "Fechar"
+                    }
+                }
+            });
+            quantAlert.open();
             return;
         }
 
@@ -659,19 +706,12 @@
             loadCidades($(this), $('#cidadeCasa'));
         });
         $('[name=inscricao\\.confraternista\\.tipo]').change(function() {
-            var tipoConfSeleciondao = $('[name=inscricao\\.confraternista\\.tipo]').val();
             var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
-            //var ocupaVagaGrupoOficina = ${command.inscricao.ocupaVagaGrupoOficina};
             if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
                 $('#evangelizadorResponsavel').show();
             } else {
                 $('#evangelizadorResponsavel').hide();
             }
-//            if(ocupaVagaGrupoOficina){
-//                $('#ocupaVaga').show();
-//            }else{
-//                $('#ocupaVaga').hide();                
-//            }
         });
         $('[name=inscricao\\.confraternista\\.tipo]:checked').change();
         $('#dataNascimento').blur(function() {

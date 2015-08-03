@@ -18,6 +18,7 @@ public class InscricaoCommand {
      * que vamos preencher no form.
      */
     private Inscricao inscricao;
+    private String emailConfirm;
     private Usuario usuario;
 
     public Inscricao getInscricao() {
@@ -28,6 +29,14 @@ public class InscricaoCommand {
         this.inscricao = inscricao;
     }
 
+    public String getEmailConfirm() {
+        return emailConfirm;
+    }
+
+    public void setEmailConfirm(String emailConfirm) {
+        this.emailConfirm = emailConfirm;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -35,5 +44,5 @@ public class InscricaoCommand {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
 }
