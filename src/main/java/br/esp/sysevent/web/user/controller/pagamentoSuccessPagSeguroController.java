@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping(value = "/user/pagamentoSuccessPS.html")
-public class pagamentoSuccessPagSeguroController extends PagamentoFormController{
+public class pagamentoSuccessPagSeguroController extends PagamentoFormController {
 
     @Autowired
     private InscricaoDao inscricaoDao;
@@ -50,8 +50,8 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
     private PagamentoInscricaoDao pagamentoInscricaoDao;
 
     @ModelAttribute("command")
-    public PagamentoInscricao getCommand(@RequestParam(value = "idInscricao", required = true) final String idInscricao, @RequestParam(value = "codTransactionPagSeguro", required = true) final String codTransactionPagSeguro) throws PagSeguroServiceException{
-        if(!CharSequenceUtils.isNumber(idInscricao)){
+    public PagamentoInscricao getCommand(@RequestParam(value = "idInscricao", required = true) final String idInscricao, @RequestParam(value = "codTransactionPagSeguro", required = true) final String codTransactionPagSeguro) throws PagSeguroServiceException {
+        if (!CharSequenceUtils.isNumber(idInscricao)) {
             throw new IllegalStateException("Inscrição inválida");
         }
         Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
@@ -63,15 +63,19 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
                 pagSeguroAccount.getEmailPagSeguroPlain(),
                 pagSeguroAccount.getTokenSegurancaProducao(),
                 pagSeguroAccount.getTokenSegurancaSandBox());
-        PagSeguroConfig.setProductionEnvironment();
-        Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials,codTransactionPagSeguro);
+        if (pagSeguroAccount.isProducao()) {
+            PagSeguroConfig.setProductionEnvironment();
+        } else {
+            PagSeguroConfig.setSandboxEnvironment();
+        }
+        Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials, codTransactionPagSeguro);
         pagamentoInscricao.setDataPagamento(CalendarUtils.castToCalendar(transaction.getDate()));
         pagamentoInscricao.setDescricaoPagamento(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, false));
         pagamentoInscricao.setDescricaoPagamentoQtip(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, true));
         pagamentoInscricao.setValor(transaction.getGrossAmount());
         pagamentoInscricaoDao.saveOrUpdate(pagamentoInscricao);
         inscricao.setPagamento(pagamentoInscricao);
-        if (PagamentoInscricaoUtils.transacaoStatusPaga(transaction)){
+        if (PagamentoInscricaoUtils.transacaoStatusPaga(transaction)) {
             inscricao.setStatus(Inscricao.Status.PAGA);
         }
         inscricaoDao.saveOrUpdate(inscricao);
@@ -80,7 +84,7 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
 
     @Override
     @RequestMapping(method = RequestMethod.GET)
-    public String onGet(@ModelAttribute("command") final PagamentoInscricao command, final ModelMap model, HttpServletRequest request){
+    public String onGet(@ModelAttribute("command") final PagamentoInscricao command, final ModelMap model, HttpServletRequest request) {
         List<Item> produtos = new ArrayList<>();
         produtos.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
         Collection<CamisetaConfraternista> camisetas = command.getInscricao().getConfraternista().getCamisetas();

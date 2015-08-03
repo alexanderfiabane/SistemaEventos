@@ -30,6 +30,8 @@ public class PagSeguroConta extends AbstractEntity{
     private String tokenSegurancaProducao;
     @Column(name = "TOKEN_SEGURANCA_DEV", nullable = true)
     private String tokenSegurancaSandBox;
+    @Column(name = "PRODUCAO", nullable = false)
+    private boolean producao;
 
     public String getEmailPagSeguro() {
         return emailPagSeguro;
@@ -71,6 +73,14 @@ public class PagSeguroConta extends AbstractEntity{
 
     public void setTokenSegurancaSandBox(String tokenSegurancaSandBox) {
         this.tokenSegurancaSandBox = tokenSegurancaSandBox;
+    }
+
+    public boolean isProducao() {
+        return producao;
+    }
+
+    public void setProducao(boolean producao) {
+        this.producao = producao;
     }
 
     @Override

@@ -1,8 +1,14 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 <head>
-    <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
-    <!--<script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>-->
+    <c:choose>
+        <c:when test="${inscricao.edicao.formaCobranca.pagSeguro.producao}">
+            <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+        </c:when>
+        <c:otherwise>
+            <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
+        </c:otherwise>
+    </c:choose>
     <style>
         .pagSeguroBtn{
             padding: 0;
@@ -66,11 +72,11 @@
     function pagar(code) {
         var isOpened;
         isOpened = PagSeguroLightbox(
-            {code: code}, 
+            {code: code},
             {success: function (transactionCode) {
                 location.href = '${pagamentoSuccessURL}' + transactionCode;
             }
-        });        
+        });
         if (!isOpened) {
             location.href = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + code;
         }

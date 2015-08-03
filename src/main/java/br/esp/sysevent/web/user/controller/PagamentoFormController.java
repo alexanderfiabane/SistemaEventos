@@ -137,12 +137,16 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             pagseguro.setSender(montaSenderPagSeguro(confraternista));
             pagseguro.setNotificationURL(montaUrlPagSeguroNotification(command.getInscricao().getEdicaoEvento(), request));
             //Gerar número para o botão lightbox e colocar no model
-            PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();            
+            PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
-            PagSeguroConfig.setProductionEnvironment();
+            if(pagSeguroAccount.isProducao()){
+                PagSeguroConfig.setProductionEnvironment();
+            }else{
+                PagSeguroConfig.setSandboxEnvironment();
+            }
             String lightBoxCode = pagseguro.register(pagSeguroCredentials, true);
             model.addAttribute("pagseguroCod", lightBoxCode);
             return "user/formPagamentoPS";
@@ -167,8 +171,6 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         pagamentoInscricaoDao.saveOrUpdate(command);
         model.addAttribute("message", getMessage("payment.success.save", locale));
         ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.payment.receive", locale), "recebimentoPagamentoDC.html");
-
-        // clear the command object from the session and return form success view
         status.setComplete();
         return "user/pagamentoSuccessDC";
     }

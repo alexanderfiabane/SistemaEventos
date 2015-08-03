@@ -105,38 +105,57 @@
                         </div>
                     </div>
                     <div id="deposito" class="row hidden">
-                        <div class="row">
-                            <div class="span4">
-                                <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.bancoPlain"/>
+                        <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+                            <legend class="label">
+                                <label class="label control">Detalhes da Forma de Cobrança</label>
+                            </legend>
+                            <div class="row">
+                                <div class="span4">
+                                    <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.bancoPlain"/>
+                                </div>
+                                <div class="span8">
+                                    <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain"/>
+                                </div>
                             </div>
-                            <div class="span8">
-                                <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain"/>
+                            <div class="row">
+                                <div class="span4">
+                                    <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agenciaPlain"/>
+                                </div>
+                                <div class="span5">
+                                    <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroContaPlain"/>
+                                </div>
+                                <div class="span3">
+                                    <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="span4">
-                                <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agenciaPlain"/>
-                            </div>
-                            <div class="span5">
-                                <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroContaPlain"/>
-                            </div>
-                            <div class="span3">
-                                <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
-                            </div>
-                        </div>
+                        </fieldset>
                     </div>
                     <div id="pagseguro" class="row hidden">
-                        <div class="row">
-                            <div class="span4">
-                                <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguroPlain"/>
+                        <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
+                            <legend class="label">
+                                <label class="label control">Detalhes da Forma de Cobrança</label>
+                            </legend>
+                            <div class="row">
+                                <div class="span3">
+                                    <label class="label control">Ambiente de excução</label>
+                                    <ul class="no-bullet no-padding list-h">
+                                        <li><form:radiobutton label="Produção" path="formaCobranca.pagSeguro.producao" value="true"/></li>
+                                        <li><form:radiobutton label="SandBox" path="formaCobranca.pagSeguro.producao" value="false"/></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="span4">
-                                <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
+                            <div class="row">
+                                <div class="span4">
+                                    <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguroPlain"/>
+                                </div>
+                                <div class="span4">
+                                    <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
+                                </div>
+                                <div class="span4">
+                                    <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
+                                </div>
                             </div>
-                            <div class="span4">
-                                <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
-                            </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </fieldset>
             </div>
@@ -213,11 +232,11 @@
                         <c:url var="delete_url" value="deleteEdicao.html"><c:param name="idEdicao" value=""/></c:url>
                         <c:url var="grupoIdade_url" value="menuGrupoIdade.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                         <c:url var="oficina_url" value="formOficina.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
-                        <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>                        
+                        <c:url var="dormitorio_url" value="menuDormitorio.html"><c:param name="idEdicao" value="${edicao.id}"/></c:url>
                             <tr>
                                 <td>
                                     <div class="btn-group small">
-                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>                                        
+                                        <button  type="button" class="btn" title="Editar" onclick="location.href = '${edit_url}';"><i class="icon-edit"></i></button>
                                     <button  type="button" class="btn deletaEdicao" data-id="${edicao.id}" title="Deletar"><i class="icon-trash"></i></button>
                                         <c:if test="${edicao.faixaEtaria}">
                                         <button  type="button" class="btn" title="Grupos por idade" onclick="location.href = '${grupoIdade_url}';"><i class="icon-group"></i></button>
@@ -225,7 +244,7 @@
                                         <c:if test="${edicao.oficina}">
                                         <button  type="button" class="btn" title="Oficinas" onclick="location.href = '${oficina_url}';"><i class="icon-wrench"></i></button>
                                         </c:if>
-                                    <button  type="button" class="btn" title="Dormitórios" onclick="location.href = '${dormitorio_url}';"><i class="icon-building"></i></button>                                    
+                                    <button  type="button" class="btn" title="Dormitórios" onclick="location.href = '${dormitorio_url}';"><i class="icon-building"></i></button>
                                 </div>
                             </td>
                             <td class="centered">${edicao.numero}</td>
@@ -329,7 +348,7 @@
             }
         });
         $("[name=formaCobranca\\.tipoCobranca]:checked").change();
-        $("[name=tipo]").change(function() {
+        $("[name=tipo]").change(function () {
             $("#selTipoEdicao").hide();
             if ($(this).val() === 'CONGRESSO') {
                 $('#idAUXILIAR').show();

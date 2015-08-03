@@ -49,12 +49,16 @@ public class PagSeguroNotification {
         String notificationType = (String) request.getParameter("notificationType");
         if (notificationType.equals("transaction")){
             Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
-            PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();                        
+            PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
             AccountCredentials pagSeguroCredentials = new AccountCredentials(
                     pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
-            PagSeguroConfig.setProductionEnvironment();
+            if(pagSeguroAccount.isProducao()){
+                PagSeguroConfig.setProductionEnvironment();
+            }else{
+                PagSeguroConfig.setSandboxEnvironment();
+            }
             Transaction transaction = NotificationService.checkTransaction(pagSeguroCredentials, notificationCod);
             PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByCodPagamento(transaction.getCode());
             TransactionStatus status = transaction.getStatus();
