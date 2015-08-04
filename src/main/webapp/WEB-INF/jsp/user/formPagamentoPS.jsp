@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/includes/jstl.jspf" %>
 <head>
     <c:choose>
-        <c:when test="${inscricao.edicao.formaCobranca.pagSeguro.producao}">
+        <c:when test="${command.inscricao.edicaoEvento.formaCobranca.pagSeguro.producao}">
             <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
         </c:when>
         <c:otherwise>
