@@ -272,8 +272,10 @@
         }
         if (!calculaMaiorIdade(dataNascimento)) {
             $('#responsavel').show();
+            $('#evangelizadorResponsavel').show();
         } else {
             $('#responsavel').hide();
+            $('#evangelizadorResponsavel').hide();
         }
         $("#imprimirInscricao").click(function () {
             var _this = $(this);

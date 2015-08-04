@@ -102,7 +102,10 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         if (confraternista.getPessoa().getDataNascimento() != null) {
             validaIdade(inscricao, errors);
             if (getIdade(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
-                validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
+                validateResponsavel(confraternista.getPessoa().getResponsavel(), errors);
+                if (confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)) {
+                    validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
+                }
             }
         }
         if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)
@@ -125,6 +128,17 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         }
         if (CharSequenceUtils.isBlank(responsavelEvento.getTelefone())) {
             errors.rejectValue("inscricao.confraternista.responsavelEvento.telefone", "errors.required");
+        }
+    }
+
+    protected void validateResponsavel(Responsavel responsavel, Errors errors) {
+        if (CharSequenceUtils.isBlank(responsavel.getNome())) {
+            errors.rejectValue("inscricao.confraternista.pessoa.responsavel.nome", "errors.required");
+        } else if (!NOME_PATTERN.matcher(responsavel.getNome()).matches()) {
+            errors.rejectValue("inscricao.confraternista.pessoa.responsavel.nome", "errors.invalid");
+        }
+        if (CharSequenceUtils.isBlank(responsavel.getTelefone())) {
+            errors.rejectValue("inscricao.confraternista.pessoa.responsavel.telefone", "errors.required");
         }
     }
 
@@ -240,7 +254,15 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         final Inscricao inscricaoDocumentos = inscricaoDao.findByEdicaoDocumentos(edicao.getId(), documentos);
         if (isNova) {
             if (inscricaoDocumentos != null) {
-                errors.rejectValue("inscricao.id", "errors.alreadyExists");
+                if (!CharSequenceUtils.isBlankOrNull(inscricaoDocumentos.getConfraternista().getPessoa().getDocumentos().getCpf())) {
+                    errors.rejectValue("inscricao.confraternista.pessoa.documentos.cpf", "errors.alreadyExists");
+                }
+                if (!CharSequenceUtils.isBlankOrNull(inscricaoDocumentos.getConfraternista().getPessoa().getDocumentos().getRg())) {
+                    errors.rejectValue("inscricao.confraternista.pessoa.documentos.rg", "errors.alreadyExists");
+                }
+                if (!CharSequenceUtils.isBlankOrNull(inscricaoDocumentos.getConfraternista().getPessoa().getDocumentos().getCertidaoNascimento())) {
+                    errors.rejectValue("inscricao.confraternista.pessoa.documentos.certidaoNascimento", "errors.alreadyExists");
+                }
             }
         } else {
             if (inscricaoDocumentos != null && !inscricaoDocumentos.getId().equals(inscricao.getId())) {

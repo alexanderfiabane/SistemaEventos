@@ -7,6 +7,7 @@
 <see:notice type="error" visible="${!empty erro}" closeable="true">${erro}</see:notice>
 
 <form:form commandName="command">
+    <form:errors path="inscricao.id" cssClass="pill error"/>
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
             <h4><fmt:message key="label.eventdetails"/></h4>
@@ -134,7 +135,7 @@
                 <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
             </div>
             <div class="row">
-                <div class="span3">                    
+                <div class="span3">
                     <label class="label">
                         <fmt:message key="label.state"/>
                     </label>
@@ -719,14 +720,19 @@
                 var dataNascimento = parseDate(texto);
                 if (!calculaMaiorIdade(dataNascimento)) {
                     $('#responsavel').show();
+                    $('#evangelizadorResponsavel').show();
                 } else {
                     $('#responsavel').hide();
+                    $('#evangelizadorResponsavel').hide();
                 }
             } else {
                 $('#responsavel').hide();
+                $('#evangelizadorResponsavel').hide();
             }
         });
-
+        if($('#dataNascimento').val() !== 'undefined' && $('#dataNascimento').val() !== '' ){
+            $('#dataNascimento').blur();
+        }
         loadCidades($('#estado'), $('#cidade'), '${command.inscricao.confraternista.pessoa.endereco.cidade.id}');
         loadCidades($('#estadoCasa'), $('#cidadeCasa'), '${command.inscricao.confraternista.casaEspirita.endereco.cidade.id}');
     });
