@@ -134,8 +134,7 @@
                 <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.pessoa.endereco.bairro" maxlength="60" inputClass="textfield width-100"/>
             </div>
             <div class="row">
-                <div class="span3">
-                    <!--<javalek:label label="label.state" isMandatory="true" isLabelKey="true" breakAfter="false" cssClass="control-label"/>-->
+                <div class="span3">                    
                     <label class="label">
                         <fmt:message key="label.state"/>
                     </label>
