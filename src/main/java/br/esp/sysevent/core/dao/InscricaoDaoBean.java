@@ -565,7 +565,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     
     protected void insereGrupoIdade(Inscricao inscricao, Boolean atualiza) {
         final Confraternista confraternista = inscricao.getConfraternista();
-        Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento());
+        Integer idadeConfraternista = diferencaDatas(inscricao.getEdicaoEvento().getPeriodoEdicao().getStart(), confraternista.getPessoa().getDataNascimento());
         Collection<GrupoIdade> gruposIdade = grupoIdadeDao.findByIdadeTipo(idadeConfraternista, confraternista.getTipo());
         if (gruposIdade != null && gruposIdade.size() > 0) {
             for (GrupoIdade grupoIdade : gruposIdade) {

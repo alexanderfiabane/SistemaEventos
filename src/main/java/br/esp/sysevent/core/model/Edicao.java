@@ -9,8 +9,8 @@ import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
@@ -25,7 +25,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
@@ -42,7 +41,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @AttributeOverride(name = "id", column =
         @Column(name = "ID_EDICAO"))
 public class Edicao extends AbstractEntity {
-    private static final long serialVersionUID = -1935823858499808116L;
+    private static final long serialVersionUID = 6057916283234385557L;    
 
     @ManyToOne
     @JoinColumn(name = "ID_EVENTO", nullable = false)
@@ -63,9 +62,12 @@ public class Edicao extends AbstractEntity {
         @AttributeOverride(name = "end", column = @Column(name = "DATA_INSCRICAO_FIM"))
     })
     private Period periodoInscricao;
-    @Column(name = "DATA_EDICAO", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar data;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "start", column = @Column(name = "DATA_EDICAO_INI")),
+        @AttributeOverride(name = "end", column = @Column(name = "DATA_EDICAO_FIM"))
+    })
+    private Period periodoEdicao;
     @Column(name = "IDADE_MINIMA", nullable = false)
     private Integer idadeMinima;
     @Column(name = "TIPO", nullable = false)
@@ -110,6 +112,12 @@ public class Edicao extends AbstractEntity {
     @Cascade({CascadeType.ALL})
     @Fetch(value = FetchMode.SUBSELECT)
     private Collection<EdicaoConfigParticipante> edicaoConfigParticipantes;
+    @ManyToOne
+    @JoinColumn(name = "ID_CONFIG_FICHA", nullable = true)
+    private EdicaoConfigFichaInscricao configFichaInscricao;
+    @ManyToOne
+    @JoinColumn(name = "ID_CONFIG_CRACHA", nullable = true)
+    private EdicaoConfigCracha configCracha;
 
     public String getTema() {
         return tema;
@@ -142,15 +150,15 @@ public class Edicao extends AbstractEntity {
     public void setPeriodoInscricao(Period periodoInscricao) {
         this.periodoInscricao = periodoInscricao;
     }
-
-    public Calendar getData() {
-        return data;
+    
+    public Period getPeriodoEdicao() {
+        return periodoEdicao;
     }
 
-    public void setData(Calendar data) {
-        this.data = data;
-    }
-
+    public void setPeriodoEdicao(Period periodoEdicao) {
+        this.periodoEdicao = periodoEdicao;
+    }    
+    
     public Integer getIdadeMinima() {
         return idadeMinima;
     }
@@ -266,6 +274,22 @@ public class Edicao extends AbstractEntity {
         this.edicaoConfigParticipantes = edicaoConfigParticipantes;
     }
 
+    public EdicaoConfigFichaInscricao getConfigFichaInscricao() {
+        return configFichaInscricao;
+    }
+
+    public void setConfigFichaInscricao(EdicaoConfigFichaInscricao configFichaInscricao) {
+        this.configFichaInscricao = configFichaInscricao;
+    }
+
+    public EdicaoConfigCracha getConfigCracha() {
+        return configCracha;
+    }
+
+    public void setConfigCracha(EdicaoConfigCracha configCracha) {
+        this.configCracha = configCracha;
+    }
+
     public Collection<Confraternista.Tipo> getIsentos(){
         Collection<Confraternista.Tipo> isentos = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
@@ -342,12 +366,13 @@ public class Edicao extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.evento != null ? this.evento.hashCode() : 0);
-        hash = 97 * hash + (this.tema != null ? this.tema.hashCode() : 0);
-        hash = 97 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
-        hash = 97 * hash + (this.data != null ? this.data.hashCode() : 0);
-        hash = 97 * hash + (this.tipo != null ? this.tipo.hashCode() : 0);
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.evento);
+        hash = 37 * hash + Objects.hashCode(this.tema);
+        hash = 37 * hash + Objects.hashCode(this.numero);
+        hash = 37 * hash + Objects.hashCode(this.periodoInscricao);
+        hash = 37 * hash + Objects.hashCode(this.periodoEdicao);
+        hash = 37 * hash + Objects.hashCode(this.tipo);
         return hash;
     }
 
@@ -360,19 +385,27 @@ public class Edicao extends AbstractEntity {
             return false;
         }
         final Edicao other = (Edicao) obj;
-        if (this.evento != other.evento && (this.evento == null || !this.evento.equals(other.evento))) {
+        if (!Objects.equals(this.evento, other.evento)) {
             return false;
         }
-        if ((this.tema == null) ? (other.tema != null) : !this.tema.equals(other.tema)) {
+        if (!Objects.equals(this.tema, other.tema)) {
             return false;
         }
-        if (this.vagas != other.vagas && (this.vagas == null || !this.vagas.equals(other.vagas))) {
+        if (!Objects.equals(this.numero, other.numero)) {
             return false;
         }
-        if (this.data != other.data && (this.data == null || !this.data.equals(other.data))) {
+        if (!Objects.equals(this.periodoInscricao, other.periodoInscricao)) {
             return false;
         }
-        return this.tipo == other.tipo;
+        if (!Objects.equals(this.periodoEdicao, other.periodoEdicao)) {
+            return false;
+        }
+        if (this.tipo != other.tipo) {
+            return false;
+        }
+        return true;
     }
+
+   
 
 }

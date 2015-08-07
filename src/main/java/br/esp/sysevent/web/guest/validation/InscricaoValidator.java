@@ -99,14 +99,18 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
             errors.rejectValue("inscricao.confraternista.nomeCracha", "errors.required");
         }
         validatePessoa(confraternista.getPessoa(), errors);
+        //Valida idade
         if (confraternista.getPessoa().getDataNascimento() != null) {
             validaIdade(inscricao, errors);
-            if (getIdade(inscricao.getEdicaoEvento().getData(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
+            if (getIdade(inscricao.getEdicaoEvento().getPeriodoEdicao().getStart(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
                 validateResponsavel(confraternista.getPessoa().getResponsavel(), errors);
                 if (confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)) {
                     validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
                 }
             }
+        }
+        if(inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA) && confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)){
+            validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
         }
         if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)
                 && (inscricao.isOcupaVagaGrupoOficina() || confraternista.getTipo().equals(Confraternista.Tipo.OFICINEIRO))) {
@@ -320,7 +324,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
     protected void validaIdade(Inscricao inscricao, Errors errors) {
 
         Calendar dataNascimento = inscricao.getConfraternista().getPessoa().getDataNascimento();
-        Calendar dataEvento = inscricao.getEdicaoEvento().getData();
+        Calendar dataEvento = inscricao.getEdicaoEvento().getPeriodoEdicao().getStart();
         Integer idadeMinima = inscricao.getEdicaoEvento().getIdadeMinima();
         int idade = getIdade(dataEvento, dataNascimento);
         if (idade < idadeMinima) {

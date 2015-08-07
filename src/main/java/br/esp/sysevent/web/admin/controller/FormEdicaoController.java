@@ -5,7 +5,6 @@
 package br.esp.sysevent.web.admin.controller;
 
 import br.esp.sysevent.core.dao.CorCamisetaDao;
-import br.esp.sysevent.core.dao.EdicaoConfigParticipanteDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
@@ -59,9 +58,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @Autowired
     private CorCamisetaDao corCamisetaDao;
     @Autowired
-    private TamanhoCamisetaDao tamanhoCamisetaDao;
-    @Autowired
-    private EdicaoConfigParticipanteDao edicaoConfigParticipanteDao;
+    private TamanhoCamisetaDao tamanhoCamisetaDao;    
     @Autowired
     private EdicaoValidator validator;
 
@@ -136,8 +133,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
-        binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
-        //binder.registerCustomEditor(EdicaoConfigParticipante.class, new CustomEntityEditor<>(edicaoConfigParticipanteDao));
+        binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));        
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<>(tipoCamisetaDao));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));

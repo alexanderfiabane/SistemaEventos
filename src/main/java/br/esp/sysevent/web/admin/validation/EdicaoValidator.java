@@ -35,6 +35,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateValorInscricao(edicao.getValorInscricao(), errors); // valida o valor da inscrição
         validateVagas(edicao.getVagas(), errors); // valida o número de vagas da edição
         validatePeriodoInscricao(edicao.getPeriodoInscricao(), errors); // valida o perído de inscrição
+        validatePeriodoEdicao(edicao.getPeriodoEdicao(), errors); // valida o perído da edição
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
         validateValorCamiseta(edicao.getValorCamiseta(), errors);
         validateFormaCobranca(edicao.getFormaCobranca(), errors);
@@ -96,6 +97,25 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 && !errors.hasFieldErrors("periodoInscricao.end")
                 && periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
                 errors.rejectValue("periodoInscricao", "errors.invalid");
+            }
+        }
+    }
+    
+    private void validatePeriodoEdicao(Period periodoEdicao, Errors errors) {
+        if (periodoEdicao == null) {
+            // período de inscrição obrigatório
+            errors.rejectValue("periodoEdicao", "errors.required");
+        } else {
+            if (periodoEdicao.getStart() == null) {
+                errors.rejectValue("periodoEdicao.start", "errors.required");
+            }
+            if (periodoEdicao.getEnd() == null) {
+                errors.rejectValue("periodoEdicao.end", "errors.required");
+            }
+            if (!errors.hasFieldErrors("periodoEdicao.start")
+                && !errors.hasFieldErrors("periodoEdicao.end")
+                && periodoEdicao.getStart().after(periodoEdicao.getEnd())) {
+                errors.rejectValue("periodoEdicao", "errors.invalid");
             }
         }
     }

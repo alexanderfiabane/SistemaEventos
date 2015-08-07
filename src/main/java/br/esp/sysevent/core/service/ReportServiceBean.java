@@ -33,7 +33,7 @@ public class ReportServiceBean implements ReportService {
         final InputStream imagem = getClass().getClassLoader().getResourceAsStream(CABECALHO_FICHA_INSCRICAO);
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
         parametros.put("fichaInscricaoCabecalho", imagem);
-        parametros.put("menorIdade", isMenorIdade(inscricao.getEdicaoEvento().getData(), inscricao.getConfraternista().getPessoa().getDataNascimento()));
+        parametros.put("menorIdade", isMenorIdade(inscricao.getEdicaoEvento().getPeriodoEdicao().getStart(), inscricao.getConfraternista().getPessoa().getDataNascimento()));
         return geraRelatorio(Collections.singleton(inscricao), FICHA_INSCRICAO, parametros);
     }
 

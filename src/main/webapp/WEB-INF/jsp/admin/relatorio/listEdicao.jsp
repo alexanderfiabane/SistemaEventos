@@ -18,7 +18,7 @@
                         <th class="align-center" style="width: 6em;"><fmt:message key="label.vacancies"/></th>
                         <th class="align-center" style="width: 8em;"><fmt:message key="label.subscriptionValue"/></th>
                         <th class="align-center" style="width: 12em;"><fmt:message key="label.subscriptionPeriod"/></th>
-                        <th class="align-center" style="width: 8em;"><fmt:message key="label.subscriptionDate"/></th>
+                        <th class="align-center" style="width: 8em;"><fmt:message key="label.editionPeriod"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                             <td class="align-right">${edicao.vagas}</td>
                             <td class="align-right">R$ ${edicao.valorInscricao}</td>
                             <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
-                            <td class="centered"><fmt:formatDate value="${edicao.data.time}" pattern="dd/MM/yyyy"/></td>
+                            <td class="centered"><fmt:formatDate value="${edicao.periodoEdicao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoEdicao.end.time}" pattern="dd/MM/yyyy"/></td>
                         </tr>
                     </c:forEach>
                 </tbody>
