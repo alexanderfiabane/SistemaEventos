@@ -26,13 +26,13 @@ import javax.persistence.Table;
         @Column(name = "ID_ED_CONFIG_CRACHA"))
 public class EdicaoConfigCracha extends AbstractEntity{
     private static final long serialVersionUID = -5996817071538853898L;
-    
+
     @ManyToOne
     @JoinColumn(name = "ID_EDICAO", nullable = false)
     private Edicao edicao;
     @Column(name = "TEM_CRACHA", nullable = false)
     private boolean temCracha;
-    @Column(name = "FUNDO_CRACHA", nullable = true, columnDefinition = "blob")    
+    @Column(name = "FUNDO_CRACHA", nullable = true, columnDefinition = "blob")
     private byte[] imagemFundo;
     private TipoCracha tipo;
 
@@ -66,7 +66,7 @@ public class EdicaoConfigCracha extends AbstractEntity{
 
     public void setTipo(TipoCracha tipo) {
         this.tipo = tipo;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -95,11 +95,11 @@ public class EdicaoConfigCracha extends AbstractEntity{
             return name();
         }
 
-        public static Collection<Edicao.Tipo> getValues() {
-            return Arrays.asList(Edicao.Tipo.values());
+        public static Collection<TipoCracha> getValues() {
+            return Arrays.asList(TipoCracha.values());
         }
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -119,5 +119,5 @@ public class EdicaoConfigCracha extends AbstractEntity{
             return false;
         }
         return true;
-    }    
+    }
 }

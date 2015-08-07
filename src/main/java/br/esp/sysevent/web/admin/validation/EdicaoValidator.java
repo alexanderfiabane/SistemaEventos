@@ -5,6 +5,8 @@
 package br.esp.sysevent.web.admin.validation;
 
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.EdicaoConfigCracha;
+import br.esp.sysevent.core.model.EdicaoConfigFichaInscricao;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
@@ -39,6 +41,8 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateIdadeMinima(edicao.getIdadeMinima(), errors);
         validateValorCamiseta(edicao.getValorCamiseta(), errors);
         validateFormaCobranca(edicao.getFormaCobranca(), errors);
+        validateEdicaoConfigFichaInscricao(edicao.getConfigFichaInscricao(), errors);
+        validateEdicaoConfigCracha(edicao.getConfigCracha(), errors);
     }
 
     private void validateTipo(Edicao.Tipo tipo, Errors errors) {
@@ -100,7 +104,7 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             }
         }
     }
-    
+
     private void validatePeriodoEdicao(Period periodoEdicao, Errors errors) {
         if (periodoEdicao == null) {
             // período de inscrição obrigatório
@@ -169,6 +173,14 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 }
             }
         }
+    }
+
+    private void validateEdicaoConfigFichaInscricao(EdicaoConfigFichaInscricao configFichaInscricao, Errors errors) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void validateEdicaoConfigCracha(EdicaoConfigCracha configCracha, Errors errors) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

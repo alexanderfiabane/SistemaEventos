@@ -41,7 +41,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @AttributeOverride(name = "id", column =
         @Column(name = "ID_EDICAO"))
 public class Edicao extends AbstractEntity {
-    private static final long serialVersionUID = 6057916283234385557L;    
+    private static final long serialVersionUID = 6057916283234385557L;
 
     @ManyToOne
     @JoinColumn(name = "ID_EVENTO", nullable = false)
@@ -113,9 +113,11 @@ public class Edicao extends AbstractEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private Collection<EdicaoConfigParticipante> edicaoConfigParticipantes;
     @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     @JoinColumn(name = "ID_CONFIG_FICHA", nullable = true)
     private EdicaoConfigFichaInscricao configFichaInscricao;
     @ManyToOne
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     @JoinColumn(name = "ID_CONFIG_CRACHA", nullable = true)
     private EdicaoConfigCracha configCracha;
 
@@ -150,15 +152,15 @@ public class Edicao extends AbstractEntity {
     public void setPeriodoInscricao(Period periodoInscricao) {
         this.periodoInscricao = periodoInscricao;
     }
-    
+
     public Period getPeriodoEdicao() {
         return periodoEdicao;
     }
 
     public void setPeriodoEdicao(Period periodoEdicao) {
         this.periodoEdicao = periodoEdicao;
-    }    
-    
+    }
+
     public Integer getIdadeMinima() {
         return idadeMinima;
     }
@@ -309,7 +311,7 @@ public class Edicao extends AbstractEntity {
         }
         return ocupamVaga;
     }
-    
+
     public Collection<Confraternista.Tipo> getOcupamVagaGrupoOficina(){
         Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
@@ -406,6 +408,6 @@ public class Edicao extends AbstractEntity {
         return true;
     }
 
-   
+
 
 }

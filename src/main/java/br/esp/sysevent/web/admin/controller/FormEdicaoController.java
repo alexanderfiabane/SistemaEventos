@@ -12,6 +12,8 @@ import br.esp.sysevent.core.dao.TipoCamisetaDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.EdicaoConfigCracha;
+import br.esp.sysevent.core.model.EdicaoConfigFichaInscricao;
 import br.esp.sysevent.core.model.EdicaoConfigParticipante;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
@@ -58,7 +60,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @Autowired
     private CorCamisetaDao corCamisetaDao;
     @Autowired
-    private TamanhoCamisetaDao tamanhoCamisetaDao;    
+    private TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
     private EdicaoValidator validator;
 
@@ -99,6 +101,12 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
                 edicaoConfigParticipantes.add(edicaoConfigParticipante);
             }
             edicao.setEdicaoConfigParticipantes(edicaoConfigParticipantes);
+            EdicaoConfigFichaInscricao configFichaInscricao = new EdicaoConfigFichaInscricao();
+            configFichaInscricao.setTemFichaInscicao(false);
+            configFichaInscricao.setAutorizacaoInstituicao(false);
+            configFichaInscricao.setAutorizacaoMenor(false);
+            configFichaInscricao.setEdicao(edicao);
+            edicao.setConfigFichaInscricao(configFichaInscricao);
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
@@ -108,6 +116,10 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @ModelAttribute("tiposEdicao")
     public Collection<Edicao.Tipo> getTiposEdicao() {
         return Edicao.Tipo.getValues();
+    }
+    @ModelAttribute("tiposCrachas")
+    public Collection<EdicaoConfigCracha.TipoCracha> getTiposCrachas() {
+        return EdicaoConfigCracha.TipoCracha.getValues();
     }
 
     @ModelAttribute("tiposFormaCobranca")
@@ -133,7 +145,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
     protected void initBinder(final WebDataBinder binder, final Locale locale) {
-        binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));        
+        binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<>(tipoCamisetaDao));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));

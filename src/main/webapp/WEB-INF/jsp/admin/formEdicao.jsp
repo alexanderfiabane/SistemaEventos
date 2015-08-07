@@ -19,9 +19,9 @@
         </ul>
         <div class="content">
             <!--Cadastro Básico-->
-            <div class="pane active" id="cadastroBasico">                
+            <div class="pane active" id="cadastroBasico">
                 <div class="row">
-                    <div class="span2 padding-top">                        
+                    <div class="span2 padding-top">
                         <label class="label control">
                             <fmt:message key="label.editiontype"/>
                         </label>
@@ -32,13 +32,13 @@
                                 </li>
                             </c:forEach>
                         </ul>
-                        <form:errors path="tipo" cssClass="pill error"/>                        
+                        <form:errors path="tipo" cssClass="pill error"/>
                     </div>
                     <div class="span10">
                         <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
                             <legend><label class="label control">Configuração de participantes da edição</label></legend>
                             <div class="table-wrapper">
-                                <table class="table hovered stroked narrow small-font-size">                                
+                                <table class="table hovered stroked narrow small-font-size">
                                     <thead class="header">
                                         <tr>
                                             <th style="width: 12em;">Tipo participante</th>
@@ -94,8 +94,8 @@
                     </div>
                     <div class="span3">
                         <see:formField id="periodoEdicao_end" label="label.editionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoEdicao.end"/>
-                    </div>                        
-                </div>                                
+                    </div>
+                </div>
             </div>
             <!--Forma de cobrança-->
             <div class="pane" id="cobranca">
@@ -113,7 +113,7 @@
                             <form:errors path="formaCobranca.tipoCobranca" class="pill error"/>
                         </ul>
                     </div>
-                    <div class="span10">                            
+                    <div class="span10">
                         <div id="deposito" class="row hidden">
                             <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
                                 <legend class="label">
@@ -176,136 +176,136 @@
                     <div class="span4">
                         <label class="label control">Tem ficha de inscrição?</label>
                         <ul class="no-bullet no-padding list-h">
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Sim" value="true"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Sim" value="true"/>
                             </li>
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Não" value="false"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Não" value="false"/>
                             </li>
                         </ul>
                         <form:errors path="configFichaInscricao.temFichaInscicao" cssClass="pill error"/>
                     </div>
                     <div class="span4">
-                        <label class="label control">Requer autorização da instituição?</label>                        
+                        <label class="label control">Requer autorização da instituição?</label>
                         <ul class="no-bullet no-padding list-h">
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.autorizacaoInstituicao" label="Sim" value="true"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.autorizacaoInstituicao" label="Sim" value="true"/>
                             </li>
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.autorizacaoInstituicao" label="Não" value="false"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.autorizacaoInstituicao" label="Não" value="false"/>
                             </li>
                         </ul>
                         <form:errors path="configFichaInscricao.autorizacaoInstituicao" cssClass="pill error"/>
                     </div>
                     <div class="span4">
-                        <label class="label control">Requer autorização para menor de idade?</label>                        
+                        <label class="label control">Requer autorização para menor de idade?</label>
                         <ul class="no-bullet no-padding list-h">
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.autorizacaoMenor" label="Sim" value="true"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.autorizacaoMenor" label="Sim" value="true"/>
                             </li>
-                            <li>                                
-                                <form:radiobutton path="configFichaInscricao.autorizacaoMenor" label="Não" value="false"/> 
+                            <li>
+                                <form:radiobutton path="configFichaInscricao.autorizacaoMenor" label="Não" value="false"/>
                             </li>
                         </ul>
-                        <form:errors path="configFichaInscricao.autorizacaoMenor" cssClass="pill error"/>                            
+                        <form:errors path="configFichaInscricao.autorizacaoMenor" cssClass="pill error"/>
                     </div>
                 </div>
             </div>
             <!--Crachás-->
-            <div class="pane" id="crachas">                
+            <div class="pane" id="crachas">
                 <div class="row">
                     <label class="label control">Tipo de crachá</label>
-                    <div class="row align-center">
+                    <div class="row">
                         <c:forEach var="item" items="${tiposCrachas}">
-                            <div class="span4">                                
+                            <div class="span4">
                                 <form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}
                                 <form:errors path="tipo" cssClass="pill error"/>
                             </div>
-                        </c:forEach>                               
-                    </div> 
+                        </c:forEach>
+                    </div>
                     <div class="row align-center">
                         <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 360px; height: 530px;">
+                                <table class="table bordered" style="width: 320px; height: 210px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME COMPLETO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">NOME COMPLETO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME DA INSTITUIÇÃO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">NOME DA INSTITUIÇÃO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">CIDADE - ESTADO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">CIDADE - ESTADO</td>
                                         </tr>
                                         <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>  
+                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
                                         </tr>
                                         <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>  
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>  
+                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
+                                            <td class="align-center small-font-size">DORMITÓRIO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>                                              
+                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 370px; height: 260px;">
+                                <table class="table bordered" style="width: 350px; height: 250px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME COMPLETO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">NOME COMPLETO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME DA INSTITUIÇÃO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">NOME DA INSTITUIÇÃO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">CIDADE - ESTADO</td>  
+                                            <td colspan="2" class="align-left mini-font-size">CIDADE - ESTADO</td>
                                         </tr>
                                         <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>  
+                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
                                         </tr>
                                         <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>  
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>  
+                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
+                                            <td class="align-center small-font-size">DORMITÓRIO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>                                              
+                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="span4">                                                            
+                        <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 400px; height: 300px;">
+                                <table class="table bordered" style="width: 310px; height: 480px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME COMPLETO</td>  
+                                            <td colspan="2" class="align-left small-font-size">NOME COMPLETO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME DA INSTITUIÇÃO</td>  
+                                            <td colspan="2" class="align-left small-font-size">NOME DA INSTITUIÇÃO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">CIDADE - ESTADO</td>  
+                                            <td colspan="2" class="align-left small-font-size">CIDADE - ESTADO</td>
                                         </tr>
                                         <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>  
+                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
                                         </tr>
                                         <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>  
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>  
+                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
+                                            <td class="align-center small-font-size">DORMITÓRIO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>                                              
+                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>                                                                                           
+                    </div>
                 </div>
                 <div class="row">
                     <label class="label control">Imagem de fundo</label><br>
@@ -313,7 +313,7 @@
                 </div>
             </div>
             <!--Camisetas-->
-            <div class="pane" id="camisetas">                                
+            <div class="pane" id="camisetas">
                 <div class="table-wrapper scrollable bordered rounded">
                     <table class="table stroked">
                         <thead class="header">
@@ -349,7 +349,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                </div>                
+                </div>
             </div>
         </div>
         <see:formButtonGroup putSubmit="true" clearUrl="formEdicao.html?idEvento=${command.evento.id}"/>
@@ -402,7 +402,7 @@
                             <td class="align-right">${edicao.vagas}</td>
                             <td class="align-right">R$ ${edicao.valorInscricao}</td>
                             <td class="centered"><fmt:formatDate value="${edicao.periodoInscricao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoInscricao.end.time}" pattern="dd/MM/yyyy"/></td>
-                            <td class="centered"><fmt:formatDate value="${edicao.periodoEdicao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoEdicao.end.time}" pattern="dd/MM/yyyy"/></td>                            
+                            <td class="centered"><fmt:formatDate value="${edicao.periodoEdicao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${edicao.periodoEdicao.end.time}" pattern="dd/MM/yyyy"/></td>
                             <td class="align-right">${edicao.idadeMinima}</td>
                         </tr>
                     </c:forEach>

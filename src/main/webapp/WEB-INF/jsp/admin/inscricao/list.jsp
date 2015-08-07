@@ -5,8 +5,8 @@
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 
-    <div id="searchParams" class="box bordered rounded control">
-        <input name="edicao.id" type="hidden" value="${edicao.id}"/>
+<div id="searchParams" class="box bordered rounded control">
+    <input name="edicao.id" type="hidden" value="${edicao.id}"/>
     <div class="row">
         <div class="span9">
             <label class="label">
@@ -191,7 +191,7 @@
                                     },
                                     'cancel': false
                                 },
-                                'postAppendContent': function(modal) {
+                                'postAppendContent': function (modal) {
                                     modal.find('.main-action').lockOnClick();
                                 }
                             });
@@ -209,7 +209,7 @@
                                     },
                                     'cancel': false
                                 },
-                                'postAppendContent': function(modal) {
+                                'postAppendContent': function (modal) {
                                     modal.find('.main-action').lockOnClick();
                                 }
                             });
@@ -232,7 +232,7 @@
                                     },
                                     'cancel': false
                                 },
-                                'postAppendContent': function(modal) {
+                                'postAppendContent': function (modal) {
                                     modal.find('.main-action').lockOnClick();
                                 }
                             });
@@ -254,7 +254,7 @@
                                     },
                                     'cancel': false
                                 },
-                                'postAppendContent': function(modal) {
+                                'postAppendContent': function (modal) {
                                     modal.find('.main-action').lockOnClick();
                                 }
                             });
