@@ -214,10 +214,22 @@
             <!--Crachás-->
             <div class="pane" id="crachas">
                 <div class="row">
-                    <label class="label control">Tipo de crachá</label>
+                    <label class="label control">Tem crachá?</label>
+                    <ul class="no-bullet no-padding list-h">
+                            <li>
+                                <form:radiobutton path="configCracha.temCracha" label="Sim" value="true"/>
+                            </li>
+                            <li>
+                                <form:radiobutton path="configCracha.temCracha" label="Não" value="false"/>
+                            </li>
+                        </ul>
+                        <form:errors path="configCracha.temCracha" cssClass="pill error"/>
+                </div>
+                <div class="row">
+                    <label class="label control">Tipo de crachá <i id="hintCracha" class="icon-info-sign"></i></label>
                     <div class="row">
                         <c:forEach var="item" items="${tiposCrachas}">
-                            <div class="span4">
+                            <div class="span4 align-center">
                                 <form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}
                                 <form:errors path="tipo" cssClass="pill error"/>
                             </div>
@@ -226,90 +238,103 @@
                     <div class="row align-center">
                         <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 320px; height: 210px;">
+                                <center>
+                                <table class="table bordered" style="width: 300px; height: 210px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">NOME COMPLETO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">NOME DA INSTITUIÇÃO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">CIDADE - ESTADO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
                                         </tr>
                                         <tr class="stroked-top stroked-bottom">
                                             <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
                                         </tr>
                                         <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>
+                                            <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
+                                            <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                </center>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 350px; height: 250px;">
+                                <center>
+                                <table class="table bordered" style="width: 400px; height: 267px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">NOME COMPLETO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">NOME DA INSTITUIÇÃO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left mini-font-size">CIDADE - ESTADO</td>
+                                            <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
                                         </tr>
                                         <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
+                                            <td colspan="2" class="align-center bold" style="font-size: 2.2em;">NOME CRACHÁ</td>
                                         </tr>
                                         <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>
+                                            <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
+                                            <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                </center>    
                             </div>
                         </div>
                         <div class="span4">
                             <div class="table-wrapper">
-                                <table class="table bordered" style="width: 310px; height: 480px;">
+                                <center>
+                                <table class="table bordered narrow" style="width: 300px; height: 442px;">
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME COMPLETO</td>
+                                            <td></td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td></td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td></td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td></td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td class="align-center no-padding bold" style="font-size: 2em;">NOME CRACHÁ</td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td class="align-center no-padding bold" style="font-size: 1.2em;">TIPO PARTICIPANTE</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2" class="align-left small-font-size">NOME DA INSTITUIÇÃO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-left small-font-size">CIDADE - ESTADO</td>
-                                        </tr>
-                                        <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-center small-font-size">GRUPO | OFICINA</td>
-                                            <td class="align-center small-font-size">DORMITÓRIO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
+                                            <td class="align-left no-padding vertical" style="font-size: .8em;">
+                                                NOME COMPLETO<br>
+                                                CIDADE - ESTADO<br>
+                                                GRUPO | OFICINA<br>
+                                                DORMITÓRIO
+                                            </td>                                           
                                         </tr>
                                     </tbody>
                                 </table>
+                                </center>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <label class="label control">Imagem de fundo</label><br>
-                    <input type="file" name="configCracha.imageFundo" class="textfield">
+                    <input type="file" id="configCracha.imageFundo" name="configCracha.imageFundo" class="textfield">
                 </div>
             </div>
             <!--Camisetas-->
@@ -534,6 +559,25 @@
             }
         });
         $("[name=tipo]:checked").change();
+        $("[name=configFichaInscricao\\.temFichaInscicao]").change(function () {
+            if ($(this).val() === 'false') {
+                $('[name=configFichaInscricao\\.autorizacaoInstituicao').filter('[value="false"]').attr('checked',true);
+                $('[name=configFichaInscricao\\.autorizacaoMenor').filter('[value="false"]').attr('checked',true);
+            } 
+        });
+        $("[name=configFichaInscricao\\.temFichaInscicao]:checked").change();
+        $("[name=configCracha\\.temCracha]").change(function () {
+            if ($(this).val() === 'false') {
+                $('[name=configCracha\\.tipo').attr('checked',false);                
+                $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));                
+            } 
+        });
+        $("[name=configCracha\\.temCracha]:checked").change();
+        
+        $("#hintCracha").qtip({
+            'content': "Os tamanhos abaixo exibidos estão, proporcionalmente, menores. Para visualizar o tamanho real do crachá selecionado acesse a área de relatórios dessa edição."                       
+        });        
+    
     });
 </script>
 

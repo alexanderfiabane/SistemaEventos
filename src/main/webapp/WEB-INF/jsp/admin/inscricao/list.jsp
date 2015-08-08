@@ -5,8 +5,8 @@
 
 <see:notice type="success" visible="${!empty message}" closeable="true">${message}</see:notice>
 
-<div id="searchParams" class="box bordered rounded control">
-    <input name="edicao.id" type="hidden" value="${edicao.id}"/>
+    <div id="searchParams" class="box bordered rounded control">
+        <input name="edicao.id" type="hidden" value="${edicao.id}"/>
     <div class="row">
         <div class="span9">
             <label class="label">
@@ -133,6 +133,10 @@
                             'content': {
                                 text: item.pagamento == null ? "Não há informações" : item.pagamento.descricaoPagamentoQtip,
                                 title: "Detalhes do Pagamento"
+                            },
+                            position: {
+                                my: 'bottom right',
+                                at: 'left top'
                             },
                             style: {
                                 classes: 'qtip-bootstrap'
