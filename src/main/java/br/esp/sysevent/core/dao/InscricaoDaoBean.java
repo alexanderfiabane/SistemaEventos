@@ -524,15 +524,21 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
     }
     
     protected void atualizaVagaOficina(final Inscricao inscricao, final Inscricao inscricaoAtual) {
-        final Oficina oficina = inscricao.getConfraternista().getOficina();
-        final Oficina oficinaAtual = inscricaoAtual.getConfraternista().getOficina();
-        if (oficina != null && !oficina.getId().equals(oficinaAtual.getId())) {
+        final Confraternista confraternista = inscricao.getConfraternista();
+        final Confraternista confraternistaAtual = inscricaoAtual.getConfraternista();
+        final Oficina oficina = confraternista.getOficina();
+        final Oficina oficinaAtual = confraternistaAtual.getOficina();
+        if (oficina != null && (!oficina.getId().equals(oficinaAtual.getId()) || !confraternista.equals(confraternistaAtual))) {
             //trocou de oficina
-            oficina.ocupaVaga();
-            oficinaAtual.desocupaVaga();
-            flushAndClear();
-            oficinaDao.saveOrUpdate(oficina);
-            oficinaDao.saveOrUpdate(oficinaAtual);
+            if(inscricao.isOcupaVagaGrupoOficina()){
+                oficina.ocupaVaga();
+                flushAndClear();
+                oficinaDao.saveOrUpdate(oficina);
+            }
+            if(inscricaoAtual.isOcupaVagaGrupoOficina()){
+                oficinaAtual.desocupaVaga();
+                oficinaDao.saveOrUpdate(oficinaAtual);
+            }
         }
     }
     
@@ -542,7 +548,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         final Confraternista confraternista = inscricao.getConfraternista();
         final Confraternista confraternistaAtual = inscricaoAtual.getConfraternista();
         final GrupoIdade grupoIdadeAtual = inscricaoAtual.getConfraternista().getGrupoIdade();
-        if (grupoIdadeAtual != null) {
+        if (grupoIdadeAtual != null && inscricaoAtual.isOcupaVagaGrupoOficina()) {
             if (!CalendarUtils.truncatedEquals(dataNascimento, dataNascimentoAtual, Calendar.DAY_OF_MONTH)
                     || !confraternista.getTipo().equals(confraternistaAtual.getTipo())
                     || !confraternista.getTipo().equals(grupoIdadeAtual.getTipo())) {

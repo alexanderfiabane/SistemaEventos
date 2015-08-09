@@ -7,6 +7,7 @@ package br.esp.sysevent.web.admin.validation;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.EdicaoConfigCracha;
 import br.esp.sysevent.core.model.EdicaoConfigFichaInscricao;
+import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
@@ -23,7 +24,7 @@ import org.springframework.validation.Errors;
  * @author Alexander
  */
 @Component
-public class EdicaoValidator extends AbstractValidator<Edicao> {
+public class EdicaoValidator extends AbstractValidator<Edicao> {   
 
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -43,10 +44,11 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         validateFormaCobranca(edicao.getFormaCobranca(), errors);
         validateEdicaoConfigFichaInscricao(edicao.getConfigFichaInscricao(), errors);
         validateEdicaoConfigCracha(edicao.getConfigCracha(), errors);
+        validateLocal(edicao.getLocal(), edicao.getLocalEndereco(), errors);
     }
 
     private void validateTipo(Edicao.Tipo tipo, Errors errors) {
-        if (tipo == null){
+        if (tipo == null) {
             errors.rejectValue("tipo", "errors.required");
         }
     }
@@ -98,8 +100,8 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 errors.rejectValue("periodoInscricao.end", "errors.required");
             }
             if (!errors.hasFieldErrors("periodoInscricao.start")
-                && !errors.hasFieldErrors("periodoInscricao.end")
-                && periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
+                    && !errors.hasFieldErrors("periodoInscricao.end")
+                    && periodoInscricao.getStart().after(periodoInscricao.getEnd())) {
                 errors.rejectValue("periodoInscricao", "errors.invalid");
             }
         }
@@ -117,8 +119,8 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
                 errors.rejectValue("periodoEdicao.end", "errors.required");
             }
             if (!errors.hasFieldErrors("periodoEdicao.start")
-                && !errors.hasFieldErrors("periodoEdicao.end")
-                && periodoEdicao.getStart().after(periodoEdicao.getEnd())) {
+                    && !errors.hasFieldErrors("periodoEdicao.end")
+                    && periodoEdicao.getStart().after(periodoEdicao.getEnd())) {
                 errors.rejectValue("periodoEdicao", "errors.invalid");
             }
         }
@@ -140,34 +142,34 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
     }
 
     private void validateFormaCobranca(FormaCobranca formaCobranca, Errors errors) {
-        if(formaCobranca.getTipoCobranca() == null){
+        if (formaCobranca.getTipoCobranca() == null) {
             errors.rejectValue("formaCobranca.tipoCobranca", "errors.required");
         }
-        if(!formaCobranca.isSemCobranca()){
-            if(formaCobranca.isDepositoConta()){
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getBancoPlain())){
+        if (!formaCobranca.isSemCobranca()) {
+            if (formaCobranca.isDepositoConta()) {
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getBancoPlain())) {
                     errors.rejectValue("formaCobranca.deposito.bancoPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getAgenciaPlain())){
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getAgenciaPlain())) {
                     errors.rejectValue("formaCobranca.deposito.agenciaPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getFavorecidoPlain())){
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getFavorecidoPlain())) {
                     errors.rejectValue("formaCobranca.deposito.favorecidoPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getNumeroContaPlain())){
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getNumeroContaPlain())) {
                     errors.rejectValue("formaCobranca.deposito.numeroContaPlain", "errors.required");
                 }
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getOperacao())){
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getDeposito().getOperacao())) {
                     errors.rejectValue("formaCobranca.deposito.operacao", "errors.required");
                 }
-            }else{
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getEmailPagSeguroPlain())){
+            } else {
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getEmailPagSeguroPlain())) {
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguroPlain", "errors.required");
-                }else if(!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguroPlain()).matches()){
+                } else if (!EMAIL_PATTERN.matcher(formaCobranca.getPagSeguro().getEmailPagSeguroPlain()).matches()) {
                     errors.rejectValue("formaCobranca.pagSeguro.emailPagSeguroPlain", "errors.invalid");
                 }
-                if(CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
-                        && CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())){
+                if (CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaProducao())
+                        && CharSequenceUtils.isBlankOrNull(formaCobranca.getPagSeguro().getTokenSegurancaSandBox())) {
                     errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaProducao", "errors.required.at.least.one");
                     errors.rejectValue("formaCobranca.pagSeguro.tokenSegurancaSandBox", "errors.required.at.least.one");
                 }
@@ -176,11 +178,66 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
     }
 
     private void validateEdicaoConfigFichaInscricao(EdicaoConfigFichaInscricao configFichaInscricao, Errors errors) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (configFichaInscricao == null) {
+            errors.rejectValue("configFichaInscricao.temFichaInscicao", "errors.required");
+            return;
+        }
+        if (!configFichaInscricao.isTemFichaInscricao() && configFichaInscricao.isAutorizacaoInstituicao()) {
+            errors.rejectValue("configFichaInscricao.autorizacaoInstituicao", "errors.invalid");
+        }
+        if (!configFichaInscricao.isTemFichaInscricao() && configFichaInscricao.isTemFichaInscricao()) {
+            errors.rejectValue("configFichaInscricao.autorizacaoMenor", "errors.invalid");
+        }
     }
 
     private void validateEdicaoConfigCracha(EdicaoConfigCracha configCracha, Errors errors) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (configCracha == null) {
+            errors.rejectValue("configFichaInscricao.temFichaInscicao", "errors.required");
+            return;
+        }
+        if (!configCracha.isTemCracha() && (configCracha.getTipo() != null)) {
+            errors.rejectValue("configCracha.tipo", "errors.invalid");
+        }
+        if (!configCracha.isTemCracha() && (configCracha.getImagemFundo() != null)) {
+            errors.rejectValue("configCracha.imageFundo", "errors.invalid");
+        }
     }
 
+    private void validateLocal(String local, Endereco localEndereco, Errors errors) {
+        if(CharSequenceUtils.isBlankOrNull(local)){
+            errors.rejectValue("local", "errors.required");        
+        }
+        validateEndereco(localEndereco, errors, "localEndereco", false);
+    }
+    
+    protected void validateEndereco(Endereco endereco, Errors errors, String path, boolean validateContato) {
+        if (CharSequenceUtils.isBlankOrNull(endereco.getNumero())) {
+            errors.rejectValue(path + ".numero", "errors.required");
+        }
+        if (endereco.getCidade() == null) {
+            errors.rejectValue(path + ".cidade", "errors.required");
+        }
+        if (CharSequenceUtils.isBlank(endereco.getLogradouro())) {
+            errors.rejectValue(path + ".logradouro", "errors.required");
+        }
+        if (CharSequenceUtils.isBlank(endereco.getBairro())) {
+            errors.rejectValue(path + ".bairro", "errors.required");
+        }
+        if (CharSequenceUtils.isBlank(endereco.getCep())) {
+            errors.rejectValue(path + ".cep", "errors.required");
+        }
+        if (validateContato) {
+            if (CharSequenceUtils.isBlank(endereco.getEmail())) {
+                errors.rejectValue(path + ".email", "errors.required");
+            } else if (!EMAIL_PATTERN.matcher(endereco.getEmail()).matches()) {
+                errors.rejectValue(path + ".email", "errors.invalid");
+            }
+            if (CharSequenceUtils.isBlank(endereco.getTelefone())) {
+                errors.rejectValue(path + ".telefone", "errors.required");
+            }
+            if (CharSequenceUtils.isBlank(endereco.getTelefoneEvento())) {
+                errors.rejectValue(path + ".telefoneEvento", "errors.required");
+            }
+        }
+    }
 }

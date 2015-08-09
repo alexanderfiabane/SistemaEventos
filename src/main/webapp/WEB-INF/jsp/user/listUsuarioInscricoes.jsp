@@ -17,7 +17,7 @@
                         <th style="width: 2em;"><fmt:message key="label.number"/></th>
                         <th><fmt:message key="label.theme"/></th>
                         <th style="width: 10em;"><fmt:message key="label.subscriptionstatus"/></th>
-                        <th style="width: 8em;" class="centered"><fmt:message key="label.subscriptionDate"/></th>
+                        <th style="width: 8em;" class="centered"><fmt:message key="label.editionPeriod"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,14 +36,18 @@
                                 </c:when>
                                 <c:when test="${inscricao.podeEfetivar && not inscricao.edicaoEvento.formaCobranca.semCobranca}">
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
-                                    <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                    <c:if test="${inscricao.edicaoEvento.configFichaInscricao.temFichaInscricao}">
+                                        <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>                                    
+                                    </c:if>
                                     <c:if test="${not inscricao.isento || not empty inscricao.confraternista.camisetas}">
                                         <button type="button" class="btn" title="Pagar inscrição" onclick="location.href = '${inscricao_pagamento_url}';"><i class="icon-money"></i></button>
                                     </c:if>
                                 </c:when>
                                 <c:otherwise>
                                     <button type="button" class="btn" title="Visualizar inscrição" onclick="location.href = '${inscricao_confirmacao_url}';"><i class="icon-eye-open"></i></button>
-                                    <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>
+                                    <c:if test="${inscricao.edicaoEvento.configFichaInscricao.temFichaInscricao}">
+                                        <button type="button" class="btn" title="Imprimir inscrição" onclick="location.href = '${inscricao_imprimir_url}';"><i class="icon-print"></i></button>                                    
+                                    </c:if>
                                 </c:otherwise>
                             </c:choose>
                             </div>
@@ -52,7 +56,7 @@
                         <td class="align-right">${inscricao.edicaoEvento.numero}</td>
                         <td>${inscricao.edicaoEvento.tema}</td>
                         <td>${inscricao.status.value}</td>
-                        <td class="centered"><fmt:formatDate value="${inscricao.edicaoEvento.data.time}" pattern="dd/MM/yyyy"/></td>
+                        <td class="centered"><fmt:formatDate value="${inscricao.edicaoEvento.periodoEdicao.start.time}" pattern="dd/MM/yyyy"/> - <fmt:formatDate value="${inscricao.edicaoEvento.periodoEdicao.end.time}" pattern="dd/MM/yyyy"/></td>
                     </tr>
                     </c:forEach>
                 </tbody>

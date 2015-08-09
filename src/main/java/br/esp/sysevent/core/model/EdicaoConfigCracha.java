@@ -34,6 +34,7 @@ public class EdicaoConfigCracha extends AbstractEntity{
     private boolean temCracha;
     @Column(name = "FUNDO_CRACHA", nullable = true, columnDefinition = "blob")
     private byte[] imagemFundo;
+    @Column(name = "TIPO_CRACHA", nullable = true)
     private TipoCracha tipo;
 
     public Edicao getEdicao() {

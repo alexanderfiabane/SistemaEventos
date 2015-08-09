@@ -4,17 +4,22 @@
  */
 package br.esp.sysevent.web.admin.controller;
 
+import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.dao.CorCamisetaDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
+import br.esp.sysevent.core.dao.EstadoDao;
 import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.TamanhoCamisetaDao;
 import br.esp.sysevent.core.dao.TipoCamisetaDao;
+import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.CorCamiseta;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.EdicaoConfigCracha;
 import br.esp.sysevent.core.model.EdicaoConfigFichaInscricao;
 import br.esp.sysevent.core.model.EdicaoConfigParticipante;
+import br.esp.sysevent.core.model.Endereco;
+import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
@@ -62,6 +67,10 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @Autowired
     private TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
+    private EstadoDao estadoDao;
+    @Autowired
+    private CidadeDao cidadeDao;
+    @Autowired
     private EdicaoValidator validator;
 
     @Override
@@ -80,7 +89,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
-            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));           
         } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
             final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
@@ -102,11 +111,16 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             }
             edicao.setEdicaoConfigParticipantes(edicaoConfigParticipantes);
             EdicaoConfigFichaInscricao configFichaInscricao = new EdicaoConfigFichaInscricao();
-            configFichaInscricao.setTemFichaInscicao(false);
+            configFichaInscricao.setTemFichaInscricao(false);
             configFichaInscricao.setAutorizacaoInstituicao(false);
             configFichaInscricao.setAutorizacaoMenor(false);
             configFichaInscricao.setEdicao(edicao);
             edicao.setConfigFichaInscricao(configFichaInscricao);
+            EdicaoConfigCracha configCracha = new EdicaoConfigCracha();
+            configCracha.setEdicao(edicao);
+            configCracha.setTemCracha(false);
+            edicao.setConfigCracha(configCracha);
+            edicao.setLocalEndereco(new Endereco());
         } else {
             throw new IllegalArgumentException("Parâmetros inválidos");
         }
@@ -141,6 +155,11 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     public Collection<TamanhoCamiseta> getTamanhosCamiseta() {
         return CollectionUtils.asList(tamanhoCamisetaDao.findAll());
     }
+    
+    @ModelAttribute("estados")
+    public Collection<Estado> getEstados() {
+        return estadoDao.findAll();
+    }
 
     /* Registra os binder do spring, para tipos de dados complexos como datas e entidades */
     @InitBinder
@@ -149,6 +168,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         binder.registerCustomEditor(TipoCamiseta.class, new CustomEntityEditor<>(tipoCamisetaDao));
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));
+        binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<>(cidadeDao));
     }
 
     /**

@@ -29,10 +29,10 @@ public class EdicaoConfigFichaInscricao extends AbstractEntity{
     @JoinColumn(name = "ID_EDICAO", nullable = false)
     private Edicao edicao;
     @Column(name = "TEM_FICHA_INSCRICAO", nullable = false)
-    private boolean temFichaInscicao;
-    @Column(name = "AUTORIZACAO_INST", nullable = false)
+    private boolean temFichaInscricao;
+    @Column(name = "AUTORIZACAO_INST", nullable = true)
     private boolean autorizacaoInstituicao;
-    @Column(name = "AUTORIZACAO_MENOR", nullable = false)
+    @Column(name = "AUTORIZACAO_MENOR", nullable = true)
     private boolean autorizacaoMenor;
 
     public Edicao getEdicao() {
@@ -43,12 +43,12 @@ public class EdicaoConfigFichaInscricao extends AbstractEntity{
         this.edicao = edicao;
     }
     
-    public boolean isTemFichaInscicao() {
-        return temFichaInscicao;
+    public boolean isTemFichaInscricao() {
+        return temFichaInscricao;
     }
 
-    public void setTemFichaInscicao(boolean temFichaInscicao) {
-        this.temFichaInscicao = temFichaInscicao;
+    public void setTemFichaInscricao(boolean temFichaInscicao) {
+        this.temFichaInscricao = temFichaInscicao;
     }
 
     public boolean isAutorizacaoInstituicao() {
@@ -71,7 +71,7 @@ public class EdicaoConfigFichaInscricao extends AbstractEntity{
     public int hashCode() {
         int hash = 3;
         hash = 37 * hash + Objects.hashCode(this.edicao);
-        hash = 37 * hash + (this.temFichaInscicao ? 1 : 0);
+        hash = 37 * hash + (this.temFichaInscricao ? 1 : 0);
         hash = 37 * hash + (this.autorizacaoInstituicao ? 1 : 0);
         hash = 37 * hash + (this.autorizacaoMenor ? 1 : 0);
         return hash;
@@ -89,7 +89,7 @@ public class EdicaoConfigFichaInscricao extends AbstractEntity{
         if (!Objects.equals(this.edicao, other.edicao)) {
             return false;
         }
-        if (this.temFichaInscicao != other.temFichaInscicao) {
+        if (this.temFichaInscricao != other.temFichaInscricao) {
             return false;
         }
         if (this.autorizacaoInstituicao != other.autorizacaoInstituicao) {

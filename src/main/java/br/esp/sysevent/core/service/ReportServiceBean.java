@@ -4,7 +4,6 @@
 package br.esp.sysevent.core.service;
 
 import br.esp.sysevent.core.model.Inscricao;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,14 +24,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReportServiceBean implements ReportService {
 
-    private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaInscricaoReport.jasper";
-    private static final String CABECALHO_FICHA_INSCRICAO = "br/esp/sysevent/core/report/cabecalhoFichaInscricao.jpg";
+    private static final String FICHA_INSCRICAO = "br/esp/sysevent/core/report/FichaInscricaoReport.jasper";    
 
     @Override
-    public byte[] geraRelatorio(Inscricao inscricao) throws Exception {
-        final InputStream imagem = getClass().getClassLoader().getResourceAsStream(CABECALHO_FICHA_INSCRICAO);
-        final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
-        parametros.put("fichaInscricaoCabecalho", imagem);
+    public byte[] geraRelatorio(Inscricao inscricao) throws Exception {        
+        final HashMap<String, Object> parametros = new HashMap<>(1);        
         parametros.put("menorIdade", isMenorIdade(inscricao.getEdicaoEvento().getPeriodoEdicao().getStart(), inscricao.getConfraternista().getPessoa().getDataNascimento()));
         return geraRelatorio(Collections.singleton(inscricao), FICHA_INSCRICAO, parametros);
     }

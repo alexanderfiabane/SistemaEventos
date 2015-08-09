@@ -13,6 +13,7 @@
         <ul class="nav tabs" id="EdicaoTab">
             <li class="active"><a href="#cadastroBasico"><fmt:message key="label.basicData"/></a></li>
             <li><a href="#cobranca"><fmt:message key="label.subscriptionPaymentMethod"/></a></li>
+            <li><a href="#local"><fmt:message key="label.subscriptionPlace"/></a></li>
             <li><a href="#fichaInscricao"><fmt:message key="label.applicationForm"/></a></li>
             <li><a href="#crachas"><fmt:message key="label.badge"/></a></li>
             <li><a href="#camisetas"><fmt:message key="label.shirts"/></a></li>
@@ -170,6 +171,47 @@
                     </div>
                 </div>
             </div>
+            <!--Local-->
+            <div class="pane" id="local">
+                <div class="row">
+                    <div class="span6">
+                        <see:formField type="text" label="label.subscriptionPlace" isLabelKey="true" isMandatory="true" path="local"/>
+                    </div>
+                    <div class="span6">
+                        <see:formField type="text" label="label.street" isLabelKey="true" isMandatory="true" path="localEndereco.logradouro"/>                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="localEndereco.numero" maxlength="6"/>
+                    </div>
+                    <div class="span4">
+                        <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="localEndereco.complemento" maxlength="60"/>
+                    </div>
+                    <div class="span4">
+                        <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="localEndereco.bairro" maxlength="60"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <label class="label">
+                            <fmt:message key="label.state"/>
+                        </label>
+                        <select id="estadoEdicao" class="selectfield width-100">
+                            <option value="">Selecione um estado</option>
+                            <c:forEach var="estado" items="${estados}">
+                                <option value="${estado.id}" <c:if test="${command.localEndereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="span4">
+                        <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="localEndereco.cidade" id="cidadeEdicao" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
+                    </div>
+                    <div class="span4">
+                        <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="localEndereco.cep" maxlength="9"/>
+                    </div>
+                </div>
+            </div>
             <!--Ficha de inscrição-->
             <div class="pane" id="fichaInscricao">
                 <div class="row">
@@ -177,13 +219,13 @@
                         <label class="label control">Tem ficha de inscrição?</label>
                         <ul class="no-bullet no-padding list-h">
                             <li>
-                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Sim" value="true"/>
+                                <form:radiobutton path="configFichaInscricao.temFichaInscricao" label="Sim" value="true"/>
                             </li>
                             <li>
-                                <form:radiobutton path="configFichaInscricao.temFichaInscicao" label="Não" value="false"/>
+                                <form:radiobutton path="configFichaInscricao.temFichaInscricao" label="Não" value="false"/>
                             </li>
                         </ul>
-                        <form:errors path="configFichaInscricao.temFichaInscicao" cssClass="pill error"/>
+                        <form:errors path="configFichaInscricao.temFichaInscricao" cssClass="pill error"/>
                     </div>
                     <div class="span4">
                         <label class="label control">Requer autorização da instituição?</label>
@@ -216,14 +258,14 @@
                 <div class="row">
                     <label class="label control">Tem crachá?</label>
                     <ul class="no-bullet no-padding list-h">
-                            <li>
-                                <form:radiobutton path="configCracha.temCracha" label="Sim" value="true"/>
-                            </li>
-                            <li>
-                                <form:radiobutton path="configCracha.temCracha" label="Não" value="false"/>
-                            </li>
-                        </ul>
-                        <form:errors path="configCracha.temCracha" cssClass="pill error"/>
+                        <li>
+                            <form:radiobutton path="configCracha.temCracha" label="Sim" value="true"/>
+                        </li>
+                        <li>
+                            <form:radiobutton path="configCracha.temCracha" label="Não" value="false"/>
+                        </li>
+                    </ul>
+                    <form:errors path="configCracha.temCracha" cssClass="pill error"/>
                 </div>
                 <div class="row">
                     <label class="label control">Tipo de crachá <i id="hintCracha" class="icon-info-sign"></i></label>
@@ -231,7 +273,7 @@
                         <c:forEach var="item" items="${tiposCrachas}">
                             <div class="span4 align-center">
                                 <form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}
-                                <form:errors path="tipo" cssClass="pill error"/>
+                                <form:errors path="configCracha.tipo" cssClass="pill error"/>
                             </div>
                         </c:forEach>
                     </div>
@@ -239,94 +281,94 @@
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                <table class="table bordered" style="width: 300px; height: 210px;">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
-                                        </tr>
-                                        <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
-                                            <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table bordered" style="width: 300px; height: 210px;">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
+                                            </tr>
+                                            <tr class="stroked-top stroked-bottom">
+                                                <td colspan="2" class="align-center bold" style="font-size: 2em;">NOME CRACHÁ</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
+                                                <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </center>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                <table class="table bordered" style="width: 400px; height: 267px;">
-                                    <tbody>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
-                                        </tr>
-                                        <tr class="stroked-top stroked-bottom">
-                                            <td colspan="2" class="align-center bold" style="font-size: 2.2em;">NOME CRACHÁ</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
-                                            <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table bordered" style="width: 400px; height: 267px;">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">NOME DA INSTITUIÇÃO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-left" style="font-size: .6em;">CIDADE - ESTADO</td>
+                                            </tr>
+                                            <tr class="stroked-top stroked-bottom">
+                                                <td colspan="2" class="align-center bold" style="font-size: 2.2em;">NOME CRACHÁ</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-center" style="font-size: .8em;">GRUPO | OFICINA</td>
+                                                <td class="align-center" style="font-size: .8em;">DORMITÓRIO</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" class="align-center">TIPO PARTICIPANTE</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </center>    
                             </div>
                         </div>
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                <table class="table bordered narrow" style="width: 300px; height: 442px;">
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td></td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td></td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td></td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td class="align-center no-padding bold" style="font-size: 2em;">NOME CRACHÁ</td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td class="align-center no-padding bold" style="font-size: 1.2em;">TIPO PARTICIPANTE</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="align-left no-padding vertical" style="font-size: .8em;">
-                                                NOME COMPLETO<br>
-                                                CIDADE - ESTADO<br>
-                                                GRUPO | OFICINA<br>
-                                                DORMITÓRIO
-                                            </td>                                           
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table bordered narrow" style="width: 300px; height: 442px;">
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                            </tr>                                        
+                                            <tr>
+                                                <td></td>
+                                            </tr>                                        
+                                            <tr>
+                                                <td></td>
+                                            </tr>                                        
+                                            <tr>
+                                                <td></td>
+                                            </tr>                                        
+                                            <tr>
+                                                <td class="align-center no-padding bold" style="font-size: 2em;">NOME CRACHÁ</td>
+                                            </tr>                                        
+                                            <tr>
+                                                <td class="align-center no-padding bold" style="font-size: 1.2em;">TIPO PARTICIPANTE</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-left no-padding vertical" style="font-size: .8em;">
+                                                    NOME COMPLETO<br>
+                                                    CIDADE - ESTADO<br>
+                                                    GRUPO | OFICINA<br>
+                                                    DORMITÓRIO
+                                                </td>                                           
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </center>
                             </div>
                         </div>
@@ -438,6 +480,7 @@
 </c:choose>
 <see:formButtonGroup putSubmit="false" backUrl="formEvento.html"/>
 
+<script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
     function toogleMenu(idEdicao) {
         var menuId = "#menu_" + idEdicao;
@@ -449,6 +492,36 @@
             $(menuId).css("left", 150);
         }
     }
+    function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
+        var estadoSelecionado = inputEstado.val();
+        inputCidade.empty();
+        if (estadoSelecionado == '') {
+            inputCidade.append($('<option value="">').append('Selecione primeiro um estado'));
+        } else {
+            enderecoAjaxService.getCidades(
+                    estadoSelecionado,
+                    {
+                        'callback': function(cidades) {
+                            inputCidade.append($('<option value="">').append('Selecione uma cidade'));
+                            $.each(cidades, function(index, value) {
+                                inputCidade.append($('<option>').val(value.id).append(value.nome));
+                            });
+                            if (idCidadeAtual) {
+                                inputCidade.val(idCidadeAtual);
+                            }
+                        },
+                        'preHook': function() {
+                            //lock
+                            $.WidgetUtils.blockUI('Aguarde...');
+                        },
+                        'postHook': function() {
+                            //unlock
+                            $.WidgetUtils.unblockUI();
+                        }
+                    }
+            );
+        }
+    }
     $(document).ready(function () {
         document.getElementById("numero").focus();
 
@@ -456,6 +529,11 @@
         $("[name='valorInscricao']").mask('9999');
         $("[name='valorCamiseta']").mask('999');
         $("[name='idadeMinima']").mask('999');
+        $('[name="localEndereco.cep"]').mask('99999-999');
+        
+        $('#estadoEdicao').change(function() {
+            loadCidades($(this), $('#cidadeEdicao'));
+        });
 
         $("#periodoInscricao_start").dateTimePicker({
             'mode': 'date',
@@ -493,19 +571,6 @@
             'showExample': true,
             picker: {
                 showClearButton: true,
-            }
-        });
-        $(".maisOpcoes").confirmDialog({
-            'title': "Mais opções",
-            'content': function ($dialogCaller) {
-                var id = $dialogCaller.data("id");
-                var $content = $("<div>").append($("#menuMaisOpcoes_" + id).html());
-                return $content;
-            },
-            class: 'qtip-dialog-huge',
-            'yesBtn': false,
-            'noBtn': {
-                label: "Fechar"
             }
         });
         $(".deletaEdicao").each(function () {
@@ -559,25 +624,25 @@
             }
         });
         $("[name=tipo]:checked").change();
-        $("[name=configFichaInscricao\\.temFichaInscicao]").change(function () {
+        $("[name=configFichaInscricao\\.temFichaInscricao]").change(function () {
             if ($(this).val() === 'false') {
-                $('[name=configFichaInscricao\\.autorizacaoInstituicao').filter('[value="false"]').attr('checked',true);
-                $('[name=configFichaInscricao\\.autorizacaoMenor').filter('[value="false"]').attr('checked',true);
-            } 
+                $('[name=configFichaInscricao\\.autorizacaoInstituicao').filter('[value="false"]').attr('checked', true);
+                $('[name=configFichaInscricao\\.autorizacaoMenor').filter('[value="false"]').attr('checked', true);
+            }
         });
-        $("[name=configFichaInscricao\\.temFichaInscicao]:checked").change();
+        $("[name=configFichaInscricao\\.temFichaInscricao]:checked").change();
         $("[name=configCracha\\.temCracha]").change(function () {
             if ($(this).val() === 'false') {
-                $('[name=configCracha\\.tipo').attr('checked',false);                
-                $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));                
-            } 
+                $('[name=configCracha\\.tipo').attr('checked', false);
+                $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));
+            }
         });
         $("[name=configCracha\\.temCracha]:checked").change();
-        
+
         $("#hintCracha").qtip({
-            'content': "Os tamanhos abaixo exibidos estão, proporcionalmente, menores. Para visualizar o tamanho real do crachá selecionado acesse a área de relatórios dessa edição."                       
-        });        
-    
+            'content': "Os tamanhos abaixo exibidos estão, proporcionalmente, menores. Para visualizar o tamanho real do crachá selecionado acesse a área de relatórios dessa edição."
+        });
+        loadCidades($('#estadoEdicao'), $('#cidadeEdicao'), '${command.localEndereco.cidade.id}');
     });
 </script>
 

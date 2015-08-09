@@ -2,8 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaInscricaoReport" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="44cd0794-5d72-4a9a-837f-e90cbd8026f8">
 	<property name="ireport.zoom" value="1.6105100000000083"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="737"/>
-	<parameter name="fichaInscricaoCabecalho" class="java.io.InputStream"/>
+	<property name="ireport.y" value="803"/>
 	<parameter name="menorIdade" class="java.lang.Boolean"/>
 	<field name="edicaoEvento.numero" class="java.lang.String"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
@@ -46,8 +45,8 @@
 	<field name="confraternista.responsavelEvento.telefone" class="java.lang.String"/>
 	<field name="confraternista.pessoa.informacoesSaude.dieta" class="java.lang.String"/>
 	<field name="edicaoEvento.local" class="java.lang.String"/>
-	<field name="edicaoEvento.endereco.cidade.nome" class="java.lang.String"/>
-	<field name="edicaoEvento.endereco.cidade.estado.sigla" class="java.lang.String"/>
+	<field name="edicaoEvento.localEndereco.cidade.nome" class="java.lang.String"/>
+	<field name="edicaoEvento.localEndereco.cidade.estado.sigla" class="java.lang.String"/>
 	<field name="edicaoEvento.periodoEdicao.start.time" class="java.util.Date"/>
 	<field name="edicaoEvento.periodoEdicao.end.time" class="java.util.Date"/>
 	<field name="edicaoEvento.configFichaInscricao.autorizacaoInstituicao" class="java.lang.Boolean"/>
@@ -795,7 +794,7 @@
 				<textElement textAlignment="Justified">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" Eu,_____________________________, portador da CI n°______________________, autorizo o menor supracitado, do(a) qual sou responsável, a participar do "+$F{edicaoEvento.numero} +" "+ $F{edicaoEvento.evento.sigla}+", no período de "+$F{edicaoEvento.periodoEdicao.start.time} +" a "+$F{edicaoEvento.periodoEdicao.end.time} +", que ocorrerá no(a) "+$F{edicaoEvento.local}+", em "+$F{edicaoEvento.endereco.cidade.nome}+"-"+$F{edicaoEvento.endereco.cidade.estado.sigla}+". Autorizo o mesmo a pernoitar no local e a divulgação de fotos e de filmagens que serão realizadas pela organização do evento."]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" Eu,_____________________________, portador da CI n°______________________, autorizo o menor supracitado, do(a) qual sou responsável, a participar do "+$F{edicaoEvento.numero} +" "+ $F{edicaoEvento.evento.sigla} +", no período de "+new SimpleDateFormat("dd/MM/yyyy").format($F{edicaoEvento.periodoEdicao.start.time})+" a "+new SimpleDateFormat("dd/MM/yyyy").format($F{edicaoEvento.periodoEdicao.end.time})+", que ocorrerá no(a) "+$F{edicaoEvento.local}+", em "+$F{edicaoEvento.localEndereco.cidade.nome}+" - "+$F{edicaoEvento.localEndereco.cidade.estado.sigla}+". Autorizo o mesmo a pernoitar no local e a divulgação de fotos e de filmagens que serão realizadas pela organização do evento."]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="46" y="99" width="212" height="1" uuid="2b93bb7d-5e82-432e-a0e0-9e35b80f6698"/>

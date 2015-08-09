@@ -38,9 +38,10 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 @Entity
 @Table(name = "EDICOES")
-@AttributeOverride(name = "id", column =
-        @Column(name = "ID_EDICAO"))
+@AttributeOverride(name = "id", column
+        = @Column(name = "ID_EDICAO"))
 public class Edicao extends AbstractEntity {
+
     private static final long serialVersionUID = 6057916283234385557L;
 
     @ManyToOne
@@ -76,25 +77,25 @@ public class Edicao extends AbstractEntity {
     @ManyToMany
     @JoinTable(name = "EDICOES_TIPOS_CAM",
             joinColumns = {
-        @JoinColumn(name = "ID_EVENTO", nullable = false)},
+                @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {
-        @JoinColumn(name = "ID_TIPO_CAM", nullable = false)})
+                @JoinColumn(name = "ID_TIPO_CAM", nullable = false)})
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<TipoCamiseta> tiposCamiseta;
     @ManyToMany
     @JoinTable(name = "EDICOES_CORES_CAM",
             joinColumns = {
-        @JoinColumn(name = "ID_EVENTO", nullable = false)},
+                @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {
-        @JoinColumn(name = "ID_COR_CAM", nullable = false)})
+                @JoinColumn(name = "ID_COR_CAM", nullable = false)})
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<CorCamiseta> coresCamiseta;
     @ManyToMany
     @JoinTable(name = "EDICOES_TAMANHOS_CAM",
             joinColumns = {
-        @JoinColumn(name = "ID_EVENTO", nullable = false)},
+                @JoinColumn(name = "ID_EVENTO", nullable = false)},
             inverseJoinColumns = {
-        @JoinColumn(name = "ID_TAMANHO_CAM", nullable = false)})
+                @JoinColumn(name = "ID_TAMANHO_CAM", nullable = false)})
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<TamanhoCamiseta> tamanhosCamiseta;
     private BigDecimal valorCamiseta;
@@ -113,13 +114,19 @@ public class Edicao extends AbstractEntity {
     @Fetch(value = FetchMode.SUBSELECT)
     private Collection<EdicaoConfigParticipante> edicaoConfigParticipantes;
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_CONFIG_FICHA", nullable = true)
     private EdicaoConfigFichaInscricao configFichaInscricao;
     @ManyToOne
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @Cascade({CascadeType.ALL})
     @JoinColumn(name = "ID_CONFIG_CRACHA", nullable = true)
     private EdicaoConfigCracha configCracha;
+    @Column(name = "LOCAL_EDICAO", nullable = true)
+    private String local;
+    @ManyToOne
+    @Cascade({CascadeType.ALL})
+    @JoinColumn(name = "ID_LOCAL_ENDERECO", nullable = true)
+    private Endereco localEndereco;
 
     public String getTema() {
         return tema;
@@ -292,30 +299,46 @@ public class Edicao extends AbstractEntity {
         this.configCracha = configCracha;
     }
 
-    public Collection<Confraternista.Tipo> getIsentos(){
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
+
+    public Endereco getLocalEndereco() {
+        return localEndereco;
+    }
+
+    public void setLocalEndereco(Endereco localEndereco) {
+        this.localEndereco = localEndereco;
+    }
+
+    public Collection<Confraternista.Tipo> getIsentos() {
         Collection<Confraternista.Tipo> isentos = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
-            if (edicaoConfigParticipante.isIsento()){
+            if (edicaoConfigParticipante.isIsento()) {
                 isentos.add(edicaoConfigParticipante.getTipoParticipante());
             }
         }
         return isentos;
     }
 
-    public Collection<Confraternista.Tipo> getOcupamVagaEvento(){
+    public Collection<Confraternista.Tipo> getOcupamVagaEvento() {
         Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
-            if (edicaoConfigParticipante.isOcupaVaga()){
+            if (edicaoConfigParticipante.isOcupaVaga()) {
                 ocupamVaga.add(edicaoConfigParticipante.getTipoParticipante());
             }
         }
         return ocupamVaga;
     }
 
-    public Collection<Confraternista.Tipo> getOcupamVagaGrupoOficina(){
+    public Collection<Confraternista.Tipo> getOcupamVagaGrupoOficina() {
         Collection<Confraternista.Tipo> ocupamVaga = new ArrayList<>();
         for (EdicaoConfigParticipante edicaoConfigParticipante : this.edicaoConfigParticipantes) {
-            if (edicaoConfigParticipante.isOcupaVagaGp()){
+            if (edicaoConfigParticipante.isOcupaVagaGp()) {
                 ocupamVaga.add(edicaoConfigParticipante.getTipoParticipante());
             }
         }
@@ -407,7 +430,5 @@ public class Edicao extends AbstractEntity {
         }
         return true;
     }
-
-
 
 }
