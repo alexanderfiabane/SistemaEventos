@@ -89,7 +89,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
-            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));           
+            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
             final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
@@ -155,7 +155,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     public Collection<TamanhoCamiseta> getTamanhosCamiseta() {
         return CollectionUtils.asList(tamanhoCamisetaDao.findAll());
     }
-    
+
     @ModelAttribute("estados")
     public Collection<Estado> getEstados() {
         return estadoDao.findAll();
@@ -169,6 +169,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));
         binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<>(cidadeDao));
+//        binder.registerCustomEditor(byte[].class, "fotoNova.conteudo", new ByteArrayMultipartFileEditor());
     }
 
     /**
@@ -203,7 +204,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             final RedirectAttributes attributes,
             final SessionStatus status,
             final Locale locale) {
-
+        //processaImagem(command, result);
         // validate data
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
@@ -213,5 +214,22 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         // clear the command object from the session and return form success view
         status.setComplete();
         return "redirect:/admin/formEdicao.html?idEvento=" + command.getEvento().getId();
+    }
+
+    private void processaImagem(final Edicao command,
+                                final BindingResult errors) {
+
+//        final byte[] imagem = command.getConfigCracha().getImagemFundo();
+//        if (ImageUtils.isBmp(imagem) || ImageUtils.isGif(imagem) || ImageUtils.isJpeg(imagem) || ImageUtils.isPng(imagem)){
+//            if (!errors.hasFieldErrors("fotoNova.conteudo")) {
+//                foto = ArquivoImagemUtils.convertToJpeg(command.getFotoNova());
+//                command.setFoto(ArquivoImagemUtils.createResizedImage(foto, imageConfig));
+//            }
+//        }
+//        if (errors.hasErrors()) {
+//            setFotoCorrente(request, command.getFoto());
+//        } else {
+//            removeFotoCorrente(request);
+//        }
     }
 }

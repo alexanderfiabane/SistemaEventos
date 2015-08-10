@@ -24,7 +24,7 @@ import org.springframework.validation.Errors;
  * @author Alexander
  */
 @Component
-public class EdicaoValidator extends AbstractValidator<Edicao> {   
+public class EdicaoValidator extends AbstractValidator<Edicao> {
 
     protected final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -205,11 +205,11 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
 
     private void validateLocal(String local, Endereco localEndereco, Errors errors) {
         if(CharSequenceUtils.isBlankOrNull(local)){
-            errors.rejectValue("local", "errors.required");        
+            errors.rejectValue("local", "errors.required");
         }
         validateEndereco(localEndereco, errors, "localEndereco", false);
     }
-    
+
     protected void validateEndereco(Endereco endereco, Errors errors, String path, boolean validateContato) {
         if (CharSequenceUtils.isBlankOrNull(endereco.getNumero())) {
             errors.rejectValue(path + ".numero", "errors.required");
@@ -240,4 +240,19 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             }
         }
     }
+
+//    private void validateFoto(final Arquivo fotoNova, final boolean isRequired, final Errors errors) {
+//        if (ArquivoUtils.isEmptyOrNull(fotoNova)) {
+//            if (isRequired) {
+//                errors.rejectValue(FOTO_PATH, REQUIRED_FIELD_ERROR);
+//            }
+//        } else {
+//            final String mimeType = IOUtils.detectMimeType(fotoNova.getConteudo(), fotoNova.getNome(), "image/jpeg", false);
+//            if (!MimeTypeCategory.isImage(mimeType)) {
+//                errors.rejectValue(FOTO_PATH, INVALID_FILE_FORMAT_ERROR);
+//            } else if (fotoNova.getSize() > maxFileSizeKB && maxFileSizeKB > 0) {
+//                errors.rejectValue(FOTO_PATH, INVALID_FILE_SIZE_ERROR, new Object[]{maxFileSizeKB}, "Tamanho Excedido");
+//            }
+//        }
+//    }
 }

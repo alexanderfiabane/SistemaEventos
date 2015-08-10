@@ -178,7 +178,7 @@
                         <see:formField type="text" label="label.subscriptionPlace" isLabelKey="true" isMandatory="true" path="local"/>
                     </div>
                     <div class="span6">
-                        <see:formField type="text" label="label.street" isLabelKey="true" isMandatory="true" path="localEndereco.logradouro"/>                        
+                        <see:formField type="text" label="label.street" isLabelKey="true" isMandatory="true" path="localEndereco.logradouro"/>
                     </div>
                 </div>
                 <div class="row">
@@ -333,7 +333,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </center>    
+                                </center>
                             </div>
                         </div>
                         <div class="span4">
@@ -343,19 +343,19 @@
                                         <tbody>
                                             <tr>
                                                 <td></td>
-                                            </tr>                                        
+                                            </tr>
                                             <tr>
                                                 <td></td>
-                                            </tr>                                        
+                                            </tr>
                                             <tr>
                                                 <td></td>
-                                            </tr>                                        
+                                            </tr>
                                             <tr>
                                                 <td></td>
-                                            </tr>                                        
+                                            </tr>
                                             <tr>
                                                 <td class="align-center no-padding bold" style="font-size: 2em;">NOME CRACHÁ</td>
-                                            </tr>                                        
+                                            </tr>
                                             <tr>
                                                 <td class="align-center no-padding bold" style="font-size: 1.2em;">TIPO PARTICIPANTE</td>
                                             </tr>
@@ -365,7 +365,7 @@
                                                     CIDADE - ESTADO<br>
                                                     GRUPO | OFICINA<br>
                                                     DORMITÓRIO
-                                                </td>                                           
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -482,6 +482,33 @@
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
+    var defaultImage = '${command.configCracha.imageFundo}';
+    function handleFileSelect(evt) {
+        /* Check for the various File API support */
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            var files = evt.target.files; /* FileList object */
+            var file = files[0];s
+
+            /* Only process image files. */
+            if (!file.type.match('image.*')) {
+                return;
+            }
+            var reader = new FileReader();
+            /* Closure to capture the file information. */
+            reader.onload = (function (theFile) {
+                return function (e) {
+                if (theFile.name === '') {
+                    document.getElementById('configCracha\\.imageFundo').src = defaultImage;
+                }
+                /* Render thumbnail. */
+                document.getElementById('configCracha\\.imageFundo').src = e.target.result;
+                };
+            })(file);
+            /* Read in the image file as a data URL. */
+            reader.readAsDataURL(file);
+        }
+    }
+
     function toogleMenu(idEdicao) {
         var menuId = "#menu_" + idEdicao;
         var hidden = $(menuId).children("ul").is(":hidden");
@@ -530,7 +557,7 @@
         $("[name='valorCamiseta']").mask('999');
         $("[name='idadeMinima']").mask('999');
         $('[name="localEndereco.cep"]').mask('99999-999');
-        
+
         $('#estadoEdicao').change(function() {
             loadCidades($(this), $('#cidadeEdicao'));
         });
