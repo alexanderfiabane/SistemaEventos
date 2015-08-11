@@ -195,10 +195,10 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             errors.rejectValue("configFichaInscricao.temFichaInscicao", "errors.required");
             return;
         }
-        if (!configCracha.isTemCracha() && (configCracha.getTipo() != null)) {
+        if (configCracha.isTemCracha() && (configCracha.getTipo() == null)) {
             errors.rejectValue("configCracha.tipo", "errors.invalid");
         }
-        if (!configCracha.isTemCracha() && (configCracha.getImagemFundo() != null)) {
+        if (configCracha.isTemCracha() && (configCracha.getImagemFundo() == null)) {
             errors.rejectValue("configCracha.imageFundo", "errors.invalid");
         }
     }

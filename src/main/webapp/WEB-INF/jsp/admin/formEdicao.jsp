@@ -256,16 +256,22 @@
             <!--Crachás-->
             <div class="pane" id="crachas">
                 <div class="row">
-                    <label class="label control">Tem crachá?</label>
-                    <ul class="no-bullet no-padding list-h">
-                        <li>
-                            <form:radiobutton path="configCracha.temCracha" label="Sim" value="true"/>
-                        </li>
-                        <li>
-                            <form:radiobutton path="configCracha.temCracha" label="Não" value="false"/>
-                        </li>
-                    </ul>
-                    <form:errors path="configCracha.temCracha" cssClass="pill error"/>
+                    <div class="span2">                        
+                        <label class="label control">Tem crachá?</label>
+                        <ul class="no-bullet no-padding list-h">
+                            <li>
+                                <form:radiobutton path="configCracha.temCracha" label="Sim" value="true"/>
+                            </li>
+                            <li>
+                                <form:radiobutton path="configCracha.temCracha" label="Não" value="false"/>
+                            </li>
+                        </ul>
+                        <form:errors path="configCracha.temCracha" cssClass="pill error"/>
+                    </div>
+                    <div class="span10">                      
+                        <label class="label control">Imagem de fundo <i id="hintCrachaImagem" class="icon-info-sign"></i></label><br>
+                        <input type="file" id="crachaFundo" name="configCracha.imagemFundo" class="textfield" multiple>                
+                    </div>
                 </div>
                 <div class="row">
                     <label class="label control">Tipo de crachá <i id="hintCracha" class="icon-info-sign"></i></label>
@@ -281,7 +287,7 @@
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                    <table class="table bordered" style="width: 300px; height: 210px;">
+                                    <table id="image1" class="table bordered" style="width: 300px; height: 210px;">
                                         <tbody>
                                             <tr>
                                                 <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
@@ -310,7 +316,7 @@
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                    <table class="table bordered" style="width: 400px; height: 267px;">
+                                    <table id="image2" class="table bordered" style="width: 400px; height: 267px;">
                                         <tbody>
                                             <tr>
                                                 <td colspan="2" class="align-left" style="font-size: .6em;">NOME COMPLETO</td>
@@ -339,7 +345,7 @@
                         <div class="span4">
                             <div class="table-wrapper">
                                 <center>
-                                    <table class="table bordered narrow" style="width: 300px; height: 442px;">
+                                    <table id="image3" class="table bordered narrow" style="width: 300px; height: 442px;">
                                         <tbody>
                                             <tr>
                                                 <td></td>
@@ -373,11 +379,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="label control">Imagem de fundo</label><br>
-                    <input type="file" id="configCracha.imageFundo" name="configCracha.imageFundo" class="textfield">
-                </div>
+                </div>                
             </div>
             <!--Camisetas-->
             <div class="pane" id="camisetas">
@@ -482,194 +484,216 @@
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">
-    var defaultImage = '${command.configCracha.imageFundo}';
-    function handleFileSelect(evt) {
-        /* Check for the various File API support */
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            var files = evt.target.files; /* FileList object */
-            var file = files[0];s
+                                        var defaultImage = '${command.configCracha.imagemFundo}';
+                                        function handleFileSelect(evt) {
+                                            /* Check for the various File API support */
+                                            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                                                var files = evt.files; /* FileList object */
+                                                var file = files[0];
+                                                /* Only process image files. */
+                                                if (!file.type.match('image.*')) {
+                                                    return;
+                                                }
+                                                var reader = new FileReader();
+                                                /* Closure to capture the file information. */
+                                                reader.onload = (function (theFile) {
+                                                    return function (e) {
+                                                        if (theFile.name === '') {
+                                                            //resize para os 3 tipos
+//                                                            document.getElementById('image').src = defaultImage;
+                                                            $('#image1 tbody').css("background-image", "url(" + defaultImage + ")");
+                                                            $('#image2 tbody').css("background-image", "url(" + defaultImage + ")");
+                                                            $('#image3 tbody').css("background-image", "url(" + defaultImage + ")");
+                                                        }
+                                                        /* Render thumbnail. */
+                                                        //resize para os 3 tipos                                                        
+                                                        $('#image tbody').css("background-image", "url(" + e.target.result + ")");
+                                                        //document.getElementById('image').src = e.target.result;
+                                                    };
+                                                })(file);
+                                                /* Read in the image file as a data URL. */
+                                                reader.readAsDataURL(file);
+                                            } else {
+                                                var noSupport = new AlertJS({
+                                                    'theme': "warning",
+                                                    'title': "Atenção",
+                                                    'content': "A API de arquivos não é suportada por esse browser. Não será possível carregar a imagem para visualização"
+                                                });
+                                                noSupport.open();
+                                            }
+                                        }
 
-            /* Only process image files. */
-            if (!file.type.match('image.*')) {
-                return;
-            }
-            var reader = new FileReader();
-            /* Closure to capture the file information. */
-            reader.onload = (function (theFile) {
-                return function (e) {
-                if (theFile.name === '') {
-                    document.getElementById('configCracha\\.imageFundo').src = defaultImage;
-                }
-                /* Render thumbnail. */
-                document.getElementById('configCracha\\.imageFundo').src = e.target.result;
-                };
-            })(file);
-            /* Read in the image file as a data URL. */
-            reader.readAsDataURL(file);
-        }
-    }
+                                        function toogleMenu(idEdicao) {
+                                            var menuId = "#menu_" + idEdicao;
+                                            var hidden = $(menuId).children("ul").is(":hidden");
+                                            $(menuId + ">ul").hide();
+                                            if (hidden) {
+                                                $(menuId).children("ul").toggle();
+                                                $(menuId).css("top", -50);
+                                                $(menuId).css("left", 150);
+                                            }
+                                        }
+                                        function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
+                                            var estadoSelecionado = inputEstado.val();
+                                            inputCidade.empty();
+                                            if (estadoSelecionado == '') {
+                                                inputCidade.append($('<option value="">').append('Selecione primeiro um estado'));
+                                            } else {
+                                                enderecoAjaxService.getCidades(
+                                                        estadoSelecionado,
+                                                        {
+                                                            'callback': function (cidades) {
+                                                                inputCidade.append($('<option value="">').append('Selecione uma cidade'));
+                                                                $.each(cidades, function (index, value) {
+                                                                    inputCidade.append($('<option>').val(value.id).append(value.nome));
+                                                                });
+                                                                if (idCidadeAtual) {
+                                                                    inputCidade.val(idCidadeAtual);
+                                                                }
+                                                            },
+                                                            'preHook': function () {
+                                                                //lock
+                                                                $.WidgetUtils.blockUI('Aguarde...');
+                                                            },
+                                                            'postHook': function () {
+                                                                //unlock
+                                                                $.WidgetUtils.unblockUI();
+                                                            }
+                                                        }
+                                                );
+                                            }
+                                        }
+                                        $(document).ready(function () {
+                                            document.getElementById("numero").focus();
 
-    function toogleMenu(idEdicao) {
-        var menuId = "#menu_" + idEdicao;
-        var hidden = $(menuId).children("ul").is(":hidden");
-        $(menuId + ">ul").hide();
-        if (hidden) {
-            $(menuId).children("ul").toggle();
-            $(menuId).css("top", -50);
-            $(menuId).css("left", 150);
-        }
-    }
-    function loadCidades(inputEstado, inputCidade, idCidadeAtual) {
-        var estadoSelecionado = inputEstado.val();
-        inputCidade.empty();
-        if (estadoSelecionado == '') {
-            inputCidade.append($('<option value="">').append('Selecione primeiro um estado'));
-        } else {
-            enderecoAjaxService.getCidades(
-                    estadoSelecionado,
-                    {
-                        'callback': function(cidades) {
-                            inputCidade.append($('<option value="">').append('Selecione uma cidade'));
-                            $.each(cidades, function(index, value) {
-                                inputCidade.append($('<option>').val(value.id).append(value.nome));
-                            });
-                            if (idCidadeAtual) {
-                                inputCidade.val(idCidadeAtual);
-                            }
-                        },
-                        'preHook': function() {
-                            //lock
-                            $.WidgetUtils.blockUI('Aguarde...');
-                        },
-                        'postHook': function() {
-                            //unlock
-                            $.WidgetUtils.unblockUI();
-                        }
-                    }
-            );
-        }
-    }
-    $(document).ready(function () {
-        document.getElementById("numero").focus();
+                                            $("[name='vagas']").mask('9999');
+                                            $("[name='valorInscricao']").mask('9999');
+                                            $("[name='valorCamiseta']").mask('999');
+                                            $("[name='idadeMinima']").mask('999');
+                                            $('[name="localEndereco.cep"]').mask('99999-999');
 
-        $("[name='vagas']").mask('9999');
-        $("[name='valorInscricao']").mask('9999');
-        $("[name='valorCamiseta']").mask('999');
-        $("[name='idadeMinima']").mask('999');
-        $('[name="localEndereco.cep"]').mask('99999-999');
+                                            $("#crachaFundo").change(function () {
+                                                handleFileSelect(this);
+                                            });
+                                            $("[name=configCracha\\.tipo]:checked").change(function(){
+                                                handleFileSelect(this);                                                
+                                            });
 
-        $('#estadoEdicao').change(function() {
-            loadCidades($(this), $('#cidadeEdicao'));
-        });
+                                            $('#estadoEdicao').change(function () {
+                                                loadCidades($(this), $('#cidadeEdicao'));
+                                            });
 
-        $("#periodoInscricao_start").dateTimePicker({
-            'mode': 'date',
-            'showExample': true,
-            'picker': {
-                showClearButton: true,
-                'onClose': function (selectedDate) {
-                    $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
-                }
-            }
-        });
-        $("#periodoInscricao_end").dateTimePicker({
-            'mode': 'date',
-            'showExample': true,
-            picker: {
-                showClearButton: true,
-                'onSelect': function (selectedDate) {
-                    $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
-                    $("#periodoEdicao_start").datepicker("option", "minDate", selectedDate);
-                }
-            }
-        });
-        $("#periodoEdicao_start").dateTimePicker({
-            'mode': 'date',
-            'showExample': true,
-            picker: {
-                showClearButton: true,
-                'onClose': function (selectedDate) {
-                    $("#periodoEdicao_end").datepicker("option", "minDate", selectedDate);
-                }
-            }
-        });
-        $("#periodoEdicao_end").dateTimePicker({
-            'mode': 'date',
-            'showExample': true,
-            picker: {
-                showClearButton: true,
-            }
-        });
-        $(".deletaEdicao").each(function () {
-            var $this = $(this);
-            var id = $this.data("id"); // cata o id
-            var thisUrl = '${delete_url}' + id; // concatena na url
-            $this.openUrl({
-                'url': thisUrl,
-                'showConfirmDialog': true,
-                'confirmDialog': {
-                    'content': "Tem certeza que deseja deletar essa edição?"
-                }
-            });
-        });
-        $("[name=formaCobranca\\.tipoCobranca]").change(function () {
-            if ($(this).val() === 'DEPOSITO_CONTA') {
-                $('#deposito').show();
-                $('#pagseguro').hide();
-            } else if ($(this).val() === 'PAGSEGURO') {
-                $('#deposito').hide();
-                $('#pagseguro').show();
-            } else {
-                $('#deposito').hide();
-                $('#pagseguro').hide();
-            }
-        });
-        $("[name=formaCobranca\\.tipoCobranca]:checked").change();
-        $("[name=tipo]").change(function () {
-            $("#selTipoEdicao").hide();
-            if ($(this).val() === 'CONGRESSO') {
-                $('#idAUXILIAR').show();
-                $('#idCOORDENADOR').show();
-                $('#idCONFRATERNISTA').show();
-                $('#idEVANGELIZADOR').hide();
-                $('#idFACILITADOR').hide();
-                $('#idOFICINEIRO').hide();
-            } else if ($(this).val() === 'FAIXA_ETARIA') {
-                $('#idAUXILIAR').show();
-                $('#idCOORDENADOR').show();
-                $('#idCONFRATERNISTA').show();
-                $('#idEVANGELIZADOR').show();
-                $('#idFACILITADOR').show();
-                $('#idOFICINEIRO').hide();
-            } else {
-                $('#idAUXILIAR').show();
-                $('#idCOORDENADOR').show();
-                $('#idCONFRATERNISTA').show();
-                $('#idEVANGELIZADOR').hide();
-                $('#idFACILITADOR').hide();
-                $('#idOFICINEIRO').show();
-            }
-        });
-        $("[name=tipo]:checked").change();
-        $("[name=configFichaInscricao\\.temFichaInscricao]").change(function () {
-            if ($(this).val() === 'false') {
-                $('[name=configFichaInscricao\\.autorizacaoInstituicao').filter('[value="false"]').attr('checked', true);
-                $('[name=configFichaInscricao\\.autorizacaoMenor').filter('[value="false"]').attr('checked', true);
-            }
-        });
-        $("[name=configFichaInscricao\\.temFichaInscricao]:checked").change();
-        $("[name=configCracha\\.temCracha]").change(function () {
-            if ($(this).val() === 'false') {
-                $('[name=configCracha\\.tipo').attr('checked', false);
-                $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));
-            }
-        });
-        $("[name=configCracha\\.temCracha]:checked").change();
+                                            $("#periodoInscricao_start").dateTimePicker({
+                                                'mode': 'date',
+                                                'showExample': true,
+                                                'picker': {
+                                                    showClearButton: true,
+                                                    'onClose': function (selectedDate) {
+                                                        $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
+                                                    }
+                                                }
+                                            });
+                                            $("#periodoInscricao_end").dateTimePicker({
+                                                'mode': 'date',
+                                                'showExample': true,
+                                                picker: {
+                                                    showClearButton: true,
+                                                    'onSelect': function (selectedDate) {
+                                                        $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
+                                                        $("#periodoEdicao_start").datepicker("option", "minDate", selectedDate);
+                                                    }
+                                                }
+                                            });
+                                            $("#periodoEdicao_start").dateTimePicker({
+                                                'mode': 'date',
+                                                'showExample': true,
+                                                picker: {
+                                                    showClearButton: true,
+                                                    'onClose': function (selectedDate) {
+                                                        $("#periodoEdicao_end").datepicker("option", "minDate", selectedDate);
+                                                    }
+                                                }
+                                            });
+                                            $("#periodoEdicao_end").dateTimePicker({
+                                                'mode': 'date',
+                                                'showExample': true,
+                                                picker: {
+                                                    showClearButton: true,
+                                                }
+                                            });
+                                            $(".deletaEdicao").each(function () {
+                                                var $this = $(this);
+                                                var id = $this.data("id"); // cata o id
+                                                var thisUrl = '${delete_url}' + id; // concatena na url
+                                                $this.openUrl({
+                                                    'url': thisUrl,
+                                                    'showConfirmDialog': true,
+                                                    'confirmDialog': {
+                                                        'content': "Tem certeza que deseja deletar essa edição?"
+                                                    }
+                                                });
+                                            });
+                                            $("[name=formaCobranca\\.tipoCobranca]").change(function () {
+                                                if ($(this).val() === 'DEPOSITO_CONTA') {
+                                                    $('#deposito').show();
+                                                    $('#pagseguro').hide();
+                                                } else if ($(this).val() === 'PAGSEGURO') {
+                                                    $('#deposito').hide();
+                                                    $('#pagseguro').show();
+                                                } else {
+                                                    $('#deposito').hide();
+                                                    $('#pagseguro').hide();
+                                                }
+                                            });
+                                            $("[name=formaCobranca\\.tipoCobranca]:checked").change();
+                                            $("[name=tipo]").change(function () {
+                                                $("#selTipoEdicao").hide();
+                                                if ($(this).val() === 'CONGRESSO') {
+                                                    $('#idAUXILIAR').show();
+                                                    $('#idCOORDENADOR').show();
+                                                    $('#idCONFRATERNISTA').show();
+                                                    $('#idEVANGELIZADOR').hide();
+                                                    $('#idFACILITADOR').hide();
+                                                    $('#idOFICINEIRO').hide();
+                                                } else if ($(this).val() === 'FAIXA_ETARIA') {
+                                                    $('#idAUXILIAR').show();
+                                                    $('#idCOORDENADOR').show();
+                                                    $('#idCONFRATERNISTA').show();
+                                                    $('#idEVANGELIZADOR').show();
+                                                    $('#idFACILITADOR').show();
+                                                    $('#idOFICINEIRO').hide();
+                                                } else {
+                                                    $('#idAUXILIAR').show();
+                                                    $('#idCOORDENADOR').show();
+                                                    $('#idCONFRATERNISTA').show();
+                                                    $('#idEVANGELIZADOR').hide();
+                                                    $('#idFACILITADOR').hide();
+                                                    $('#idOFICINEIRO').show();
+                                                }
+                                            });
+                                            $("[name=tipo]:checked").change();
+                                            $("[name=configFichaInscricao\\.temFichaInscricao]").change(function () {
+                                                if ($(this).val() === 'false') {
+                                                    $('[name=configFichaInscricao\\.autorizacaoInstituicao').filter('[value="false"]').attr('checked', true);
+                                                    $('[name=configFichaInscricao\\.autorizacaoMenor').filter('[value="false"]').attr('checked', true);
+                                                }
+                                            });
+                                            $("[name=configFichaInscricao\\.temFichaInscricao]:checked").change();
+                                            $("[name=configCracha\\.temCracha]").change(function () {
+                                                if ($(this).val() === 'false') {
+                                                    $('[name=configCracha\\.tipo').attr('checked', false);
+                                                    $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));
+                                                }
+                                            });
+                                            $("[name=configCracha\\.temCracha]:checked").change();
 
-        $("#hintCracha").qtip({
-            'content': "Os tamanhos abaixo exibidos estão, proporcionalmente, menores. Para visualizar o tamanho real do crachá selecionado acesse a área de relatórios dessa edição."
-        });
-        loadCidades($('#estadoEdicao'), $('#cidadeEdicao'), '${command.localEndereco.cidade.id}');
-    });
+                                            $("#hintCracha").qtip({
+                                                'content': "Os tamanhos abaixo exibidos estão, proporcionalmente, menores. Para visualizar o tamanho real do crachá selecionado acesse a área de relatórios dessa edição."
+                                            });
+                                            $("#hintCrachaImagem").qtip({
+                                                'content': "Os tamanhos suportados são: jpeg, gif, bmp e png."
+                                            });
+                                            loadCidades($('#estadoEdicao'), $('#cidadeEdicao'), '${command.localEndereco.cidade.id}');
+                                        });
 </script>
 
