@@ -17,11 +17,13 @@ import br.esp.sysevent.core.service.ReportService;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -166,9 +168,15 @@ public class AdminReportController {
             final HttpServletResponse response) throws Exception {
         Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
-        final InputStream imagem = getClass().getClassLoader().getResourceAsStream(FUNDO_CRACHAS);
+        byte[] imagemFundo = edicao.getConfigCracha().getImagemFundo();
+        InputStream fundoCracha;
+        if (imagemFundo == null){
+           fundoCracha = null;
+        }else{
+           fundoCracha = new ByteArrayInputStream(imagemFundo);
+        }
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
-        parametros.put("fundoCracha", imagem);
+        parametros.put("fundoCracha", fundoCracha);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CRACHASA3, parametros);
         ControllerUtils.writeHttpAttached(pdf, "crachasA3.pdf", "application/pdf", response);
         return null;
@@ -180,7 +188,8 @@ public class AdminReportController {
             final HttpServletResponse response) throws Exception {
         Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
-        final InputStream imagem = getClass().getClassLoader().getResourceAsStream(FUNDO_CRACHAS);
+        String imagemFundo = Base64.encodeBase64String(edicao.getConfigCracha().getImagemFundo());
+        final InputStream imagem = getClass().getClassLoader().getResourceAsStream("data:image/png;base64,"+imagemFundo);
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
         parametros.put("fundoCracha", imagem);
         final byte[] pdf = reportService.geraRelatorio(inscricoes, CRACHASA4, parametros);

@@ -24,13 +24,17 @@
 	<detail>
 		<band height="212" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="340" height="212" backcolor="#FFFFFF" uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037"/>
+				<reportElement uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037" x="0" y="0" width="340" height="212" backcolor="#FFFFFF"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
 				</graphicElement>
 			</rectangle>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true">
+				<reportElement uuid="5b238abe-aabd-4a5d-b65d-af99cec2e7e9" x="0" y="0" width="340" height="212"/>
+				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
+			</image>
 			<textField>
-				<reportElement mode="Transparent" x="7" y="157" width="162" height="22" uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c"/>
+				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="7" y="157" width="162" height="22"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
@@ -38,7 +42,7 @@
 				<textFieldExpression><![CDATA[($F{confraternista.grupoIdade.nome} == null) || ($F{confraternista.grupoIdade.nome}.equals("")) ? "Não informado." : $F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="7" y="181" width="326" height="22" uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74"/>
+				<reportElement uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74" mode="Transparent" x="7" y="181" width="326" height="22"/>
 				<box leftPadding="5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="14"/>
@@ -46,7 +50,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="7" y="109" width="326" height="40" backcolor="#FFFFFF" uuid="2c443fc7-30ed-464c-b65f-5b27ece853e9"/>
+				<reportElement uuid="2c443fc7-30ed-464c-b65f-5b27ece853e9" mode="Transparent" x="7" y="109" width="326" height="40" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Sakkal Majalla" size="28" isBold="true" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
@@ -54,7 +58,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.nomeCracha}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="170" y="157" width="162" height="22" uuid="fa0639f8-b46a-4a46-9a2b-083b623be4a1"/>
+				<reportElement uuid="fa0639f8-b46a-4a46-9a2b-083b623be4a1" mode="Transparent" x="170" y="157" width="162" height="22"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
@@ -62,23 +66,19 @@
 				<textFieldExpression><![CDATA[($F{confraternista.dormitorio.nome} == null) || ($F{confraternista.dormitorio.nome}.equals("")) ? "Não informado." : $F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="103" width="340" height="1" uuid="28c32abf-fa03-473c-ac30-5340d7bc5f4c"/>
+				<reportElement uuid="28c32abf-fa03-473c-ac30-5340d7bc5f4c" x="0" y="103" width="340" height="1"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="152" width="340" height="1" uuid="c14dca34-9887-4cd4-92dd-9ff67b9dcb5d"/>
+				<reportElement uuid="c14dca34-9887-4cd4-92dd-9ff67b9dcb5d" x="0" y="152" width="340" height="1"/>
 				<graphicElement>
 					<pen lineWidth="4.0"/>
 				</graphicElement>
 			</line>
-			<image hAlign="Right" isUsingCache="true">
-				<reportElement x="209" y="9" width="122" height="92" uuid="5b238abe-aabd-4a5d-b65d-af99cec2e7e9"/>
-				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
-			</image>
 			<textField>
-				<reportElement x="7" y="9" width="195" height="92" uuid="59f86c14-303c-4d4d-92e3-c6c7c08356d4"/>
+				<reportElement uuid="59f86c14-303c-4d4d-92e3-c6c7c08356d4" x="7" y="9" width="195" height="92"/>
 				<textElement>
 					<font fontName="Sakkal Majalla"/>
 				</textElement>
