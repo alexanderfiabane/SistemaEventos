@@ -3,6 +3,7 @@
  */
 package br.esp.sysevent.web.guest.controller;
 
+import br.esp.sysevent.core.dao.CamisetaConfraternistaDao;
 import br.esp.sysevent.core.dao.CidadeDao;
 import br.esp.sysevent.core.dao.CorCamisetaDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
@@ -87,6 +88,8 @@ public class FormInscricaoController extends I18nController {
     protected TamanhoCamisetaDao tamanhoCamisetaDao;
     @Autowired
     protected TipoCamisetaDao tipoCamisetaDao;
+    @Autowired
+    protected CamisetaConfraternistaDao camisetaConfraternistaDao;
     @Autowired
     protected InscricaoValidator validator;
 

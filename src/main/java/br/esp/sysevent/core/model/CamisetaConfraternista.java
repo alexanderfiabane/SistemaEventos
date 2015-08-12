@@ -25,15 +25,15 @@ public class CamisetaConfraternista extends AbstractEntity {
     @JoinColumn(name = "ID_CONF", nullable = false)
     private Confraternista confraternista;
     @ManyToOne
-    @JoinColumn(name = "ID_TAMANHO", nullable = false)
+    @JoinColumn(name = "ID_TAMANHO", nullable = true)
     private TamanhoCamiseta tamanhoCamiseta;
     @ManyToOne
-    @JoinColumn(name = "ID_TIPO", nullable = false)
+    @JoinColumn(name = "ID_TIPO", nullable = true)
     private TipoCamiseta tipoCamiseta;
     @ManyToOne
-    @JoinColumn(name = "ID_COR", nullable = false)
+    @JoinColumn(name = "ID_COR", nullable = true)
     private CorCamiseta corCamiseta;
-    @Column(name = "QUANTIDADE", nullable = false)
+    @Column(name = "QUANTIDADE", nullable = true)
     private Integer quantidadeCamiseta;
 
     public Confraternista getConfraternista() {

@@ -89,7 +89,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
-            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));           
         } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
             final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
