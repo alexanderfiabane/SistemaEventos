@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,8 +34,12 @@ public class EdicaoConfigCracha extends AbstractEntity{
     private Edicao edicao;
     @Column(name = "TEM_CRACHA", nullable = false)
     private boolean temCracha;
-    @Column(name = "FUNDO_CRACHA", nullable = true, columnDefinition = "blob")
-    private byte[] imagemFundo;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "nome", column = @Column(name = "IMAGEM_NOME")),
+        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO"))
+    })
+    private ImagemArquivo imagemFundo;
     @Column(name = "TIPO_CRACHA", nullable = true)
     private TipoCracha tipo;
 
@@ -53,11 +59,11 @@ public class EdicaoConfigCracha extends AbstractEntity{
         this.temCracha = temCracha;
     }
 
-    public byte[] getImagemFundo() {
+    public ImagemArquivo getImagemFundo() {
         return imagemFundo;
     }
 
-    public void setImagemFundo(byte[] imagemFundo) {
+    public void setImagemFundo(ImagemArquivo imagemFundo) {
         this.imagemFundo = imagemFundo;
     }
 

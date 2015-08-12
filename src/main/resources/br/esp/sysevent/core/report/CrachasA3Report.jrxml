@@ -3,7 +3,7 @@
 	<property name="ireport.zoom" value="1.6105100000000325"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="fundoCracha" class="java.io.InputStream"/>
+	<parameter name="fundoCracha" class="byte[]"/>
 	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
@@ -31,7 +31,7 @@
 			</rectangle>
 			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true">
 				<reportElement uuid="5b238abe-aabd-4a5d-b65d-af99cec2e7e9" x="0" y="0" width="340" height="212"/>
-				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
+				<imageExpression><![CDATA[new ByteArrayInputStream($P{fundoCracha})]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="7" y="157" width="162" height="22"/>

@@ -22,10 +22,12 @@ import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Estado;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.TamanhoCamiseta;
 import br.esp.sysevent.core.model.TipoCamiseta;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomEntityEditor;
+import br.esp.sysevent.util.ImagemArquivoPropertyeditor;
 import br.esp.sysevent.web.admin.validation.EdicaoValidator;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import com.javaleks.commons.util.CharSequenceUtils;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -89,7 +92,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         Edicao edicao = new Edicao();
         if (CharSequenceUtils.isNumber(idEdicao)) {
             // busca uma edicao ja existente
-            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));           
+            edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         } else if (CharSequenceUtils.isNumber(idEvento)) {
             // cria uma nova edicao para o evento
             final Evento evento = eventoDao.findById(NumberUtils.parseLong(idEvento));
@@ -119,6 +122,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             EdicaoConfigCracha configCracha = new EdicaoConfigCracha();
             configCracha.setEdicao(edicao);
             configCracha.setTemCracha(false);
+            configCracha.setImagemFundo(new ImagemArquivo());
             edicao.setConfigCracha(configCracha);
             edicao.setLocalEndereco(new Endereco());
         } else {
@@ -131,6 +135,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     public Collection<Edicao.Tipo> getTiposEdicao() {
         return Edicao.Tipo.getValues();
     }
+
     @ModelAttribute("tiposCrachas")
     public Collection<EdicaoConfigCracha.TipoCracha> getTiposCrachas() {
         return EdicaoConfigCracha.TipoCracha.getValues();
@@ -169,7 +174,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         binder.registerCustomEditor(CorCamiseta.class, new CustomEntityEditor<>(corCamisetaDao));
         binder.registerCustomEditor(TamanhoCamiseta.class, new CustomEntityEditor<>(tamanhoCamisetaDao));
         binder.registerCustomEditor(Cidade.class, new CustomEntityEditor<>(cidadeDao));
-//        binder.registerCustomEditor(byte[].class, "fotoNova.conteudo", new ByteArrayMultipartFileEditor());
+        binder.registerCustomEditor(ImagemArquivo.class, new ImagemArquivoPropertyeditor());
     }
 
     /**
@@ -182,6 +187,13 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final Edicao command, final ModelMap model) {
         model.addAttribute("edicoes", edicaoDao.findByProperty("evento", command.getEvento()));
+        byte[] imagemFundo = command.getConfigCracha().getImagemFundo().getData();
+        if (imagemFundo != null) {
+            String image = Base64.encodeBase64String(imagemFundo);
+            model.addAttribute("fundoCracha", image);
+        } else {
+            model.addAttribute("fundoCracha", null);
+        }
         //return form view
         return "admin/formEdicao";
     }
@@ -204,7 +216,6 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             final RedirectAttributes attributes,
             final SessionStatus status,
             final Locale locale) {
-        //processaImagem(command, result);
         // validate data
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
@@ -214,22 +225,5 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         // clear the command object from the session and return form success view
         status.setComplete();
         return "redirect:/admin/formEdicao.html?idEvento=" + command.getEvento().getId();
-    }
-
-    private void processaImagem(final Edicao command,
-                                final BindingResult errors) {
-
-//        final byte[] imagem = command.getConfigCracha().getImagemFundo();
-//        if (ImageUtils.isBmp(imagem) || ImageUtils.isGif(imagem) || ImageUtils.isJpeg(imagem) || ImageUtils.isPng(imagem)){
-//            if (!errors.hasFieldErrors("fotoNova.conteudo")) {
-//                foto = ArquivoImagemUtils.convertToJpeg(command.getFotoNova());
-//                command.setFoto(ArquivoImagemUtils.createResizedImage(foto, imageConfig));
-//            }
-//        }
-//        if (errors.hasErrors()) {
-//            setFotoCorrente(request, command.getFoto());
-//        } else {
-//            removeFotoCorrente(request);
-//        }
     }
 }

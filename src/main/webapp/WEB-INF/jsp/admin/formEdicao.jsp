@@ -6,7 +6,7 @@
 <fmt:message var="confirmDeleteMsg" key="message.confirm.delete"/>
 
 <mocca:title title="Formulário de cadastro" level="2"/>
-<form:form commandName="command">
+<form:form commandName="command" enctype="multipart/form-data">
     <!--Conteúdo Tab-->
     <div class="tabbable">
         <!--Tab-->
@@ -269,19 +269,24 @@
                         <form:errors path="configCracha.temCracha" cssClass="pill error"/>
                     </div>
                     <div class="span2">
-                    <label class="label control">Tipo de crachá</label>
-                    <ul class="no-bullet no-padding">
-                    <c:forEach var="item" items="${tiposCrachas}">
-                        <li><form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}</li>
-                    </c:forEach>
-                    </ul>
-                    <form:errors path="configCracha.tipo" cssClass="pill error"/>
+                        <label class="label control">Tipo de crachá</label>
+                        <ul class="no-bullet no-padding">
+                            <c:forEach var="item" items="${tiposCrachas}">
+                                <li><form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}</li>
+                                </c:forEach>
+                        </ul>
+                        <form:errors path="configCracha.tipo" cssClass="pill error"/>
                     </div>
                     <div class="span8">
                         <label class="label control">Imagem de fundo <i id="hintCrachaImagem" class="icon-info-sign"></i></label><br>
-                        <input type="file" id="crachaFundo" name="configCracha.imagemFundo" class="textfield" multiple onchange="handleFileSelect(event);">
+                        <input type="file" accept="image/*" id="crachaFundo" name="configCracha.imagemFundo" class="textfield">
                     </div>
                 </div>
+                <c:if test="${command.configCracha.imagemFundo.data != null}">
+                    <div class="row">
+                        <img src="data:image/png;base64,${fundoCracha}"/>
+                    </div>
+                </c:if>
             </div>
             <!--Camisetas-->
             <div class="pane" id="camisetas">
@@ -536,6 +541,17 @@ $(document).ready(function () {
         }
     });
     $("[name=configFichaInscricao\\.temFichaInscricao]:checked").change();
+    $("[name=configFichaInscricao\\.autorizacaoInstituicao]").change(function () {
+        if ($(this).val() === 'true') {
+           $('[name=configFichaInscricao\\.temFichaInscricao').filter('[value="true"]').attr('checked', true);
+        }
+    });
+    $("[name=configFichaInscricao\\.autorizacaoMenor]").change(function () {
+        if ($(this).val() === 'true') {
+           $('[name=configFichaInscricao\\.temFichaInscricao').filter('[value="true"]').attr('checked', true);
+        }
+    });
+
     $("[name=configCracha\\.temCracha]").change(function () {
         if ($(this).val() === 'false') {
             $('[name=configCracha\\.tipo').attr('checked', false);
