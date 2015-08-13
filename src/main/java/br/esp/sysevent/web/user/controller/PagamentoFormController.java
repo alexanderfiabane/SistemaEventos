@@ -8,12 +8,15 @@ import br.com.uol.pagseguro.domain.Item;
 import br.com.uol.pagseguro.domain.Phone;
 import br.com.uol.pagseguro.domain.Sender;
 import br.com.uol.pagseguro.domain.SenderDocument;
+import br.com.uol.pagseguro.domain.Transaction;
 import br.com.uol.pagseguro.domain.checkout.Checkout;
 import br.com.uol.pagseguro.enums.Currency;
 import br.com.uol.pagseguro.enums.DocumentType;
 import br.com.uol.pagseguro.enums.ShippingType;
+import br.com.uol.pagseguro.enums.TransactionStatus;
 import br.com.uol.pagseguro.exception.PagSeguroServiceException;
 import br.com.uol.pagseguro.properties.PagSeguroConfig;
+import br.com.uol.pagseguro.service.TransactionSearchService;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
@@ -91,7 +94,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             throw new IllegalStateException("Pagamento não está liberado para esta inscrição");
         }
         PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByInscricao(inscricao);
-        if (pagamentoInscricao == null){
+        if (pagamentoInscricao == null) {
             pagamentoInscricao = new PagamentoInscricao();
             pagamentoInscricao.setInscricao(inscricao);
         }
@@ -108,7 +111,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model, HttpServletRequest request) throws PagSeguroServiceException, MalformedURLException {
         FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();
         List<Item> produtos = new ArrayList<>();
-        if(!command.getInscricao().isIsento()){
+        if (!command.getInscricao().isIsento()) {
             produtos.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
         }
         Collection<CamisetaConfraternista> camisetas = command.getInscricao().getConfraternista().getCamisetas();
@@ -118,10 +121,23 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             }
         }
         model.addAttribute("produtos", produtos);
-        if (command.getId() != null){
+        if (command.getId() != null) {
             if (tipoCobranca.equals(TipoCobranca.PAGSEGURO)) {
-                return "user/pagamentoSuccessPS";
-            }else{
+                PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
+                AccountCredentials pagSeguroCredentials = new AccountCredentials(
+                        pagSeguroAccount.getEmailPagSeguroPlain(),
+                        pagSeguroAccount.getTokenSegurancaProducao(),
+                        pagSeguroAccount.getTokenSegurancaSandBox());
+                if (pagSeguroAccount.isProducao()) {
+                    PagSeguroConfig.setProductionEnvironment();
+                } else {
+                    PagSeguroConfig.setSandboxEnvironment();
+                }
+                Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials, command.getCodPagamento());
+                if(!transaction.getStatus().equals(TransactionStatus.CANCELLED)){
+                    return "user/pagamentoSuccessPS";
+                }
+            } else {
                 return "user/pagamentoSuccessDC";
             }
         }
@@ -142,9 +158,9 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
                     pagSeguroAccount.getEmailPagSeguroPlain(),
                     pagSeguroAccount.getTokenSegurancaProducao(),
                     pagSeguroAccount.getTokenSegurancaSandBox());
-            if(pagSeguroAccount.isProducao()){
+            if (pagSeguroAccount.isProducao()) {
                 PagSeguroConfig.setProductionEnvironment();
-            }else{
+            } else {
                 PagSeguroConfig.setSandboxEnvironment();
             }
             String lightBoxCode = pagseguro.register(pagSeguroCredentials, true);
@@ -190,7 +206,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         return inscricao;
     }
 
-    private Sender montaSenderPagSeguro(Confraternista confraternista){
+    private Sender montaSenderPagSeguro(Confraternista confraternista) {
         Sender sender = new Sender();
         Pessoa pessoa = confraternista.getPessoa();
         sender.setName(pessoa.getNome());
@@ -201,7 +217,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         Phone phone = new Phone(ddd, telefone);
         sender.setPhone(phone);
 
-        if(!CharSequenceUtils.isEmptyOrNull(pessoa.getDocumentos().getCpf())){
+        if (!CharSequenceUtils.isEmptyOrNull(pessoa.getDocumentos().getCpf())) {
             SenderDocument document = new SenderDocument(DocumentType.CPF, pessoa.getDocumentos().getCpf());
             List<SenderDocument> documentos = new ArrayList<>();
             documentos.add(document);
@@ -211,7 +227,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     }
 
     private String montaUrlPagSeguroNotification(Edicao edicao, HttpServletRequest request) throws MalformedURLException {
-        final String uri = request.getContextPath()+"/guest/pagSeguroNotification.html?idEdicao="+edicao.getId();
+        final String uri = request.getContextPath() + "/guest/pagSeguroNotification.html?idEdicao=" + edicao.getId();
         final String proxy = request.getHeader("x-forwarded-host");
         final String link = proxy == null ? new URL("http", request.getServerName(), request.getServerPort(), uri).toString() : new URL("http", proxy, uri).toString();
         return link;

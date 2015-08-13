@@ -7,6 +7,7 @@ import com.javaleks.commons.core.model.AbstractEntity;
 import com.javaleks.commons.util.CharSequenceUtils;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -148,8 +149,10 @@ public class Inscricao extends AbstractEntity {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + (this.confraternista != null ? this.confraternista.hashCode() : 0);
-        hash = 71 * hash + (this.edicaoEvento != null ? this.edicaoEvento.hashCode() : 0);
+        hash = 71 * hash + Objects.hashCode(this.status);
+        hash = 71 * hash + Objects.hashCode(this.dataRecebimento);
+        hash = 71 * hash + Objects.hashCode(this.dataConfirmacao);
+        hash = 71 * hash + Objects.hashCode(this.confraternista);
         return hash;
     }
 
@@ -162,10 +165,16 @@ public class Inscricao extends AbstractEntity {
             return false;
         }
         final Inscricao other = (Inscricao) obj;
-        if (this.confraternista != other.confraternista && (this.confraternista == null || !this.confraternista.equals(other.confraternista))) {
+        if (this.status != other.status) {
             return false;
         }
-        if (this.edicaoEvento != other.edicaoEvento && (this.edicaoEvento == null || !this.edicaoEvento.equals(other.edicaoEvento))) {
+        if (!Objects.equals(this.dataRecebimento, other.dataRecebimento)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataConfirmacao, other.dataConfirmacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.confraternista, other.confraternista)) {
             return false;
         }
         return true;

@@ -4,6 +4,7 @@
 package br.esp.sysevent.core.model;
 
 import com.javaleks.commons.core.model.AbstractEntity;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -95,10 +96,10 @@ public class Oficina extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 41 * hash + (this.nome != null ? this.nome.hashCode() : 0);
-        hash = 41 * hash + (this.vagas != null ? this.vagas.hashCode() : 0);
-        hash = 41 * hash + (this.edicaoEvento != null ? this.edicaoEvento.hashCode() : 0);
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.getId());
+        hash = 61 * hash + Objects.hashCode(this.nome);
+        hash = 61 * hash + Objects.hashCode(this.vagas);
         return hash;
     }
 
@@ -111,15 +112,16 @@ public class Oficina extends AbstractEntity {
             return false;
         }
         final Oficina other = (Oficina) obj;
-        if ((this.nome == null) ? (other.nome != null) : !this.nome.equals(other.nome)) {
+        if (!Objects.equals(this.getId(), other.getId())) {
             return false;
         }
-        if (this.vagas != other.vagas && (this.vagas == null || !this.vagas.equals(other.vagas))) {
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
-        if (this.edicaoEvento != other.edicaoEvento && (this.edicaoEvento == null || !this.edicaoEvento.equals(other.edicaoEvento))) {
+        if (!Objects.equals(this.vagas, other.vagas)) {
             return false;
         }
         return true;
     }
+
 }

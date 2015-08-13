@@ -126,7 +126,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             edicao.setConfigCracha(configCracha);
             edicao.setLocalEndereco(new Endereco());
         } else {
-            throw new IllegalArgumentException("Parâmetros inválidos");
+            throw new IllegalArgumentException("Parâmetros Inválidos");
         }
         return edicao;
     }
@@ -199,7 +199,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
     }
 
     /**
-     * Processa a submissão do form.
+     * Processa a submissÃ£o do form.
      *
      * @param command
      * @param result

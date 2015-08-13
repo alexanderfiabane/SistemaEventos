@@ -352,6 +352,9 @@ public class Edicao extends AbstractEntity {
     public void ocupaVaga() {
         vagasOcupadas++;
     }
+    public void desocupaVaga() {
+        vagasOcupadas--;
+    }
 
     public boolean isCongresso() {
         return Tipo.CONGRESSO.equals(getTipo());
