@@ -10,8 +10,10 @@ import br.esp.sysevent.core.model.EdicaoConfigFichaInscricao;
 import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca;
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.persistence.springframework.validation.AbstractValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
+import com.javaleks.commons.util.ImageUtils;
 import com.javaleks.commons.util.NumberUtils;
 import com.javaleks.core.model.embeddable.Period;
 import java.math.BigDecimal;
@@ -196,15 +198,17 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
             return;
         }
         if (configCracha.isTemCracha() && (configCracha.getTipo() == null)) {
-            errors.rejectValue("configCracha.tipo", "errors.invalid");
+            errors.rejectValue("configCracha.tipo", "errors.required");
         }
         if (configCracha.isTemCracha() && (configCracha.getImagemFundo() == null)) {
-            errors.rejectValue("configCracha.imageFundo", "errors.invalid");
+            errors.rejectValue("configCracha.imagemFundo", "errors.required");
+        } else {
+            validateImagem(configCracha.getImagemFundo(), "configCracha.imagemFundo", errors);
         }
     }
 
     private void validateLocal(String local, Endereco localEndereco, Errors errors) {
-        if(CharSequenceUtils.isBlankOrNull(local)){
+        if (CharSequenceUtils.isBlankOrNull(local)) {
             errors.rejectValue("local", "errors.required");
         }
         validateEndereco(localEndereco, errors, "localEndereco", false);
@@ -241,18 +245,12 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         }
     }
 
-//    private void validateFoto(final Arquivo fotoNova, final boolean isRequired, final Errors errors) {
-//        if (ArquivoUtils.isEmptyOrNull(fotoNova)) {
-//            if (isRequired) {
-//                errors.rejectValue(FOTO_PATH, REQUIRED_FIELD_ERROR);
-//            }
-//        } else {
-//            final String mimeType = IOUtils.detectMimeType(fotoNova.getConteudo(), fotoNova.getNome(), "image/jpeg", false);
-//            if (!MimeTypeCategory.isImage(mimeType)) {
-//                errors.rejectValue(FOTO_PATH, INVALID_FILE_FORMAT_ERROR);
-//            } else if (fotoNova.getSize() > maxFileSizeKB && maxFileSizeKB > 0) {
-//                errors.rejectValue(FOTO_PATH, INVALID_FILE_SIZE_ERROR, new Object[]{maxFileSizeKB}, "Tamanho Excedido");
-//            }
-//        }
-//    }
+    protected void validateImagem(ImagemArquivo imagemFundo, String pathImage, Errors errors) {
+        final byte[] imagemConteudo = imagemFundo.getData();
+        if (!ImageUtils.isBmp(imagemConteudo) && !ImageUtils.isGif(imagemConteudo) && !ImageUtils.isJpeg(imagemConteudo) && !ImageUtils.isPng(imagemConteudo)) {
+            errors.reject(pathImage, "errors.image.invalid");
+        } else if (imagemConteudo.length > 10485760) {
+            errors.reject(pathImage, "errors.image.size.invalid");
+        }
+    }
 }

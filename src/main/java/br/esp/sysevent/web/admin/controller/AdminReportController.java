@@ -10,6 +10,7 @@ import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Edicao;
+import br.esp.sysevent.core.model.EdicaoConfigCracha;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Usuario;
@@ -48,10 +49,13 @@ public class AdminReportController {
     private static final String CONFRATERNISTAS_PRESENCA = "br/esp/sysevent/core/report/PresencaConfraternistasReport.jasper";
     private static final String CONFRATERNISTAS_SAUDE_ALIMENTACAO = "br/esp/sysevent/core/report/SaudeAlimentacaoConfraternistaReport.jasper";
     private static final String CAMISETA_ENCOMENDA = "br/esp/sysevent/core/report/CamisetasEncomendaReport.jasper";
-    private static final String CRACHASA3 = "br/esp/sysevent/core/report/CrachasA3Report.jasper";
-    private static final String CRACHASA4 = "br/esp/sysevent/core/report/CrachasA4Report.jasper";
-//    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha2.jpg";
-    private static final String FUNDO_CRACHAS = "br/esp/sysevent/core/report/fundoCracha3.png";
+    private static final String CRACHASA3_0710 = "br/esp/sysevent/core/report/CrachasA30710Report.jasper";
+    private static final String CRACHASA3_0812 = "br/esp/sysevent/core/report/CrachasA30812Report.jasper";
+    private static final String CRACHASA3_1495 = "br/esp/sysevent/core/report/CrachasA31495Report.jasper";
+    private static final String CRACHASA4_0710 = "br/esp/sysevent/core/report/CrachasA40710Report.jasper";
+    private static final String CRACHASA4_0812 = "br/esp/sysevent/core/report/CrachasA40812Report.jasper";
+    private static final String CRACHASA4_1495 = "br/esp/sysevent/core/report/CrachasA41495Report.jasper";
+
     @Autowired
     private InscricaoDao inscricaoDao;
     @Autowired
@@ -95,6 +99,7 @@ public class AdminReportController {
         ControllerUtils.writeHttpAttached(pdf, "confraternistasOficinasOficineiros.pdf", "application/pdf", response);
         return null;
     }
+
     @RequestMapping(value = "/admin/relatorio/reportConfGrupo.html", method = RequestMethod.GET)
     public ModelAndView confraternistasGrupoReport(@RequestParam(value = "idEdicao", required = false) final String idEdicao,
             final HttpServletRequest request,
@@ -165,17 +170,21 @@ public class AdminReportController {
             final HttpServletResponse response) throws Exception {
         Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
-//        byte[] imagemFundo = edicao.getConfigCracha().getImagemFundo();
-//        Image fundoCracha;
-//        if (imagemFundo == null){
-//           fundoCracha = null;
-//        }else{
-//           fundoCracha = ImageUtils.readImage(imagemFundo);
-//        }
+        EdicaoConfigCracha cracha = edicao.getConfigCracha();
+        byte[] imagemFundo = cracha.getImagemFundo().getData();
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
-//        parametros.put("fundoCracha", imagemFundo);
-        final byte[] pdf = reportService.geraRelatorio(inscricoes, CRACHASA3, parametros);
-        ControllerUtils.writeHttpAttached(pdf, "crachasA3.pdf", "application/pdf", response);
+        parametros.put("fundoCracha", imagemFundo);
+        if (cracha.isTemCracha()){
+            byte[] pdf;
+            if(edicao.getConfigCracha().getTipo().equals(EdicaoConfigCracha.TipoCracha.PEQUENO_HORIZONTAL)){
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA3_0710, parametros);
+            }else if(edicao.getConfigCracha().getTipo().equals(EdicaoConfigCracha.TipoCracha.MEDIO_HORIZONTAL)){
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA3_0812, parametros);
+            }else {
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA3_1495, parametros);
+            }
+            ControllerUtils.writeHttpAttached(pdf, "crachasA3.pdf", "application/pdf", response);
+        }
         return null;
     }
 
@@ -185,12 +194,21 @@ public class AdminReportController {
             final HttpServletResponse response) throws Exception {
         Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
         Collection<Inscricao> inscricoes = inscricaoDao.findByEdicaoTipo(edicao);
-//        String imagemFundo = Base64.encodeBase64String(edicao.getConfigCracha().getImagemFundo());
-//        final InputStream imagem = getClass().getClassLoader().getResourceAsStream("data:image/png;base64,"+imagemFundo);
+        EdicaoConfigCracha cracha = edicao.getConfigCracha();
+        byte[] imagemFundo = cracha.getImagemFundo().getData();
         final HashMap<String, Object> parametros = new HashMap<String, Object>(1);
-//        parametros.put("fundoCracha", imagem);
-        final byte[] pdf = reportService.geraRelatorio(inscricoes, CRACHASA4, parametros);
-        ControllerUtils.writeHttpAttached(pdf, "crachasA4.pdf", "application/pdf", response);
+        parametros.put("fundoCracha", imagemFundo);
+        if (cracha.isTemCracha()){
+            byte[] pdf;
+            if(edicao.getConfigCracha().getTipo().equals(EdicaoConfigCracha.TipoCracha.PEQUENO_HORIZONTAL)){
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA4_0710, parametros);
+            }else if(edicao.getConfigCracha().getTipo().equals(EdicaoConfigCracha.TipoCracha.MEDIO_HORIZONTAL)){
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA4_0812, parametros);
+            }else {
+                pdf = reportService.geraRelatorio(inscricoes, CRACHASA4_1495, parametros);
+            }
+            ControllerUtils.writeHttpAttached(pdf, "crachasA4.pdf", "application/pdf", response);
+        }
         return null;
     }
 

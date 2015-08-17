@@ -20,8 +20,10 @@
     <mocca:menuItem iconClass="icon-file-text-alt" label="Relatório de Saúde e Dieta dos Confraternistas" url="/admin/relatorio/reportConfSaudeAlimentacao.html?idEdicao=${edicao.id}"/>
     <mocca:menuItem iconClass="icon-file-text-alt" label="Relatório de camisetas dos Confraternistas" url="/admin/relatorio/reportConfCamiseta.html?idEdicao=${edicao.id}"/>
     <mocca:menuItem iconClass="icon-file-text-alt" label="Relatório de camisetas para encomenda" url="/admin/relatorio/reportEncomendaCamiseta.html?idEdicao=${edicao.id}"/>
-    <mocca:menuItem iconClass="icon-file-text-alt" label="Crachás (Folha A3)" url="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/>
-    <mocca:menuItem iconClass="icon-file-text-alt" label="Crachás (Folha A4)" url="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/>
+    <c:if test="${edicao.configCracha.temCracha}">
+        <mocca:menuItem iconClass="icon-file-text-alt" label="Crachás (Folha A3)" url="/admin/relatorio/reportCrachaA3.html?idEdicao=${edicao.id}"/>
+        <mocca:menuItem iconClass="icon-file-text-alt" label="Crachás (Folha A4)" url="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/>        
+    </c:if>
 </mocca:menu>
 <see:formButtonGroup putSubmit="false" backUrl="listEdicao.html?idEvento=${edicao.evento.id}"/>
 

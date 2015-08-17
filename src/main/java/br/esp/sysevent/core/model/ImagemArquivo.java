@@ -21,7 +21,7 @@ public class ImagemArquivo implements Serializable{
 
     @Column(name = "NOME")
     private String nome;
-    @Column(name = "CONTEUDO")
+    @Column(name = "CONTEUDO", columnDefinition = "LONGBLOB")
     private byte[] data;
 
     public ImagemArquivo() {

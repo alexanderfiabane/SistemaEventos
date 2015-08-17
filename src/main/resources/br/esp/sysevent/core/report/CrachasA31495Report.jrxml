@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrachasA3Report" columnCount="4" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="286" columnSpacing="1" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb00ecac-347e-460e-bae9-0a0d8a7bd2bd">
-	<property name="ireport.zoom" value="0.9090909090909263"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrachasA31495Report" columnCount="4" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="286" columnSpacing="1" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb00ecac-347e-460e-bae9-0a0d8a7bd2bd">
+	<property name="ireport.zoom" value="1.610510000000032"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
-	<parameter name="fundoCracha" class="java.io.InputStream"/>
+	<property name="ireport.y" value="49"/>
+	<parameter name="fundoCracha" class="byte[]"/>
 	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
@@ -21,19 +21,19 @@
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="354" splitType="Stretch">
+		<band height="396" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="286" height="353" backcolor="#FFFFFF" uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037"/>
+				<reportElement uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037" x="0" y="1" width="286" height="394" backcolor="#FFFFFF"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
 				</graphicElement>
 			</rectangle>
-			<image isUsingCache="true">
-				<reportElement x="1" y="1" width="285" height="352" uuid="4179d45f-1a24-4aed-b549-94e9c46d0e3e"/>
-				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="4179d45f-1a24-4aed-b549-94e9c46d0e3e" x="1" y="1" width="284" height="394"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream($P{fundoCracha})]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement mode="Transparent" x="5" y="202" width="276" height="34" uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c"/>
+				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="5" y="321" width="276" height="34"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true"/>
@@ -41,7 +41,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.oficina.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="5" y="88" width="276" height="22" uuid="65a7c206-1e78-4a9c-89a1-1028c40c13e7"/>
+				<reportElement uuid="65a7c206-1e78-4a9c-89a1-1028c40c13e7" mode="Transparent" x="5" y="214" width="276" height="22"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
@@ -49,7 +49,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="5" y="250" width="276" height="22" uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74"/>
+				<reportElement uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74" mode="Transparent" x="5" y="363" width="276" height="22"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
@@ -57,7 +57,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###000">
-				<reportElement mode="Transparent" x="210" y="250" width="70" height="22" uuid="87575336-96ef-4924-a10b-aa0540fbf426"/>
+				<reportElement uuid="87575336-96ef-4924-a10b-aa0540fbf426" mode="Transparent" x="211" y="363" width="70" height="22"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
@@ -65,7 +65,7 @@
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="5" y="110" width="276" height="22" uuid="ca5245e2-0fd2-441f-9d27-fed63ad4cf01"/>
+				<reportElement uuid="ca5245e2-0fd2-441f-9d27-fed63ad4cf01" mode="Transparent" x="5" y="236" width="276" height="22"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
@@ -73,7 +73,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.endereco.cidade.nome}.toUpperCase() + " - " + $F{confraternista.pessoa.endereco.cidade.estado.sigla}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="5" y="146" width="276" height="56" backcolor="#FFFFFF" uuid="2c443fc7-30ed-464c-b65f-5b27ece853e9"/>
+				<reportElement uuid="2c443fc7-30ed-464c-b65f-5b27ece853e9" mode="Transparent" x="5" y="265" width="276" height="56" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="28" isBold="true" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>

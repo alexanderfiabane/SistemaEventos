@@ -280,10 +280,12 @@
                     <div class="span8">
                         <label class="label control">Imagem de fundo <i id="hintCrachaImagem" class="icon-info-sign"></i></label><br>
                         <input type="file" accept="image/*" id="crachaFundo" name="configCracha.imagemFundo" class="textfield">
+                        <form:errors path="configCracha.imagemFundo" cssClass="pill error"/>
                     </div>
                 </div>
                 <c:if test="${command.configCracha.imagemFundo.data != null}">
                     <div class="row">
+                        <label class="label control">Crachá atual</label><br>
                         <img src="data:image/png;base64,${fundoCracha}"/>
                     </div>
                 </c:if>
@@ -559,6 +561,10 @@ $(document).ready(function () {
         }
     });
     $("[name=configCracha\\.temCracha]:checked").change();
+
+    $("[name=configCracha\\.tipo]").change(function () {
+        $('[name=configCracha\\.temCracha').filter('[value="true"]').attr('checked', true);
+    });
 
     $("#hintCrachaImagem").qtip({
         'content': "Os tamanhos suportados são: <strong>jpeg, gif, bmp e png</strong>."

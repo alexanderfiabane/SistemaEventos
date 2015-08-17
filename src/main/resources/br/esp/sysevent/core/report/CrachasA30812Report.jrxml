@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrachasA4Report" columnCount="2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="340" columnSpacing="122" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb00ecac-347e-460e-bae9-0a0d8a7bd2bd">
-	<property name="ireport.zoom" value="1.771561000000039"/>
-	<property name="ireport.x" value="124"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrachasA30812Report" columnCount="3" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="340" columnSpacing="65" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fb00ecac-347e-460e-bae9-0a0d8a7bd2bd">
+	<property name="ireport.zoom" value="1.6105100000000325"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="fundoCracha" class="java.io.InputStream"/>
+	<parameter name="fundoCracha" class="byte[]"/>
 	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
 	<field name="confraternista.pessoa.nome" class="java.lang.String"/>
@@ -24,21 +24,17 @@
 	<detail>
 		<band height="212" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="340" height="212" backcolor="#FFFFFF" uuid="1845ac8f-5349-422c-a3a9-c8c500462953"/>
+				<reportElement uuid="3b0bd4f0-fd11-4eb7-906d-a71dc0856037" x="0" y="0" width="340" height="212" backcolor="#FFFFFF"/>
 				<graphicElement>
 					<pen lineWidth="1.0" lineStyle="Dashed"/>
 				</graphicElement>
 			</rectangle>
+			<image scaleImage="FillFrame" hAlign="Left" vAlign="Top" isUsingCache="true">
+				<reportElement uuid="5b238abe-aabd-4a5d-b65d-af99cec2e7e9" x="0" y="0" width="340" height="212"/>
+				<imageExpression><![CDATA[new ByteArrayInputStream($P{fundoCracha})]]></imageExpression>
+			</image>
 			<textField>
-				<reportElement mode="Transparent" x="7" y="181" width="326" height="22" uuid="52a69703-e0e5-48be-b375-dc9743f1cce8"/>
-				<box leftPadding="5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="14"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement mode="Transparent" x="7" y="157" width="162" height="22" uuid="58652bc7-c499-4011-b402-ba9c7f4e8b04"/>
+				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="7" y="157" width="162" height="22"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
@@ -46,39 +42,43 @@
 				<textFieldExpression><![CDATA[($F{confraternista.grupoIdade.nome} == null) || ($F{confraternista.grupoIdade.nome}.equals("")) ? "Não informado." : $F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="170" y="157" width="162" height="22" uuid="6f289e5f-bab1-4ee2-89f9-6447e5b673de"/>
-				<box leftPadding="0"/>
+				<reportElement uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74" mode="Transparent" x="7" y="181" width="326" height="22"/>
+				<box leftPadding="5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
+					<font fontName="Sakkal Majalla" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{confraternista.dormitorio.nome} == null) || ($F{confraternista.dormitorio.nome}.equals("")) ? "Não informado." : $F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="7" y="109" width="326" height="40" backcolor="#FFFFFF" uuid="ef244ba5-c728-4e83-83c7-19a02ff5d7b9"/>
+				<reportElement uuid="2c443fc7-30ed-464c-b65f-5b27ece853e9" mode="Transparent" x="7" y="109" width="326" height="40" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Sakkal Majalla" size="28" isBold="true" isUnderline="false" isStrikeThrough="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{confraternista.nomeCracha}.toUpperCase()]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="0" y="103" width="340" height="1" uuid="6022c0c0-64ae-4218-b13a-deda337b5a26"/>
-				<graphicElement>
-					<pen lineWidth="4.0"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement x="0" y="152" width="340" height="1" uuid="63560130-f0b7-46a2-ab9e-557b1ca3efe8"/>
-				<graphicElement>
-					<pen lineWidth="4.0"/>
-				</graphicElement>
-			</line>
-			<image hAlign="Right" isUsingCache="true">
-				<reportElement x="209" y="9" width="122" height="92" uuid="1ab6ca05-7ef3-442b-b1ea-2de31bb4186a"/>
-				<imageExpression><![CDATA[$P{fundoCracha}]]></imageExpression>
-			</image>
 			<textField>
-				<reportElement x="7" y="9" width="195" height="92" uuid="94a6089d-95b7-4634-96ab-4f88c765a730"/>
+				<reportElement uuid="fa0639f8-b46a-4a46-9a2b-083b623be4a1" mode="Transparent" x="170" y="157" width="162" height="22"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Sakkal Majalla" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{confraternista.dormitorio.nome} == null) || ($F{confraternista.dormitorio.nome}.equals("")) ? "Não informado." : $F{confraternista.dormitorio.nome}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="28c32abf-fa03-473c-ac30-5340d7bc5f4c" x="0" y="103" width="340" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement uuid="c14dca34-9887-4cd4-92dd-9ff67b9dcb5d" x="0" y="152" width="340" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="59f86c14-303c-4d4d-92e3-c6c7c08356d4" x="7" y="9" width="195" height="92"/>
 				<textElement>
 					<font fontName="Sakkal Majalla"/>
 				</textElement>
