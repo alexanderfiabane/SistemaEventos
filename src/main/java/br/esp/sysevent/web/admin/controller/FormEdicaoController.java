@@ -216,7 +216,7 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
             final RedirectAttributes attributes,
             final SessionStatus status,
             final Locale locale) {
-        // validate data
+        processaFoto(command);
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model);
         }
@@ -225,5 +225,12 @@ public class FormEdicaoController extends AbstractFormController<Long, Edicao> {
         // clear the command object from the session and return form success view
         status.setComplete();
         return "redirect:/admin/formEdicao.html?idEvento=" + command.getEvento().getId();
+    }
+
+    private void processaFoto(Edicao command) {
+        if(!command.getConfigCracha().isTemCracha()){
+            command.getConfigCracha().getImagemFundo().setNome("");
+            command.getConfigCracha().getImagemFundo().setData(null);
+        }
     }
 }

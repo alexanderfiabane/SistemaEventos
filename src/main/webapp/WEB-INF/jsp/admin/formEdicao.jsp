@@ -271,6 +271,7 @@
                     <div class="span2">
                         <label class="label control">Tipo de crachá</label>
                         <ul class="no-bullet no-padding">
+                            <li><form:radiobutton path="configCracha.tipo" value="" /> Nenhum</li>
                             <c:forEach var="item" items="${tiposCrachas}">
                                 <li><form:radiobutton path="configCracha.tipo" value="${item.name}"/> ${item.descricao}</li>
                                 </c:forEach>
@@ -283,7 +284,7 @@
                         <form:errors path="configCracha.imagemFundo" cssClass="pill error"/>
                     </div>
                 </div>
-                <c:if test="${command.configCracha.imagemFundo.data != null}">
+                <c:if test="${command.configCracha.imagemFundo.data != null && not empty command.configCracha.imagemFundo.nome}">
                     <div class="row">
                         <label class="label control">Crachá atual</label><br>
                         <img src="data:image/png;base64,${fundoCracha}"/>
@@ -556,15 +557,20 @@ $(document).ready(function () {
 
     $("[name=configCracha\\.temCracha]").change(function () {
         if ($(this).val() === 'false') {
-            $('[name=configCracha\\.tipo').attr('checked', false);
+            $('[name=configCracha\\.tipo').filter('[value=""]').attr('checked', true);
             $('[name=configCracha\\.imageFundo').replaceWith($('[name=configCracha\\.imageFundo').clone(true));
         }
     });
     $("[name=configCracha\\.temCracha]:checked").change();
 
     $("[name=configCracha\\.tipo]").change(function () {
-        $('[name=configCracha\\.temCracha').filter('[value="true"]').attr('checked', true);
+        if($(this).val() === '' || $.ObjectUtils.isBlank(${command.configCracha.tipo})){
+            $('[name=configCracha\\.temCracha').filter('[value="false"]').attr('checked', true);
+        }else{
+            $('[name=configCracha\\.temCracha').filter('[value="true"]').attr('checked', true);
+        }
     });
+    $("[name=configCracha\\.tipo]:checked").change();
 
     $("#hintCrachaImagem").qtip({
         'content': "Os tamanhos suportados são: <strong>jpeg, gif, bmp e png</strong>."

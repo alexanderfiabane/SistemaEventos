@@ -38,8 +38,8 @@ public class EdicaoConfigCracha extends AbstractEntity{
     private boolean temCracha;
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "nome", column = @Column(name = "IMAGEM_NOME")),
-        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO"))
+        @AttributeOverride(name = "nome", column = @Column(name = "IMAGEM_NOME", nullable = true)),
+        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO", nullable = true))
     })
     private ImagemArquivo imagemFundo;
     @Column(name = "TIPO_CRACHA", nullable = true)
@@ -90,7 +90,7 @@ public class EdicaoConfigCracha extends AbstractEntity{
     public enum TipoCracha{
         PEQUENO_HORIZONTAL("07cm x 10cm"),
         MEDIO_HORIZONTAL("08cm x 12cm"),
-        GRANDE_VERTICAL("14cm x 9,5cm");
+        GRANDE_VERTICAL("14cm x 10cm");
         private final String descricao;
 
         private TipoCracha(final String descricao) {

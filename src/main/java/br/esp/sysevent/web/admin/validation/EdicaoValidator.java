@@ -200,9 +200,9 @@ public class EdicaoValidator extends AbstractValidator<Edicao> {
         if (configCracha.isTemCracha() && (configCracha.getTipo() == null)) {
             errors.rejectValue("configCracha.tipo", "errors.required");
         }
-        if (configCracha.isTemCracha() && (configCracha.getImagemFundo() == null)) {
+        if (configCracha.isTemCracha() && (configCracha.getImagemFundo().getData() == null)) {
             errors.rejectValue("configCracha.imagemFundo", "errors.required");
-        } else {
+        } else if (configCracha.getImagemFundo().getData() != null){
             validateImagem(configCracha.getImagemFundo(), "configCracha.imagemFundo", errors);
         }
     }
