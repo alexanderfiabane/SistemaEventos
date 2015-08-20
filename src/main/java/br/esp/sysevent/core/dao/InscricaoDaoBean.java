@@ -79,7 +79,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 appendln("where ed.id = :idEdicao");
         if (CharSequenceUtils.isNotBlank(nomePessoa)) {
             builder.appendln("  and pessoa.nome like :nomePessoa");
-            params.put("nomePessoa", nomePessoa);
+            params.put("nomePessoa", "%"+nomePessoa+"%");
         }
         if (CharSequenceUtils.isNotBlank(codPagamento)) {
             builder.appendln("  and pag.codPagamento = :codPagamento");
@@ -131,7 +131,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 appendln("where ed.id = :idEdicao");
         if (CharSequenceUtils.isNotBlank(nomePessoa)) {
             builder.appendln("  and pessoa.nome like :nomePessoa");
-            params.put("nomePessoa", nomePessoa);
+            params.put("nomePessoa", "%"+nomePessoa+"%");
         }
         if (CharSequenceUtils.isNotBlank(codPagamento)) {
             builder.appendln("  and pag.codPagamento = :codPagamento");
