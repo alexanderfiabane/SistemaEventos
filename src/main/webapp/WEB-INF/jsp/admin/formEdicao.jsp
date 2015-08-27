@@ -479,6 +479,7 @@ $(document).ready(function () {
             }
         }
     });
+    $("#periodoInscricao_start").close(); //para edições que estão sendo editadas
     $("#periodoEdicao_end").dateTimePicker({
         'mode': 'date',
         'showExample': true,
@@ -486,6 +487,7 @@ $(document).ready(function () {
             showClearButton: true,
         }
     });
+    $("#periodoEdicao_start").close(); //para edições que estão sendo editadas
     $(".deletaEdicao").each(function () {
         var $this = $(this);
         var id = $this.data("id"); // cata o id
