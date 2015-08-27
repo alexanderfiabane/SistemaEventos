@@ -23,6 +23,7 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
         super(sessionFactory);
     }
 
+    @Override
     public PagamentoInscricao findByInscricao(Inscricao inscricao){
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
