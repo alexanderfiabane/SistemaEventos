@@ -13,5 +13,6 @@ import br.esp.sysevent.core.model.PagamentoInscricao;
 public interface PagamentoInscricaoDao extends BaseSistemaDao<Long, PagamentoInscricao> {
 
     public PagamentoInscricao findByInscricao(Inscricao inscricao);
+    public PagamentoInscricao findByInscricao(Inscricao inscricao, PagamentoInscricao.PagSeguroStatus status);
     public PagamentoInscricao findByCodPagamento(String codPagamento);
 }

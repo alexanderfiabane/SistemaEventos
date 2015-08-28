@@ -61,11 +61,12 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
     public void validateCommand(final InscricaoCommand inscricaoCmd, final Errors errors) {
         final Inscricao inscricao = inscricaoCmd.getInscricao();
         final Usuario usuario = inscricaoCmd.getUsuario();
+        final boolean novaInscricao = inscricao.getId() == null ? true : false;
         validateEdicao(inscricao, errors);
         validateConfraternista(inscricao, errors);
         validateInscricao(inscricao, errors);
-        validateUsuario(usuario, errors);
-        if (inscricao.getId() == null) {
+        validateUsuario(usuario, errors, novaInscricao);
+        if (novaInscricao) {
             if (!inscricao.getConfraternista().getPessoa().getEndereco().getEmail().equals(inscricaoCmd.getEmailConfirm())) {
                 errors.rejectValue("emailConfirm", "errors.invalid");
             }
@@ -275,12 +276,22 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         }
     }
 
-    protected void validateUsuario(Usuario usuario, Errors errors) {
+    protected void validateUsuario(Usuario usuario, Errors errors, boolean novaInscricao) {
         final Usuario outroUsuario = usuarioDao.findByLogin(usuario.getUsername());
-        if (outroUsuario != null) {
-            if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
-                errors.rejectValue("usuario.username", "errors.alreadyExists");
-                return;
+        if(novaInscricao){
+            if (outroUsuario != null) {
+                if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
+                    errors.rejectValue("usuario.username", "errors.alreadyExists");
+                    return;
+                }
+            }
+        
+        }else{
+            if (outroUsuario != null && !usuario.getUsername().equals(outroUsuario.getUsername())) {
+                if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
+                    errors.rejectValue("usuario.username", "errors.alreadyExists");
+                    return;
+                }
             }
         }
         if (!LOGIN_PATTERN.matcher(usuario.getUsername()).matches()) {

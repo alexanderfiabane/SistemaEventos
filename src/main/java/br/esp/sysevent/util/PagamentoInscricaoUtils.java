@@ -14,6 +14,7 @@ import br.esp.sysevent.core.model.CamisetaConfraternista;
 import br.esp.sysevent.core.model.Cidade;
 import br.esp.sysevent.core.model.Endereco;
 import br.esp.sysevent.core.model.Inscricao;
+import br.esp.sysevent.core.model.PagamentoInscricao;
 import com.javaleks.commons.text.EnhancedStringBuilder;
 import java.math.BigDecimal;
 
@@ -100,6 +101,23 @@ public abstract class PagamentoInscricaoUtils {
                 endereco.getComplemento() // Complemento
         );
         return address;
+    }
+    
+    public static PagamentoInscricao.PagSeguroStatus getStatusTransacao(TransactionStatus status) {
+        switch (status){
+            case AVAILABLE: return PagamentoInscricao.PagSeguroStatus.AVAILABLE;
+            case CANCELLED: return PagamentoInscricao.PagSeguroStatus.CANCELLED;
+            case CONTESTATION: return PagamentoInscricao.PagSeguroStatus.CONTESTATION;
+            case INITIATED: return PagamentoInscricao.PagSeguroStatus.INITIATED;
+            case IN_ANALYSIS: return PagamentoInscricao.PagSeguroStatus.IN_ANALYSIS;
+            case IN_DISPUTE: return PagamentoInscricao.PagSeguroStatus.IN_DISPUTE;
+            case PAID: return PagamentoInscricao.PagSeguroStatus.PAID;
+            case REFUNDED: return PagamentoInscricao.PagSeguroStatus.REFUNDED;
+            case SELLER_CHARGEBACK: return PagamentoInscricao.PagSeguroStatus.SELLER_CHARGEBACK;
+            case WAITING_PAYMENT: return PagamentoInscricao.PagSeguroStatus.WAITING_PAYMENT;
+            default: return PagamentoInscricao.PagSeguroStatus.UNKNOWN_STATUS;                
+        }
+               
     }
 
 }

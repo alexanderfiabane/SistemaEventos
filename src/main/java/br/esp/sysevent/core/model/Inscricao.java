@@ -109,7 +109,7 @@ public class Inscricao extends AbstractEntity {
 
     public void setPagamento(PagamentoInscricao pagamento) {
         this.pagamento = pagamento;
-    }
+    }     
 
     public boolean isPodeAnalisar() {
         return status == Status.PENDENTE;
