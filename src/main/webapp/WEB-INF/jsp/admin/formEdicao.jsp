@@ -448,27 +448,50 @@ $(document).ready(function () {
         loadCidades($(this), $('#cidadeEdicao'));
     });
 
-    $("#periodoInscricao_start").dateTimePicker({
+    $("#periodoInscricao_start, #periodoInscricao_end").dateTimePicker({
         'mode': 'date',
         'showExample': true,
-        'picker': {
-            showClearButton: true,
-            'onClose': function (selectedDate) {
-                $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
+        'picker':{
+            'showClearButton': true,
+            'beforeShow':function(input){
+                if (input.id == 'periodoInscricao_end') {
+                    //fazer parse do date para dd/MM/yyyy
+                    var minDate = new Date($('#periodoInscricao_start').val());
+                    minDate.setDate(minDate.getDate() + 1)
+                    return {
+                        minDate: minDate
+                    };
+                }else{
+                    var maxDate = new Date($('#periodoInscricao_end').val());
+                    maxDate.setDate(maxDate.getDate() - 1)
+                    return {
+                        maxDate: maxDate
+                    };
+                }
             }
         }
     });
-    $("#periodoInscricao_end").dateTimePicker({
-        'mode': 'date',
-        'showExample': true,
-        picker: {
-            showClearButton: true,
-            'onSelect': function (selectedDate) {
-                $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
-                $("#periodoEdicao_start").datepicker("option", "minDate", selectedDate);
-            }
-        }
-    });
+//    $("#periodoInscricao_start").dateTimePicker({
+//        'mode': 'date',
+//        'showExample': true,
+//        'picker': {
+//            showClearButton: true,
+//            'onClose': function (selectedDate) {
+//                $("#periodoInscricao_end").datepicker("option", "minDate", selectedDate);
+//            }
+//        }
+//    });
+//    $("#periodoInscricao_end").dateTimePicker({
+//        'mode': 'date',
+//        'showExample': true,
+//        picker: {
+//            showClearButton: true,
+//            'onSelect': function (selectedDate) {
+//                $("#periodoInscricao_start").datepicker("option", "maxDate", selectedDate);
+//                $("#periodoEdicao_start").datepicker("option", "minDate", selectedDate);
+//            }
+//        }
+//    });
     $("#periodoEdicao_start").dateTimePicker({
         'mode': 'date',
         'showExample': true,
@@ -479,7 +502,7 @@ $(document).ready(function () {
             }
         }
     });
-    $("#periodoInscricao_start").close(); //para edições que estão sendo editadas
+    //$("#periodoInscricao_start").close(); //para edições que estão sendo editadas
     $("#periodoEdicao_end").dateTimePicker({
         'mode': 'date',
         'showExample': true,
@@ -487,7 +510,7 @@ $(document).ready(function () {
             showClearButton: true,
         }
     });
-    $("#periodoEdicao_start").close(); //para edições que estão sendo editadas
+    //$("#periodoEdicao_start").close(); //para edições que estão sendo editadas
     $(".deletaEdicao").each(function () {
         var $this = $(this);
         var id = $this.data("id"); // cata o id
