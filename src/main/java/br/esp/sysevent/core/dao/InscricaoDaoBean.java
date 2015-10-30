@@ -21,6 +21,7 @@ import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -340,11 +341,17 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .append("and confraternista.tipo in (:tipo) ")
                 .append("and i.status in (:status) ")
                 .append("order by oficina.nome, pessoa.nome ");
-
+        Collection<Inscricao.Status> status = new ArrayList<>();
+        status.add(Status.PAGA);
+        status.add(Status.AGUARDANDO_PAGAMENTO);
+        status.add(Status.EFETIVADA);
+        Collection<Confraternista.Tipo> tipos = new ArrayList<>();
+        tipos.add(Tipo.CONFRATERNISTA);
+        tipos.add(Tipo.COORDENADOR);
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
-                .setParameterList("tipo", new Confraternista.Tipo[]{Confraternista.Tipo.CONFRATERNISTA, Confraternista.Tipo.COORDENADOR})
-                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("tipo", tipos)
+                .setParameterList("status", status)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 

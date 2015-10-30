@@ -38,7 +38,7 @@ public class UsuarioValidator extends AbstractValidator<UsuarioCommand> {
     protected void validateUsername(Usuario usuario, Errors errors) {
         final Usuario outroUsuario = usuarioDao.findByLogin(usuario.getUsername());
         if (outroUsuario != null) {
-            if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
+            if (EntityUtils.isPersistent(usuario) && (!usuario.getId().equals(outroUsuario.getId()))) {
                 errors.rejectValue("usuario.username", "errors.alreadyExists");
                 return;
             }
@@ -66,13 +66,13 @@ public class UsuarioValidator extends AbstractValidator<UsuarioCommand> {
             errors.rejectValue("senhaAtual", "errors.passwordInvalid");
             return;
         }
-        if (!command.getNovaSenha().equals(command.getConfirmaNovaSenha())){            
+        if (!command.getNovaSenha().equals(command.getConfirmaNovaSenha())){
             errors.rejectValue("novaSenha", "errors.passwordNotMach");
             errors.rejectValue("confirmaNovaSenha", "errors.passwordNotMach");
         }else{
             if (!PASSWORD_PATTERN.matcher(command.getNovaSenha()).matches()) {
                 errors.rejectValue("novaSenha", "errors.passwordInvalid");
-            }        
+            }
         }
     }
 
