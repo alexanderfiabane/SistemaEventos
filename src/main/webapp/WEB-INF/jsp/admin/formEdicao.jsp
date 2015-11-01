@@ -85,16 +85,16 @@
                 </div>
                 <div class="row">
                     <div class="span3">
-                        <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.start" inputClass="manual-init"/>
+                        <see:formField id="periodoInscricao_start" label="label.subscriptionPeriodStart" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.start" inputClass="manual-init textfield"/>
                     </div>
                     <div class="span3">
-                        <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.end"/>
+                        <see:formField id="periodoInscricao_end" label="label.subscriptionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoInscricao.end" inputClass="manual-init textfield"/>
                     </div>
                     <div class="span3">
-                        <see:formField id="periodoEdicao_start" label="label.editionPeriodStart" isLabelKey="true" isMandatory="true" type="text" path="periodoEdicao.start" inputClass="manual-init"/>
+                        <see:formField id="periodoEdicao_start" label="label.editionPeriodStart" isLabelKey="true" isMandatory="true" type="text" path="periodoEdicao.start" inputClass="manual-init textfield"/>
                     </div>
                     <div class="span3">
-                        <see:formField id="periodoEdicao_end" label="label.editionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoEdicao.end"/>
+                        <see:formField id="periodoEdicao_end" label="label.editionPeriodEnd" isLabelKey="true" isMandatory="true" type="text" path="periodoEdicao.end" inputClass="manual-init textfield"/>
                     </div>
                 </div>
             </div>
@@ -122,21 +122,21 @@
                                 </legend>
                                 <div class="row">
                                     <div class="span4">
-                                        <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.bancoPlain"/>
+                                        <see:formField label="Banco" isMandatory="false" path="formaCobranca.deposito.bancoPlain" inputClass="textfield"/>
                                     </div>
                                     <div class="span8">
-                                        <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain"/>
+                                        <see:formField label="Favorecido" isMandatory="false" path="formaCobranca.deposito.favorecidoPlain" inputClass="textfield"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="span4">
-                                        <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agenciaPlain"/>
+                                        <see:formField label="Agência" isMandatory="false" path="formaCobranca.deposito.agenciaPlain" inputClass="textfield"/>
                                     </div>
                                     <div class="span5">
-                                        <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroContaPlain"/>
+                                        <see:formField label="Número da conta" isMandatory="false" path="formaCobranca.deposito.numeroContaPlain" inputClass="textfield"/>
                                     </div>
                                     <div class="span3">
-                                        <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao"/>
+                                        <see:formField label="Número da operação" isMandatory="false" path="formaCobranca.deposito.operacao" inputClass="textfield"/>
                                     </div>
                                 </div>
                             </fieldset>
@@ -157,13 +157,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="span4">
-                                        <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguroPlain"/>
+                                        <see:formField type="text" label="E-mail PagSeguro" isMandatory="false" path="formaCobranca.pagSeguro.emailPagSeguroPlain" inputClass="textfield"/>
                                     </div>
                                     <div class="span4">
-                                        <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao"/>
+                                        <see:formField type="text" label="Token (PRODUÇÃO)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaProducao" inputClass="textfield"/>
                                     </div>
                                     <div class="span4">
-                                        <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox"/>
+                                        <see:formField type="text" label="Token (SANDBOX)" isMandatory="false" path="formaCobranca.pagSeguro.tokenSegurancaSandBox" inputClass="textfield"/>
                                     </div>
                                 </div>
                             </fieldset>
@@ -175,21 +175,21 @@
             <div class="pane" id="local">
                 <div class="row">
                     <div class="span6">
-                        <see:formField type="text" label="label.subscriptionPlace" isLabelKey="true" isMandatory="true" path="local"/>
+                        <see:formField type="text" label="label.subscriptionPlace" isLabelKey="true" isMandatory="true" path="local" inputClass="textfield"/>
                     </div>
                     <div class="span6">
-                        <see:formField type="text" label="label.street" isLabelKey="true" isMandatory="true" path="localEndereco.logradouro"/>
+                        <see:formField type="text" label="label.street" isLabelKey="true" isMandatory="true" path="localEndereco.logradouro" inputClass="textfield"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="span4">
-                        <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="localEndereco.numero" maxlength="6"/>
+                        <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="localEndereco.numero" maxlength="6" inputClass="textfield"/>
                     </div>
                     <div class="span4">
-                        <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="localEndereco.complemento" maxlength="60"/>
+                        <see:formField label="label.complement" isLabelKey="true" isMandatory="false" path="localEndereco.complemento" maxlength="60" inputClass="textfield"/>
                     </div>
                     <div class="span4">
-                        <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="localEndereco.bairro" maxlength="60"/>
+                        <see:formField label="label.district" isLabelKey="true" isMandatory="true" path="localEndereco.bairro" maxlength="60" inputClass="textfield"/>
                     </div>
                 </div>
                 <div class="row">
@@ -197,7 +197,7 @@
                         <label class="label">
                             <fmt:message key="label.state"/>
                         </label>
-                        <select id="estadoEdicao" class="selectfield width-100">
+                        <select id="estadoEdicao" class="selectfield">
                             <option value="">Selecione um estado</option>
                             <c:forEach var="estado" items="${estados}">
                                 <option value="${estado.id}" <c:if test="${command.localEndereco.cidade.estado.id == estado.id}">selected="selected"</c:if>>${estado.nome}</option>
@@ -205,10 +205,10 @@
                         </select>
                     </div>
                     <div class="span4">
-                        <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="localEndereco.cidade" id="cidadeEdicao" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado"/>
+                        <see:formField label="label.city" isLabelKey="true" isMandatory="true" path="localEndereco.cidade" id="cidadeEdicao" type="select" itemValue="id" itemLabel="nome" selectNullItemLabel="Selecione primeiro um estado" inputClass="selectfield"/>
                     </div>
                     <div class="span4">
-                        <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="localEndereco.cep" maxlength="9"/>
+                        <see:formField label="label.zipcode" isLabelKey="true" isMandatory="true" path="localEndereco.cep" maxlength="9" inputClass="textfield"/>
                     </div>
                 </div>
             </div>
