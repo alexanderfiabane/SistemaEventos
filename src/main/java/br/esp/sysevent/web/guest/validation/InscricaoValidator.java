@@ -110,7 +110,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
                 }
             }
         }
-        if(inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA) && confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)){
+        if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.FAIXA_ETARIA) && confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)) {
             validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
         }
         if (inscricao.getEdicaoEvento().getTipo().equals(Edicao.Tipo.OFICINA)
@@ -278,15 +278,12 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
 
     protected void validateUsuario(Usuario usuario, Errors errors, boolean novaInscricao) {
         final Usuario outroUsuario = usuarioDao.findByLogin(usuario.getUsername());
-        if(novaInscricao){
+        if (novaInscricao) {
             if (outroUsuario != null) {
-                if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
-                    errors.rejectValue("usuario.username", "errors.alreadyExists");
-                    return;
-                }
+                errors.rejectValue("usuario.username", "errors.alreadyExists");
+                return;
             }
-        
-        }else{
+        } else {
             if (outroUsuario != null && !usuario.getUsername().equals(outroUsuario.getUsername())) {
                 if (EntityUtils.isPersistent(usuario) && usuario.getId() != outroUsuario.getId()) {
                     errors.rejectValue("usuario.username", "errors.alreadyExists");
