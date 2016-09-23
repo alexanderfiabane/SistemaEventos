@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  *
@@ -21,7 +22,7 @@ public class ImagemArquivo implements Serializable{
 
     @Column(name = "NOME")
     private String nome;
-    @Column(name = "CONTEUDO", columnDefinition = "LONGBLOB")
+    @Column(name = "CONTEUDO", columnDefinition = "longblob")
     private byte[] data;
 
     public ImagemArquivo() {
@@ -43,6 +44,10 @@ public class ImagemArquivo implements Serializable{
 
     public byte[] getData() {
         return data;
+    }
+
+    public String getDataBase64(){
+        return Base64.encodeBase64String(data);
     }
 
     public void setData(byte[] data) {

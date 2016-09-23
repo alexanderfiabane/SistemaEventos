@@ -6,6 +6,7 @@ import br.esp.sysevent.core.dao.EventoDao;
 import br.esp.sysevent.core.dao.GrupoIdadeDao;
 import br.esp.sysevent.core.dao.InscricaoDao;
 import br.esp.sysevent.core.dao.OficinaDao;
+import br.esp.sysevent.core.dao.PagamentoInscricaoDao;
 import br.esp.sysevent.core.dao.UsuarioDao;
 import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
@@ -13,22 +14,26 @@ import br.esp.sysevent.core.model.Edicao.Tipo;
 import br.esp.sysevent.core.model.Evento;
 import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
 import br.esp.sysevent.core.model.GrupoIdade;
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.web.controller.I18nController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
+import com.javaleks.commons.io.HttpUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
 import java.util.Collection;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -52,6 +57,8 @@ public class AdminInscricoesController extends I18nController{
     private EventoDao eventoDao;
     @Autowired
     private ConfraternistaDao confraternistaDao;
+    @Autowired
+    private PagamentoInscricaoDao pagamentoInscricaoDao;
 
     @RequestMapping(value = "/admin/inscricao/list.html", method = RequestMethod.GET)
     public String list(@RequestParam(value = "idEdicao", required = false) final String idEdicao, final ModelMap model) {
@@ -165,6 +172,16 @@ public class AdminInscricoesController extends I18nController{
         return inscricaoCmd;
     }
 
+    @RequestMapping(value = "/admin/inscricao/downloadComprovante.html", method = RequestMethod.GET)
+    public ModelAndView downloadAnexo(@RequestParam(value = "idComprovante", required = false) final Long idComprovante, final HttpServletResponse response) throws Exception {
+        final ImagemArquivo comprovante = pagamentoInscricaoDao.findComprovante(idComprovante);
+        if (comprovante == null) {
+            throw new Exception("Compravante não encontrado");
+        }
+        HttpUtils.writeHttpAttached(comprovante.getNome(), comprovante.getData(), response);
+        return null;
+    }
+
     private void liberaVaga(Inscricao inscricao) {
         final Edicao edicaoEvento = inscricao.getEdicaoEvento();
         final Tipo tipoEvento = edicaoEvento.getTipo();
@@ -180,7 +197,7 @@ public class AdminInscricoesController extends I18nController{
                 confraternistaDao.saveOrUpdate(confraternista);
             } else if (tipoEvento.equals(Tipo.FAIXA_ETARIA) && grupoIdade != null) {
                 grupoIdade.setVagasOcupadas(grupoIdade.getVagasOcupadas() - 1);
-                grupoIdadeDao.saveOrUpdate(grupoIdade);             
+                grupoIdadeDao.saveOrUpdate(grupoIdade);
                 confraternista.setGrupoIdade(null);
                 confraternistaDao.saveOrUpdate(confraternista);
             }

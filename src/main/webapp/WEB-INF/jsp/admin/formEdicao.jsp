@@ -456,7 +456,7 @@ $(document).ready(function () {
             'beforeShow':function(input){
                 if (input.id === 'periodoInscricao_end') {
                     var minDateFormated = $('#periodoInscricao_start').val().split('/');
-                    var minDate = new Date(minDateFormated[2],minDateFormated[1],minDateFormated[0]);
+                    var minDate = new Date(minDateFormated[2],minDateFormated[1] - 1,minDateFormated[0]);
                     minDate.setDate(minDate.getDate() + 1);
                     var maxDateFormated = $('#periodoEdicao_start').val().split('/');
                     var maxDate = new Date(maxDateFormated[2],maxDateFormated[1],maxDateFormated[0]);
@@ -467,17 +467,17 @@ $(document).ready(function () {
                     };
                 }else if (input.id === 'periodoInscricao_ini'){
                     var maxDateFormated = $('#periodoInscricao_end').val().split('/');
-                    var maxDate = new Date(maxDateFormated[2],maxDateFormated[1],maxDateFormated[0]);
+                    var maxDate = new Date(maxDateFormated[2],maxDateFormated[1] - 1,maxDateFormated[0]);
                     maxDate.setDate(maxDate.getDate() - 1);
                     return {
                         maxDate: maxDate
                     };
                 }else if (input.id === 'periodoEdicao_start') {
                     var minDateFormated = $('#periodoInscricao_end').val().split('/');
-                    var minDate = new Date(minDateFormated[2],minDateFormated[1],minDateFormated[0]);
+                    var minDate = new Date(minDateFormated[2],minDateFormated[1] - 1 ,minDateFormated[0]);
                     minDate.setDate(minDate.getDate() + 1);
                     var maxDateFormated = $('#periodoEdicao_end').val().split('/');
-                    var maxDate = new Date(maxDateFormated[2],maxDateFormated[1],maxDateFormated[0]);
+                    var maxDate = new Date(maxDateFormated[2],maxDateFormated[1] - 1 ,maxDateFormated[0]);
                     maxDate.setDate(maxDate.getDate() - 1);
                     return {
                         minDate: minDate,
@@ -485,7 +485,7 @@ $(document).ready(function () {
                     };
                 }else{
                     var minDateFormated = $('#periodoEdicao_start').val().split('/');
-                    var minDate = new Date(minDateFormated[2],minDateFormated[1],minDateFormated[0]);
+                    var minDate = new Date(minDateFormated[2],minDateFormated[1] - 1 ,minDateFormated[0]);
                     minDate.setDate(minDate.getDate() + 1);
                     return {
                         minDate: minDate

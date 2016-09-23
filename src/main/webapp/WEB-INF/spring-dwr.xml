@@ -47,7 +47,12 @@
             <dwr:include method="id"/>
             <dwr:include method="pessoa"/>
             <dwr:include method="tipo"/>
+            <dwr:include method="casaEspirita"/>
             <dwr:include method="camisetas"/>
+        </dwr:convert>
+        <dwr:convert class="br.esp.sysevent.core.model.CasaEspirita" type="hibernate3">
+            <dwr:include method="id"/>
+            <dwr:include method="nome"/>            
         </dwr:convert>
         <dwr:convert class="br.esp.sysevent.core.model.Confraternista$Tipo" type="bean">
             <dwr:include method="descricao"/>            
@@ -98,8 +103,14 @@
             <dwr:include method="descricaoPagamento"/>            
             <dwr:include method="descricaoPagamentoQtip"/>            
             <dwr:include method="dataPagamento"/>            
+            <dwr:include method="comprovante"/>            
             <dwr:include method="valor"/>                        
-        </dwr:convert>
+        </dwr:convert>        
+        <dwr:convert class="br.esp.sysevent.core.model.ImagemArquivo" type="hibernate3">
+            <dwr:include method="nome"/>            
+            <dwr:include method="data"/>                        
+            <dwr:include method="dataBase64"/>                        
+        </dwr:convert>        
         <dwr:convert class="br.esp.sysevent.core.model.Inscricao$Status" type="bean">
             <dwr:include method="value"/>            
         </dwr:convert>

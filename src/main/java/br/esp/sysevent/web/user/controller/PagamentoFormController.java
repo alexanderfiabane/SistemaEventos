@@ -24,20 +24,25 @@ import br.esp.sysevent.core.model.Confraternista;
 import br.esp.sysevent.core.model.Edicao;
 import br.esp.sysevent.core.model.FormaCobranca;
 import br.esp.sysevent.core.model.FormaCobranca.TipoCobranca;
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagSeguroConta;
 import br.esp.sysevent.core.model.PagamentoInscricao;
+import br.esp.sysevent.core.model.PagamentoInscricao.PagSeguroStatus;
 import br.esp.sysevent.core.model.Pessoa;
 import br.esp.sysevent.core.model.Usuario;
 import br.esp.sysevent.persistence.springframework.beans.propertyeditors.CustomCalendarEditor;
 import br.esp.sysevent.persistence.springframework.validation.Validator;
+import br.esp.sysevent.util.ImagemArquivoPropertyeditor;
 import br.esp.sysevent.util.PagamentoInscricaoUtils;
 import br.esp.sysevent.web.controller.AbstractFormController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.user.validation.PagamentoInscricaoValidator;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.CollectionUtils;
+import com.javaleks.commons.util.ImageUtils;
 import com.javaleks.commons.util.NumberUtils;
+import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -97,6 +102,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         if (pagamentoInscricao == null) {
             pagamentoInscricao = new PagamentoInscricao();
             pagamentoInscricao.setInscricao(inscricao);
+            pagamentoInscricao.setComprovante(new ImagemArquivo());
         }
         return pagamentoInscricao;
     }
@@ -105,22 +111,23 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     public void initBinder(final WebDataBinder binder, final Locale locale) {
         binder.registerCustomEditor(Calendar.class, new CustomCalendarEditor(getDateFormat(locale), true));
         binder.registerCustomEditor(BigDecimal.class, new CustomNumberEditor(BigDecimal.class, getNumberFormat(locale), true));
+        binder.registerCustomEditor(ImagemArquivo.class, new ImagemArquivoPropertyeditor());
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String onGet(@ModelAttribute(COMMAND_NAME) final PagamentoInscricao command, final ModelMap model, HttpServletRequest request) throws PagSeguroServiceException, MalformedURLException {
         FormaCobranca.TipoCobranca tipoCobranca = command.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca();
-        List<Item> produtos = new ArrayList<>();
+        List<Item> itens = new ArrayList<>();
         if (!command.getInscricao().isIsento()) {
-            produtos.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
+            itens.add(PagamentoInscricaoUtils.montaInscricaoItemPagSeguro(command.getInscricao()));
         }
         Collection<CamisetaConfraternista> camisetas = command.getInscricao().getConfraternista().getCamisetas();
         if (!CollectionUtils.isEmptyOrNull(camisetas)) {
             for (CamisetaConfraternista camiseta : camisetas) {
-                produtos.add(PagamentoInscricaoUtils.montaCamisetaItemPagSeguro(camiseta, command.getInscricao().getEdicaoEvento().getValorCamiseta()));
+                itens.add(PagamentoInscricaoUtils.montaCamisetaItemPagSeguro(camiseta, command.getInscricao().getEdicaoEvento().getValorCamiseta()));
             }
         }
-        model.addAttribute("produtos", produtos);
+        model.addAttribute("itens", itens);
         if (command.getId() != null) {
             if (tipoCobranca.equals(TipoCobranca.PAGSEGURO)) {
                 PagSeguroConta pagSeguroAccount = command.getInscricao().getEdicaoEvento().getFormaCobranca().getPagSeguro();
@@ -145,7 +152,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             //Criar objeto pagseguro com os dados de 'compra' dessa inscrição
             Checkout pagseguro = new Checkout();
             pagseguro.setCurrency(Currency.BRL);
-            pagseguro.setItems(produtos);
+            pagseguro.setItems(itens);
             pagseguro.setShippingAddress(PagamentoInscricaoUtils.montaAddressPagSeguro(command.getInscricao()));
             pagseguro.setShippingType(ShippingType.NOT_SPECIFIED);
             pagseguro.setReference("SE" + command.getInscricao().getId());
@@ -180,15 +187,21 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
             final HttpServletRequest request,
             final SessionStatus status,
             final Locale locale) throws PagSeguroServiceException, MalformedURLException {
-
+        processaComprovante(command);
         if (runValidator(command, result).hasErrors()) {
             return onGet(command, model, request);
         }
+        command.setDescricaoPagamentoQtip(command.getDescricaoPagamento());
+        command.setStatus(PagSeguroStatus.IN_ANALYSIS);
         pagamentoInscricaoDao.saveOrUpdate(command);
-        model.addAttribute("message", getMessage("payment.success.save", locale));
+        Inscricao inscricao = command.getInscricao();
+        inscricao.setPagamento(command);
+        inscricaoDao.saveOrUpdate(inscricao);
+        attributes.addFlashAttribute("message", getMessage("payment.success.save", locale));
         ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.payment.receive", locale), "recebimentoPagamentoDC.html");
         status.setComplete();
-        return "user/pagamentoSuccessDC";
+        attributes.addAttribute("idInscricao", command.getInscricao().getId());
+        return "redirect:/user/formPagamento.html";
     }
 
     protected Inscricao getInscricao(final String idInscricao) throws IllegalArgumentException, IllegalAccessException {
@@ -232,4 +245,16 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         final String link = proxy == null ? new URL("http", request.getServerName(), request.getServerPort(), uri).toString() : new URL("http", proxy, uri).toString();
         return link;
     }
+
+    private void processaComprovante(PagamentoInscricao command) {
+        if(command.getComprovante() == null){
+            command.getComprovante().setNome("");
+            command.getComprovante().setData(null);
+        }else{
+            BufferedImage comprovanteResized = ImageUtils.scaleImage(command.getComprovante().getData(), 640, 640, true);
+            command.getComprovante().setData(ImageUtils.getJpegBytes(comprovanteResized));
+        }
+    }
+
+
 }

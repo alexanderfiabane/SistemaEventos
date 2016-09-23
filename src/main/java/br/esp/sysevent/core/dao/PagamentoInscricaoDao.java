@@ -3,6 +3,7 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 
@@ -13,6 +14,7 @@ import br.esp.sysevent.core.model.PagamentoInscricao;
 public interface PagamentoInscricaoDao extends BaseSistemaDao<Long, PagamentoInscricao> {
 
     public PagamentoInscricao findByInscricao(Inscricao inscricao);
+    public ImagemArquivo findComprovante(Long idPagamentoInscricao);
     public PagamentoInscricao findByInscricao(Inscricao inscricao, PagamentoInscricao.PagSeguroStatus status);
     public PagamentoInscricao findByCodPagamento(String codPagamento);
 }

@@ -3,6 +3,7 @@
  */
 package br.esp.sysevent.core.dao;
 
+import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
 import org.hibernate.Criteria;
@@ -30,7 +31,7 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
                 .add(Restrictions.eq("inscricao", inscricao));
         return findUniqueByCriteria(criteria);
     }
-    
+
     @Override
     public PagamentoInscricao findByInscricao(Inscricao inscricao, PagamentoInscricao.PagSeguroStatus status){
         final Criteria criteria = createCriteria()
@@ -39,7 +40,13 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
                 .add(Restrictions.eq("status", status));
         return findUniqueByCriteria(criteria);
     }
-    
+
+    @Override
+    public ImagemArquivo findComprovante(Long idPagamentoInscricao){
+        PagamentoInscricao pagamentoInscricao = findById(idPagamentoInscricao);
+        return pagamentoInscricao.getComprovante();
+    }
+
     @Override
     public PagamentoInscricao findByCodPagamento(String codPagamento){
         final Criteria criteria = createCriteria()

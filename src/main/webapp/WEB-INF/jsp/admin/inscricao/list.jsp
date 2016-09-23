@@ -62,16 +62,16 @@
     </div>
 </div>
 
-
 <div id="paginationWrapper" class="table-wrapper scrollable">
     <table class="table striped stroked hovered narrow small-font-size">
         <thead class="header">
             <tr>
                 <th class="centered"><fmt:message key="label.options"/></th>
                 <th data-name="pessoa.nome"><fmt:message key="label.name"/></th>
+                <th data-name="confraternista.casaEspirita.nome"><fmt:message key="label.se.name"/></th>
                 <th style="min-width: 12em;" data-name="confraternista.tipo"><fmt:message key="label.subscriptiontype"/></th>
-                <th data-name="this.status"><fmt:message key="label.subscriptionstatus"/></th>
                 <th style="min-width: 12em;" data-name="this.dataRecebimento"><fmt:message key="label.subscriptionDateReceive"/></th>
+                <th data-name="this.status"><fmt:message key="label.subscriptionstatus"/></th>
                 <th><fmt:message key="label.paymentdate"/></th>
                 <th><fmt:message key="label.paymentnumber"/></th>
             </tr>
@@ -80,15 +80,19 @@
             <tr data-role="tableRow">
                 <td class="centered"></td>
                 <td>@{confraternista.pessoa.nome}</td>
+                <td>@{confraternista.casaEspirita.nome}</td>
                 <td>@{confraternista.tipo.descricao}</td>
-                <td>@{status.value}</td>
                 <td>@{dataRecebimento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
+                <td>@{status.value}</td>
                 <td>@{pagamento.dataPagamento|format=dd/MM/yyyy|ifBlank=Não informado}</td>
-                <td><i class="hint icon-info-sign"></i> @{pagamento.codPagamento|ifBlank=Não informado}</td>
+                <td><i class="hint icon-info-sign"></i> @{pagamento|transform=isLinkdownloadComprovante}</td>
             </tr>
         </tbody>
     </table>
 </div>
+<c:url value="/admin/inscricao/downloadComprovante.html" var="url_foto">
+    <c:param name="idComprovante" value=""/>
+</c:url>
 <c:url value="/admin/inscricao/listEdicao.html" var="backUrl">
     <c:param name="idEvento" value="${edicao.evento.id}"/>
 </c:url>
@@ -113,7 +117,7 @@
     <c:param name="idInscricao" value=""/>
 </c:url>
 <script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
-<script type="text/javascript">
+<script type="text/javascript">    
     $(document).ready(function () {
         $('#paginationWrapper').ajaxTable({
             ajaxTable: inscricaoAjaxService,
@@ -125,21 +129,27 @@
             'table': {
                 'postAddLine': function ($tr, item) {
                     var $td = $tr.find("td").eq(0);
-                    var $icoDoc = $tr.find("td").eq(6).find('.hint');
+                    var $icoDoc = $tr.find("td").eq(7).find('.hint');
+                    var $descricaoPagamento;
+                    if (item.pagamento === null) {
+                        $descricaoPagamento = "Não há informações";
+                    } else {
+                        $descricaoPagamento = "<b>Descrição:</b><br>" + item.pagamento.descricaoPagamentoQtip;
+                    }                    
                     if ($.ObjectUtils.isUnvalued(item.pagamento)) {
                         $icoDoc.remove();
                     } else {
                         $icoDoc.qtip({
                             'content': {
-                                text: item.pagamento == null ? "Não há informações" : item.pagamento.descricaoPagamentoQtip,
-                                title: "Detalhes do Pagamento"
+                                title: "Detalhes do Pagamento",
+                                text: $descricaoPagamento
                             },
                             position: {
                                 my: 'bottom right',
                                 at: 'left top'
                             },
                             style: {
-                                classes: 'qtip-bootstrap'
+                                classes: 'qtip-bootstrap qtip-shadow'
                             }
                         });
                     }
@@ -285,4 +295,12 @@
             }
         });
     });
+    
+    function isLinkdownloadComprovante(pagamento){
+        if(pagamento === null){
+            return "Não informado";
+        }else{
+            return "<a href='${url_foto}"+pagamento.id+"'>"+pagamento.codPagamento+"</a>";
+        }
+    };
 </script>

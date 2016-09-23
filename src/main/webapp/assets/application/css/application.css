@@ -102,9 +102,9 @@ table .centered {
 
 table th {
     background-color: #3E5460;
-    //color: #404040;
+    /*color: #404040;*/
     color: #ffffff;
-    //background-color: #4684B4;
+    /*background-color: #4684B4;*/
 }
 
 /* modificando o estilo do tablesorter */

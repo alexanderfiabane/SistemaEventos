@@ -10,7 +10,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,6 +44,12 @@ public class PagamentoInscricao extends AbstractEntity {
     @Column(name = "DATA_PAGAMENTO", nullable = true)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataPagamento;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "nome", column = @Column(name = "IMAGEM_NOME", nullable = true)),
+        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO", nullable = true))
+    })
+    private ImagemArquivo comprovante;
     @Column(name = "STATUS", nullable = true)
     @Enumerated(EnumType.STRING)
     private PagSeguroStatus status;
@@ -88,6 +96,13 @@ public class PagamentoInscricao extends AbstractEntity {
         this.dataPagamento = dataPagamento;
     }
 
+    public ImagemArquivo getComprovante() {
+        return comprovante;
+    }
+
+    public void setComprovante(ImagemArquivo comprovante) {
+        this.comprovante = comprovante;
+    }
     public PagSeguroStatus getStatus() {
         return status;
     }

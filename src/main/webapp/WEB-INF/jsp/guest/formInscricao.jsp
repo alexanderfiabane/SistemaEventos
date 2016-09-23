@@ -720,16 +720,29 @@
                 var dataNascimento = parseDate(texto);
                 if (!calculaMaiorIdade(dataNascimento)) {
                     $('#responsavel').show();
-                    $('#evangelizadorResponsavel').show();
                 } else {
                     $('#responsavel').hide();
-                    $('#evangelizadorResponsavel').hide();
                 }
             } else {
                 $('#responsavel').hide();
-                $('#evangelizadorResponsavel').hide();
             }
         });
+//        $('#dataNascimento').blur(function() {
+//            var texto = $(this).val();
+//            if (typeof texto !== 'undefined' && texto !== '') {
+//                var dataNascimento = parseDate(texto);
+//                if (!calculaMaiorIdade(dataNascimento)) {
+//                    $('#responsavel').show();
+//                    $('#evangelizadorResponsavel').show();
+//                } else {
+//                    $('#responsavel').hide();
+//                    $('#evangelizadorResponsavel').hide();
+//                }
+//            } else {
+//                $('#responsavel').hide();
+//                $('#evangelizadorResponsavel').hide();
+//            }
+//        });
         if($('#dataNascimento').val() !== 'undefined' && $('#dataNascimento').val() !== '' ){
             $('#dataNascimento').blur();
         }

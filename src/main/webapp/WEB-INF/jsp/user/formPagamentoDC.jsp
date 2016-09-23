@@ -22,7 +22,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="item" items="${produtos}">
+                    <c:forEach var="item" items="${itens}">
                         <tr>
                             <td>${item.description}</td>
                             <td class="align-center">${item.quantity}</td>
@@ -41,13 +41,13 @@
         </div>
     </fieldset>
 </div>
-<form:form commandName="command">
+<form:form commandName="command" enctype="multipart/form-data">
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
             <h4><fmt:message key="label.menu.payment"/></h4>
         </legend>
         <div class="row">
-            <div class="span6">
+            <div class="span3">
                 <see:formField label="label.paymentnumber" isLabelKey="true" isMandatory="true" path="codPagamento"/>
             </div>
             <div class="span3">
@@ -55,6 +55,11 @@
             </div>
             <div class="span3">
                 <see:formField label="label.paymentvalue" isLabelKey="true" isMandatory="true" path="valor"/>
+            </div>
+            <div class="span3">
+                <label class="label control">Comprovante <i id="hintImagem" class="icon-info-sign"></i></label><br>
+                <input type="file" accept="image/*" id="crachaFundo" id="comprovante" name="comprovante" class="textfield">
+                <form:errors path="comprovante" cssClass="pill error"/>
             </div>
         </div>
         <div class="row">
@@ -66,7 +71,7 @@
     <c:url var="clearUrl" value="/user/formPagamento.html">
         <c:param name="idInscricao" value="${command.inscricao.id}"/>
     </c:url>
-    <c:url var="backUrl" value="/user/listaInscricoes.html">
+    <c:url var="backUrl" value="/user/listUsuarioInscricoes.html">
     </c:url>
     <see:formButtonGroup putSubmit="true" clearUrl="${clearUrl}" backUrl="${backUrl}"/>
 </form:form>
@@ -74,6 +79,9 @@
     $(document).ready(function () {
         $("#pagDescricao").textCounter({
             maxChars: 500
+        });
+        $("#hintImagem").qtip({
+            'content': "Os tamanhos suportados são: <strong>jpeg, gif, bmp e png</strong>."
         });
     });
 </script>
