@@ -8,6 +8,7 @@ package br.esp.sysevent.util;
 import br.com.uol.pagseguro.domain.Address;
 import br.com.uol.pagseguro.domain.Item;
 import br.com.uol.pagseguro.domain.Transaction;
+import br.com.uol.pagseguro.domain.TransactionSummary;
 import br.com.uol.pagseguro.enums.PaymentMethodType;
 import br.com.uol.pagseguro.enums.TransactionStatus;
 import br.esp.sysevent.core.model.CamisetaConfraternista;
@@ -55,8 +56,36 @@ public abstract class PagamentoInscricaoUtils {
             }else{
                 descricaoPagamento.appendln(" )");
             }
-            descricaoPagamento.append("<label class='label'>Valor pago</label>: ")
+            BigDecimal valorTotalTaxas = transaction.getGrossAmount().add(transaction.getFeeAmount().add(transaction.getExtraAmount()));
+            descricaoPagamento.append("<label class='label'>Valor pago (incluindo taxas)</label>: ")
+                    .append(" R$ ").append(valorTotalTaxas.toString());
+        }
+        return descricaoPagamento.toString();
+    }
+
+    public static String montaDescricaoPagamento(TransactionSummary transaction, boolean qtip){
+        EnhancedStringBuilder descricaoPagamento = new EnhancedStringBuilder();
+        descricaoPagamento.setLineBreakMode(EnhancedStringBuilder.LineBreakMode.HTML);
+        if (qtip){
+            descricaoPagamento.append("<div class='mini-font-size'>");
+            descricaoPagamento.append("<strong>Situação do pagmento</strong>: ")
+                    .appendln(transaction.getStatus().getDescription());
+            descricaoPagamento.append("<strong>Meio de pagmento</strong>: ")
+                    .appendln(transaction.getPaymentMethod().getType().getType());
+            descricaoPagamento.append("<strong>Valor pago em taxas</strong>: ")
+                    .append(" R$ ").appendln(transaction.getFeeAmount().toString());
+            descricaoPagamento.append("<strong>Valor pago</strong>: ")
                     .append(" R$ ").append(transaction.getGrossAmount().toString());
+            descricaoPagamento.append("</div");
+        }else{
+            descricaoPagamento.append("<label class='label'>Situação do pagmento</label>: ")
+                    .appendln(transaction.getStatus().getDescription());
+            descricaoPagamento.append("<label class='label'>Meio de pagmento</label>: ")
+                    .appendln(transaction.getPaymentMethod().getType().getType());
+
+            BigDecimal valorTotalTaxas = transaction.getGrossAmount().add(transaction.getFeeAmount().add(transaction.getExtraAmount()));
+            descricaoPagamento.append("<label class='label'>Valor pago (incluindo taxas)</label>: ")
+                    .append(" R$ ").append(valorTotalTaxas.toString());
         }
         return descricaoPagamento.toString();
     }
@@ -102,7 +131,7 @@ public abstract class PagamentoInscricaoUtils {
         );
         return address;
     }
-    
+
     public static PagamentoInscricao.PagSeguroStatus getStatusTransacao(TransactionStatus status) {
         switch (status){
             case AVAILABLE: return PagamentoInscricao.PagSeguroStatus.AVAILABLE;
@@ -115,9 +144,9 @@ public abstract class PagamentoInscricaoUtils {
             case REFUNDED: return PagamentoInscricao.PagSeguroStatus.REFUNDED;
             case SELLER_CHARGEBACK: return PagamentoInscricao.PagSeguroStatus.SELLER_CHARGEBACK;
             case WAITING_PAYMENT: return PagamentoInscricao.PagSeguroStatus.WAITING_PAYMENT;
-            default: return PagamentoInscricao.PagSeguroStatus.UNKNOWN_STATUS;                
+            default: return PagamentoInscricao.PagSeguroStatus.UNKNOWN_STATUS;
         }
-               
+
     }
 
 }

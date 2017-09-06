@@ -226,7 +226,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
         sender.setEmail(pessoa.getEndereco().getEmail());
 
         String ddd = CharSequenceUtils.subStringBeforeFirst(")", CharSequenceUtils.subStringAfterFirst("(", pessoa.getEndereco().getTelefone()));
-        String telefone = CharSequenceUtils.deletePattern("-", CharSequenceUtils.subStringAfterFirst(")", pessoa.getEndereco().getTelefone()));
+        String telefone = CharSequenceUtils.deletePattern(CharSequenceUtils.subStringAfterFirst(")", pessoa.getEndereco().getTelefone()), "-");
         Phone phone = new Phone(ddd, telefone);
         sender.setPhone(phone);
 
@@ -242,7 +242,7 @@ public class PagamentoFormController extends AbstractFormController<Long, Pagame
     private String montaUrlPagSeguroNotification(Edicao edicao, HttpServletRequest request) throws MalformedURLException {
         final String uri = request.getContextPath() + "/guest/pagSeguroNotification.html?idEdicao=" + edicao.getId();
         final String proxy = request.getHeader("x-forwarded-host");
-        final String link = proxy == null ? new URL("http", request.getServerName(), request.getServerPort(), uri).toString() : new URL("http", proxy, uri).toString();
+        final String link = proxy == null ? new URL("http", request.getServerName(), uri).toString() : new URL("http", proxy, uri).toString();
         return link;
     }
 

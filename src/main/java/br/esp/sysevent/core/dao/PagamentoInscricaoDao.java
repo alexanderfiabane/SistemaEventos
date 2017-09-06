@@ -17,4 +17,5 @@ public interface PagamentoInscricaoDao extends BaseSistemaDao<Long, PagamentoIns
     public ImagemArquivo findComprovante(Long idPagamentoInscricao);
     public PagamentoInscricao findByInscricao(Inscricao inscricao, PagamentoInscricao.PagSeguroStatus status);
     public PagamentoInscricao findByCodPagamento(String codPagamento);
+    public PagamentoInscricao findByCodReferencia(String codReference);
 }

@@ -27,13 +27,6 @@ public class EdicaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Edicao> impl
 
     @Override
     public Collection<Edicao> findAbertas(Calendar dataAtual){
-//        StringBuilder select = new StringBuilder();
-//        select.append("from Edicao where "
-//                + "periodoInscricao.period.start <= :dataAtual "
-//                + "and periodoInscricao.period.end >= :dataAtual");
-//        Query query = createQuery(select);
-//        query.setDate("dataAtual", dataAtual.getTime());
-//        return query.list();
         final Criteria criteria = createCriteria().
                 setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).
                 add(Restrictions.le("periodoInscricao.start", dataAtual)).

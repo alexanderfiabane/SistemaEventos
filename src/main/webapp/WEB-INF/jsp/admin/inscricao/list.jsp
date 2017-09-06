@@ -58,6 +58,9 @@
         </div>
     </div>
     <div class="form-actions stroked-top mini-padding no-margin-bottom">
+        <c:if test="${edicao.formaCobranca.pagSeguroConta}">
+            <button type="button" class="btn control left" name="pagsegurosync"><i class="icon-refresh"></i> Sincronizar pagamentos com PagSeguroUOL</button>            
+        </c:if>
         <button type="button" class="btn primary table-refresh" name="search"><i class="icon-search"></i> Pesquisar</button>
     </div>
 </div>
@@ -116,8 +119,11 @@
 <c:url var="url_reabre" value="reabre.html">
     <c:param name="idInscricao" value=""/>
 </c:url>
+<c:url var="url_sync" value="pagseguroSync.html">
+    <c:param name="idEdicao" value="${edicao.id}"/>
+</c:url>    
 <script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
-<script type="text/javascript">    
+<script type="text/javascript">
     $(document).ready(function () {
         $('#paginationWrapper').ajaxTable({
             ajaxTable: inscricaoAjaxService,
@@ -135,7 +141,7 @@
                         $descricaoPagamento = "Não há informações";
                     } else {
                         $descricaoPagamento = "<b>Descrição:</b><br>" + item.pagamento.descricaoPagamentoQtip;
-                    }                    
+                    }
                     if ($.ObjectUtils.isUnvalued(item.pagamento)) {
                         $icoDoc.remove();
                     } else {
@@ -295,12 +301,32 @@
             }
         });
     });
-    
-    function isLinkdownloadComprovante(pagamento){
-        if(pagamento === null){
+
+    $("[name=pagsegurosync]").click(function () {
+        var confirmSync = new ConfirmJS({
+            'theme': "success",
+            'content': "Tem certeza que deseja sincronizar os pagamentos com o PagSeguroUOL?",
+            'buttons': {
+                'yes': {
+                    'clickFunction': function (event, modal) {
+                        location.href = '${url_sync}';
+                    }
+                },
+                'cancel': false
+            },
+            'postAppendContent': function (modal) {
+                modal.find('.main-action').lockOnClick();
+            }
+        });
+        confirmSync.open();
+    });
+
+    function isLinkdownloadComprovante(pagamento) {
+        if (pagamento === null) {
             return "Não informado";
-        }else{
-            return "<a href='${url_foto}"+pagamento.id+"'>"+pagamento.codPagamento+"</a>";
+        } else {
+            return "<a href='${url_foto}" + pagamento.id + "'>" + pagamento.codPagamento + "</a>";
         }
-    };
+    }
+    ;
 </script>

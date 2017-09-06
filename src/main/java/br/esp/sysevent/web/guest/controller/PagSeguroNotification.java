@@ -47,6 +47,7 @@ public class PagSeguroNotification {
     public void onPost(@RequestParam(value = "idEdicao", required = false) final String idEdicao, HttpServletRequest request) throws PagSeguroServiceException {
         String notificationCod = (String) request.getParameter("notificationCode");
         String notificationType = (String) request.getParameter("notificationType");
+        PagamentoInscricao pagamentoInscricao = new PagamentoInscricao();
         if (notificationType.equals("transaction")){
             Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
             PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
@@ -60,7 +61,11 @@ public class PagSeguroNotification {
                 PagSeguroConfig.setSandboxEnvironment();
             }
             Transaction transaction = NotificationService.checkTransaction(pagSeguroCredentials, notificationCod);
-            PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByCodPagamento(transaction.getCode());
+            pagamentoInscricao = pagamentoInscricaoDao.findByCodPagamento(transaction.getCode());
+            if(pagamentoInscricao == null){
+                pagamentoInscricao = pagamentoInscricaoDao.findByCodReferencia(transaction.getReference());
+                pagamentoInscricao.setCodPagamento(transaction.getCode());
+            }
             TransactionStatus status = transaction.getStatus();
             if(status.equals(TransactionStatus.PAID)){
                 Inscricao inscricao = pagamentoInscricao.getInscricao();

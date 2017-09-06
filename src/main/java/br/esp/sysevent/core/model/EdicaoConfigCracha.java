@@ -39,7 +39,7 @@ public class EdicaoConfigCracha extends AbstractEntity{
     @Embedded
     @AttributeOverrides({
         @AttributeOverride(name = "nome", column = @Column(name = "IMAGEM_NOME", nullable = true)),
-        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO", nullable = true))
+        @AttributeOverride(name = "data", column = @Column(name = "IMAGEM_CONTEUDO", nullable = true, columnDefinition = "MEDIUMBLOB"))
     })
     private ImagemArquivo imagemFundo;
     @Column(name = "TIPO_CRACHA", nullable = true)

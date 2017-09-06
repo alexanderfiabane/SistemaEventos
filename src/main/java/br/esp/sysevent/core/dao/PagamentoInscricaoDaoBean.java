@@ -6,6 +6,7 @@ package br.esp.sysevent.core.dao;
 import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.PagamentoInscricao;
+import com.javaleks.commons.util.CharSequenceUtils;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -52,6 +53,15 @@ public class PagamentoInscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, 
         final Criteria criteria = createCriteria()
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.eq("codPagamento", codPagamento));
+        return findUniqueByCriteria(criteria);
+    }
+
+    @Override
+    public PagamentoInscricao findByCodReferencia(String codReference){
+        String idInscricao = CharSequenceUtils.subStringAfterFirst("SE", codReference);
+        final Criteria criteria = createCriteria()
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("inscricao.id", Long.parseLong(idInscricao)));
         return findUniqueByCriteria(criteria);
     }
 }

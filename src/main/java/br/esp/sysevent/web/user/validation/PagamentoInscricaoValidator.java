@@ -30,5 +30,8 @@ public class PagamentoInscricaoValidator extends AbstractValidator<PagamentoInsc
         if(CharSequenceUtils.isBlankOrNull(target.getDescricaoPagamento())) {
             errors.rejectValue("descricaoPagamento", "errors.required");
         }
+        if (target.getComprovante() == null || target.getComprovante().getData() == null){
+            errors.rejectValue("comprovante", "errors.required");
+        }
     }
 }

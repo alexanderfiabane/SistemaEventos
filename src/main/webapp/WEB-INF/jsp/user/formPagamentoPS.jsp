@@ -78,7 +78,11 @@
             }
         });
         if (!isOpened) {
-            location.href = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + code;
+            if(${command.inscricao.edicaoEvento.formaCobranca.pagSeguro.producao}){
+                location.href = 'https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' + code;                
+            }else{
+                location.href = 'https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=' + code;                                
+            }
         }
     }
     $(document).ready(function () {

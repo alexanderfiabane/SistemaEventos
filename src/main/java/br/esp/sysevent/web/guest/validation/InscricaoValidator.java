@@ -22,6 +22,7 @@ import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.EntityUtils;
 import com.javaleks.commons.util.PeriodUtils;
+import com.javaleks.commons.validators.CPFValidator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -181,10 +182,12 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         } else {
             final Inscricao inscricaoAtual = inscricaoDao.findById(inscricao.getId());
             final Oficina oficinaAtual = inscricaoAtual.getConfraternista().getOficina();
-            if (!oficina.getId().equals(oficinaAtual.getId())) {
-                //trocou de oficina
-                if (!oficina.temVaga()) {
-                    errors.rejectValue("inscricao.confraternista.oficina", "errors.workshop.full");
+            if(oficinaAtual != null){
+                if (!oficina.getId().equals(oficinaAtual.getId())) {
+                    //trocou de oficina
+                    if (!oficina.temVaga()) {
+                        errors.rejectValue("inscricao.confraternista.oficina", "errors.workshop.full");
+                    }
                 }
             }
         }
@@ -300,33 +303,8 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
         if (!CPF_PATTERN.matcher(cpf).matches()) {
             return false;
         }
-        final String cpfNoMask = cpf.replace(".", "").replace("-", "");
-        final String numero = cpfNoMask.substring(0, 9);
-        int[] digitos = new int[11];
-        int peso, soma, resto;
-
-        //calculo do 1º digito
-        soma = 0;
-        peso = 10;
-        for (int i = 0; i < 9; i++) {
-            digitos[i] = Character.digit(numero.charAt(i), 10);
-            soma += digitos[i] * peso--;
-        }
-        resto = soma % 11;
-        resto = resto < 2 ? 0 : 11 - resto;
-        digitos[9] = resto;
-
-        //calculo do 2º digito
-        soma = 0;
-        peso = 11;
-        for (int i = 0; i < 10; i++) {
-            soma += digitos[i] * peso--;
-        }
-        resto = soma % 11;
-        resto = resto < 2 ? 0 : 11 - resto;
-        digitos[10] = resto;
-
-        return cpfNoMask.substring(9).equals(String.valueOf(digitos[9]).concat(String.valueOf(digitos[10])));
+        CPFValidator validator = new CPFValidator();
+        return validator.validate(cpf);
     }
 
     protected void validaIdade(Inscricao inscricao, Errors errors) {

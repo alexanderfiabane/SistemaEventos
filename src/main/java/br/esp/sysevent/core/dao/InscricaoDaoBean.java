@@ -204,6 +204,7 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .addOrder(Order.asc("estado.nome"))
@@ -220,7 +221,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.pessoa", "pessoa")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .addOrder(Order.asc("confraternista.tipo"))
@@ -237,7 +240,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.dormitorio", "dormitorio")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .addOrder(Order.asc("dormitorio.sexo"))
@@ -255,7 +260,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.grupoIdade", "grupoIdade")
                 .add(Restrictions.eq("grupoIdade.id", idGrupoIdade))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .add(Restrictions.ne("confraternista.tipo", Confraternista.Tipo.FACILITADOR))
@@ -272,7 +279,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .add(Restrictions.eq("edicaoEvento.id", idEdicao))
                 .add(Restrictions.isNull("confraternista.dormitorio.id"))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .add(Restrictions.eq("pessoa.sexo", sexo))
@@ -288,7 +297,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .createAlias("confraternista.pessoa", "pessoa")
                 .add(Restrictions.eq("edicaoEvento", edicao))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ))
                 .addOrder(Order.asc("pessoa.sexo"))
@@ -312,7 +323,11 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
 
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
-                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{
+                    Inscricao.Status.AGUARDANDO_AVALIACAO,
+                    Inscricao.Status.AGUARDANDO_PAGAMENTO,
+                    Inscricao.Status.PAGA,
+                    Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
@@ -342,8 +357,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .append("and i.status in (:status) ")
                 .append("order by oficina.nome, pessoa.nome ");
         Collection<Inscricao.Status> status = new ArrayList<>();
-        status.add(Status.PAGA);
+        status.add(Status.AGUARDANDO_AVALIACAO);
         status.add(Status.AGUARDANDO_PAGAMENTO);
+        status.add(Status.PAGA);
         status.add(Status.EFETIVADA);
         Collection<Confraternista.Tipo> tipos = new ArrayList<>();
         tipos.add(Tipo.CONFRATERNISTA);
@@ -376,7 +392,11 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
         return getCurrentSession().createQuery(builder.toString())
                 .setEntity("edicao", edicao)
                 .setParameterList("tipo", new Confraternista.Tipo[]{Confraternista.Tipo.CONFRATERNISTA, Confraternista.Tipo.COORDENADOR, Confraternista.Tipo.EVANGELIZADOR})
-                .setParameterList("status", new Inscricao.Status[]{Inscricao.Status.AGUARDANDO_PAGAMENTO, Inscricao.Status.EFETIVADA})
+                .setParameterList("status", new Inscricao.Status[]{
+                    Inscricao.Status.AGUARDANDO_AVALIACAO,
+                    Inscricao.Status.AGUARDANDO_PAGAMENTO,
+                    Inscricao.Status.PAGA,
+                    Inscricao.Status.EFETIVADA})
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
@@ -405,7 +425,9 @@ public class InscricaoDaoBean extends AbstractBaseSistemaDaoBean<Long, Inscricao
                 .add(Restrictions.eq("pessoa.sexo", genero))
                 .add(Restrictions.eq("edicaoEvento.id", idEdicao))
                 .add(Restrictions.or(
+                                Restrictions.eq("status", Inscricao.Status.AGUARDANDO_AVALIACAO),
                                 Restrictions.eq("status", Inscricao.Status.AGUARDANDO_PAGAMENTO),
+                                Restrictions.eq("status", Inscricao.Status.PAGA),
                                 Restrictions.eq("status", Inscricao.Status.EFETIVADA)
                         ));
         return findByCriteria(criteria);

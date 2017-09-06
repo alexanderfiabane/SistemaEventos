@@ -1,5 +1,12 @@
 package br.esp.sysevent.web.admin.controller;
 
+import br.com.uol.pagseguro.domain.AccountCredentials;
+import br.com.uol.pagseguro.domain.TransactionSearchResult;
+import br.com.uol.pagseguro.domain.TransactionSummary;
+import br.com.uol.pagseguro.enums.TransactionStatus;
+import br.com.uol.pagseguro.exception.PagSeguroServiceException;
+import br.com.uol.pagseguro.properties.PagSeguroConfig;
+import br.com.uol.pagseguro.service.TransactionSearchService;
 import br.esp.sysevent.core.dao.ConfraternistaDao;
 import br.esp.sysevent.core.dao.EdicaoDao;
 import br.esp.sysevent.core.dao.EventoDao;
@@ -17,14 +24,21 @@ import br.esp.sysevent.core.model.GrupoIdade;
 import br.esp.sysevent.core.model.ImagemArquivo;
 import br.esp.sysevent.core.model.Inscricao;
 import br.esp.sysevent.core.model.Oficina;
+import br.esp.sysevent.core.model.PagSeguroConta;
+import br.esp.sysevent.core.model.PagamentoInscricao;
 import br.esp.sysevent.core.model.Usuario;
+import br.esp.sysevent.util.PagamentoInscricaoUtils;
 import br.esp.sysevent.web.controller.I18nController;
 import br.esp.sysevent.web.controller.util.ControllerUtils;
 import br.esp.sysevent.web.guest.command.InscricaoCommand;
 import com.javaleks.commons.io.HttpUtils;
+import com.javaleks.commons.util.CalendarUtils;
 import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.NumberUtils;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +55,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author Giuliano
  */
 @Controller
-public class AdminInscricoesController extends I18nController{
+public class AdminInscricoesController extends I18nController {
 
     @Autowired
     private EdicaoDao edicaoDao;
@@ -111,15 +125,15 @@ public class AdminInscricoesController extends I18nController{
     @RequestMapping(value = "/admin/inscricao/aprova.html", method = RequestMethod.GET)
     public String aprova(@RequestParam(value = "idInscricao", required = false) final String idInscricao, final ModelMap model, final Locale locale, RedirectAttributes attributes) {
         final InscricaoCommand inscricaoCmd = getInscricao(idInscricao);
-        if (inscricaoCmd.getInscricao().isIsento() && inscricaoCmd.getInscricao().getConfraternista().getCamisetas().isEmpty()){
+        if (inscricaoCmd.getInscricao().isIsento() && inscricaoCmd.getInscricao().getConfraternista().getCamisetas().isEmpty()) {
             inscricaoCmd.getInscricao().setStatus(Inscricao.Status.PAGA);
-        }else{
+        } else {
             inscricaoCmd.getInscricao().setStatus(Inscricao.Status.AGUARDANDO_PAGAMENTO);
         }
         inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
-        if(inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.DEPOSITO_CONTA)){
+        if (inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.DEPOSITO_CONTA)) {
             ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoDC.html");
-        }else if (inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.PAGSEGURO)){
+        } else if (inscricaoCmd.getInscricao().getEdicaoEvento().getFormaCobranca().getTipoCobranca().equals(TipoCobranca.PAGSEGURO)) {
             ControllerUtils.sendMail(inscricaoCmd.getInscricao(), "Inscrição Aceita", "pagamentoInscricaoPS.html");
         }
         attributes.addFlashAttribute("message", getMessage("subscription.success.aproved", locale));
@@ -157,6 +171,79 @@ public class AdminInscricoesController extends I18nController{
         return "redirect:/admin/inscricao/list.html?idEdicao=" + inscricaoCmd.getInscricao().getEdicaoEvento().getId();
     }
 
+    @RequestMapping(value = "/admin/inscricao/pagseguroSync.html", method = RequestMethod.GET)
+    public String syncPagamentos(@RequestParam(value = "idEdicao", required = false) final String idEdicao, final ModelMap model, final Locale locale, RedirectAttributes attributes) throws PagSeguroServiceException {
+        Edicao edicao = edicaoDao.findById(NumberUtils.parseLong(idEdicao));
+        PagSeguroConta pagSeguroAccount = edicao.getFormaCobranca().getPagSeguro();
+        AccountCredentials pagSeguroCredentials = new AccountCredentials(
+                pagSeguroAccount.getEmailPagSeguroPlain(),
+                pagSeguroAccount.getTokenSegurancaProducao(),
+                pagSeguroAccount.getTokenSegurancaSandBox());
+        if (pagSeguroAccount.isProducao()) {
+            PagSeguroConfig.setProductionEnvironment();
+        } else {
+            PagSeguroConfig.setSandboxEnvironment();
+        }
+        Calendar mesAtras = Calendar.getInstance();
+        mesAtras.add(Calendar.MONTH, -1);
+//        TransactionSearchResult transactionSearchResult = TransactionSearchService.searchByDate(pagSeguroCredentials,
+//                edicao.getPeriodoInscricao().getStart().getTime(), Calendar.getInstance().getTime(), Integer.valueOf(1), Integer.valueOf(1000));
+        TransactionSearchResult transactionSearchResult = TransactionSearchService.searchByDate(pagSeguroCredentials,
+                mesAtras.getTime(), Calendar.getInstance().getTime(), Integer.valueOf(1), Integer.valueOf(1000));
+
+        if (transactionSearchResult != null) {
+            List<TransactionSummary> listTransactionSummaries = transactionSearchResult.getTransactionSummaries();
+            Iterator<TransactionSummary> transactionSummariesIterator = listTransactionSummaries.iterator();
+
+            while (transactionSummariesIterator.hasNext()) {
+                TransactionSummary currentTransactionSummary = (TransactionSummary) transactionSummariesIterator.next();
+                PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByCodReferencia(currentTransactionSummary.getReference());
+                TransactionStatus statusTransacao = currentTransactionSummary.getStatus();
+
+                if (pagamentoInscricao != null) {
+                    if(!pagamentoInscricao.getInscricao().getStatus().equals(Inscricao.Status.EFETIVADA)){
+                        //Atualiza as informações
+                        Inscricao inscricao = pagamentoInscricao.getInscricao();
+                        pagamentoInscricao.setDataPagamento(CalendarUtils.castToCalendar(currentTransactionSummary.getDate()));
+                        pagamentoInscricao.setCodPagamento(currentTransactionSummary.getCode());
+                        pagamentoInscricao.setValor(currentTransactionSummary.getGrossAmount().add(currentTransactionSummary.getFeeAmount().add(currentTransactionSummary.getExtraAmount())));
+                        pagamentoInscricao.setDescricaoPagamento(PagamentoInscricaoUtils.montaDescricaoPagamento(currentTransactionSummary, false));
+                        pagamentoInscricao.setDescricaoPagamentoQtip(PagamentoInscricaoUtils.montaDescricaoPagamento(currentTransactionSummary, true));
+                        pagamentoInscricaoDao.saveOrUpdate(pagamentoInscricao);
+                        if (statusTransacao.equals(TransactionStatus.PAID)) {
+                            inscricao.setStatus(Inscricao.Status.PAGA);
+                            inscricao.setPagamento(pagamentoInscricao);
+                            inscricaoDao.saveOrUpdate(inscricao);
+                        }
+                    }
+                } else {
+                    //cria pagamentoInscricao e salva
+                    InscricaoCommand inscricaoCmd = getInscricao(CharSequenceUtils.subStringAfterFirst("SE", currentTransactionSummary.getReference()));
+                    if(!inscricaoCmd.getInscricao().getStatus().equals(Inscricao.Status.EFETIVADA)){
+                        pagamentoInscricao = new PagamentoInscricao();
+                        pagamentoInscricao.setInscricao(inscricaoCmd.getInscricao());
+                        pagamentoInscricao.setDataPagamento(CalendarUtils.castToCalendar(currentTransactionSummary.getDate()));
+                        pagamentoInscricao.setCodPagamento(currentTransactionSummary.getCode());
+                        pagamentoInscricao.setValor(currentTransactionSummary.getGrossAmount().add(currentTransactionSummary.getFeeAmount().add(currentTransactionSummary.getExtraAmount())));
+                        pagamentoInscricao.setDescricaoPagamento(PagamentoInscricaoUtils.montaDescricaoPagamento(currentTransactionSummary, false));
+                        pagamentoInscricao.setDescricaoPagamentoQtip(PagamentoInscricaoUtils.montaDescricaoPagamento(currentTransactionSummary, true));
+                        pagamentoInscricaoDao.saveOrUpdate(pagamentoInscricao);
+                        if(statusTransacao.equals(TransactionStatus.PAID)){
+                            inscricaoCmd.getInscricao().setStatus(Inscricao.Status.PAGA);
+                            inscricaoCmd.getInscricao().setPagamento(pagamentoInscricao);
+                            inscricaoDao.saveOrUpdate(inscricaoCmd.getInscricao());
+                        }
+                    }
+                }
+            }
+            attributes.addFlashAttribute("message", "Pagamentos sincronizados com sucesso");
+        } else {
+            attributes.addFlashAttribute("message", "Não foram encontrados pagamentos até a data de hoje");
+        }
+
+        return "redirect:/admin/inscricao/list.html?idEdicao=" + idEdicao;
+    }
+
     private InscricaoCommand getInscricao(final String idInscricao, String... initProps) throws IllegalArgumentException {
         InscricaoCommand inscricaoCmd = new InscricaoCommand();
         if (!CharSequenceUtils.isNumber(idInscricao)) {
@@ -189,7 +276,7 @@ public class AdminInscricoesController extends I18nController{
         final Oficina oficina = confraternista.getOficina();
         final GrupoIdade grupoIdade = confraternista.getGrupoIdade();
         //verificar tipo da inscricao
-        if(inscricao.isOcupaVagaGrupoOficina() && !tipoEvento.equals(Tipo.CONGRESSO)){
+        if (inscricao.isOcupaVagaGrupoOficina() && !tipoEvento.equals(Tipo.CONGRESSO)) {
             if (tipoEvento.equals(Tipo.OFICINA) && oficina != null) {
                 oficina.setVagasOcupadas(oficina.getVagasOcupadas() - 1);
                 oficinaDao.saveOrUpdate(oficina);

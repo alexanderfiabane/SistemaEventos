@@ -702,8 +702,10 @@
             loadCidades($(this), $('#cidadeCasa'));
         });
         $('[name=inscricao\\.confraternista\\.tipo]').change(function() {
+            var data = $('#dataNascimento').val();
+            var dataNascimento = parseDate(data);
             var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
-            if ((tipoEvento == 'FAIXA_ETARIA') && ($("input:radio[value=CONFRATERNISTA]").is(':checked'))) {
+            if ((tipoEvento == 'FAIXA_ETARIA') || (($("input:radio[value=CONFRATERNISTA]").is(':checked')) && !calculaMaiorIdade(dataNascimento))) {
                 $('#evangelizadorResponsavel').show();
             } else {
                 $('#evangelizadorResponsavel').hide();

@@ -55,9 +55,13 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
             throw new IllegalStateException("Inscrição inválida");
         }
         Inscricao inscricao = inscricaoDao.findById(NumberUtils.parseLong(idInscricao));
-        PagamentoInscricao pagamentoInscricao = new PagamentoInscricao();
-        pagamentoInscricao.setInscricao(inscricao);
+        PagamentoInscricao pagamentoInscricao = pagamentoInscricaoDao.findByInscricao(inscricao);
+        if(pagamentoInscricao == null){
+            pagamentoInscricao = new PagamentoInscricao();
+            pagamentoInscricao.setInscricao(inscricao);
+        }
         pagamentoInscricao.setCodPagamento(codTransactionPagSeguro);
+
         PagSeguroConta pagSeguroAccount = inscricao.getEdicaoEvento().getFormaCobranca().getPagSeguro();
         AccountCredentials pagSeguroCredentials = new AccountCredentials(
                 pagSeguroAccount.getEmailPagSeguroPlain(),
@@ -69,11 +73,13 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
             PagSeguroConfig.setSandboxEnvironment();
         }
         Transaction transaction = TransactionSearchService.searchByCode(pagSeguroCredentials, codTransactionPagSeguro);
+
         pagamentoInscricao.setDataPagamento(CalendarUtils.castToCalendar(transaction.getDate()));
         pagamentoInscricao.setDescricaoPagamento(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, false));
         pagamentoInscricao.setDescricaoPagamentoQtip(PagamentoInscricaoUtils.montaDescricaoPagamento(transaction, true));
         pagamentoInscricao.setValor(transaction.getGrossAmount());
         pagamentoInscricaoDao.saveOrUpdate(pagamentoInscricao);
+
         inscricao.setPagamento(pagamentoInscricao);
         if (PagamentoInscricaoUtils.transacaoStatusPaga(transaction)) {
             inscricao.setStatus(Inscricao.Status.PAGA);
@@ -93,7 +99,7 @@ public class pagamentoSuccessPagSeguroController extends PagamentoFormController
                 produtos.add(PagamentoInscricaoUtils.montaCamisetaItemPagSeguro(camiseta, command.getInscricao().getEdicaoEvento().getValorCamiseta()));
             }
         }
-        model.addAttribute("produtos", produtos);
+        model.addAttribute("itens", produtos);
         Locale locale = new Locale("br");
         model.addAttribute("message", getMessage("payment.success.save", locale));
         ControllerUtils.sendMail(command.getInscricao(), getMessage("mail.subscription.payment.receive", locale), "recebimentoPagamentoPS.html");
