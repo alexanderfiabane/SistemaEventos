@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CrachasA41495Report" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="286" columnSpacing="1" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" uuid="fb00ecac-347e-460e-bae9-0a0d8a7bd2bd">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="599"/>
+	<property name="ireport.zoom" value="1.8627639691774662"/>
+	<property name="ireport.x" value="29"/>
+	<property name="ireport.y" value="216"/>
 	<parameter name="fundoCracha" class="byte[]"/>
 	<field name="edicaoEvento.numero" class="java.lang.Integer"/>
 	<field name="edicaoEvento.evento.sigla" class="java.lang.String"/>
@@ -30,16 +30,16 @@
 				</graphicElement>
 			</rectangle>
 			<image scaleImage="FillFrame" isUsingCache="true">
-				<reportElement uuid="4179d45f-1a24-4aed-b549-94e9c46d0e3e" x="1" y="1" width="280" height="396"/>
+				<reportElement uuid="4179d45f-1a24-4aed-b549-94e9c46d0e3e" x="1" y="1" width="285" height="396"/>
 				<imageExpression><![CDATA[new ByteArrayInputStream($P{fundoCracha})]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="17" y="288" width="247" height="34"/>
+				<reportElement uuid="11725e49-64e9-4a82-91b1-14a0e01a1a5c" mode="Transparent" x="17" y="285" width="247" height="34"/>
 				<box leftPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{confraternista.oficina.nome} == null ? "" : $F{confraternista.oficina.nome}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{confraternista.grupoIdade.nome} == null ? "" : $F{confraternista.grupoIdade.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="65a7c206-1e78-4a9c-89a1-1028c40c13e7" mode="Transparent" x="17" y="182" width="247" height="22"/>
@@ -50,7 +50,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.pessoa.nome}.toUpperCase()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74" mode="Transparent" x="17" y="327" width="247" height="22"/>
+				<reportElement uuid="231889e3-7173-4bfb-bda6-d51acf7dfd74" mode="Transparent" x="17" y="320" width="247" height="22"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12"/>
@@ -58,7 +58,7 @@
 				<textFieldExpression><![CDATA[$F{confraternista.tipo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###000">
-				<reportElement uuid="87575336-96ef-4924-a10b-aa0540fbf426" mode="Transparent" x="17" y="349" width="247" height="22"/>
+				<reportElement uuid="87575336-96ef-4924-a10b-aa0540fbf426" mode="Transparent" x="17" y="341" width="247" height="22"/>
 				<box leftPadding="5" rightPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="false"/>
@@ -86,6 +86,12 @@
 			</line>
 			<line>
 				<reportElement uuid="db04fdb4-3e7d-47fc-b0d2-766e825072c2" x="0" y="0" width="1" height="10"/>
+			</line>
+			<line>
+				<reportElement uuid="fd6d69bd-fd58-4ec0-87c7-3e41883dfdd9" x="276" y="0" width="10" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="24081032-46bd-4458-b812-c627173fa8c2" x="285" y="0" width="1" height="10"/>
 			</line>
 		</band>
 	</detail>
