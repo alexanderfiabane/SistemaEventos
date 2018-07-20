@@ -50,7 +50,10 @@
         </tbody>
     </table>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="formEdicao.html?idEvento=${command.edicaoEvento.evento.id}"/>
+<c:url value="formEdicao.html" var="backUrl">
+    <c:param name="idEvento" value="${command.edicaoEvento.evento.id}"/>
+</c:url>  
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script>
     $(document).ready(function(){
         $("#vagas").mask('9999');

@@ -18,7 +18,9 @@
             <see:formField label="CPF" type="text" id="cpf" path="cpf"/>
         </div>
     </div>
-    <see:formButtonGroup putSubmit="true" backUrl="../index.html" clearUrl="esqueciSenha.html"/>
+    <c:url var="backUrl" value="../index.html"></c:url>
+    <c:url var="clearUrl" value="esqueciSenha.html"></c:url>    
+    <see:formButtonGroup putSubmit="true" backUrl="${backUrl}" clearUrl="${clearUrl}"/>
 </form:form>
 <script>
     $(document).ready(function(){

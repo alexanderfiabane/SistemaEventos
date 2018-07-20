@@ -62,7 +62,8 @@
         </div>
     </c:otherwise>
 </c:choose>
-<see:formButtonGroup putSubmit="false" backUrl="menu.html"/>
+<c:url value="/admin/menu.html" var="backUrl"></c:url>        
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script type="text/javascript">
     onload = function () {
         document.getElementById("nome").focus();

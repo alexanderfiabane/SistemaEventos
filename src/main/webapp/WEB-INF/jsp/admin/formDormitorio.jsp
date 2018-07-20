@@ -64,7 +64,10 @@
         </tbody>
     </table>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="menuDormitorio.html?idEdicao=${command.edicaoEvento.id}">
+<c:url value="/admin/inscricao/menuDormitorio.html" var="backUrl">
+    <c:param name="idEdicao" value="${command.edicaoEvento.id}"/>
+</c:url>                
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}">
     <c:url var="aloca_url" value="alocaDormitorio.html"><c:param name="idEdicao" value="${command.edicaoEvento.id}"/></c:url>
     <button type="button" class="btn primary" onclick="location.href = '${aloca_url}';">Alocar Confraternistas nos Dormitórios</button>
 </see:formButtonGroup>

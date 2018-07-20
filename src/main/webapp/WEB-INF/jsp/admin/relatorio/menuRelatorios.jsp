@@ -25,5 +25,8 @@
         <mocca:menuItem iconClass="icon-file-text-alt" label="Crachás (Folha A4)" url="/admin/relatorio/reportCrachaA4.html?idEdicao=${edicao.id}"/>        
     </c:if>
 </mocca:menu>
-<see:formButtonGroup putSubmit="false" backUrl="listEdicao.html?idEvento=${edicao.evento.id}"/>
+<c:url value="listEdicao.html" var="backUrl">
+    <c:param name="idEvento" value="${edicao.evento.id}"/>
+</c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 

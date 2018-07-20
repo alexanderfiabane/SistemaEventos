@@ -14,6 +14,7 @@ import com.javaleks.commons.util.CharSequenceUtils;
 import com.javaleks.commons.util.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -21,8 +22,17 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.core.io.ClassPathResource;
@@ -129,21 +139,23 @@ public abstract class ControllerUtils {
         final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricao", (Object) inscricao));
 
-        final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
-//                + " - " + inscricao.getEdicaoEvento().getEvento().getSigla() 
-                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");
-        email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
-        email.setSubject(subject);
-        email.setRawContent(content);
-
-        final EmailSender emailSender = new EmailSender();
-        emailSender.setJavamailProperties(mailProperties);
-        try {
-            emailSender.send(email, null);
-        } catch (Exception ex) {
-            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
-        }
+        sendMail(mailProperties, new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()}, subject, content);
+        
+//        final SimpleEmail email = new SimpleEmail();
+//        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
+////                + " - " + inscricao.getEdicaoEvento().getEvento().getSigla() 
+//                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");
+//        email.setTo(new String[]{inscricao.getConfraternista().getPessoa().getEndereco().getEmail()});
+//        email.setSubject(subject);
+//        email.setRawContent(content);
+//
+//        final EmailSender emailSender = new EmailSender();
+//        emailSender.setJavamailProperties(mailProperties);
+//        try {
+//            emailSender.send(email, null);
+//        } catch (Exception ex) {
+//            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+//        }
     }
 
     public static void sendMailInscricaoUsuario(InscricaoCommand inscricaoCmd, String subject, String modelName) {
@@ -158,21 +170,23 @@ public abstract class ControllerUtils {
         final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("inscricaoCmd", (Object) inscricaoCmd));
 
-        final SimpleEmail email = new SimpleEmail();
-         email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
-//                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
-                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");        
-        email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
-        email.setSubject(subject);
-        email.setRawContent(content);
-
-        final EmailSender emailSender = new EmailSender();
-        emailSender.setJavamailProperties(mailProperties);
-        try {
-            emailSender.send(email, null);
-        } catch (Exception ex) {
-            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
-        }
+        sendMail(mailProperties, new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()}, subject, content);
+        
+//        final SimpleEmail email = new SimpleEmail();
+//         email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
+////                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
+//                + "<" + mailProperties.getProperty("mail.smtp.from") + ">");        
+//        email.setTo(new String[]{inscricaoCmd.getInscricao().getConfraternista().getPessoa().getEndereco().getEmail()});
+//        email.setSubject(subject);
+//        email.setRawContent(content);
+//
+//        final EmailSender emailSender = new EmailSender();
+//        emailSender.setJavamailProperties(mailProperties);
+//        try {
+//            emailSender.send(email, null);
+//        } catch (Exception ex) {
+//            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+//        }
     }
 
     public static void sendMailUsuario(Usuario usuario, String subject, String modelName) {
@@ -187,18 +201,76 @@ public abstract class ControllerUtils {
         final InputStream model = ControllerUtils.class.getClassLoader().getResourceAsStream("br/esp/sysevent/web/mail/" + modelName);
         final String content = getVelocityProcessor().process(model, Collections.singletonMap("usuario", (Object) usuario));
 
-        final SimpleEmail email = new SimpleEmail();
-        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + mailProperties.getProperty("mail.smtp.from") +">");
-        email.setTo(new String[]{usuario.getPessoa().getEndereco().getEmail()});
-        email.setSubject(subject);
-        email.setRawContent(content);
+        sendMail(mailProperties, new String[]{usuario.getPessoa().getEndereco().getEmail()}, subject, content);
+        
+//        final SimpleEmail email = new SimpleEmail();
+//        email.setFrom(mailProperties.getProperty("mail.smtp.from.name") + "<" + mailProperties.getProperty("mail.smtp.from") +">");
+//        email.setTo(new String[]{usuario.getPessoa().getEndereco().getEmail()});
+//        email.setSubject(subject);
+//        email.setRawContent(content);
+//
+//        final EmailSender emailSender = new EmailSender();
+//        emailSender.setJavamailProperties(mailProperties);
+//        try {
+//            emailSender.send(email, null);
+//        } catch (Exception ex) {
+//            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+//        }
+    }
+    
+    private static void sendMail(final Properties mailProperties, String[] sendTo, String subject, String content){
+        String tsl = mailProperties.getProperty("mail.smtp.starttls.enable");
+        Properties props = new Properties();        
+        props.put("mail.smtp.starttls.enable", tsl);
+        props.put("mail.smtp.host", mailProperties.getProperty("mail.smtp.host"));
+        props.put("mail.smtp.port", mailProperties.getProperty("mail.smtp.port"));
+        props.put("mail.smtp.auth", mailProperties.getProperty("mail.smtp.auth"));
+        if(!CharSequenceUtils.isBlankOrNull(tsl)){
+            
+            Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(mailProperties.getProperty("mail.auth.username"), mailProperties.getProperty("mail.auth.password"));
+                }
+            });    
+            
+            try {
+                String sysName = mailProperties.getProperty("mail.smtp.from.name");
+                Address adFrom = null;
+                try {
+                    adFrom = new InternetAddress(mailProperties.getProperty("mail.smtp.from"), sysName);
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(ControllerUtils.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Message message = new MimeMessage(session);                
+                message.setFrom(adFrom);
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(sendTo[0]));
+                message.setSubject(subject);
+                //message.setText(content);
+                message.setContent(content, "text/html; charset=utf-8");
+                Logger.getLogger(FormInscricaoController.class.getName()).log(Level.INFO, "Enviando email por TLS...");
+                Transport.send(message);                
+                Logger.getLogger(FormInscricaoController.class.getName()).log(Level.INFO, "Email enviado por TLS. =D");
+            } catch (MessagingException e) {
+                Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", e);                
+                Logger.getLogger(e.getMessage());                
+            }
+        }else{
+            final SimpleEmail email = new SimpleEmail();
+             email.setFrom(mailProperties.getProperty("mail.smtp.from.name") 
+    //                + " - " + inscricaoCmd.getInscricao().getEdicaoEvento().getEvento().getSigla() 
+                    + "<" + mailProperties.getProperty("mail.smtp.from") + ">");        
+            email.setTo(sendTo);
+            email.setSubject(subject);
+            email.setRawContent(content);
 
-        final EmailSender emailSender = new EmailSender();
-        emailSender.setJavamailProperties(mailProperties);
-        try {
-            emailSender.send(email, null);
-        } catch (Exception ex) {
-            Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+            final EmailSender emailSender = new EmailSender();
+            emailSender.setJavamailProperties(mailProperties);
+            try {
+                emailSender.send(email, null);
+            } catch (Exception ex) {
+                Logger.getLogger(FormInscricaoController.class.getName()).log(Level.SEVERE, "Erro enviando email", ex);
+            }
         }
     }
 }

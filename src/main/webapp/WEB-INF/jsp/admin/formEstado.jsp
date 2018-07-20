@@ -34,7 +34,8 @@
         <display:column property="sigla" style="witdh: 2em;"/>
     </display:table>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="menuCadastrosBasicos.html"/>
+<c:url value="/admin/menuCadastrosBasicos.html" var="backUrl"></c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 
 <script type="text/javascript">
     onload = function() {

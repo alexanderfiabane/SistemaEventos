@@ -10,4 +10,7 @@
     <mocca:menuItem iconClass="icon-exchange" label="Trocar Confraternista de Dormitório" isLabelKey="false"
                     url="/admin/trocaDormitorio.html?idEdicao=${edicao.id}"/>
 </mocca:menu>
-
+<c:url value="/admin/formEdicao.html" var="backUrl">
+    <c:param name="idEvento" value="${edicao.evento.id}"/>
+</c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>

@@ -43,7 +43,8 @@
         </tbody>
     </table>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="menuCamisetas.html"/>
+<c:url value="menuCamisetas.html" var="backUrl"></c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#descricao").focus();

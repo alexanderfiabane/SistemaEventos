@@ -52,7 +52,8 @@
         </table>
     </div>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="formEstado.html"/>
+<c:url value="/admin/formEstado.html" var="backUrl"></c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 
 <script type="text/javascript">
     onload = function() {

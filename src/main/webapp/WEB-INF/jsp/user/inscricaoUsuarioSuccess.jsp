@@ -241,7 +241,8 @@
         </div>
     </fieldset>
 </c:if>
-<see:formButtonGroup putSubmit="false" backUrl="listUsuarioInscricoes.html"/>
+<c:url var="backUrl" value="listUsuarioInscricoes.html"></c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script>
     function calculaMaiorIdade(nasc) {
         var hoje = new Date(), idade;

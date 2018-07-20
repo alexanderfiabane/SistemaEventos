@@ -23,5 +23,7 @@
             <see:formField type="password" maxlength="10" label="Confirme a nova senha" path="confirmaNovaSenha" inputClass="textfield"/>
         </div>
     </div>
-    <see:formButtonGroup putSubmit="true" backUrl="listUsuarioInscricoes.html" clearUrl="alterarSenha.html"/>
+    <c:url var="backUrl" value="listUsuarioInscricoes.html"></c:url>
+    <c:url var="clearUrl" value="alterarSenha.html"></c:url>    
+    <see:formButtonGroup putSubmit="true" backUrl="${backUrl}" clearUrl="${clearUrl}"/>
 </form:form>

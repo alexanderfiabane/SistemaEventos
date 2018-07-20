@@ -8,6 +8,7 @@
 
 <form:form commandName="command">
     <form:errors path="inscricao.id" cssClass="pill error"/>
+    <form:errors path="inscricao.edicaoEvento" cssClass="pill error"/>
     <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
         <legend class="label">
             <h4><fmt:message key="label.eventdetails"/></h4>
@@ -56,7 +57,8 @@
             </div>
         </div>
     </fieldset>
-    <c:if test="${(not empty command.inscricao.edicaoEvento.gruposIdade) && (command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
+    <%--<c:if test="${(not empty command.inscricao.edicaoEvento.gruposIdade) && (command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA')}">--%>
+    <c:if test="${(command.inscricao.edicaoEvento.tipo == 'FAIXA_ETARIA')}">
         <div id="grupoFacilitador" style="display: none;">
             <fieldset class="control bordered rounded shadowed small-margin-bottom large-padding-bottom">
                 <legend class="label">
@@ -285,14 +287,16 @@
             </div>
         </div>
         <!--TODO: Aqui fazer verificação por tipo *avaliar para os outros tipos de evento-->
-        <div id="evangelizadorResponsavel" class="row" style="display:none;">
-            <div class="span6">
-                <see:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.nome" maxlength="100" inputClass="textfield width-100"/>
+        <%--<c:if test="${command.confraternista.tipo == 'CONFRATERNISTA' || (command.confraternista.tipo == 'COORDENADOR' && command.confraternista.tipo)}">--%> 
+            <div id="evangelizadorResponsavel" class="row" style="display:none;">
+                <div class="span6">
+                    <see:formField label="label.responsibleevent" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.nome" maxlength="100" inputClass="textfield width-100"/>
+                </div>
+                <div class="span3">
+                    <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.telefone" maxlength="16" inputClass="textfield width-100"/>
+                </div>
             </div>
-            <div class="span3">
-                <see:formField label="label.phone" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.responsavelEvento.telefone" maxlength="16" inputClass="textfield width-100"/>
-            </div>
-        </div>
+        <%--</c:if>--%>        
         <div class="row">
             <div class="span12">
                 <see:formField id="atividadeIE" label="label.activityatie" isLabelKey="true" isMandatory="true" path="inscricao.confraternista.atividadeCasaEspirita" type="textarea" maxlength="500" inputClass="textarea width-100"/>
@@ -709,7 +713,7 @@
             var data = $('#dataNascimento').val();
             var dataNascimento = parseDate(data);
             var tipoEvento = '${command.inscricao.edicaoEvento.tipo}';
-            if ((tipoEvento == 'FAIXA_ETARIA') || (($("input:radio[value=CONFRATERNISTA]").is(':checked')) && !calculaMaiorIdade(dataNascimento))) {
+            if ((tipoEvento == 'FAIXA_ETARIA' && ($("input:radio[value=CONFRATERNISTA]").is(':checked') || ($("input:radio[value=COORDENADOR]").is(':checked')) && !calculaMaiorIdade(dataNascimento))) || (($("input:radio[value=CONFRATERNISTA]").is(':checked')) && !calculaMaiorIdade(dataNascimento))) {
                 $('#evangelizadorResponsavel').show();
             } else {
                 $('#evangelizadorResponsavel').hide();

@@ -390,7 +390,8 @@
         </div>
     </c:otherwise>
 </c:choose>
-<see:formButtonGroup putSubmit="false" backUrl="formEvento.html"/>
+<c:url value="/admin/formEvento.html" var="backUrl"></c:url>          
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 
 <script type="text/javascript" src="<c:url value="/dwr/interface/enderecoAjaxService.js"/>"></script>
 <script type="text/javascript">

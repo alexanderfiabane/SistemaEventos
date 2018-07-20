@@ -106,7 +106,7 @@ public class InscricaoValidator extends AbstractValidator<InscricaoCommand> {
             validaIdade(inscricao, errors);
             if (getIdade(inscricao.getEdicaoEvento().getPeriodoEdicao().getStart(), confraternista.getPessoa().getDataNascimento()) < maiorIdade) {
                 validateResponsavel(confraternista.getPessoa().getResponsavel(), errors);
-                if (confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA)) {
+                if (confraternista.getTipo().equals(Confraternista.Tipo.CONFRATERNISTA) || confraternista.getTipo().equals(Confraternista.Tipo.COORDENADOR)) {
                     validateResponsavelEvento(confraternista.getResponsavelEvento(), errors);
                 }
             }

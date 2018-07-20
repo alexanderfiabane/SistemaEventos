@@ -83,7 +83,10 @@
         </div>
     </div>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="menuGrupoIdade.html?idEdicao=${edicao.id}"/>
+<c:url value="menuGrupoIdade.html" var="backUrl">
+    <c:param name="idEdicao" value="${edicao.id}"/>
+</c:url>
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script type="text/javascript" src="<c:url value="/dwr/interface/inscricaoAjaxService.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/dwr/interface/grupoIdadeAjaxService.js"/>"></script>
 <script type="text/javascript">

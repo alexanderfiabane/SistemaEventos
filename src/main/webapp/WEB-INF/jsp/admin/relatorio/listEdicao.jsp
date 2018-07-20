@@ -41,5 +41,6 @@
         </div>
     </c:otherwise>
 </c:choose>
-<see:formButtonGroup putSubmit="false" backUrl="listEvento.html"/>
+<c:url var="backUrl" value="listEvento.html"></c:url>        
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 

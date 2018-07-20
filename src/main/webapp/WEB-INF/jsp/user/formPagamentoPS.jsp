@@ -58,7 +58,8 @@
         </div>
     </fieldset>
 </div>
-<see:formButtonGroup putSubmit="false" backUrl="listUsuarioInscricoes.html">
+<c:url value="backUrl" value="listUsuarioInscricoes.html"></c:url>                            
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}">
     <button id="pagSeguroBtn" class="btn link pagSeguroBtn" type="button" title="Pague com PagSeguro - é rápido, grátis e seguro!" data-code="${pagseguroCod}">
         <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/99x61-pagar-azul-assina.gif"/>
     </button>

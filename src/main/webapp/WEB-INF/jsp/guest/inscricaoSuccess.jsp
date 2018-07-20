@@ -245,7 +245,8 @@
 <c:url var="url_print" value="/user/fichaInscricao.html">
     <c:param name="idInscricao" value="${command.inscricao.id}"/>
 </c:url>
-<see:formButtonGroup putSubmit="false" backUrl="../index.html">
+<c:url var="backUrl" value="../index.html"></c:url>                
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}">
     <c:if test="${command.inscricao.edicaoEvento.configFichaInscricao.temFichaInscricao}">        
         <button type="button" class="btn primary" title="Imprimir" id="imprimirInscricao" data-url="${url_print}"><i class="icon-print"></i> Imprimir Inscrição</button>
     </c:if>

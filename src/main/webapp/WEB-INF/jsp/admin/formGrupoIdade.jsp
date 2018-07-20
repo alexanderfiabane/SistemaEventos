@@ -73,7 +73,10 @@
         </div>
     </c:otherwise>
 </c:choose>
-<see:formButtonGroup putSubmit="false" backUrl="menuGrupoIdade.html?idEdicao=${command.edicaoEvento.id}"/>
+    <c:url value="menuGrupoIdade.html" var="backUrl">
+        <c:param name="idEdicao" value="${command.edicaoEvento.id}"/>
+    </c:url>        
+<see:formButtonGroup putSubmit="false" backUrl="${backUrl}"/>
 <script>
     $(document).ready(function(){
        $("#idadeMinima").mask('999');
