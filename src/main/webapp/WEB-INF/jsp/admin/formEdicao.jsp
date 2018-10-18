@@ -68,7 +68,7 @@
                 </div>
                 <div class="row">
                     <div class="span2">
-                        <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="numero" maxlength="4" inputClass="textfield"/>
+                        <see:formField label="label.number" isLabelKey="true" isMandatory="true" path="numero" maxlength="6" inputClass="textfield"/>
                     </div>
                     <div class="span4">
                         <see:formField label="label.theme" isLabelKey="true" isMandatory="true" path="tema" maxlength="100" inputClass="textfield"/>
